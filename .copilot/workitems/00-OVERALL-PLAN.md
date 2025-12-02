@@ -1,62 +1,94 @@
 # OpenNutriTracker - Overall Work Plan
 
-## Priority 1: Critical Bugs (Data Integrity & Calculations) - ✅ COMPLETED
+## ✅ COMPLETED WORK
 
-### 1.1 Data Loss Bug (#292)
-- ~~Fix date key format to prevent year-based collisions~~
-- ~~Add backward-compatible migration~~
-- ~~Test data persistence across years~~
-- ~~Verify no data loss occurs~~
+### Priority 1: Critical Bugs (Data Integrity & Calculations) - COMPLETE
+- ✅ #292: Data loss after 1 year (ISO 8601 format + migration)
+- ✅ #236, #259: Negative macro values (boundary validation)
+- ✅ #220, #262, #239: Keyboard focus issues (removed setState)
+- ✅ #267: Custom meals search (name validation + code search)
 
-### 1.2 Calculation Errors (#236, #259)
-- ~~Investigate negative protein values~~
-- ~~Fix calendar showing values without food added~~
-- ~~Fix inaccurate past day calculations~~
-- ~~Ensure proper increment/decrement logic~~
+### Priority 2A: Input Validation Suite - COMPLETE
+- ✅ #217, #216: Height/weight negative value prevention
+- ✅ #253: Imperial weights conversion fix
+- ✅ #244: Decimal weight values (already supported)
+- ✅ #209: Zero quantity validation
+- ✅ #210: Daily quantity limits (max 10,000)
+- ✅ #211: Name format validation (requires letter)
+- ✅ #207: Future date blocking
 
-### 1.3 Custom Meals Search (#267)
-- ~~Require name for custom meals (validation)~~
-- ~~Improve search to include code field~~
-- ~~Verify custom meals are findable~~
+**Total Issues Fixed: 15**
+**Commits: 10**
 
-### 1.4 Keyboard Focus Issues (#220, #262, #239)
-- ~~Fix base quantity field losing focus~~
-- ~~Fix keyboard dismissing on each keystroke~~
-- ~~Fix IME disappearing while inputting~~
+---
 
-## Priority 2: Input Validation Suite (IN PROGRESS)
+## 🔄 REMAINING PRIORITY ISSUES
 
-### 2.1 Height/Weight Validation
-- Prevent negative height values (#217)
-- Prevent negative weight values (#216)
-- Fix Imperial weights not setting correctly (#253)
-- Add decimal value support for weight (#244)
+### Priority 2B: Remaining Input Validation (Medium Priority)
+- [ ] #208 - Activity indicator remains after removal
+- [ ] #212 - Duplicate food addition warnings
+- [ ] #213 - Nonsensical nutritional info validation
+- [ ] #215 - Missing required info blocking (may already work)
 
-### 2.2 Meal Input Validation
-- ~~Require food name (#214) - DONE in #267~~
-- Prevent zero quantity meals (#209)
-- Add daily quantity limits (#210)
-- Prevent nonsensical nutritional info (#213)
-- Require at least one letter in food names (#211)
-- Warn on duplicate food additions (#212)
-- Block food items missing required info (#215)
+### Priority 3: Data Quality Issues (High Priority)
+- [ ] #222 - FoodData Central import issues (missing energy, 20x fiber)
+- [ ] #252 - Products missing from FDC
+- [ ] #288, #242 - Weight field shows "Invalid height" error
 
-### 2.3 Temporal Validation
-- Prevent data entry on future dates (#207)
-- Fix activity indicator remaining after removal (#208)
+### Priority 4: UX Improvements (Medium Priority)
+- [ ] #243 - Use "next" key on height field
+- [ ] #281 - Direct weight update on landing screen
+- [ ] #291 - Extend recent list beyond 200 entries
 
-### 2.4 Data Quality
-- Fix FoodData Central import issues (#222)
+### Priority 5: Feature Additions (Low-Medium Priority)
+- [ ] #237 - Micronutrient tracking
+- [ ] #232 - Direct macro input for custom meals
+- [ ] #279 - Multi-ingredient meal composition
+- [ ] #284 - Weekly weight goal setting
+- [ ] #249 - Add meal without permanent save
+- [ ] #227 - Copy meal to same meal type for today
+
+### Priority 6: Technical Debt (Low Priority)
+- [ ] Remove dummy data from user_data_source.dart
+- [ ] Make enum class for rating in tracked_day_entity.dart
+- [ ] Group activities in effort categories
+- [ ] Change default totalQuantity from 0 to 60
+- [ ] Make translation keys in fdc_const.dart
+- [ ] Extract unit parsing logic
+- [ ] Handle user birthday properly
+
+### Priority 7: Infrastructure Issues (Low Priority)
+- [ ] #280 - Scanner on Android 10 (Vulkan/Mali)
+- [ ] #282 - Localize units system names for German
+- [ ] #290 - Update to 2024 Compendium of Physical Activities
+- [ ] #229 - API rate limiting
+- [ ] #263 - Indian food database
+- [ ] #266 - Website 404 error
+- [ ] #205 - Contribution Guide access
+- [ ] #272 - App availability in regions
+
+---
+
+## 📊 STATISTICS
+
+**Issues Addressed:** 15 / ~50+  
+**Completion Rate:** ~30%  
+**Critical Bugs:** 100% Complete ✅  
+**Input Validation:** 75% Complete  
+
+---
+
+## 🎯 RECOMMENDED NEXT PRIORITIES
+
+1. **Priority 3: Data Quality** (#222, #252, #288) - Affects data integrity
+2. **Priority 2B: Remaining Validation** (#208, #212, #213) - Quick wins
+3. **Priority 4: UX Improvements** (#243, #281, #291) - User experience
+4. **Priority 5: Feature Additions** (#237, #279, #284) - New capabilities
+
+---
 
 ## Current Status
-- ✅ Completed: Priority 1 - Critical Bugs (4 issues fixed)
-- 🔄 Working on: Priority 2 - Input Validation Suite
-- Last updated: 2025-12-02 23:26 UTC
-
-## Recent Commits
-- 11650bb - Fix #267: Custom meals search
-- c7308f2 - Migration for backward compatibility (#292)
-- 252df53 - Refactor: extract helper method
-- 0c6a0a7 - Fix keyboard focus issue
-- 0fa2ba2 - Fix data loss and negative values
-- abb2ebd - Initial plan
+- Last updated: 2025-12-02 23:45 UTC
+- Working Branch: copilot/list-open-tasks-analysis
+- Commits on branch: 10
+- Status: Ready for next priority selection
