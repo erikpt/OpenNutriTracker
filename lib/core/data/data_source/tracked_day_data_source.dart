@@ -88,7 +88,8 @@ class TrackedDayDataSource {
     final updateDay = await getTrackedDay(day);
 
     if (updateDay != null) {
-      updateDay.caloriesTracked -= addCalories;
+      final newValue = updateDay.caloriesTracked - addCalories;
+      updateDay.caloriesTracked = newValue < 0 ? 0 : newValue;
       updateDay.save();
     }
   }
@@ -178,14 +179,16 @@ class TrackedDayDataSource {
 
     if (updateDay != null) {
       if (carbsAmount != null) {
-        updateDay.carbsTracked = (updateDay.carbsTracked ?? 0) - carbsAmount;
+        final newValue = (updateDay.carbsTracked ?? 0) - carbsAmount;
+        updateDay.carbsTracked = newValue < 0 ? 0 : newValue;
       }
       if (fatAmount != null) {
-        updateDay.fatTracked = (updateDay.fatTracked ?? 0) - fatAmount;
+        final newValue = (updateDay.fatTracked ?? 0) - fatAmount;
+        updateDay.fatTracked = newValue < 0 ? 0 : newValue;
       }
       if (proteinAmount != null) {
-        updateDay.proteinTracked =
-            (updateDay.proteinTracked ?? 0) - proteinAmount;
+        final newValue = (updateDay.proteinTracked ?? 0) - proteinAmount;
+        updateDay.proteinTracked = newValue < 0 ? 0 : newValue;
       }
       updateDay.save();
     }
