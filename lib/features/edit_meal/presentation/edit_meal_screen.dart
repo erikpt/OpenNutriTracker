@@ -272,6 +272,13 @@ class _EditMealScreenState extends State<EditMealScreen> {
 
   void _onSavePressed(bool usesImperialUnits) {
     try {
+      // Validate that custom meals have a name
+      if (_nameTextController.text.trim().isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('${S.of(context).mealNameLabel} is required')));
+        return;
+      }
+
       // Convert meal size back to metric units if necessary
       final mealQuantity = usesImperialUnits
           ? _convertToMetric(

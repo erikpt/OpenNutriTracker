@@ -47,6 +47,7 @@ class RecentMealBloc extends Bloc<RecentMealEvent, RecentMealState> {
   bool Function(IntakeEntity) matchesSearchString(String searchString) {
     return (intake) =>
         (intake.meal.name?.toLowerCase().contains(searchString) ?? false) ||
-        (intake.meal.brands?.toLowerCase().contains(searchString) ?? false);
+        (intake.meal.brands?.toLowerCase().contains(searchString) ?? false) ||
+        (intake.meal.code?.toLowerCase().contains(searchString) ?? false);
   }
 }
