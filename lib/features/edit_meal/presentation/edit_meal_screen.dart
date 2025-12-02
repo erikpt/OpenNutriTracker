@@ -278,6 +278,14 @@ class _EditMealScreenState extends State<EditMealScreen> {
             SnackBar(content: Text('${S.of(context).mealNameLabel} is required')));
         return;
       }
+      
+      // Validate name contains at least one letter (#211)
+      final name = _nameTextController.text.trim();
+      if (!RegExp(r'[a-zA-Z]').hasMatch(name)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('${S.of(context).mealNameLabel} must contain at least one letter')));
+        return;
+      }
 
       // Convert meal size back to metric units if necessary
       final mealQuantity = usesImperialUnits

@@ -1,9 +1,9 @@
 # Priority 2: Input Validation Suite - IN PROGRESS 🔄
 
 ## Tasks:
-- [ ] #217, #216: Height/Weight validation
-- [ ] #253: Imperial weights conversion
-- [ ] #244: Decimal weight values
+- [x] #217, #216: Height/Weight validation
+- [x] #253: Imperial weights conversion
+- [x] #244: Decimal weight values
 - [ ] #209: Zero quantity validation
 - [ ] #210: Daily quantity limits
 - [ ] #213: Nutritional data validation

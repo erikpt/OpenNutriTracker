@@ -156,6 +156,25 @@ class MealDetailBottomSheet extends StatelessWidget {
   }
 
   void onAddButtonPressed(BuildContext context) {
+    // Validate quantity (#209, #210)
+    final quantityText = quantityTextController.text.replaceAll(',', '.');
+    final quantity = double.tryParse(quantityText);
+    
+    if (quantity == null || quantity <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${S.of(context).quantityLabel} must be greater than 0')),
+      );
+      return;
+    }
+    
+    // Reasonable maximum limit per meal (#210)
+    if (quantity > 10000) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${S.of(context).quantityLabel} seems unrealistically high')),
+      );
+      return;
+    }
+    
     mealDetailBloc.addIntake(
         context,
         mealDetailBloc.state.selectedUnit,
