@@ -189,10 +189,15 @@ Future<void> initLocator() async {
       () => TrackedDayDataSource(hiveDBProvider.trackedDayBox));
 
   await _initializeConfig(locator());
+  await _migrateTrackedDays(locator());
 }
 
 Future<void> _initializeConfig(ConfigDataSource configDataSource) async {
   if (!await configDataSource.configInitialized()) {
     configDataSource.initializeConfig();
   }
+}
+
+Future<void> _migrateTrackedDays(TrackedDayDataSource trackedDayDataSource) async {
+  await trackedDayDataSource.migrateToNewDateFormat();
 }

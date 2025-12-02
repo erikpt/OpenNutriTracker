@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:opennutritracker/core/data/dbo/tracked_day_dbo.dart';
 import 'package:opennutritracker/core/utils/extensions.dart';
@@ -8,6 +9,52 @@ class TrackedDayDataSource {
   final Box<TrackedDayDBO> _trackedDayBox;
 
   TrackedDayDataSource(this._trackedDayBox);
+
+  /// Migrates tracked days from old date format (locale-dependent yMd) to new ISO 8601 format (yyyy-MM-dd)
+  /// This ensures backward compatibility with existing data while preventing future data loss
+  Future<void> migrateToNewDateFormat() async {
+    log.info('Starting tracked day date format migration...');
+    
+    try {
+      final allKeys = _trackedDayBox.keys.toList();
+      final newFormatRegex = RegExp(r'^\d{4}-\d{2}-\d{2}$'); // Matches yyyy-MM-dd
+      int migratedCount = 0;
+
+      for (final key in allKeys) {
+        final keyString = key.toString();
+        
+        // Skip if already in new format
+        if (newFormatRegex.hasMatch(keyString)) {
+          continue;
+        }
+
+        final trackedDay = _trackedDayBox.get(key);
+        if (trackedDay != null) {
+          // Generate new key using the date stored in the object
+          final newKey = trackedDay.day.toParsedDay();
+          
+          // Only migrate if new key doesn't already exist (avoid overwriting)
+          if (!_trackedDayBox.containsKey(newKey)) {
+            await _trackedDayBox.put(newKey, trackedDay);
+            await _trackedDayBox.delete(key);
+            migratedCount++;
+            log.fine('Migrated key: $keyString -> $newKey');
+          } else {
+            log.warning('Skipping migration for $keyString: new key $newKey already exists');
+          }
+        }
+      }
+
+      if (migratedCount > 0) {
+        log.info('Migration complete: $migratedCount tracked day(s) migrated to new format');
+      } else {
+        log.info('No migration needed: all tracked days already use new format');
+      }
+    } catch (e, stackTrace) {
+      log.severe('Error during tracked day migration: $e', e, stackTrace);
+      rethrow;
+    }
+  }
 
   Future<void> saveTrackedDay(TrackedDayDBO trackedDayDBO) async {
     log.fine('Updating tracked day in db');
