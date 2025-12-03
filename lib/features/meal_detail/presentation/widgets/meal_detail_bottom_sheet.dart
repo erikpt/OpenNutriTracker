@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:opennutritracker/core/domain/entity/intake_entity.dart';
 import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
+import 'package:opennutritracker/core/domain/usecase/get_intake_usecase.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/core/utils/navigation_options.dart';
 import 'package:opennutritracker/features/add_meal/domain/entity/meal_entity.dart';
@@ -155,7 +157,35 @@ class MealDetailBottomSheet extends StatelessWidget {
     }
   }
 
-  void onAddButtonPressed(BuildContext context) {
+  void onAddButtonPressed(BuildContext context) async {
+    // Validate quantity (#209, #210)
+    final quantityText = quantityTextController.text.replaceAll(',', '.');
+    final quantity = double.tryParse(quantityText);
+    
+    if (quantity == null || quantity <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${S.of(context).quantityLabel} must be greater than 0')),
+      );
+      return;
+    }
+    
+    // Reasonable maximum limit per meal (#210)
+    if (quantity > 10000) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${S.of(context).quantityLabel} seems unrealistically high')),
+      );
+      return;
+    }
+    
+    // Check for duplicate additions (#212)
+    final isDuplicate = await _checkForDuplicate(context);
+    if (isDuplicate) {
+      final shouldAdd = await _showDuplicateDialog(context);
+      if (shouldAdd != true) {
+        return; // User cancelled
+      }
+    }
+    
     mealDetailBloc.addIntake(
         context,
         mealDetailBloc.state.selectedUnit,
@@ -176,6 +206,55 @@ class MealDetailBottomSheet extends StatelessWidget {
         SnackBar(content: Text(S.of(context).infoAddedIntakeLabel)));
     Navigator.of(context)
         .popUntil(ModalRoute.withName(NavigationOptions.mainRoute));
+  }
+
+  // #212: Check if this meal was already added today for the same meal type
+  Future<bool> _checkForDuplicate(BuildContext context) async {
+    final getIntakeUsecase = locator<GetIntakeUsecase>();
+    final List<IntakeEntity> todayIntakes;
+    
+    switch (intakeTypeEntity) {
+      case IntakeTypeEntity.breakfast:
+        todayIntakes = await getIntakeUsecase.getBreakfastIntakeByDay(day);
+        break;
+      case IntakeTypeEntity.lunch:
+        todayIntakes = await getIntakeUsecase.getLunchIntakeByDay(day);
+        break;
+      case IntakeTypeEntity.dinner:
+        todayIntakes = await getIntakeUsecase.getDinnerIntakeByDay(day);
+        break;
+      case IntakeTypeEntity.snack:
+        todayIntakes = await getIntakeUsecase.getSnackIntakeByDay(day);
+        break;
+    }
+    
+    // Check if meal with same code or name already exists
+    return todayIntakes.any((intake) =>
+        (product.code != null && intake.meal.code == product.code) ||
+        (product.name != null && intake.meal.name == product.name));
+  }
+
+  // #212: Show confirmation dialog for duplicate meals
+  Future<bool?> _showDuplicateDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(S.of(context).warningLabel),
+          content: Text('This food has already been added to this meal today. Add it again?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(S.of(context).cancelLabel),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(S.of(context).addLabel),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   DropdownMenuItem<String> _getServingDropdownItem(BuildContext context) {

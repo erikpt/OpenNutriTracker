@@ -119,14 +119,31 @@ class MealNutrimentsEntity extends Equatable {
             nutriment.nutrientId == FDCConst.fdcTotalDietaryFiberId)
         ?.amount;
 
+    // Data quality validation (#222, #213)
+    final validatedEnergy = _validateNutrient(energyTotal, 0, 900); // max 900 kcal per 100g
+    final validatedCarbs = _validateNutrient(carbsTotal, 0, 100);
+    final validatedFat = _validateNutrient(fatTotal, 0, 100);
+    final validatedProteins = _validateNutrient(proteinsTotal, 0, 100);
+    final validatedSugar = _validateNutrient(sugarTotal, 0, validatedCarbs);
+    final validatedSaturatedFat = _validateNutrient(saturatedFatTotal, 0, validatedFat);
+    final validatedFiber = _validateNutrient(fiberTotal, 0, validatedCarbs);
+
     return MealNutrimentsEntity(
-        energyKcal100: energyTotal,
-        carbohydrates100: carbsTotal,
-        fat100: fatTotal,
-        proteins100: proteinsTotal,
-        sugars100: sugarTotal,
-        saturatedFat100: saturatedFatTotal,
-        fiber100: fiberTotal);
+        energyKcal100: validatedEnergy,
+        carbohydrates100: validatedCarbs,
+        fat100: validatedFat,
+        proteins100: validatedProteins,
+        sugars100: validatedSugar,
+        saturatedFat100: validatedSaturatedFat,
+        fiber100: validatedFiber);
+  }
+
+  /// Validates nutrient value is within reasonable bounds (#222, #213)
+  static double? _validateNutrient(double? value, double min, double? max) {
+    if (value == null) return null;
+    if (value < min) return null; // Negative values are invalid
+    if (max != null && value > max) return null; // Exceeds maximum
+    return value;
   }
 
   static double? _getValuePerUnit(double? valuePer100) {
