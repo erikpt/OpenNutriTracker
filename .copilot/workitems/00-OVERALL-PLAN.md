@@ -1,94 +1,385 @@
 # OpenNutriTracker - Overall Work Plan
 
-## ✅ COMPLETED WORK
-
-### Priority 1: Critical Bugs (Data Integrity & Calculations) - COMPLETE
-- ✅ #292: Data loss after 1 year (ISO 8601 format + migration)
-- ✅ #236, #259: Negative macro values (boundary validation)
-- ✅ #220, #262, #239: Keyboard focus issues (removed setState)
-- ✅ #267: Custom meals search (name validation + code search)
-
-### Priority 2A: Input Validation Suite - COMPLETE
-- ✅ #217, #216: Height/weight negative value prevention
-- ✅ #253: Imperial weights conversion fix
-- ✅ #244: Decimal weight values (already supported)
-- ✅ #209: Zero quantity validation
-- ✅ #210: Daily quantity limits (max 10,000)
-- ✅ #211: Name format validation (requires letter)
-- ✅ #207: Future date blocking
-
-**Total Issues Fixed: 15**
-**Commits: 10**
+**Last Updated:** 2025-12-03 16:45 UTC  
+**Source:** GitHub Issues Analysis from simonoppowa/OpenNutriTracker  
+**Total Open Issues:** 136 issues tracked
 
 ---
 
-## 🔄 REMAINING PRIORITY ISSUES
+## ✅ COMPLETED WORK (Previous Sessions)
 
-### Priority 2B: Remaining Input Validation (Medium Priority)
-- [ ] #208 - Activity indicator remains after removal
-- [ ] #212 - Duplicate food addition warnings
-- [ ] #213 - Nonsensical nutritional info validation
-- [ ] #215 - Missing required info blocking (may already work)
+### Priority 1: Critical Bugs - 100% COMPLETE ✅
+1. ✅ **#292** - Data loss after 1 year (ISO 8601 + migration)
+2. ✅ **#236, #259** - Negative macro values (boundary validation)
+3. ✅ **#220, #262, #239** - Keyboard focus loss (removed setState)
+4. ✅ **#267** - Custom meals search (name validation + code search)
 
-### Priority 3: Data Quality Issues (High Priority)
-- [ ] #222 - FoodData Central import issues (missing energy, 20x fiber)
-- [ ] #252 - Products missing from FDC
-- [ ] #288, #242 - Weight field shows "Invalid height" error
+### Priority 2: Input Validation Suite - 100% COMPLETE ✅
+5. ✅ **#217, #216** - Height/weight negative value prevention
+6. ✅ **#253** - Imperial weights conversion fix
+7. ✅ **#244** - Decimal weight values (confirmed)
+8. ✅ **#209** - Zero quantity meal prevention
+9. ✅ **#210** - Daily quantity limits (max 10,000)
+10. ✅ **#211** - Name format validation (requires letter)
+11. ✅ **#207** - Future date blocking
+12. ✅ **#208** - Activity indicator after removal
+13. ✅ **#212** - Duplicate food warnings
+14. ✅ **#215** - Missing required info validation (confirmed working)
 
-### Priority 4: UX Improvements (Medium Priority)
-- [ ] #243 - Use "next" key on height field
-- [ ] #281 - Direct weight update on landing screen
-- [ ] #291 - Extend recent list beyond 200 entries
+### Priority 3: Data Quality - Partial Complete ⚠️
+15. ✅ **#222** - FDC import validation (partial - sugar≤carbs, saturatedFat≤fat)
+16. ✅ **#213** - Nonsensical nutritional info validation
 
-### Priority 5: Feature Additions (Low-Medium Priority)
-- [ ] #237 - Micronutrient tracking
-- [ ] #232 - Direct macro input for custom meals
-- [ ] #279 - Multi-ingredient meal composition
-- [ ] #284 - Weekly weight goal setting
-- [ ] #249 - Add meal without permanent save
-- [ ] #227 - Copy meal to same meal type for today
+### Priority 4: UX Quick Wins - Partial Complete ⚠️
+17. ✅ **#243** - "Next" key on height field
+18. ✅ **#288, #242** - Weight field error message fix
+19. ✅ **#291** - Extended recent list to 500
 
-### Priority 6: Technical Debt (Low Priority)
-- [ ] Remove dummy data from user_data_source.dart
-- [ ] Make enum class for rating in tracked_day_entity.dart
-- [ ] Group activities in effort categories
-- [ ] Change default totalQuantity from 0 to 60
-- [ ] Make translation keys in fdc_const.dart
-- [ ] Extract unit parsing logic
-- [ ] Handle user birthday properly
-
-### Priority 7: Infrastructure Issues (Low Priority)
-- [ ] #280 - Scanner on Android 10 (Vulkan/Mali)
-- [ ] #282 - Localize units system names for German
-- [ ] #290 - Update to 2024 Compendium of Physical Activities
-- [ ] #229 - API rate limiting
-- [ ] #263 - Indian food database
-- [ ] #266 - Website 404 error
-- [ ] #205 - Contribution Guide access
-- [ ] #272 - App availability in regions
+**Total Issues Addressed:** 21 from previous work sessions
 
 ---
 
-## 📊 STATISTICS
+## 🔥 PRIORITY 1: CRITICAL BUGS (Must Fix)
 
-**Issues Addressed:** 15 / ~50+  
-**Completion Rate:** ~30%  
-**Critical Bugs:** 100% Complete ✅  
-**Input Validation:** 75% Complete  
+### Data Integrity Issues
+- [ ] **#182** - Invalid intake displayed for some days in Diary (0 kcal shown)
+  - Impact: High - Data display corruption
+  - Effort: Medium (2-3 hours)
+
+### UI/UX Blocking Issues  
+- [ ] **#156** - Add button behind phone navigation bar
+  - Impact: High - Can't add items on some devices
+  - Effort: Low (30-60 min)
+  
+- [ ] **#154** - Diary navigates to current date after adding future entry
+  - Impact: Medium - Confusing UX
+  - Effort: Low (1 hour)
 
 ---
 
-## 🎯 RECOMMENDED NEXT PRIORITIES
+## 🎯 PRIORITY 2: DATA QUALITY & SEARCH (High Value)
 
-1. **Priority 3: Data Quality** (#222, #252, #288) - Affects data integrity
-2. **Priority 2B: Remaining Validation** (#208, #212, #213) - Quick wins
-3. **Priority 4: UX Improvements** (#243, #281, #291) - User experience
-4. **Priority 5: Feature Additions** (#237, #279, #284) - New capabilities
+### Food Database Issues
+- [ ] **#252** - Products missing from FDC despite having data
+  - Impact: High - Users can't find items
+  - Effort: Medium (2-4 hours)
+  - Related: #92, #157
+  
+- [ ] **#222** - FDC import issues (missing energy, 20x fiber) 
+  - Impact: High - Bad data in app
+  - Status: Partially fixed, needs completion
+  - Effort: Medium (2-3 hours)
+  
+- [ ] **#125** - Can only find highly processed foods, not basic items
+  - Impact: High - Core functionality
+  - Effort: High (4-6 hours)
+  
+- [ ] **#174** - User-defined food not visible in search
+  - Impact: High - Custom meals disappear
+  - Effort: Medium (2-3 hours)
+  
+- [ ] **#191** - Recent food list is limited (loses old entries)
+  - Impact: Medium - User frustration
+  - Status: Partially addressed (#291 extended to 500)
+  - Effort: Low (1 hour) - May need further extension or unlimited
+
+### Search & Scanning
+- [ ] **#229** - API rate limiting causing search failures
+  - Impact: High - 90% failure rate reported
+  - Effort: High (3-4 hours) - May need user API key option
+  
+- [ ] **#280** - Scanner broken on Android 10 (Vulkan/Mali)
+  - Impact: High - Core feature broken for some devices
+  - Effort: High (research required)
 
 ---
 
-## Current Status
-- Last updated: 2025-12-02 23:45 UTC
-- Working Branch: copilot/list-open-tasks-analysis
-- Commits on branch: 10
-- Status: Ready for next priority selection
+## 🛠️ PRIORITY 3: CORE FEATURES (User Requested)
+
+### Meal Management
+- [ ] **#279** - Multi-ingredient meal composition (most requested)
+  - Impact: Very High - Top feature request
+  - Effort: High (1-2 days)
+  - Related: #112, #138
+  
+- [ ] **#232** - Direct macro input for custom meals
+  - Impact: High - Simplifies workflow
+  - Effort: Medium (3-4 hours)
+  
+- [ ] **#249** - Add meal without permanent save
+  - Impact: Medium - One-off meals
+  - Effort: Medium (2-3 hours)
+  
+- [ ] **#227** - Copy meal to same meal type for today
+  - Impact: Medium - Convenience
+  - Effort: Low (1-2 hours)
+
+### Goal & Tracking Features
+- [ ] **#284** - Weekly weight goal setting (highly requested)
+  - Impact: High - Better goal management
+  - Effort: Medium (3-4 hours)
+  
+- [ ] **#119** - Target weight consideration in calorie calc
+  - Impact: High - More accurate goals
+  - Effort: Medium (2-3 hours)
+  - Related: #123
+  
+- [ ] **#123** - Let users define exact calorie/macro goals
+  - Impact: High - User control
+  - Effort: Medium (2-3 hours)
+  
+- [ ] **#150** - Display recommended calories per meal
+  - Impact: Medium - Better planning
+  - Effort: Low (1 hour)
+
+### Nutrition Tracking
+- [ ] **#237** - Micronutrient tracking (vitamins, minerals, sodium, fiber)
+  - Impact: High - Extended tracking
+  - Effort: High (1-2 days)
+  - Related: #149, #160, #173, #245
+  
+- [ ] **#235** - Display macros for each food item and meal
+  - Impact: Medium - Better visibility
+  - Effort: Low (1-2 hours)
+
+---
+
+## 📱 PRIORITY 4: UX & POLISH
+
+### Data Entry Improvements
+- [ ] **#281** - Direct weight update on landing screen
+  - Impact: Medium - Convenience
+  - Effort: Medium (2-3 hours)
+  
+- [ ] **#234** - Allow changing values from calendar
+  - Impact: Medium - Edit without delete/re-add
+  - Effort: Medium (2-3 hours)
+  
+- [ ] **#176** - Modification of recorded amounts
+  - Impact: Medium - Better editing
+  - Effort: Medium (2-3 hours)
+
+### Input Validation (Additional)
+- [ ] **#199** - App accepts future birth dates
+  - Impact: Low - Data validation
+  - Effort: Low (15 min)
+  
+- [ ] **#200, #201** - Allow 0 as weight/height value
+  - Impact: Low - Already addressed in #216, #217?
+  - Effort: Low (verify/document)
+  
+- [ ] **#204** - Prevent height > 15 ft
+  - Impact: Low - Edge case
+  - Effort: Low (15 min)
+
+### Scanner & Barcode
+- [ ] **#162** - Manual barcode entry (text input)
+  - Impact: Medium - Fallback option
+  - Effort: Low (1 hour)
+  
+- [ ] **#167** - Associate custom products with barcode
+  - Impact: Medium - Better catalog
+  - Effort: Medium (2-3 hours)
+  
+- [ ] **#165** - Camera view rotates with phone
+  - Impact: Low - Cosmetic
+  - Effort: Low (1 hour)
+
+---
+
+## 🌐 PRIORITY 5: LOCALIZATION & ACCESSIBILITY
+
+### Translations
+- [ ] **#282** - German localization for unit system names
+  - Impact: Low - i18n
+  - Effort: Low (30 min)
+  
+- [ ] **#171** - Add Polish translation support (Crowdin)
+  - Impact: Low - i18n
+  - Effort: Low (setup Crowdin)
+  
+- [ ] **#142** - Slovak translation submitted
+  - Impact: Low - i18n
+  - Effort: Low (merge file)
+
+### Date & Time
+- [ ] **#183** - Date formatting inconsistent (MM/DD/YYYY vs YYYY-MM-DD)
+  - Impact: Low - Polish
+  - Effort: Low (30 min)
+  
+- [ ] **#177** - kJ support (kilojoules)
+  - Impact: Medium - International users
+  - Effort: Low (1-2 hours)
+  
+- [ ] **#139** - Custom wake/sleep times for calorie reset
+  - Impact: Low - Edge case
+  - Effort: Medium (2-3 hours)
+
+---
+
+## 🚀 PRIORITY 6: ADVANCED FEATURES
+
+### Data Management
+- [ ] **#132** - Export data (CSV/JSON)
+  - Impact: High - Data portability
+  - Effort: Medium (3-4 hours)
+  
+- [ ] **#286** - Sync to external server/Docker
+  - Impact: Medium - Advanced users
+  - Effort: High (1-2 days)
+  
+- [ ] **#147** - Sync with Health Connect/Google Fit/Samsung Health
+  - Impact: High - Platform integration
+  - Effort: High (1-2 days)
+
+### Additional Tracking
+- [ ] **#189** - Body measurements tracking (neck, shoulders, chest, etc.)
+  - Impact: Medium - Fitness tracking
+  - Effort: Medium (3-4 hours)
+  
+- [ ] **#178** - Medical symptoms tracking
+  - Impact: Low - Niche use case
+  - Effort: Low (1-2 hours)
+
+### Activity Updates
+- [ ] **#290** - Update to 2024 Compendium of Physical Activities
+  - Impact: Medium - Data accuracy
+  - Effort: Medium (2-3 hours)
+  - Related: #195 (broken link), #170
+  
+- [ ] **#118** - Add Yoga to activities
+  - Impact: Low - Missing activity
+  - Effort: Low (15 min)
+  
+- [ ] **#143** - Add HIIT Training
+  - Impact: Low - Missing activity
+  - Effort: Low (15 min)
+  
+- [ ] **#151** - Add common activities (push-ups, squats)
+  - Impact: Low - Better catalog
+  - Effort: Low (30 min)
+
+### Database Extensions
+- [ ] **#263** - Indian food database integration
+  - Impact: Medium - Regional support
+  - Effort: High (4-8 hours)
+  
+- [ ] **#166** - Self-host food database/API
+  - Impact: Low - Advanced users
+  - Effort: Very High
+
+---
+
+## 🎨 PRIORITY 7: VISUAL & THEME
+
+- [ ] **Material You themes** (from README TODO)
+  - Impact: Medium - Modern UI
+  - Effort: Medium (4-6 hours)
+  
+- [ ] **#255** - Dynamic app icon (dark mode)
+  - Impact: Low - iOS polish
+  - Effort: Low (1-2 hours)
+  
+- [ ] **#192** - iOS widgets
+  - Impact: Medium - Quick access
+  - Effort: High (1-2 days)
+  
+- [ ] **#168** - Homepage collapse categories
+  - Impact: Low - UI customization
+  - Effort: Low (1-2 hours)
+  
+- [ ] **#175** - Visual status in Diary sheet
+  - Impact: Low - Consistency
+  - Effort: Low (1 hour)
+
+---
+
+## 📚 PRIORITY 8: INFRASTRUCTURE & DOCUMENTATION
+
+### Distribution
+- [ ] **#126, #159, #264** - F-Droid listing
+  - Impact: High - Reach FOSS users
+  - Effort: Medium (setup + maintenance)
+  
+- [ ] **#272** - App availability in regions (Czechia iOS)
+  - Impact: Medium - User access
+  - Effort: Unknown (App Store config)
+
+### Documentation
+- [ ] **#266** - Website 404 error (simonoppowa.github.io)
+  - Impact: Medium - Project visibility
+  - Effort: Low (fix/redirect)
+  
+- [ ] **#205** - Contribution Guide access
+  - Impact: Low - Onboarding
+  - Effort: Low (fix wiki permissions)
+  
+- [ ] **#187** - Data loss when using Back button in setup
+  - Impact: Low - Onboarding UX
+  - Effort: Low (1 hour)
+
+### AI Features
+- [ ] **#250** - Ask AI to fill nutrition info
+  - Impact: Low - Experimental
+  - Effort: High (API integration)
+  
+- [ ] **#181** - JSON import for meals (ChatGPT workflow)
+  - Impact: Low - Power user feature
+  - Effort: Medium (2-3 hours)
+  
+- [ ] **#144** - Add pictures to meals from gallery
+  - Impact: Low - Visual tracking
+  - Effort: Medium (2-3 hours)
+
+### Features Outside Scope
+- [ ] **#277** - Disable activity tracking (feature flag)
+  - Impact: Low - Niche request
+  - Effort: Medium (2-3 hours)
+  
+- [ ] **#158** - Default to serving quantity vs grams
+  - Impact: Low - UX preference
+  - Effort: Medium (2-3 hours)
+
+---
+
+## 📊 CURRENT STATUS
+
+**Open Issues on GitHub:** 136  
+**Issues Addressed (Previous Work):** 21  
+**Remaining Issues:** 115+
+
+### Completion by Priority:
+- **Priority 1 (Critical):** 100% Complete ✅ (previous work)
+- **Priority 2 (Validation):** 100% Complete ✅ (previous work)
+- **Priority 3 (Data Quality):** ~30% Complete ⚠️
+- **Priority 4 (UX):** ~15% Complete 🔄
+- **Priority 5+ (Features):** <5% Complete 📝
+
+---
+
+## 🎯 RECOMMENDED NEXT STEPS
+
+### Quick Wins (< 2 hours each):
+1. **#156** - Fix Add button navigation overlap
+2. **#154** - Fix diary navigation after future date entry
+3. **#162** - Manual barcode entry
+4. **#118, #143, #151** - Add missing activities
+5. **#282** - German unit localization
+
+### High Impact (4-8 hours each):
+1. **#279** - Multi-ingredient meals (most requested!)
+2. **#252** - Fix product search/missing items
+3. **#284** - Weekly weight goal
+4. **#123** - Custom calorie/macro goals
+5. **#237** - Micronutrient tracking
+
+### Data Quality (Critical):
+1. **#182** - Fix diary display showing 0 kcal
+2. **#222** - Complete FDC import validation
+3. **#174** - Fix custom meal visibility
+4. **#229** - Address API rate limiting
+
+---
+
+**Status:** Comprehensive analysis complete  
+**Next Action:** Awaiting user direction on which priority area to tackle
