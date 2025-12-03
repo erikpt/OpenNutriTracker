@@ -216,6 +216,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         fatAmount: fatAmount,
         proteinAmount: proteinAmount);
     _updateDiaryPage(dateTime);
+    add(const LoadItemsEvent()); // #208: Reload home page to remove activity indicator
   }
 
   Future<void> _updateDiaryPage(DateTime day) async {
