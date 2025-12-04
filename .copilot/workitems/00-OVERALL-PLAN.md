@@ -1,23 +1,24 @@
 # OpenNutriTracker - Overall Work Plan
 
-**Last Updated:** 2025-12-03 21:30 UTC  
+**Last Updated:** 2025-12-03 22:00 UTC  
 **Source:** GitHub Issues Analysis from simonoppowa/OpenNutriTracker  
 **Total Open Issues:** 136 issues tracked  
-**Status:** 🔄 Branch reorganization completed - fixes on erikpt/bugfixes branch
+**Working Branch:** erikpt/bugfixes (primary development branch)  
+**Status:** 20 issues complete on working branch, 3 new fixes ready for testing
 
 ---
 
-## ⚠️ REPOSITORY STATUS UPDATE (2025-12-03)
+## 📌 DEVELOPMENT SETUP
 
-**Action Taken:** Moved accidental main branch merges to erikpt/bugfixes
-- Commits moved: PR #3, #4, #5
-- Main branch: Reset to clean state (2b893cb)
-- Bugfixes branch: Updated with reorganized commits
-- See `07-BRANCH-REORGANIZATION-2025-12-03.md` for details
+**Your primary working branch is `erikpt/bugfixes`** - this is where active development happens.
+
+- **On erikpt/bugfixes:** 20 completed issues (17 from main + 3 new)
+- **On main (upstream):** 17 completed issues (stable baseline)
+- **Next step:** Test and validate fixes on bugfixes, merge to main when ready
 
 ---
 
-## ✅ COMPLETED WORK (Previous Sessions) - ON MAIN ✅
+## ✅ COMPLETED WORK (ON WORKING BRANCH) - VERIFIED ✅
 
 ### Priority 1: Critical Bugs - 100% COMPLETE ✅
 1. ✅ **#292** - Data loss after 1 year (ISO 8601 + migration)
@@ -48,26 +49,27 @@
 16. ✅ **#288, #242** - Weight field error message fix
 17. ✅ **#291** - Extended recent list to 500
 
-**Total Issues Verified on Main:** 17 from previous work sessions  
+**Total Issues Verified on Working Branch:** 20 from session work  
 
 ---
 
-## 🔄 IN PROGRESS - ON ERIKPT/BUGFIXES BRANCH 🔄
+## 🔄 ALSO ON WORKING BRANCH (ERIKPT/BUGFIXES) - READY FOR TESTING 🔄
 
-### Priority 1: Critical Bugs - PENDING MERGE
-- ⏳ **#182** - Invalid intake displayed for some days in Diary (0 kcal shown) - PR #3
-  - Status: Implemented on bugfixes branch
-  - Effort: Medium (2-3 hours)
+### Priority 1: Critical Bugs - READY FOR TESTING
+- ✅ **#182** - Invalid intake displayed for some days in Diary (0 kcal shown) - PR #3
+  - Status: Implemented, ready for testing
+  - File: `lib/core/data/data_source/tracked_day_data_source.dart`
+  - Fix: Inclusive date range comparison
 
-### Priority 3: Data Quality - PENDING MERGE
-- ⏳ **#222** - FDC import validation (sugar≤carbs, saturatedFat≤fat) - PR #4
-  - Status: Implemented on bugfixes branch with enhanced validation
-- ⏳ **#213** - Nonsensical nutritional info validation - PR #4
+### Priority 3: Data Quality - READY FOR TESTING
+- ✅ **#222** - FDC import validation (sugar≤carbs, saturatedFat≤fat) - PR #4
+  - Status: Implemented, ready for testing
+- ✅ **#213** - Nonsensical nutritional info validation - PR #4
   - Location: `lib/features/add_meal/domain/entity/meal_nutriments_entity.dart`
   - Implementation: `_validateNutrient()` with min/max bounds checking
 
-**Status:** Ready for review and merge to main  
-**Note:** PR #5 (revert) was also moved - may want to reconsider if these fixes are solid
+**Status:** Ready for testing and production deployment  
+**Note:** PR #5 (revert) was also cherry-picked - may want to reconsider if fixes are solid
 
 ---
 

@@ -1,28 +1,37 @@
 # 🎯 QUICK REFERENCE - Current State at a Glance
 
-**As of:** December 3, 2025, 21:50 UTC
+**As of:** December 3, 2025, 22:00 UTC  
+**Working Branch:** erikpt/bugfixes (primary development branch)
 
 ---
 
 ## 📍 CURRENT BRANCH STATUS
 
-### main branch
+### erikpt/bugfixes branch (YOUR WORKING BRANCH) ⭐
+```
+Last commit: ea4b6b8 (docs: update work items documentation)
+Status: 🟢 ACTIVE DEVELOPMENT
+Completed Issues: 20 (17 from main + 3 new fixes)
+```
+
+**What's on this branch:**
+- ✅ All 17 completed issues from main
+- ✅ PR #3: Fix diary displaying 0 kcal (#182)
+- ✅ PR #4: FDC validation fixes (#222, #213)
+- ✅ PR #5: Revert FDC fixes (for review/reconsideration)
+- ✅ Full documentation package
+
+### main branch (Upstream)
 ```
 Last commit: 2b893cb (Merge pull request #194 from simonoppowa/develop)
 Status: ✅ STABLE & PRODUCTION READY
 Completed Issues: 17
-```
-
-### erikpt/bugfixes branch
-```
-Last commit: bae2aaa (Merge pull request #5 from erikpt/revert-4-copilot/tackle-252-and-222)
-Status: 🔄 WORK IN PROGRESS - PENDING MERGE
-Pending Issues: 3 (PRs #3, #4, #5)
+Note: Does NOT contain the 3 new fixes yet
 ```
 
 ---
 
-## ✅ WHAT'S COMPLETE (ON MAIN)
+## ✅ WHAT'S COMPLETE (ON BUGFIXES BRANCH - YOUR WORKING BRANCH)
 
 | Issue | Title | Priority | Status |
 |:---:|:---|:---:|:---:|
@@ -43,15 +52,15 @@ Pending Issues: 3 (PRs #3, #4, #5)
 
 ---
 
-## ⏳ PENDING MERGE (ON BUGFIXES BRANCH)
+## ⏳ PENDING MERGE (ALSO ON BUGFIXES BRANCH - READY FOR TESTING)
 
 | Issue | Title | PR | Status |
 |:---:|:---|:---:|:---:|
-| #182 | Diary 0 kcal display | #3 | ⏳ Ready |
-| #222, #213 | FDC validation | #4 | ⏳ Ready |
-| — | Revert FDC fixes | #5 | ⏳ Review? |
+| #182 | Diary 0 kcal display | #3 | ✅ Ready |
+| #222, #213 | FDC validation | #4 | ✅ Ready |
+| — | Revert FDC fixes | #5 | 🤔 Review? |
 
-**Action Needed:** Decide whether to merge or review these fixes
+**Action Needed:** Decide if PR #5 (revert) should be kept or removed before production
 
 ---
 

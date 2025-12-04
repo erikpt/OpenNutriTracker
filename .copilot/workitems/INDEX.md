@@ -1,6 +1,15 @@
 # 📑 Work Items Documentation Index
 
-**Quick Links:**
+**Working Branch:** erikpt/bugfixes (primary development)  
+**Last Updated:** 2025-12-03 22:00 UTC
+
+---
+
+## 📌 IMPORTANT NOTE
+
+**Your primary working branch is `erikpt/bugfixes`**, not main. All active development and testing happens here. This branch contains 20 completed issues and is ready for production testing.
+
+---
 
 ## 🚀 Start Here
 1. **[QUICK-REFERENCE.md](QUICK-REFERENCE.md)** - One-page summary (2 min read)
