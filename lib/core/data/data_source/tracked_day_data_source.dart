@@ -34,7 +34,7 @@ class TrackedDayDataSource {
       DateTime start, DateTime end) async {
     List<TrackedDayDBO> trackedDays = _trackedDayBox.values
         .where((trackedDay) =>
-            (trackedDay.day.isAfter(start) && trackedDay.day.isBefore(end)))
+            !trackedDay.day.isBefore(start) && !trackedDay.day.isAfter(end))
         .toList();
     return trackedDays;
   }
