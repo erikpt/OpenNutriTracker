@@ -43,9 +43,16 @@ class CalendarDayBloc extends Bloc<CalendarDayEvent, CalendarDayState> {
     });
 
     on<RefreshCalendarDayEvent>((event, emit) async {
-      if (_currentDay != null) {
+      // Use provided date if available, otherwise use current day
+      final dateToRefresh = event.dayToRefresh ?? _currentDay;
+      
+      if (dateToRefresh != null) {
+        // Update current day if a specific date was provided
+        if (event.dayToRefresh != null) {
+          _currentDay = event.dayToRefresh;
+        }
         emit(CalendarDayLoading());
-        await _loadCalendarDay(_currentDay!, emit);
+        await _loadCalendarDay(dateToRefresh, emit);
       }
     });
   }
