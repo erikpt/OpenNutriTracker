@@ -76,17 +76,18 @@ class MealNutrimentsEntity extends Equatable {
       List<FDCFoodNutrimentDTO> fdcNutriment) {
     // FDC Food nutriments can have different values for Energy [Energy,
     // Energy (Atwater General Factors), Energy (Atwater Specific Factors)]
+    // Prefer Atwater Specific Factors as they are more accurate for nutrition tracking
     final energyTotal = fdcNutriment
-            .firstWhereOrNull(
-                (nutriment) => nutriment.nutrientId == FDCConst.fdcTotalKcalId)
+            .firstWhereOrNull((nutriment) =>
+                nutriment.nutrientId == FDCConst.fdcKcalAtwaterSpecificId)
             ?.amount ??
         fdcNutriment
             .firstWhereOrNull((nutriment) =>
                 nutriment.nutrientId == FDCConst.fdcKcalAtwaterGeneralId)
             ?.amount ??
         fdcNutriment
-            .firstWhereOrNull((nutriment) =>
-                nutriment.nutrientId == FDCConst.fdcKcalAtwaterSpecificId)
+            .firstWhereOrNull(
+                (nutriment) => nutriment.nutrientId == FDCConst.fdcTotalKcalId)
             ?.amount;
 
     final carbsTotal = fdcNutriment
@@ -119,14 +120,32 @@ class MealNutrimentsEntity extends Equatable {
             nutriment.nutrientId == FDCConst.fdcTotalDietaryFiberId)
         ?.amount;
 
+    // Validate nutritional data for consistency and sanity
+    final validatedEnergy = _validateNutrient(energyTotal, 0, 900);
+    final validatedCarbs = _validateNutrient(carbsTotal, 0, 100);
+    final validatedFat = _validateNutrient(fatTotal, 0, 100);
+    final validatedProteins = _validateNutrient(proteinsTotal, 0, 100);
+    final validatedSugar = _validateNutrient(sugarTotal, 0, validatedCarbs);
+    final validatedSaturatedFat = _validateNutrient(saturatedFatTotal, 0, validatedFat);
+    final validatedFiber = _validateNutrient(fiberTotal, 0, validatedCarbs);
+
     return MealNutrimentsEntity(
-        energyKcal100: energyTotal,
-        carbohydrates100: carbsTotal,
-        fat100: fatTotal,
-        proteins100: proteinsTotal,
-        sugars100: sugarTotal,
-        saturatedFat100: saturatedFatTotal,
-        fiber100: fiberTotal);
+        energyKcal100: validatedEnergy,
+        carbohydrates100: validatedCarbs,
+        fat100: validatedFat,
+        proteins100: validatedProteins,
+        sugars100: validatedSugar,
+        saturatedFat100: validatedSaturatedFat,
+        fiber100: validatedFiber);
+  }
+
+  /// Validates a nutrient value to ensure it's within reasonable bounds.
+  /// Returns null if the value is invalid (negative, unrealistic, or inconsistent).
+  static double? _validateNutrient(double? value, double min, double? max) {
+    if (value == null) return null;
+    if (value < min) return null; // Negative or below minimum
+    if (max != null && value > max) return null; // Exceeds maximum
+    return value;
   }
 
   static double? _getValuePerUnit(double? valuePer100) {
