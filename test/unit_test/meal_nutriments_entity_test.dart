@@ -207,6 +207,42 @@ void main() {
         expect(entity.fiber100, null);
       });
 
+      test('should validate sub-nutrients when parent nutrient is missing', () {
+        // When carbs are missing but sugar/fiber are present, validate against max macro limit
+        final fdcNutriments = [
+          FDCFoodNutrimentDTO(
+              nutrientId: FDCConst.fdcTotalSugarId, amount: 50.0),
+          FDCFoodNutrimentDTO(
+              nutrientId: FDCConst.fdcTotalDietaryFiberId, amount: 30.0),
+        ];
+
+        final entity = MealNutrimentsEntity.fromFDCNutriments(fdcNutriments);
+
+        expect(entity.carbohydrates100, null);
+        expect(entity.sugars100, 50.0, 
+            reason: 'Sugar should be valid when carbs missing but value reasonable');
+        expect(entity.fiber100, 30.0,
+            reason: 'Fiber should be valid when carbs missing but value reasonable');
+      });
+
+      test('should reject sub-nutrients exceeding max when parent nutrient is missing', () {
+        // When carbs are missing but sugar/fiber exceed max macro limit, reject them
+        final fdcNutriments = [
+          FDCFoodNutrimentDTO(
+              nutrientId: FDCConst.fdcTotalSugarId, amount: 150.0),
+          FDCFoodNutrimentDTO(
+              nutrientId: FDCConst.fdcTotalDietaryFiberId, amount: 120.0),
+        ];
+
+        final entity = MealNutrimentsEntity.fromFDCNutriments(fdcNutriments);
+
+        expect(entity.carbohydrates100, null);
+        expect(entity.sugars100, null,
+            reason: 'Sugar should be rejected when exceeds max even if carbs missing');
+        expect(entity.fiber100, null,
+            reason: 'Fiber should be rejected when exceeds max even if carbs missing');
+      });
+
       test('should handle edge case: fiber = carbohydrates (valid)', () {
         final fdcNutriments = [
           FDCFoodNutrimentDTO(
@@ -244,17 +280,17 @@ void main() {
     });
 
     group('Real-world FDC data examples', () {
-      test('should handle apple with nonsensical fiber value (issue #222 example)', () {
-        // Simulating the apple data from issue #222 where fiber was 20x weight
+      test('should handle apple with nonsensical sugar and fiber values (issue #222 example)', () {
+        // Simulating the apple data from issue #222 where sugar and fiber were 20x too high
         final fdcNutriments = [
           FDCFoodNutrimentDTO(
               nutrientId: FDCConst.fdcKcalAtwaterSpecificId, amount: 52.0),
           FDCFoodNutrimentDTO(
               nutrientId: FDCConst.fdcTotalCarbsId, amount: 14.0),
           FDCFoodNutrimentDTO(
-              nutrientId: FDCConst.fdcTotalSugarId, amount: 280.0), // 20x error
+              nutrientId: FDCConst.fdcTotalSugarId, amount: 280.0), // 20x error - exceeds carbs
           FDCFoodNutrimentDTO(
-              nutrientId: FDCConst.fdcTotalDietaryFiberId, amount: 280.0), // 20x error
+              nutrientId: FDCConst.fdcTotalDietaryFiberId, amount: 280.0), // 20x error - exceeds carbs
         ];
 
         final entity = MealNutrimentsEntity.fromFDCNutriments(fdcNutriments);
