@@ -89,9 +89,9 @@ void _openEditMealScreen(bool usesImperialUnits) {
   Navigator.of(context).pushNamed(NavigationOptions.editMealRoute,
 ```
 
-**Impact:** Low - Just a placeholder comment
+**Impact:** Unknown - Orphaned TODO comment without description
 
-**Status:** ✅ REMOVED (just a marker)
+**Status:** ❓ NEEDS CLARIFICATION - Ask original developer about intent
 
 ---
 
@@ -102,7 +102,7 @@ void _openEditMealScreen(bool usesImperialUnits) {
 | LoadCalendarDayEvent props | 🔴 CRITICAL | Bug | ✅ FIXED |
 | Dummy user data | 🟠 MEDIUM | Design | 📋 IDENTIFIED |
 | Rating enum | 🟠 MEDIUM | Refactor | 📋 IDENTIFIED |
-| TODO placeholder | 🟡 LOW | Comment | ✅ REMOVED |
+| TODO placeholder | 🟡 LOW | Comment | ❓ ASK DEV |
 
 ---
 
