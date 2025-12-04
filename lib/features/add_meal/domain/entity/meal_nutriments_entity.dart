@@ -7,6 +7,10 @@ import 'package:opennutritracker/features/add_meal/data/dto/fdc/fdc_food_nutrime
 import 'package:opennutritracker/features/add_meal/data/dto/off/off_product_nutriments_dto.dart';
 
 class MealNutrimentsEntity extends Equatable {
+  // Validation thresholds for FDC data
+  static const double _maxEnergyKcalPer100g = 900.0;
+  static const double _maxMacroPer100g = 100.0;
+  
   final double? energyKcal100;
 
   final double? carbohydrates100;
@@ -76,17 +80,18 @@ class MealNutrimentsEntity extends Equatable {
       List<FDCFoodNutrimentDTO> fdcNutriment) {
     // FDC Food nutriments can have different values for Energy [Energy,
     // Energy (Atwater General Factors), Energy (Atwater Specific Factors)]
+    // Prefer Atwater Specific Factors as they are more accurate for nutrition tracking
     final energyTotal = fdcNutriment
-            .firstWhereOrNull(
-                (nutriment) => nutriment.nutrientId == FDCConst.fdcTotalKcalId)
+            .firstWhereOrNull((nutriment) =>
+                nutriment.nutrientId == FDCConst.fdcKcalAtwaterSpecificId)
             ?.amount ??
         fdcNutriment
             .firstWhereOrNull((nutriment) =>
                 nutriment.nutrientId == FDCConst.fdcKcalAtwaterGeneralId)
             ?.amount ??
         fdcNutriment
-            .firstWhereOrNull((nutriment) =>
-                nutriment.nutrientId == FDCConst.fdcKcalAtwaterSpecificId)
+            .firstWhereOrNull(
+                (nutriment) => nutriment.nutrientId == FDCConst.fdcTotalKcalId)
             ?.amount;
 
     final carbsTotal = fdcNutriment
@@ -119,14 +124,39 @@ class MealNutrimentsEntity extends Equatable {
             nutriment.nutrientId == FDCConst.fdcTotalDietaryFiberId)
         ?.amount;
 
+    // Validate nutritional data for consistency and sanity
+    final validatedEnergy = _validateNutrient(energyTotal, 0, _maxEnergyKcalPer100g);
+    final validatedCarbs = _validateNutrient(carbsTotal, 0, _maxMacroPer100g);
+    final validatedFat = _validateNutrient(fatTotal, 0, _maxMacroPer100g);
+    final validatedProteins = _validateNutrient(proteinsTotal, 0, _maxMacroPer100g);
+    // Validate sub-nutrients against their parent nutrients (only if parent is valid)
+    final validatedSugar = validatedCarbs != null 
+        ? _validateNutrient(sugarTotal, 0, validatedCarbs)
+        : _validateNutrient(sugarTotal, 0, _maxMacroPer100g);
+    final validatedSaturatedFat = validatedFat != null
+        ? _validateNutrient(saturatedFatTotal, 0, validatedFat)
+        : _validateNutrient(saturatedFatTotal, 0, _maxMacroPer100g);
+    final validatedFiber = validatedCarbs != null
+        ? _validateNutrient(fiberTotal, 0, validatedCarbs)
+        : _validateNutrient(fiberTotal, 0, _maxMacroPer100g);
+
     return MealNutrimentsEntity(
-        energyKcal100: energyTotal,
-        carbohydrates100: carbsTotal,
-        fat100: fatTotal,
-        proteins100: proteinsTotal,
-        sugars100: sugarTotal,
-        saturatedFat100: saturatedFatTotal,
-        fiber100: fiberTotal);
+        energyKcal100: validatedEnergy,
+        carbohydrates100: validatedCarbs,
+        fat100: validatedFat,
+        proteins100: validatedProteins,
+        sugars100: validatedSugar,
+        saturatedFat100: validatedSaturatedFat,
+        fiber100: validatedFiber);
+  }
+
+  /// Validates a nutrient value to ensure it's within reasonable bounds.
+  /// Returns null if the value is invalid (negative, unrealistic, or inconsistent).
+  static double? _validateNutrient(double? value, double min, double? max) {
+    if (value == null) return null;
+    if (value < min) return null; // Negative or below minimum
+    if (max != null && value > max) return null; // Exceeds maximum
+    return value;
   }
 
   static double? _getValuePerUnit(double? valuePer100) {
