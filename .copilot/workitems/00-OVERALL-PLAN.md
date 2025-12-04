@@ -1,13 +1,23 @@
 # OpenNutriTracker - Overall Work Plan
 
-**Last Updated:** 2025-12-04 01:55 UTC  
+**Last Updated:** 2025-12-03 21:30 UTC  
 **Source:** GitHub Issues Analysis from simonoppowa/OpenNutriTracker  
 **Total Open Issues:** 136 issues tracked  
-**Status:** Code verified - all Priority 1-2 issues confirmed fixed in codebase
+**Status:** 🔄 Branch reorganization completed - fixes on erikpt/bugfixes branch
 
 ---
 
-## ✅ COMPLETED WORK (Previous Sessions) - VERIFIED ✅
+## ⚠️ REPOSITORY STATUS UPDATE (2025-12-03)
+
+**Action Taken:** Moved accidental main branch merges to erikpt/bugfixes
+- Commits moved: PR #3, #4, #5
+- Main branch: Reset to clean state (2b893cb)
+- Bugfixes branch: Updated with reorganized commits
+- See `07-BRANCH-REORGANIZATION-2025-12-03.md` for details
+
+---
+
+## ✅ COMPLETED WORK (Previous Sessions) - ON MAIN ✅
 
 ### Priority 1: Critical Bugs - 100% COMPLETE ✅
 1. ✅ **#292** - Data loss after 1 year (ISO 8601 + migration)
@@ -15,7 +25,7 @@
 3. ✅ **#220, #262, #239** - Keyboard focus loss (removed setState)
 4. ✅ **#267** - Custom meals search (name validation + code search)
 
-### Priority 2: Input Validation Suite - 100% COMPLETE ✅ **[Verified 2025-12-04]**
+### Priority 2: Input Validation Suite - 100% COMPLETE ✅
 5. ✅ **#217, #216** - Height/weight negative value prevention
 6. ✅ **#253** - Imperial weights conversion fix
 7. ✅ **#244** - Decimal weight values (confirmed)
@@ -33,19 +43,31 @@
     - Location: `lib/features/edit_meal/presentation/edit_meal_screen.dart:276-288`
     - Implementation: Name field validation (not empty, must contain letter)
 
-### Priority 3: Data Quality - Partial Complete ⚠️ **[Verified 2025-12-04]**
-15. ✅ **#222** - FDC import validation (partial - sugar≤carbs, saturatedFat≤fat)
-16. ✅ **#213** - Nonsensical nutritional info validation
-    - Location: `lib/features/add_meal/domain/entity/meal_nutriments_entity.dart:122-147`
-    - Implementation: `_validateNutrient()` with min/max bounds checking
+### Priority 4: UX Quick Wins - COMPLETE ✅
+15. ✅ **#243** - "Next" key on height field
+16. ✅ **#288, #242** - Weight field error message fix
+17. ✅ **#291** - Extended recent list to 500
 
-### Priority 4: UX Quick Wins - Partial Complete ⚠️
-17. ✅ **#243** - "Next" key on height field
-18. ✅ **#288, #242** - Weight field error message fix
-19. ✅ **#291** - Extended recent list to 500
+**Total Issues Verified on Main:** 17 from previous work sessions  
 
-**Total Issues Addressed:** 21 from previous work sessions  
-**Verification Status:** All fixes confirmed present in codebase (2025-12-04)
+---
+
+## 🔄 IN PROGRESS - ON ERIKPT/BUGFIXES BRANCH 🔄
+
+### Priority 1: Critical Bugs - PENDING MERGE
+- ⏳ **#182** - Invalid intake displayed for some days in Diary (0 kcal shown) - PR #3
+  - Status: Implemented on bugfixes branch
+  - Effort: Medium (2-3 hours)
+
+### Priority 3: Data Quality - PENDING MERGE
+- ⏳ **#222** - FDC import validation (sugar≤carbs, saturatedFat≤fat) - PR #4
+  - Status: Implemented on bugfixes branch with enhanced validation
+- ⏳ **#213** - Nonsensical nutritional info validation - PR #4
+  - Location: `lib/features/add_meal/domain/entity/meal_nutriments_entity.dart`
+  - Implementation: `_validateNutrient()` with min/max bounds checking
+
+**Status:** Ready for review and merge to main  
+**Note:** PR #5 (revert) was also moved - may want to reconsider if these fixes are solid
 
 ---
 
@@ -55,8 +77,11 @@
 - [ ] **#182** - Invalid intake displayed for some days in Diary (0 kcal shown)
   - Impact: High - Data display corruption
   - Effort: Medium (2-3 hours)
+---
 
-### UI/UX Blocking Issues  
+## 🔥 PRIORITY 1: CRITICAL BUGS (Remaining)
+
+### Data Integrity Issues
 - [ ] **#156** - Add button behind phone navigation bar
   - Impact: High - Can't add items on some devices
   - Effort: Low (30-60 min)
@@ -70,12 +95,12 @@
 ## 🎯 PRIORITY 2: DATA QUALITY & SEARCH (High Value)
 
 ### Food Database Issues
-- [ ] **#252** - Products missing from FDC despite having data
+- ⏳ **#252** - Products missing from FDC despite having data (ON BUGFIXES BRANCH)
   - Impact: High - Users can't find items
   - Effort: Medium (2-4 hours)
   - Related: #92, #157
   
-- [ ] **#222** - FDC import issues (missing energy, 20x fiber) 
+- ⏳ **#222** - FDC import issues (ON BUGFIXES BRANCH) 
   - Impact: High - Bad data in app
   - Status: Partially fixed, needs completion
   - Effort: Medium (2-3 hours)
