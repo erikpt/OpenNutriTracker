@@ -197,9 +197,9 @@ class MealDetailBottomSheet extends StatelessWidget {
     // Refresh Home Page
     locator<HomeBloc>().add(const LoadItemsEvent());
 
-    // Refresh Diary Page
+    // Refresh Diary Page - Pass the day to preserve selection (#154)
     locator<DiaryBloc>().add(const LoadDiaryYearEvent());
-    locator<CalendarDayBloc>().add(RefreshCalendarDayEvent());
+    locator<CalendarDayBloc>().add(RefreshCalendarDayEvent(dayToRefresh: day));
 
     // Show snackbar and return to dashboard
     ScaffoldMessenger.of(context).showSnackBar(
