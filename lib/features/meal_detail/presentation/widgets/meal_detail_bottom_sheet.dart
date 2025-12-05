@@ -241,11 +241,11 @@ class MealDetailBottomSheet extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(S.of(context).warningLabel),
-          content: Text('This food has already been added to this meal today. Add it again?'),
+          content: Text(S.of(context).duplicateMealDialogContent),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: Text(S.of(context).cancelLabel),
+              child: Text(S.of(context).dialogCancelLabel),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true),

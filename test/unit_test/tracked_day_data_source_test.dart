@@ -131,7 +131,6 @@ void main() {
 
     test('returns empty list when no days in range', () async {
       final day1 = DateTime.utc(2024, 1, 1);
-      final day2 = DateTime.utc(2024, 1, 10);
 
       await dataSource.saveTrackedDay(TrackedDayDBO(
         day: day1,

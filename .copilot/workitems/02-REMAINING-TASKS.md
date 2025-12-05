@@ -1,5 +1,24 @@
 # 🔄 REMAINING TASKS - Prioritized
 
+## ✅ COMPLETED (Verified 2025-12-04)
+
+### #212 - Duplicate Food Additions ✅
+**Status:** COMPLETE - Implemented in meal_detail_bottom_sheet.dart
+- `_checkForDuplicateMeal()` method
+- Warning dialog with localized strings
+
+### #229 - API Rate Limiting ✅
+**Status:** COMPLETE - Implemented in fdc_data_source.dart
+- `_enforceRateLimit()` with 100ms minimum interval
+- Applied to all API calls
+
+### #125 - Search Quality ✅
+**Status:** COMPLETE - Implemented in fdc_data_source.dart
+- `_calculateRelevanceScore()` with weighted scoring
+- Exact match boosting, word coverage scoring
+
+---
+
 ## Priority 2B: Remaining Input Validation (Quick Wins)
 
 ### #208 - Activity Indicator After Removal
@@ -7,10 +26,7 @@
 **Files:** lib/features/home/presentation/bloc/home_bloc.dart  
 **Effort:** Low (1-2 hours)
 
-### #212 - Duplicate Food Additions
-**Problem:** Same food can be added multiple times without warning  
-**Solution:** Check existing intakes, offer to merge or warn  
-**Effort:** Medium (2-4 hours)
+### ~~#212 - Duplicate Food Additions~~ ✅ COMPLETE
 
 ### #213 - Nonsensical Nutritional Info
 **Problem:** App accepts illogical data (sugar > carbs, etc.)  
@@ -101,8 +117,8 @@
 
 ## Priority 6: Technical Debt
 
-- Remove dummy data from user_data_source.dart (5 min)
-- Make enum class for rating (30 min)
+- ~~Remove dummy data from user_data_source.dart~~ (identified, needs design decision)
+- ~~Make enum class for rating~~ ✅ COMPLETE (DayRating enum)
 - Group activities by effort (1-2 hours)
 - Update default totalQuantity (5 min)
 - Translation keys for fdc_const (30 min)
@@ -115,7 +131,7 @@
 - #280 - Scanner on Android 10 (research required)
 - #282 - German localization (30 min)
 - #290 - Update activity compendium (1-2 hours)
-- #229 - API rate limiting (2-3 hours)
+- ~~#229 - API rate limiting~~ ✅ COMPLETE
 - #263 - Indian food database (research + 4-8 hours)
 - #266, #205, #272 - Documentation/deployment issues
 
@@ -123,11 +139,11 @@
 
 ## Effort Estimates
 
-**Quick Wins (< 1 hour):** #243, #288, #291, dummy data removal  
+**Quick Wins (< 1 hour):** #243, #288, #291, ~~dummy data removal~~  
 **Low Effort (1-2 hours):** #208, #215, technical debt items  
-**Medium Effort (2-4 hours):** #212, #213, #252, #281, #232, #284  
+**Medium Effort (2-4 hours):** ~~#212~~, #213, #252, #281, #232, #284  
 **High Effort (4+ hours):** #222, #237, #279, #263  
 
 ---
 
-Last updated: 2025-12-02 23:45 UTC
+Last updated: 2025-12-04 (Session 4)
