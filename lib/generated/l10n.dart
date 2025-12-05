@@ -110,6 +110,26 @@ class S {
     );
   }
 
+  /// `Warning`
+  String get warningLabel {
+    return Intl.message(
+      'Warning',
+      name: 'warningLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This food has already been added to this meal today. Add it again?`
+  String get duplicateMealDialogContent {
+    return Intl.message(
+      'This food has already been added to this meal today. Add it again?',
+      name: 'duplicateMealDialogContent',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create custom meal item?`
   String get createCustomDialogTitle {
     return Intl.message(
