@@ -170,7 +170,7 @@ Future<void> initLocator() async {
     () => AddUserUsecase(locator()),
   );
   locator.registerLazySingleton<SearchProductsUseCase>(
-    () => SearchProductsUseCase(locator()),
+    () => SearchProductsUseCase(locator(), locator()),
   );
   locator.registerLazySingleton<SearchProductByBarcodeUseCase>(
     () => SearchProductByBarcodeUseCase(locator()),
