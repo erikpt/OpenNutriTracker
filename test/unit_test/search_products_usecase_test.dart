@@ -85,6 +85,69 @@ void main() {
       expect(result, [offApiResult]);
       verifyNever(getIntakeUsecase.getRecentIntake());
     });
+
+    test('matches custom meals by brand case-insensitively', () async {
+      final customBrandMatch = MealEntity(
+          code: 'custom-brand',
+          name: 'Snack',
+          brands: 'Almond Co',
+          thumbnailImageUrl: null,
+          mainImageUrl: null,
+          url: null,
+          mealQuantity: null,
+          mealUnit: 'g',
+          servingQuantity: null,
+          servingUnit: 'g',
+          servingSize: null,
+          nutriments: MealNutrimentsEntity.empty(),
+          source: MealSourceEntity.custom);
+      final fdcApiResult = _meal(
+          code: 'fdc-api',
+          name: 'Almond Product',
+          source: MealSourceEntity.fdc);
+
+      when(productsRepository.getSupabaseFDCFoodsByString('ALMOND'))
+          .thenAnswer((_) async => [fdcApiResult]);
+      when(getIntakeUsecase.getRecentIntake())
+          .thenAnswer((_) async => [_intake('i1', customBrandMatch)]);
+
+      final result = await useCase.searchFDCFoodByString('ALMOND');
+
+      expect(result, [customBrandMatch, fdcApiResult]);
+    });
+
+    test('deduplicates custom meals when code is missing by fallback name key',
+        () async {
+      final customNoCode = MealEntity(
+          code: null,
+          name: 'Peanut Butter',
+          brands: null,
+          thumbnailImageUrl: null,
+          mainImageUrl: null,
+          url: null,
+          mealQuantity: null,
+          mealUnit: 'g',
+          servingQuantity: null,
+          servingUnit: 'g',
+          servingSize: null,
+          nutriments: MealNutrimentsEntity.empty(),
+          source: MealSourceEntity.custom);
+      final offApiResult = _meal(
+          code: 'off-api',
+          name: 'Peanut Product',
+          source: MealSourceEntity.off);
+
+      when(productsRepository.getOFFProductsByString('peanut'))
+          .thenAnswer((_) async => [offApiResult]);
+      when(getIntakeUsecase.getRecentIntake()).thenAnswer((_) async => [
+            _intake('i1', customNoCode),
+            _intake('i2', customNoCode),
+          ]);
+
+      final result = await useCase.searchOFFProductsByString('peanut');
+
+      expect(result, [customNoCode, offApiResult]);
+    });
   });
 }
 
