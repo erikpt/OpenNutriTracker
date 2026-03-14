@@ -1,18 +1,17 @@
 # Remaining Tasks — Prioritized
 
-**Last Updated:** 2026-03-11 (session 3)
+**Last Updated:** 2026-03-14 (session 4)
 
 ---
 
-## Priority 1: Bugs (Fix Next)
+## Priority 1: Bugs
 
 ### ~~#213 — Nonsensical nutritional info~~ ✅ DONE
-Validation added in `edit_meal_screen.dart` `_onSavePressed`: macros ≤ base qty, total macros ≤ base×1.05, kcal ≤ base×9.
+Validation in `edit_meal_screen.dart` `_onSavePressed`: macros ≤ base qty, total macros ≤ base×1.05, kcal ≤ base×9.
 
-### #182 — Diary shows 0 kcal for some days
-**Problem:** Date comparison bug causes some logged days to show zero
-**File:** `lib/core/data/data_source/tracked_day_data_source.dart`
-**Effort:** Low-Medium (investigate first)
+### ~~#182 — Diary shows 0 kcal for some days~~ ✅ DONE
+`DayInfoWidget` now computes kcal/macros from actual intake lists (not stale cache).
+`CalendarDayBloc` reconciles `TrackedDayDBO` cache on each day load — calendar dot colors self-heal.
 
 ---
 
@@ -22,21 +21,20 @@ Validation added in `edit_meal_screen.dart` `_onSavePressed`: macros ≤ base qt
 Macro totals shown per meal section header + compact per-item badge in intake cards.
 
 ### ~~#277 — Disable activity tracking option~~ ✅ DONE
-Settings toggle persisted via `ConfigDBO.showActivityTracking` → `HomeLoadedState.showActivityTracking`.
-`ActivityVerticalList` conditionally shown on home page based on setting.
+Settings `SwitchListTile` toggle; persisted via `ConfigDBO.showActivityTracking` (HiveField 9).
+`ActivityVerticalList` conditionally rendered on home page.
 
-### #267/#174 — Custom meals not findable before first use
-**Problem:** Custom meals only appear in "Recently Added" after being logged once
-**Fix:** Persist custom meal templates in separate Hive box; include in recent search
-**Effort:** Medium (3-4 hours)
+### ~~#232 — Direct macro input for custom meals~~ ✅ DONE
+`SegmentedButton` toggle (Per Xg/ml | Total) in edit meal screen.
+In Total mode, values are converted to per-base-qty on save using meal quantity.
+
+### ~~#267/#174 — Custom meals not findable before first use~~ ✅ DONE
+Custom meals saved to `CustomMealBox` (`Box<MealDBO>`) when edit-meal flow completes.
+`RecentMealBloc` merges templates + logged intakes, deduplicating by code/name.
 
 ---
 
 ## Priority 3: Medium Features
-
-### #232 — Direct macro input for custom meals
-**Problem:** Edit meal screen requires per-100g values; no total macro input option
-**Effort:** Medium (3-4 hours)
 
 ### #284 — Weekly weight goal
 **Effort:** Medium (3-4 hours)
