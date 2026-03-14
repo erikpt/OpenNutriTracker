@@ -293,7 +293,7 @@ class _EditMealScreenState extends State<EditMealScreen> {
     );
   }
 
-  void _onSavePressed(bool usesImperialUnits) {
+  Future<void> _onSavePressed(bool usesImperialUnits) async {
     try {
       // Validate that custom meals have a name
       if (_nameTextController.text.trim().isEmpty) {
@@ -396,6 +396,12 @@ class _EditMealScreenState extends State<EditMealScreen> {
           fatText,
           proteinText);
 
+      // Persist custom meal template (#267)
+      if (newMealEntity.source == MealSourceEntity.custom) {
+        await _editMealBloc.saveCustomMeal(newMealEntity);
+      }
+
+      if (!mounted) return;
       Navigator.of(context).pushNamedAndRemoveUntil(
           NavigationOptions.mealDetailRoute,
           ModalRoute.withName(NavigationOptions.addMealRoute),
@@ -405,6 +411,7 @@ class _EditMealScreenState extends State<EditMealScreen> {
       log.warning("Error while creating new meal entity");
       Sentry.captureException(exception, stackTrace: stacktrace);
 
+      if (!mounted) return;
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(S.of(context).errorMealSave)));
     }
