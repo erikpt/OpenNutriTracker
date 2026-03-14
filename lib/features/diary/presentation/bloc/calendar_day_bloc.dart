@@ -71,6 +71,28 @@ class CalendarDayBloc extends Bloc<CalendarDayEvent, CalendarDayState> {
 
     final trackedDayEntity = await _getTrackedDayUsecase.getTrackedDay(day);
 
+    // #182: Reconcile stale cache if actual intake total differs
+    if (trackedDayEntity != null) {
+      final allIntakes = [
+        ...breakfastIntakeList,
+        ...lunchIntakeList,
+        ...dinnerIntakeList,
+        ...snackIntakeList
+      ];
+      final actualKcal =
+          allIntakes.fold(0.0, (sum, i) => sum + i.totalKcal);
+      if ((trackedDayEntity.caloriesTracked - actualKcal).abs() > 0.5) {
+        final actualCarbs =
+            allIntakes.fold(0.0, (sum, i) => sum + i.totalCarbsGram);
+        final actualFat =
+            allIntakes.fold(0.0, (sum, i) => sum + i.totalFatsGram);
+        final actualProtein =
+            allIntakes.fold(0.0, (sum, i) => sum + i.totalProteinsGram);
+        await _addTrackedDayUsecase.reconcileDayTracked(
+            day, actualKcal, actualCarbs, actualFat, actualProtein);
+      }
+    }
+
     emit(CalendarDayLoaded(
         trackedDayEntity,
         userActivities,

@@ -239,4 +239,18 @@ class TrackedDayDataSource {
       updateDay.save();
     }
   }
+
+  /// Overwrite tracked values with recomputed actuals to fix stale cache (#182)
+  Future<void> reconcileCaloriesAndMacrosTracked(DateTime day,
+      double calories, double carbs, double fat, double protein) async {
+    log.fine('Reconciling tracked day calories and macros');
+    final updateDay = await getTrackedDay(day);
+    if (updateDay != null) {
+      updateDay.caloriesTracked = calories;
+      updateDay.carbsTracked = carbs;
+      updateDay.fatTracked = fat;
+      updateDay.proteinTracked = protein;
+      updateDay.save();
+    }
+  }
 }
