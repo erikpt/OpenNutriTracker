@@ -1,135 +1,68 @@
-# 🎯 QUICK REFERENCE - Current State at a Glance
+# Quick Reference — OpenNutriTracker
 
-**As of:** March 13, 2026  
-**Working Branch:** erikpt/fix-issue-263-keyboard-dismissal (active PR #313)
-
----
-
-## 📍 CURRENT BRANCH STATUS
-
-### erikpt/fix-issue-263-keyboard-dismissal (ACTIVE PR #313)
-```
-Status: 🟡 BRANCH EXISTS — NO CODE CHANGES YET
-Base: erikpt/bugfixes (all prior fixes included)
-```
-
-**What's on this branch (inherited from erikpt/bugfixes):**
-- ✅ PR #6: Issue #154 - Diary navigation fix (MERGED)
-- ✅ PR #7: Technical debt fixes (MERGED)
-- ✅ All validation, critical bugs, UX fixes
-- 🔴 **#263 keyboard dismissal — not yet implemented** (this branch's purpose)
-
-### 🔴 ACTIVE BUG: use_build_context_synchronously (5 violations)
-```
-File: lib/features/meal_detail/presentation/widgets/meal_detail_bottom_sheet.dart
-Lines: 183, 190, 205, 206, 207
-Risk: Widget unmount crash between async gap and BuildContext use
-Fix needed: Add `if (!context.mounted) return;` after await _checkForDuplicate()
-```
-
-### erikpt/bugfixes / main branch
-```
-PR #7 merged. 24+ issues complete. Stable baseline.
-```
+**Branch:** `erikpt/fix-issue-263-keyboard-dismissal`
+**PR:** #313 → simonoppowa/OpenNutriTracker
+**Last Updated:** 2026-03-11
 
 ---
 
-## ✅ WHAT'S COMPLETE
+## ✅ Completed Issues (this branch)
 
-### Critical Bugs & Input Validation (All Done)
-| Issue | Title | Status |
-|:---:|:---|:---:|
-| #292 | Data loss after 1 year | ✅ |
-| #236, #259 | Negative macro values | ✅ |
-| #220, #262, #239 | Keyboard focus loss | ✅ |
-| #267 | Custom meals search | ✅ |
-| #217, #216 | Height/weight validation | ✅ |
-| #253, #244 | Weight conversion & decimals | ✅ |
-| #209, #210 | Quantity validation | ✅ |
-| #211, #207 | Name & date validation | ✅ |
-| #208 | Activity indicator after removal | ✅ |
-| #215 | Missing required info | ✅ |
-| #243 | "Next" key on height field | ✅ |
-| #288, #242 | Weight error message | ✅ |
-| #291 | Recent list extended to 500 | ✅ |
+### Keyboard / Focus
+- **#262/#239/#220** — Keyboard dismissal (GestureDetector + keyboardDismissBehavior in add_meal_screen.dart)
 
-### Recently Completed (Sessions 3-4)
-| Issue | Title | Status |
-|:---:|:---|:---:|
-| #154 | Diary navigation after future entry | ✅ PR #6 Merged |
-| #229 | API rate limiting | ⚠️ NOT IN CODE (possibly reverted in PR #5) |
-| #125 | Search quality improvements | ⚠️ NOT IN CODE (possibly reverted in PR #5) |
-| #212 | Duplicate meal detection | ✅ Implemented |
-| — | DayRating enum (tech debt) | ✅ PR #7 |
-| — | LoadCalendarDayEvent props bug | ✅ PR #7 |
-| — | Analyzer errors reduced (PR #7) | ⚠️ 19 info-level remain |
+### Input Validation
+- **#199** — Future birth dates blocked (`lastDate: DateTime.now()` in onboarding + profile)
+- **#200/#201** — Zero weight/height prevented (minWeight 10kg/20lbs, minHeight 50cm/1ft)
+- **#204** — Height > 15ft/457cm blocked (cap in set_height_dialog.dart)
+- **#207** — Future dates blocked in diary calendar (`lastDay: widget.currentDate`)
+- **#208** — Activity indicator removed after deletion (`LoadItemsEvent()` in home_bloc.dart)
+- **#209/#210** — Zero/excessive quantity blocked in meal_detail_bottom_sheet (> 0, ≤ 10000)
+- **#211** — Meal name must contain a letter (edit_meal_screen.dart)
+- **#212** — Duplicate meal warning dialog (meal_detail_bottom_sheet.dart)
+- **#214** — Custom food name required (edit_meal_screen.dart)
+- **#216/#217** — Negative weight/height prevented (minValue clamped)
+- **#244** — Decimal weight supported (divisions: 1000 in set_weight_dialog.dart)
+- **#253** — Imperial weight min set (20 lbs)
 
----
+### Data Quality
+- **#252** — FDC Atwater energy fallback order: 1008 → 958 (Specific) → 957 (General)
+- **#306** — OFF search crash fixed (nullable nutriments in OFFProductDTO)
 
-## 🔥 HIGH PRIORITY REMAINING
+### Features / UX
+- **#118/#143/#151** — Yoga (2.5 MET), HIIT (8.0 MET), calisthenics/squats (8.0 MET) added
+- **#282** — German l10n for unit system names
+- **#291** — Recent meals list extended to 500
+- **#309** — Exceeded kcal shown in red on dashboard ("X kcal exceeded")
 
-### Immediate (Active Branch #313)
-- [ ] **#263** - Keyboard dismissal — `GestureDetector` + `FocusScope.unfocus()` or `ScrollView.keyboardDismissBehavior`
-- [ ] **BUG** - Fix `use_build_context_synchronously` in `meal_detail_bottom_sheet.dart` (5 violations, crash risk)
-
-### Technical Debt
-- [ ] Localize hardcoded validation strings in `set_weight_dialog.dart`, `set_height_dialog.dart`, `meal_detail_bottom_sheet.dart`, `edit_meal_screen.dart`
-- [ ] Replace `assert(x != null)` with proper null handling in `home_bloc.dart` lines 160/163
-- [ ] Investigate/re-implement #229 (rate limiting) and #125 (search quality) — code not present
-- [ ] Lower OFF timeout from 20s (`off_data_source.dart` TODO)
-
-### High Impact Features
-- [ ] **#279** - Multi-ingredient meals ⭐ MOST REQUESTED
-- [ ] **#222** - FoodData Central import issues (reverted in PR #5 — needs re-implementation)
-- [ ] **#284** - Weekly weight goals
-- [ ] **#280** - Meal templates/favorites
-- [ ] **#126** - Search history (Low effort)
+### Bug Fixes
+- **assert→null guard** — home_bloc.dart updateIntakeItem (crash fix)
+- **use_build_context_synchronously** — meal_detail_bottom_sheet.dart (crash fix)
 
 ---
 
-## 📚 DOCUMENTATION ROADMAP
+## 🔄 Remaining High-Priority Items
 
-**START HERE:** `README.md` - Overview of all work items
-
-**Details by Topic:**
-- Latest updates → `10-STATUS-UPDATE-2025-12-04.md` ⭐
-- Overall strategy → `00-OVERALL-PLAN.md`
-- Current hot issues → `06-CURRENT-STATUS-2025-12-03.md`
-- Open work items → `02-REMAINING-TASKS.md`
-- Technical debt → `09-TECHNICAL-DEBT-FIXES.md`
-
----
-
-## 💡 QUICK DECISIONS
-
-**Q: What should I work on next?**  
-A: First fix the `use_build_context_synchronously` crash bug in `meal_detail_bottom_sheet.dart`, then implement **#263 (Keyboard dismissal)** on this branch.
-
-**Q: How much work is completed?**  
-A: ~22+ verified issues done (ALL critical bugs, input validation). #229 and #125 are claimed complete but code is absent — investigation needed.
-
-**Q: Are there any open PRs?**  
-A: Yes — PR #313 (this branch, #263 keyboard dismissal — not yet started).
+| # | Title | Effort |
+|---|-------|--------|
+| #213 | Nonsensical nutritional info accepted (sugar > carbs, etc.) | Medium |
+| #182 | Diary shows 0 kcal for some days (date range bug) | Medium |
+| #235 | Display macros per food item/meal | Low |
+| #267/#174 | Custom meals searchable without prior add | Medium |
+| #277 | Option to disable activity tracking | Medium |
+| #232 | Direct macro input for custom meals | Medium |
+| #279 | Multi-ingredient meal composition | High |
+| #222 | FDC import validation (reverted in PR #5) | High |
 
 ---
 
-## 🔧 QUICK COMMANDS
+## ⚠️ l10n Procedure (cannot run generator)
 
-```bash
-# Use FVM for correct Flutter version
-fvm flutter analyze    # Run analyzer
-fvm flutter test       # Run tests
-fvm flutter pub get    # Get dependencies
+New l10n keys must be manually added to **5 files**:
+1. `lib/l10n/intl_en.arb`
+2. `lib/l10n/intl_de.arb`
+3. `lib/l10n/intl_tr.arb`
+4. `lib/generated/l10n.dart` (add getter method)
+5. `lib/generated/intl/messages_en.dart`, `messages_de.dart`, `messages_tr.dart` (add to map)
 
-# Branch operations
-git checkout erikpt/bugfixes           # Switch to working branch
-git checkout erikpt/fix-technical-debt # Current feature branch
-
-# Create PR with GitHub CLI
-gh pr create --base erikpt/bugfixes --head <branch> --title "title"
-```
-
----
-
-**Last Updated:** 2026-03-13  
-**Questions?** See detailed docs in `.copilot/workitems/`
+**Why:** `flutter gen-l10n` requires `flutter: generate: true` in pubspec (not set). `intl_utils:generate` fails due to `intl` version conflict between app (`^0.19.0`) and flutter_localizations SDK (`0.20.2`).

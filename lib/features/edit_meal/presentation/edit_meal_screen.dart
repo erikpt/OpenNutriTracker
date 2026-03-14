@@ -287,6 +287,46 @@ class _EditMealScreenState extends State<EditMealScreen> {
         return;
       }
 
+      // Validate nutritional consistency (#213)
+      final baseQty =
+          double.tryParse(_baseQuantityTextController.text) ?? 100.0;
+      final enteredKcal = double.tryParse(_kcalTextController.text);
+      final enteredCarbs = double.tryParse(_carbsTextController.text);
+      final enteredFat = double.tryParse(_fatTextController.text);
+      final enteredProtein = double.tryParse(_proteinTextController.text);
+
+      for (final entry in {
+        'Carbs': enteredCarbs,
+        'Fat': enteredFat,
+        'Protein': enteredProtein,
+      }.entries) {
+        if (entry.value != null && entry.value! > baseQty) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                  '${entry.key} cannot exceed base quantity (${baseQty}g/ml)')));
+          return;
+        }
+      }
+
+      if (enteredCarbs != null &&
+          enteredFat != null &&
+          enteredProtein != null) {
+        final totalMacros = enteredCarbs + enteredFat + enteredProtein;
+        if (totalMacros > baseQty * 1.05) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                  'Total macros (${totalMacros.toStringAsFixed(1)}g) exceed base quantity (${baseQty.toStringAsFixed(0)}g)')));
+          return;
+        }
+      }
+
+      if (enteredKcal != null && enteredKcal > baseQty * 9) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text('Kcal value seems too high for ${baseQty.toStringAsFixed(0)}g/ml')));
+        return;
+      }
+
       // Convert meal size back to metric units if necessary
       final mealQuantity = usesImperialUnits
           ? _convertToMetric(

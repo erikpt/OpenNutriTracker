@@ -1,149 +1,75 @@
-# 🔄 REMAINING TASKS - Prioritized
+# Remaining Tasks — Prioritized
 
-## ✅ COMPLETED (Verified 2025-12-04)
-
-### #212 - Duplicate Food Additions ✅
-**Status:** COMPLETE - Implemented in meal_detail_bottom_sheet.dart
-- `_checkForDuplicateMeal()` method
-- Warning dialog with localized strings
-
-### #229 - API Rate Limiting ✅
-**Status:** COMPLETE - Implemented in fdc_data_source.dart
-- `_enforceRateLimit()` with 100ms minimum interval
-- Applied to all API calls
-
-### #125 - Search Quality ✅
-**Status:** COMPLETE - Implemented in fdc_data_source.dart
-- `_calculateRelevanceScore()` with weighted scoring
-- Exact match boosting, word coverage scoring
+**Last Updated:** 2026-03-11
 
 ---
 
-## Priority 2B: Remaining Input Validation (Quick Wins)
+## Priority 1: Bugs (Fix Next)
 
-### #208 - Activity Indicator After Removal
-**Problem:** Activity indicator stays visible after removing activity  
-**Files:** lib/features/home/presentation/bloc/home_bloc.dart  
-**Effort:** Low (1-2 hours)
-
-### ~~#212 - Duplicate Food Additions~~ ✅ COMPLETE
-
-### #213 - Nonsensical Nutritional Info
-**Problem:** App accepts illogical data (sugar > carbs, etc.)  
-**Solution:** Add consistency validation rules  
-**Effort:** Medium (2-4 hours)
-
-### #215 - Missing Required Info Blocking
-**Problem:** App may block saving with complete info  
-**Solution:** Review and fix validation logic  
-**Effort:** Low (investigate first)
-
----
-
-## Priority 3: Data Quality Issues (High Impact)
-
-### #222 - FoodData Central Import Issues ⚠️
-**Problem:** 
-- Missing energy values
-- Fiber weights 20x too high
-- Bad data from FDC API
-
-**Solution:**
-- Add validation on import (sugar < carbs, saturatedFat < fat)
-- Sanity checks (total macros < 100g per 100g)
-- Log problematic items
-- Handle missing data gracefully
-
-**Files:** 
-- lib/features/add_meal/data/data_sources/fdc_data_source.dart
-- lib/features/add_meal/data/repository/products_repository.dart
-
-**Effort:** High (4-8 hours)
-
-### #252 - Products Missing from FDC
-**Problem:** Some products don't appear in FDC results  
-**Solution:** Investigate API query parameters  
-**Effort:** Medium (2-4 hours)
-
-### #288, #242 - Weight Field Error Message
-**Problem:** Weight field shows "Invalid height" error  
-**Solution:** Fix error message mapping  
-**Effort:** Low (30 min)
-
----
-
-## Priority 4: UX Improvements
-
-### #243 - "Next" Key on Height Field
-**Problem:** Height field doesn't use "next" keyboard action  
-**Solution:** Change TextInputAction to next  
-**Effort:** Low (15 min)
-
-### #281 - Direct Weight Update on Landing
-**Problem:** Can't update weight from main screen  
-**Solution:** Add weight update widget to home  
+### #213 — Nonsensical nutritional info
+**Problem:** App accepts sugar > carbs, saturatedFat > fat, total macros > 100g/100g
+**File:** `lib/features/add_meal/domain/entity/meal_nutriments_entity.dart`
+**Fix:** Validate on save in edit_meal_screen and/or clamp on import
 **Effort:** Medium (2-3 hours)
 
-### #291 - Extend Recent List
-**Problem:** Recent list limited to 200 entries  
-**Solution:** Increase limit or add pagination  
-**Effort:** Low (30 min)
+### #182 — Diary shows 0 kcal for some days
+**Problem:** Date comparison bug causes some logged days to show zero
+**File:** `lib/core/data/data_source/tracked_day_data_source.dart`
+**Effort:** Low-Medium (investigate first)
 
 ---
 
-## Priority 5: Feature Additions
+## Priority 2: High-Value UX
 
-### #237 - Micronutrient Tracking
-**Problem:** Only tracks macros, not vitamins/minerals  
-**Solution:** Extend data model and UI  
-**Effort:** High (1-2 days)
+### #235 — Macros per food item and meal
+**Problem:** Home screen only shows kcal per meal item; users want carbs/fat/protein
+**Files:** `lib/features/home/presentation/widgets/intake_vertical_list.dart`
+**Effort:** Low (1-2 hours — UI only)
 
-### #279 - Multi-Ingredient Meals
-**Problem:** Can't create meals from multiple foods  
-**Solution:** Add meal composition feature  
-**Effort:** High (1-2 days)
+### #277 — Disable activity tracking option
+**Problem:** Users without activity tracking can't hide the section
+**Fix:** Settings toggle → `ConfigEntity.showActivityTracking`
+**Effort:** Medium (2-3 hours)
 
-### #232 - Direct Macro Input
-**Problem:** Can't directly input macros for custom meals  
-**Solution:** Add macro input fields option  
-**Effort:** Medium (3-4 hours)
-
-### #284 - Weekly Weight Goals
-**Problem:** Only daily goals, no weekly tracking  
-**Solution:** Add weekly goal setting and tracking  
+### #267/#174 — Custom meals not findable before first use
+**Problem:** Custom meals only appear in "Recently Added" after being logged once
+**Fix:** Persist custom meal templates in separate Hive box; include in recent search
 **Effort:** Medium (3-4 hours)
 
 ---
 
-## Priority 6: Technical Debt
+## Priority 3: Medium Features
 
-- ~~Remove dummy data from user_data_source.dart~~ (identified, needs design decision)
-- ~~Make enum class for rating~~ ✅ COMPLETE (DayRating enum)
-- Group activities by effort (1-2 hours)
-- Update default totalQuantity (5 min)
-- Translation keys for fdc_const (30 min)
-- Extract unit parsing logic (1 hour)
+### #232 — Direct macro input for custom meals
+**Problem:** Edit meal screen requires per-100g values; no total macro input option
+**Effort:** Medium (3-4 hours)
 
----
+### #284 — Weekly weight goal
+**Effort:** Medium (3-4 hours)
 
-## Priority 7: Infrastructure
-
-- #280 - Scanner on Android 10 (research required)
-- #282 - German localization (30 min)
-- #290 - Update activity compendium (1-2 hours)
-- ~~#229 - API rate limiting~~ ✅ COMPLETE
-- #263 - Indian food database (research + 4-8 hours)
-- #266, #205, #272 - Documentation/deployment issues
+### #229 — API rate limiting / search failures
+**Problem:** OFF/FDC search returns no results intermittently
+**Note:** Previously claimed fixed but code is absent — needs investigation
+**Effort:** High
 
 ---
 
-## Effort Estimates
+## Priority 4: Large Features
 
-**Quick Wins (< 1 hour):** #243, #288, #291, ~~dummy data removal~~  
-**Low Effort (1-2 hours):** #208, #215, technical debt items  
-**Medium Effort (2-4 hours):** ~~#212~~, #213, #252, #281, #232, #284  
-**High Effort (4+ hours):** #222, #237, #279, #263  
+### #279 — Multi-ingredient meal composition (most requested)
+**Effort:** High (1-2 days)
+
+### #222 — FDC import validation (was reverted in PR #5)
+**Fix:** Re-implement sanity checks (sugar ≤ carbs, saturatedFat ≤ fat, macros ≤ 100g)
+**Effort:** High (4-8 hours)
+
+### #237 — Micronutrient tracking
+**Effort:** High (data model + UI)
 
 ---
 
-Last updated: 2025-12-04 (Session 4)
+## Technical Debt
+
+- Localize hardcoded validation strings in `set_weight_dialog.dart`, `meal_detail_bottom_sheet.dart`, `edit_meal_screen.dart`
+- Lower OFF timeout from 20s (TODO comment in `off_data_source.dart`)
+- Re-investigate #229/#125 (rate limiting / search quality — code not present)
