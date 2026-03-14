@@ -56,6 +56,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final configData = await _getConfigUsecase.getConfig();
       final usesImperialUnits = configData.usesImperialUnits;
       final showDisclaimerDialog = !configData.hasAcceptedDisclaimer;
+      final showActivityTracking = configData.showActivityTracking;
 
       final breakfastIntakeList =
           await _getIntakeUsecase.getTodayBreakfastIntake();
@@ -132,7 +133,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           dinnerIntakeList: dinnerIntakeList,
           snackIntakeList: snackIntakeList,
           userActivityList: userActivities,
-          usesImperialUnits: usesImperialUnits));
+          usesImperialUnits: usesImperialUnits,
+          showActivityTracking: showActivityTracking));
     });
   }
 
@@ -157,11 +159,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final dateTime = DateTime.now();
     // Get old intake values
     final oldIntakeObject = await _getIntakeUsecase.getIntakeById(intakeId);
-    assert(oldIntakeObject != null);
+    if (oldIntakeObject == null) return;
     final newIntakeObject =
         await _updateIntakeUsecase.updateIntake(intakeId, fields);
-    assert(newIntakeObject != null);
-    if (oldIntakeObject!.amount > newIntakeObject!.amount) {
+    if (newIntakeObject == null) return;
+    if (oldIntakeObject.amount > newIntakeObject.amount) {
       // Amounts shrunk
       await _addTrackedDayUseCase.removeDayCaloriesTracked(
           dateTime, oldIntakeObject.totalKcal - newIntakeObject.totalKcal);
@@ -216,6 +218,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         fatAmount: fatAmount,
         proteinAmount: proteinAmount);
     _updateDiaryPage(dateTime);
+    add(const LoadItemsEvent()); // #208: Reload home page to remove activity indicator
   }
 
   Future<void> _updateDiaryPage(DateTime day) async {

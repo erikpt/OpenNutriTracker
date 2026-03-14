@@ -43,9 +43,16 @@ class CalendarDayBloc extends Bloc<CalendarDayEvent, CalendarDayState> {
     });
 
     on<RefreshCalendarDayEvent>((event, emit) async {
-      if (_currentDay != null) {
+      // Use provided date if available, otherwise use current day
+      final dateToRefresh = event.dayToRefresh ?? _currentDay;
+      
+      if (dateToRefresh != null) {
+        // Update current day if a specific date was provided
+        if (event.dayToRefresh != null) {
+          _currentDay = event.dayToRefresh;
+        }
         emit(CalendarDayLoading());
-        await _loadCalendarDay(_currentDay!, emit);
+        await _loadCalendarDay(dateToRefresh, emit);
       }
     });
   }
@@ -63,6 +70,28 @@ class CalendarDayBloc extends Bloc<CalendarDayEvent, CalendarDayState> {
     final snackIntakeList = await _getIntakeUsecase.getSnackIntakeByDay(day);
 
     final trackedDayEntity = await _getTrackedDayUsecase.getTrackedDay(day);
+
+    // #182: Reconcile stale cache if actual intake total differs
+    if (trackedDayEntity != null) {
+      final allIntakes = [
+        ...breakfastIntakeList,
+        ...lunchIntakeList,
+        ...dinnerIntakeList,
+        ...snackIntakeList
+      ];
+      final actualKcal =
+          allIntakes.fold(0.0, (sum, i) => sum + i.totalKcal);
+      if ((trackedDayEntity.caloriesTracked - actualKcal).abs() > 0.5) {
+        final actualCarbs =
+            allIntakes.fold(0.0, (sum, i) => sum + i.totalCarbsGram);
+        final actualFat =
+            allIntakes.fold(0.0, (sum, i) => sum + i.totalFatsGram);
+        final actualProtein =
+            allIntakes.fold(0.0, (sum, i) => sum + i.totalProteinsGram);
+        await _addTrackedDayUsecase.reconcileDayTracked(
+            day, actualKcal, actualCarbs, actualFat, actualProtein);
+      }
+    }
 
     emit(CalendarDayLoaded(
         trackedDayEntity,

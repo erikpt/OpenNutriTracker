@@ -1,6 +1,7 @@
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get_it/get_it.dart';
 import 'package:opennutritracker/core/data/data_source/config_data_source.dart';
+import 'package:opennutritracker/core/data/data_source/custom_meal_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/intake_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/physical_activity_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/tracked_day_data_source.dart';
@@ -108,12 +109,12 @@ Future<void> initLocator() async {
   locator.registerFactory<MealDetailBloc>(
       () => MealDetailBloc(locator(), locator(), locator(), locator()));
   locator.registerFactory<ScannerBloc>(() => ScannerBloc(locator(), locator()));
-  locator.registerFactory<EditMealBloc>(() => EditMealBloc(locator()));
+  locator.registerFactory<EditMealBloc>(() => EditMealBloc(locator(), locator())); // #267
   locator.registerFactory<AddMealBloc>(() => AddMealBloc(locator()));
   locator
       .registerFactory<ProductsBloc>(() => ProductsBloc(locator(), locator()));
   locator.registerFactory<FoodBloc>(() => FoodBloc(locator(), locator()));
-  locator.registerFactory(() => RecentMealBloc(locator(), locator()));
+  locator.registerFactory(() => RecentMealBloc(locator(), locator(), locator())); // #267
 
   // UseCases
   locator.registerLazySingleton<GetConfigUsecase>(
@@ -187,12 +188,19 @@ Future<void> initLocator() async {
   locator.registerLazySingleton<SpFdcDataSource>(() => SpFdcDataSource());
   locator.registerLazySingleton(
       () => TrackedDayDataSource(hiveDBProvider.trackedDayBox));
+  locator.registerLazySingleton(
+      () => CustomMealDataSource(hiveDBProvider.customMealBox)); // #267
 
   await _initializeConfig(locator());
+  await _migrateTrackedDays(locator());
 }
 
 Future<void> _initializeConfig(ConfigDataSource configDataSource) async {
   if (!await configDataSource.configInitialized()) {
     configDataSource.initializeConfig();
   }
+}
+
+Future<void> _migrateTrackedDays(TrackedDayDataSource trackedDayDataSource) async {
+  await trackedDayDataSource.migrateToNewDateFormat();
 }

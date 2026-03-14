@@ -77,6 +77,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: Text(S.of(context).settingsThemeLabel),
                   onTap: () => _showThemeDialog(context, state.appTheme),
                 ),
+                SwitchListTile(
+                  secondary: const Icon(Icons.directions_run_outlined),
+                  title: Text(S.of(context).settingsShowActivityTracking),
+                  value: state.showActivityTracking,
+                  onChanged: (bool value) {
+                    _settingsBloc.setShowActivityTracking(value);
+                    _settingsBloc.add(LoadSettingsEvent());
+                    _homeBloc.add(LoadItemsEvent());
+                  },
+                ),
                 ListTile(
                   leading: const Icon(Icons.import_export),
                   title: Text(S.of(context).exportImportLabel),

@@ -90,6 +90,13 @@ class ConfigDataSource {
     config?.save();
   }
 
+  Future<void> setConfigShowActivityTracking(bool show) async {
+    _log.fine('Updating config showActivityTracking to $show');
+    final config = _configBox.get(_configKey);
+    config?.showActivityTracking = show;
+    config?.save();
+  }
+
   Future<ConfigDBO> getConfig() async {
     return _configBox.get(_configKey) ?? ConfigDBO.empty();
   }

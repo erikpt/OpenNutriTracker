@@ -15,6 +15,13 @@ class SetWeightDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double selectedWeight = userWeight;
+    // Ensure minValue doesn't go negative (#216, #253)
+    final minWeight = usesImperialUnits ? 20.0 : 10.0;
+    final calculatedMin = usesImperialUnits
+        ? userWeight - weightRangeLbs
+        : userWeight - weightRangeKg;
+    final actualMin = calculatedMin > minWeight ? calculatedMin : minWeight;
+    
     return AlertDialog(
       title: Text(S.of(context).selectWeightDialogLabel),
       content: Wrap(children: [
@@ -23,14 +30,12 @@ class SetWeightDialog extends StatelessWidget {
             HorizontalPicker(
                 height: 100,
                 backgroundColor: Colors.transparent,
-                minValue: usesImperialUnits
-                    ? userWeight - weightRangeLbs
-                    : userWeight - weightRangeKg,
+                minValue: actualMin,
                 maxValue: usesImperialUnits
                     ? userWeight + weightRangeLbs
                     : userWeight + weightRangeKg,
                 initialPosition: InitialPosition.center,
-                divisions: 1000,
+                divisions: 1000, // Supports decimal values (#244)
                 suffix: usesImperialUnits
                     ? S.of(context).lbsLabel
                     : S.of(context).kgLabel,
@@ -48,7 +53,21 @@ class SetWeightDialog extends StatelessWidget {
             child: Text(S.of(context).dialogCancelLabel)),
         TextButton(
             onPressed: () {
-              // TODO validate selected weight
+              // Validate selected weight (prevent negative and unrealistic values)
+              if (selectedWeight <= 0) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('${S.of(context).selectWeightDialogLabel} must be greater than 0')),
+                );
+                return;
+              }
+              // Maximum reasonable weight check (500 kg / 1100 lbs)
+              final maxWeight = usesImperialUnits ? 1100.0 : 500.0;
+              if (selectedWeight > maxWeight) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('${S.of(context).selectWeightDialogLabel} seems unrealistic')),
+                );
+                return;
+              }
               Navigator.pop(context, selectedWeight);
             },
             child: Text(S.of(context).dialogOKLabel)),
