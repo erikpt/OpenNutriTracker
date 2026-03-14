@@ -44,6 +44,7 @@ class _EditMealScreenState extends State<EditMealScreen> {
 
   final _units = ['g', 'ml', 'g/ml'];
   late String? selectedUnit;
+  bool _isTotal = false; // #232: toggle between per-base-qty and total input
 
   // late List<DropdownMenuItem> _mealUnitDropdownItems;
   late List<ButtonSegment<String>> _mealUnitButtonSegment;
@@ -225,12 +226,33 @@ class _EditMealScreenState extends State<EditMealScreen> {
           keyboardType: TextInputType.number,
         ),
         const SizedBox(height: 48),
+        // #232: Toggle between per-base-qty and total nutrient input
+        SegmentedButton<bool>(
+          segments: [
+            ButtonSegment(
+              value: false,
+              label: Text('Per ${_getDisplayQuantity()}${baseQuantityUnit.trim()}'),
+            ),
+            const ButtonSegment(
+              value: true,
+              label: Text('Total'),
+            ),
+          ],
+          selected: {_isTotal},
+          onSelectionChanged: (Set<bool> newSelection) {
+            setState(() {
+              _isTotal = newSelection.first;
+            });
+          },
+        ),
+        const SizedBox(height: 16),
         TextFormField(
           controller: _kcalTextController,
           inputFormatters: CustomTextInputFormatter.doubleOnly(),
           decoration: InputDecoration(
-              labelText:
-                  S.of(context).mealKcalLabel + _getDisplayQuantity() + baseQuantityUnit,
+              labelText: _isTotal
+                  ? '${S.of(context).mealKcalLabel}(total)'
+                  : S.of(context).mealKcalLabel + _getDisplayQuantity() + baseQuantityUnit,
               border: const OutlineInputBorder()),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
@@ -239,9 +261,9 @@ class _EditMealScreenState extends State<EditMealScreen> {
           controller: _carbsTextController,
           inputFormatters: CustomTextInputFormatter.doubleOnly(),
           decoration: InputDecoration(
-              labelText: S.of(context).mealCarbsLabel +
-                  _getDisplayQuantity() +
-                  baseQuantityUnit,
+              labelText: _isTotal
+                  ? '${S.of(context).mealCarbsLabel}(total)'
+                  : S.of(context).mealCarbsLabel + _getDisplayQuantity() + baseQuantityUnit,
               border: const OutlineInputBorder()),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
@@ -250,8 +272,9 @@ class _EditMealScreenState extends State<EditMealScreen> {
           controller: _fatTextController,
           inputFormatters: CustomTextInputFormatter.doubleOnly(),
           decoration: InputDecoration(
-              labelText:
-                  S.of(context).mealFatLabel + _getDisplayQuantity() + baseQuantityUnit,
+              labelText: _isTotal
+                  ? '${S.of(context).mealFatLabel}(total)'
+                  : S.of(context).mealFatLabel + _getDisplayQuantity() + baseQuantityUnit,
               border: const OutlineInputBorder()),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
@@ -260,9 +283,9 @@ class _EditMealScreenState extends State<EditMealScreen> {
           controller: _proteinTextController,
           inputFormatters: CustomTextInputFormatter.doubleOnly(),
           decoration: InputDecoration(
-              labelText: S.of(context).mealProteinLabel +
-                  _getDisplayQuantity() +
-                  baseQuantityUnit,
+              labelText: _isTotal
+                  ? '${S.of(context).mealProteinLabel}(total)'
+                  : S.of(context).mealProteinLabel + _getDisplayQuantity() + baseQuantityUnit,
               border: const OutlineInputBorder()),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
@@ -287,13 +310,40 @@ class _EditMealScreenState extends State<EditMealScreen> {
         return;
       }
 
+      // Convert total → per-base-qty if in total input mode (#232)
+      String kcalText = _kcalTextController.text;
+      String carbsText = _carbsTextController.text;
+      String fatText = _fatTextController.text;
+      String proteinText = _proteinTextController.text;
+      if (_isTotal) {
+        final mealQty =
+            double.tryParse(_mealQuantityTextController.text) ?? 0.0;
+        if (mealQty <= 0) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Enter meal quantity to use total input mode')));
+          return;
+        }
+        final baseQtyForConversion =
+            double.tryParse(_baseQuantityTextController.text) ?? 100.0;
+        String convertTotal(String text) {
+          final v = double.tryParse(text);
+          if (v == null) return text;
+          return ((v / mealQty) * baseQtyForConversion).toString();
+        }
+
+        kcalText = convertTotal(kcalText);
+        carbsText = convertTotal(carbsText);
+        fatText = convertTotal(fatText);
+        proteinText = convertTotal(proteinText);
+      }
+
       // Validate nutritional consistency (#213)
       final baseQty =
           double.tryParse(_baseQuantityTextController.text) ?? 100.0;
-      final enteredKcal = double.tryParse(_kcalTextController.text);
-      final enteredCarbs = double.tryParse(_carbsTextController.text);
-      final enteredFat = double.tryParse(_fatTextController.text);
-      final enteredProtein = double.tryParse(_proteinTextController.text);
+      final enteredKcal = double.tryParse(kcalText);
+      final enteredCarbs = double.tryParse(carbsText);
+      final enteredFat = double.tryParse(fatText);
+      final enteredProtein = double.tryParse(proteinText);
 
       for (final entry in {
         'Carbs': enteredCarbs,
@@ -341,10 +391,10 @@ class _EditMealScreenState extends State<EditMealScreen> {
           _servingQuantityTextController.text,
           _baseQuantityTextController.text,
           selectedUnit,
-          _kcalTextController.text,
-          _carbsTextController.text,
-          _fatTextController.text,
-          _proteinTextController.text);
+          kcalText,
+          carbsText,
+          fatText,
+          proteinText);
 
       Navigator.of(context).pushNamedAndRemoveUntil(
           NavigationOptions.mealDetailRoute,
