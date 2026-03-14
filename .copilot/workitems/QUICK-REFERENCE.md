@@ -1,29 +1,35 @@
 # 🎯 QUICK REFERENCE - Current State at a Glance
 
-**As of:** December 4, 2025  
-**Working Branch:** erikpt/bugfixes (primary development branch)
+**As of:** March 13, 2026  
+**Working Branch:** erikpt/fix-issue-263-keyboard-dismissal (active PR #313)
 
 ---
 
 ## 📍 CURRENT BRANCH STATUS
 
-### erikpt/bugfixes branch (YOUR WORKING BRANCH) ⭐
+### erikpt/fix-issue-263-keyboard-dismissal (ACTIVE PR #313)
 ```
-Status: 🟢 ACTIVE DEVELOPMENT
-Completed Issues: 24+ (21 from main + PR #6, #7 pending)
+Status: 🟡 BRANCH EXISTS — NO CODE CHANGES YET
+Base: erikpt/bugfixes (all prior fixes included)
 ```
 
-**What's on this branch:**
-- ✅ All completed issues from main
+**What's on this branch (inherited from erikpt/bugfixes):**
 - ✅ PR #6: Issue #154 - Diary navigation fix (MERGED)
-- 🔄 PR #7: Technical debt fixes (OPEN)
-- ✅ Full documentation package
+- ✅ PR #7: Technical debt fixes (MERGED)
+- ✅ All validation, critical bugs, UX fixes
+- 🔴 **#263 keyboard dismissal — not yet implemented** (this branch's purpose)
 
-### main branch (Upstream)
+### 🔴 ACTIVE BUG: use_build_context_synchronously (5 violations)
 ```
-Last commit: 2b893cb (Merge pull request #194 from simonoppowa/develop)
-Status: ✅ STABLE & PRODUCTION READY
-Note: Contains fixes from erik's prior work
+File: lib/features/meal_detail/presentation/widgets/meal_detail_bottom_sheet.dart
+Lines: 183, 190, 205, 206, 207
+Risk: Widget unmount crash between async gap and BuildContext use
+Fix needed: Add `if (!context.mounted) return;` after await _checkForDuplicate()
+```
+
+### erikpt/bugfixes / main branch
+```
+PR #7 merged. 24+ issues complete. Stable baseline.
 ```
 
 ---
@@ -51,26 +57,33 @@ Note: Contains fixes from erik's prior work
 | Issue | Title | Status |
 |:---:|:---|:---:|
 | #154 | Diary navigation after future entry | ✅ PR #6 Merged |
-| #229 | API rate limiting | ✅ Implemented |
-| #125 | Search quality improvements | ✅ Implemented |
+| #229 | API rate limiting | ⚠️ NOT IN CODE (possibly reverted in PR #5) |
+| #125 | Search quality improvements | ⚠️ NOT IN CODE (possibly reverted in PR #5) |
 | #212 | Duplicate meal detection | ✅ Implemented |
 | — | DayRating enum (tech debt) | ✅ PR #7 |
 | — | LoadCalendarDayEvent props bug | ✅ PR #7 |
-| — | All analyzer errors fixed | ✅ PR #7 |
+| — | Analyzer errors reduced (PR #7) | ⚠️ 19 info-level remain |
 
 ---
 
 ## 🔥 HIGH PRIORITY REMAINING
 
-### Quick Wins
-- [ ] **#263** - Keyboard dismissal issues (30 min)
-- [ ] **#126** - Search history (Low effort)
+### Immediate (Active Branch #313)
+- [ ] **#263** - Keyboard dismissal — `GestureDetector` + `FocusScope.unfocus()` or `ScrollView.keyboardDismissBehavior`
+- [ ] **BUG** - Fix `use_build_context_synchronously` in `meal_detail_bottom_sheet.dart` (5 violations, crash risk)
+
+### Technical Debt
+- [ ] Localize hardcoded validation strings in `set_weight_dialog.dart`, `set_height_dialog.dart`, `meal_detail_bottom_sheet.dart`, `edit_meal_screen.dart`
+- [ ] Replace `assert(x != null)` with proper null handling in `home_bloc.dart` lines 160/163
+- [ ] Investigate/re-implement #229 (rate limiting) and #125 (search quality) — code not present
+- [ ] Lower OFF timeout from 20s (`off_data_source.dart` TODO)
 
 ### High Impact Features
 - [ ] **#279** - Multi-ingredient meals ⭐ MOST REQUESTED
-- [ ] **#222** - FoodData Central import issues
+- [ ] **#222** - FoodData Central import issues (reverted in PR #5 — needs re-implementation)
 - [ ] **#284** - Weekly weight goals
 - [ ] **#280** - Meal templates/favorites
+- [ ] **#126** - Search history (Low effort)
 
 ---
 
@@ -90,13 +103,13 @@ Note: Contains fixes from erik's prior work
 ## 💡 QUICK DECISIONS
 
 **Q: What should I work on next?**  
-A: **#263 (Keyboard dismissal)** - Quick win (~30 min), then **#279 (multi-ingredient meals)** - most requested feature.
+A: First fix the `use_build_context_synchronously` crash bug in `meal_detail_bottom_sheet.dart`, then implement **#263 (Keyboard dismissal)** on this branch.
 
 **Q: How much work is completed?**  
-A: ~24+ issues done, including ALL critical bugs, input validation, and key infrastructure (#125, #212, #229).
+A: ~22+ verified issues done (ALL critical bugs, input validation). #229 and #125 are claimed complete but code is absent — investigation needed.
 
 **Q: Are there any open PRs?**  
-A: Yes - PR #7 (technical debt fixes) is open and ready for review.
+A: Yes — PR #313 (this branch, #263 keyboard dismissal — not yet started).
 
 ---
 
@@ -118,5 +131,5 @@ gh pr create --base erikpt/bugfixes --head <branch> --title "title"
 
 ---
 
-**Last Updated:** 2025-12-04  
+**Last Updated:** 2026-03-13  
 **Questions?** See detailed docs in `.copilot/workitems/`

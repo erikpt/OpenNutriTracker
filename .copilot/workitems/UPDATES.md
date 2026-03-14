@@ -1,4 +1,45 @@
-# 📝 Documentation Updates - December 3, 2025
+# 📝 Documentation Updates
+
+---
+
+## 🔍 Codebase Review - March 13, 2026
+
+**Update Time:** March 13, 2026  
+**Branch:** erikpt/fix-issue-263-keyboard-dismissal (PR #313)  
+**Reason:** Full codebase review — docs vs code reality check
+
+### Findings
+
+#### 🔴 Active Bug — `use_build_context_synchronously` (5 violations)
+`onAddButtonPressed` in `meal_detail_bottom_sheet.dart` is `async` and uses `BuildContext` at lines 183, 190, 205–207 after `await _checkForDuplicate()` without a `mounted` check. This can crash when the widget unmounts during the async gap.
+- **Fix:** Add `if (!context.mounted) return;` immediately after the `await` call.
+
+#### ⚠️ Documentation Inaccuracies Corrected
+| Claim | Reality |
+|:---|:---|
+| #229 API rate limiting — `_enforceRateLimit()` in `fdc_data_source.dart` | Method not present in code. Likely included in PR #4 and reverted by PR #5. |
+| #125 Search quality — `_calculateRelevanceScore()` in `fdc_data_source.dart` | Method not present in code. Same cause likely. |
+| `02-INPUT-VALIDATION.md` checkboxes mostly unchecked | All items are complete except #222 (reverted). Checkboxes updated. |
+| PR #7 "All analyzer errors fixed" | 19 info-level issues remain (5 are `use_build_context_synchronously`, 14 are `unnecessary_string_escapes` in generated files). |
+
+#### 🟡 Code Quality Issues Found
+- **Hardcoded English strings** in validation error messages (not using l10n):
+  - `set_weight_dialog.dart:56`, `set_height_dialog.dart:55`
+  - `meal_detail_bottom_sheet.dart:171,177`, `edit_meal_screen.dart:279,284`
+- **`assert()` in non-test code:** `home_bloc.dart:160,163` — stripped in release builds, masks null errors
+- **20s timeout with TODO comment:** `off_data_source.dart:16` — stale tech debt
+
+#### ✅ Branch Status
+`erikpt/fix-issue-263-keyboard-dismissal` is at the same commit as `erikpt/bugfixes`. No implementation for #263 has been added yet.
+
+### Documents Updated This Revision
+- `02-INPUT-VALIDATION.md` — all checkboxes corrected to reflect actual code state
+- `QUICK-REFERENCE.md` — current branch, verified statuses, active bugs, updated priorities
+- `UPDATES.md` — this entry
+
+---
+
+## 📝 Documentation Updates - December 3, 2025
 
 **Update Time:** 22:00 UTC (FINAL UPDATE)  
 **Reason:** Clarify working branch setup and current development status
