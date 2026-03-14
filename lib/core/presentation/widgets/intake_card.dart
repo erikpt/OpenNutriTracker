@@ -68,20 +68,46 @@ class IntakeCard extends StatelessWidget {
                           .secondaryContainer.withValues(alpha: 0.5),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(8.0),
-                    padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
-                    decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .tertiaryContainer.withValues(alpha: 0.8),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Text(
-                      '${intake.totalKcal.toInt()} kcal',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  Positioned(
+                    top: 8,
+                    left: 8,
+                    right: 8,
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+                      decoration: BoxDecoration(
                           color: Theme.of(context)
                               .colorScheme
-                              .onTertiaryContainer),
+                              .tertiaryContainer
+                              .withValues(alpha: 0.8),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '${intake.totalKcal.toInt()} kcal',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onTertiaryContainer),
+                          ),
+                          Text(
+                            'C${intake.totalCarbsGram.toInt()} F${intake.totalFatsGram.toInt()} P${intake.totalProteinsGram.toInt()}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                                    fontSize: 9,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onTertiaryContainer
+                                        .withValues(alpha: 0.8)),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(

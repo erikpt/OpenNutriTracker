@@ -15,10 +15,24 @@ class PhysicalActivityDataSource {
         PhysicalActivityDBO("02010", "bicycling, stationary", "general", 7.5,
             [], PhysicalActivityTypeDBO.conditioningExercise),
         PhysicalActivityDBO(
+            "02020",
+            "circuit training",
+            "HIIT, high intensity interval training, general",
+            8.0,
+            [],
+            PhysicalActivityTypeDBO.conditioningExercise),
+        PhysicalActivityDBO(
             "02030",
             "calisthenics",
             "light or moderate effort, general (e.g., back exercises)",
             3.5,
+            [],
+            PhysicalActivityTypeDBO.conditioningExercise),
+        PhysicalActivityDBO(
+            "02040",
+            "calisthenics",
+            "vigorous effort (e.g., push-ups, sit-ups, pull-ups, squats)",
+            8.0,
             [],
             PhysicalActivityTypeDBO.conditioningExercise),
         PhysicalActivityDBO(
@@ -35,6 +49,13 @@ class PhysicalActivityDataSource {
             "water exercise",
             "water aerobics, water calisthenics",
             5.3,
+            [],
+            PhysicalActivityTypeDBO.conditioningExercise),
+        PhysicalActivityDBO(
+            "02160",
+            "yoga",
+            "general, hatha",
+            2.5,
             [],
             PhysicalActivityTypeDBO.conditioningExercise),
         PhysicalActivityDBO("03015", "aerobic", "general", 7.3, [],

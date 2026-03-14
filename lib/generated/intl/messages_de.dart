@@ -123,6 +123,7 @@ class MessageLookup extends MessageLookupByLibrary {
     'infoAddedIntakeLabel': MessageLookupByLibrary.simpleMessage('Neue Aufnahme hinzugefügt'),
     'itemDeletedSnackbar': MessageLookupByLibrary.simpleMessage('Eintrag gelöscht'),
     'itemUpdatedSnackbar': MessageLookupByLibrary.simpleMessage('Eintrag aktualisiert'),
+    'kcalExceededLabel': MessageLookupByLibrary.simpleMessage('kcal überschritten'),
     'kcalLabel': MessageLookupByLibrary.simpleMessage('kcal'),
     'kcalLeftLabel': MessageLookupByLibrary.simpleMessage('kcal übrig'),
     'kgLabel': MessageLookupByLibrary.simpleMessage('kg'),

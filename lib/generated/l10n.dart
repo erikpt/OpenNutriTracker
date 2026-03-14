@@ -660,6 +660,16 @@ class S {
     );
   }
 
+  /// `Show Activity Tracking`
+  String get settingsShowActivityTracking {
+    return Intl.message(
+      'Show Activity Tracking',
+      name: 'settingsShowActivityTracking',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Source Code`
   String get settingsSourceCodeLabel {
     return Intl.message(
@@ -1186,6 +1196,16 @@ class S {
     return Intl.message(
       'kcal left',
       name: 'kcalLeftLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `kcal exceeded`
+  String get kcalExceededLabel {
+    return Intl.message(
+      'kcal exceeded',
+      name: 'kcalExceededLabel',
       desc: '',
       args: [],
     );

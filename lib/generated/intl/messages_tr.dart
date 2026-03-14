@@ -124,6 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
     'infoAddedIntakeLabel': MessageLookupByLibrary.simpleMessage('Yeni alım eklendi'),
     'itemDeletedSnackbar': MessageLookupByLibrary.simpleMessage('Öğe silindi'),
     'itemUpdatedSnackbar': MessageLookupByLibrary.simpleMessage('Öğe güncellendi'),
+    'kcalExceededLabel': MessageLookupByLibrary.simpleMessage('kcal aşıldı'),
     'kcalLabel': MessageLookupByLibrary.simpleMessage('kcal'),
     'kcalLeftLabel': MessageLookupByLibrary.simpleMessage('kalan kcal'),
     'kgLabel': MessageLookupByLibrary.simpleMessage('kg'),
