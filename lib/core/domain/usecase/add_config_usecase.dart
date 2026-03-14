@@ -41,4 +41,13 @@ class AddConfigUsecase {
   Future<void> setConfigShowActivityTracking(bool show) async {
     _configRepository.setConfigShowActivityTracking(show);
   }
+
+  // #312: Notification reminder settings
+  Future<void> setNotificationsEnabled(bool enabled) async {
+    _configRepository.setNotificationsEnabled(enabled);
+  }
+
+  Future<void> setNotificationTime(int hour, int minute) async {
+    _configRepository.setNotificationTime(hour, minute);
+  }
 }

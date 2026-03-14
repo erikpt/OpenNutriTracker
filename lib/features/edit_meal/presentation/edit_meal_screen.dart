@@ -226,16 +226,17 @@ class _EditMealScreenState extends State<EditMealScreen> {
           keyboardType: TextInputType.number,
         ),
         const SizedBox(height: 48),
-        // #232: Toggle between per-base-qty and total nutrient input
+        // #232/#298: Toggle between per-base-qty and total nutrient input
         SegmentedButton<bool>(
           segments: [
             ButtonSegment(
               value: false,
-              label: Text('Per ${_getDisplayQuantity()}${baseQuantityUnit.trim()}'),
+              label: Text(S.of(context).mealNutrientsPerQtyLabel(
+                  _getDisplayQuantity(), baseQuantityUnit.trim())),
             ),
-            const ButtonSegment(
+            ButtonSegment(
               value: true,
-              label: Text('Total'),
+              label: Text(S.of(context).mealNutrientsTotalLabel),
             ),
           ],
           selected: {_isTotal},
@@ -250,9 +251,11 @@ class _EditMealScreenState extends State<EditMealScreen> {
           controller: _kcalTextController,
           inputFormatters: CustomTextInputFormatter.doubleOnly(),
           decoration: InputDecoration(
-              labelText: _isTotal
-                  ? '${S.of(context).mealKcalLabel}(total)'
-                  : S.of(context).mealKcalLabel + _getDisplayQuantity() + baseQuantityUnit,
+              labelText: S.of(context).mealKcalLabel,
+              helperText: _isTotal
+                  ? S.of(context).mealNutrientsTotalLabel
+                  : S.of(context).mealNutrientsPerQtyLabel(
+                      _getDisplayQuantity(), baseQuantityUnit.trim()),
               border: const OutlineInputBorder()),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
@@ -261,9 +264,11 @@ class _EditMealScreenState extends State<EditMealScreen> {
           controller: _carbsTextController,
           inputFormatters: CustomTextInputFormatter.doubleOnly(),
           decoration: InputDecoration(
-              labelText: _isTotal
-                  ? '${S.of(context).mealCarbsLabel}(total)'
-                  : S.of(context).mealCarbsLabel + _getDisplayQuantity() + baseQuantityUnit,
+              labelText: S.of(context).mealCarbsLabel,
+              helperText: _isTotal
+                  ? S.of(context).mealNutrientsTotalLabel
+                  : S.of(context).mealNutrientsPerQtyLabel(
+                      _getDisplayQuantity(), baseQuantityUnit.trim()),
               border: const OutlineInputBorder()),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
@@ -272,9 +277,11 @@ class _EditMealScreenState extends State<EditMealScreen> {
           controller: _fatTextController,
           inputFormatters: CustomTextInputFormatter.doubleOnly(),
           decoration: InputDecoration(
-              labelText: _isTotal
-                  ? '${S.of(context).mealFatLabel}(total)'
-                  : S.of(context).mealFatLabel + _getDisplayQuantity() + baseQuantityUnit,
+              labelText: S.of(context).mealFatLabel,
+              helperText: _isTotal
+                  ? S.of(context).mealNutrientsTotalLabel
+                  : S.of(context).mealNutrientsPerQtyLabel(
+                      _getDisplayQuantity(), baseQuantityUnit.trim()),
               border: const OutlineInputBorder()),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
@@ -283,9 +290,11 @@ class _EditMealScreenState extends State<EditMealScreen> {
           controller: _proteinTextController,
           inputFormatters: CustomTextInputFormatter.doubleOnly(),
           decoration: InputDecoration(
-              labelText: _isTotal
-                  ? '${S.of(context).mealProteinLabel}(total)'
-                  : S.of(context).mealProteinLabel + _getDisplayQuantity() + baseQuantityUnit,
+              labelText: S.of(context).mealProteinLabel,
+              helperText: _isTotal
+                  ? S.of(context).mealNutrientsTotalLabel
+                  : S.of(context).mealNutrientsPerQtyLabel(
+                      _getDisplayQuantity(), baseQuantityUnit.trim()),
               border: const OutlineInputBorder()),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),

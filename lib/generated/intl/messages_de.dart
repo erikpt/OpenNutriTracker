@@ -29,6 +29,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m3(age) => "${age} Jahre";
 
+  static m4(rate) => "${rate} kg/Woche";
+
+  static m5(rate) => "${rate} lbs/Woche";
+
+  static m6(qty, unit) => "Pro ${qty} ${unit}";
+
+  static m7(time) => "Erinnerungszeit: ${time}";
+
   @override
   final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
 
@@ -112,6 +120,11 @@ class MessageLookup extends MessageLookupByLibrary {
     'genderMaleLabel': MessageLookupByLibrary.simpleMessage('♂ männlich'),
     'goalGainWeight': MessageLookupByLibrary.simpleMessage('Gewicht zunehmen'),
     'goalLabel': MessageLookupByLibrary.simpleMessage('Ziel'),
+    'weeklyWeightGoalLabel': MessageLookupByLibrary.simpleMessage('Wöchentliche Rate'),
+    'weeklyWeightGoalNoneLabel': MessageLookupByLibrary.simpleMessage('Nicht festgelegt'),
+    'weeklyWeightGoalKgPerWeek': m4,
+    'weeklyWeightGoalLbsPerWeek': m5,
+    'chooseWeeklyWeightGoalLabel': MessageLookupByLibrary.simpleMessage('Wöchentliche Gewichtsrate'),
     'goalLoseWeight': MessageLookupByLibrary.simpleMessage('Gewicht verlieren'),
     'goalMaintainWeight': MessageLookupByLibrary.simpleMessage('Gewicht halten'),
     'gramMilliliterUnit': MessageLookupByLibrary.simpleMessage('g/ml'),
@@ -131,11 +144,13 @@ class MessageLookup extends MessageLookupByLibrary {
     'lunchLabel': MessageLookupByLibrary.simpleMessage('Mittagessen'),
     'macroDistributionLabel': MessageLookupByLibrary.simpleMessage('Makronährstoff-Verteilung:'),
     'mealBrandsLabel': MessageLookupByLibrary.simpleMessage('Marken'),
-    'mealCarbsLabel': MessageLookupByLibrary.simpleMessage('Kohlenhydrate pro 100 g/ml'),
-    'mealFatLabel': MessageLookupByLibrary.simpleMessage('Fett pro 100 g/ml'),
-    'mealKcalLabel': MessageLookupByLibrary.simpleMessage('kcal pro 100 g/ml'),
+    'mealCarbsLabel': MessageLookupByLibrary.simpleMessage('Kohlenhydrate (g)'),
+    'mealFatLabel': MessageLookupByLibrary.simpleMessage('Fett (g)'),
+    'mealKcalLabel': MessageLookupByLibrary.simpleMessage('kcal'),
     'mealNameLabel': MessageLookupByLibrary.simpleMessage('Mahlzeitenname'),
-    'mealProteinLabel': MessageLookupByLibrary.simpleMessage('Protein pro 100 g/ml'),
+    'mealProteinLabel': MessageLookupByLibrary.simpleMessage('Protein (g)'),
+    'mealNutrientsPerQtyLabel': m6,
+    'mealNutrientsTotalLabel': MessageLookupByLibrary.simpleMessage('Gesamtmenge'),
     'mealSizeLabel': MessageLookupByLibrary.simpleMessage('Mahlzeitsgröße (g/ml)'),
     'mealSizeLabelImperial': MessageLookupByLibrary.simpleMessage('Mahlzeitsgröße (oz/fl oz)'),
     'mealUnitLabel': MessageLookupByLibrary.simpleMessage('Mahlzeiteinheit'),
@@ -422,6 +437,8 @@ class MessageLookup extends MessageLookupByLibrary {
     'settingsMassLabel': MessageLookupByLibrary.simpleMessage('Masse'),
     'settingsPrivacySettings': MessageLookupByLibrary.simpleMessage('Datenschutzeinstellungen'),
     'settingsReportErrorLabel': MessageLookupByLibrary.simpleMessage('Fehler melden'),
+    'settingsNotificationsLabel': MessageLookupByLibrary.simpleMessage('Tägliche Erinnerung'),
+    'settingsNotificationsTimeLabel': m7,
     'settingsSourceCodeLabel': MessageLookupByLibrary.simpleMessage('Quellcode'),
     'settingsThemeDarkLabel': MessageLookupByLibrary.simpleMessage('Dunkel'),
     'settingsThemeLabel': MessageLookupByLibrary.simpleMessage('Thema'),

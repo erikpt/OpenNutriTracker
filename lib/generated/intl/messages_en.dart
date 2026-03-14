@@ -29,6 +29,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m3(age) => "${age} years";
 
+  static m4(rate) => "${rate} kg/week";
+
+  static m5(rate) => "${rate} lbs/week";
+
+  static m6(qty, unit) => "Per ${qty} ${unit}";
+
+  static m7(time) => "Reminder time: ${time}";
+
   @override
   final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
 
@@ -114,6 +122,11 @@ class MessageLookup extends MessageLookupByLibrary {
     'genderMaleLabel': MessageLookupByLibrary.simpleMessage('♂ male'),
     'goalGainWeight': MessageLookupByLibrary.simpleMessage('Gain Weight'),
     'goalLabel': MessageLookupByLibrary.simpleMessage('Goal'),
+    'weeklyWeightGoalLabel': MessageLookupByLibrary.simpleMessage('Weekly rate'),
+    'weeklyWeightGoalNoneLabel': MessageLookupByLibrary.simpleMessage('Not set'),
+    'weeklyWeightGoalKgPerWeek': m4,
+    'weeklyWeightGoalLbsPerWeek': m5,
+    'chooseWeeklyWeightGoalLabel': MessageLookupByLibrary.simpleMessage('Weekly weight rate'),
     'goalLoseWeight': MessageLookupByLibrary.simpleMessage('Lose Weight'),
     'goalMaintainWeight': MessageLookupByLibrary.simpleMessage('Maintain Weight'),
     'gramMilliliterUnit': MessageLookupByLibrary.simpleMessage('g/ml'),
@@ -134,11 +147,13 @@ class MessageLookup extends MessageLookupByLibrary {
     'lunchLabel': MessageLookupByLibrary.simpleMessage('Lunch'),
     'macroDistributionLabel': MessageLookupByLibrary.simpleMessage('Macronutrient Distribution:'),
     'mealBrandsLabel': MessageLookupByLibrary.simpleMessage('Brands'),
-    'mealCarbsLabel': MessageLookupByLibrary.simpleMessage('carbs per'),
-    'mealFatLabel': MessageLookupByLibrary.simpleMessage('fat per'),
-    'mealKcalLabel': MessageLookupByLibrary.simpleMessage('kcal per'),
+    'mealCarbsLabel': MessageLookupByLibrary.simpleMessage('Carbohydrates (g)'),
+    'mealFatLabel': MessageLookupByLibrary.simpleMessage('Fat (g)'),
+    'mealKcalLabel': MessageLookupByLibrary.simpleMessage('kcal'),
     'mealNameLabel': MessageLookupByLibrary.simpleMessage('Meal name'),
-    'mealProteinLabel': MessageLookupByLibrary.simpleMessage('protein per 100 g/ml'),
+    'mealProteinLabel': MessageLookupByLibrary.simpleMessage('Protein (g)'),
+    'mealNutrientsPerQtyLabel': m6,
+    'mealNutrientsTotalLabel': MessageLookupByLibrary.simpleMessage('Total amount'),
     'mealSizeLabel': MessageLookupByLibrary.simpleMessage('Meal size (g/ml)'),
     'mealSizeLabelImperial': MessageLookupByLibrary.simpleMessage('Meal size (oz/fl oz)'),
     'mealUnitLabel': MessageLookupByLibrary.simpleMessage('Meal unit'),
@@ -430,6 +445,8 @@ class MessageLookup extends MessageLookupByLibrary {
     'settingsMetricLabel': MessageLookupByLibrary.simpleMessage('Metric (kg, cm, ml)'),
     'settingsPrivacySettings': MessageLookupByLibrary.simpleMessage('Privacy Settings'),
     'settingsReportErrorLabel': MessageLookupByLibrary.simpleMessage('Report Error'),
+    'settingsNotificationsLabel': MessageLookupByLibrary.simpleMessage('Daily Reminder'),
+    'settingsNotificationsTimeLabel': m7,
     'settingsSourceCodeLabel': MessageLookupByLibrary.simpleMessage('Source Code'),
     'settingsSystemLabel': MessageLookupByLibrary.simpleMessage('System'),
     'settingsThemeDarkLabel': MessageLookupByLibrary.simpleMessage('Dark'),
