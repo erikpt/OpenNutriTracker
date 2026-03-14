@@ -98,4 +98,11 @@ class ConfigDataSource {
     final config = _configBox.get(_configKey);
     return config?.hasAcceptedSendAnonymousData ?? false;
   }
+
+  Future<void> setConfigShowMicronutrients(bool show) async {
+    _log.fine('Updating config showMicronutrients to $show');
+    final config = _configBox.get(_configKey);
+    config?.showMicronutrients = show;
+    config?.save();
+  }
 }

@@ -37,4 +37,8 @@ class AddConfigUsecase {
       double carbGoalPct, double proteinGoalPct, double fatPctGoal) async {
     _configRepository.setUserMacroPct(carbGoalPct, proteinGoalPct, fatPctGoal);
   }
+
+  Future<void> setConfigShowMicronutrients(bool show) async {
+    _configRepository.setConfigShowMicronutrients(show);
+  }
 }

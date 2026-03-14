@@ -77,6 +77,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: Text(S.of(context).settingsThemeLabel),
                   onTap: () => _showThemeDialog(context, state.appTheme),
                 ),
+                SwitchListTile(
+                  secondary: const Icon(Icons.science_outlined),
+                  title: Text(S.of(context).settingsShowMicronutrientsLabel),
+                  value: state.showMicronutrients,
+                  onChanged: (bool value) {
+                    _settingsBloc.setShowMicronutrients(value);
+                    _settingsBloc.add(LoadSettingsEvent());
+                  },
+                ),
                 ListTile(
                   leading: const Icon(Icons.import_export),
                   title: Text(S.of(context).exportImportLabel),

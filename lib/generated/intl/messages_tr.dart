@@ -145,6 +145,31 @@ class MessageLookup extends MessageLookupByLibrary {
             "Dışa Aktarma / İçe Aktarma başarılı"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("yağ"),
         "fiberLabel": MessageLookupByLibrary.simpleMessage("lif"),
+        "monounsaturatedFatLabel":
+            MessageLookupByLibrary.simpleMessage("tekli doymamış yağ"),
+        "polyunsaturatedFatLabel":
+            MessageLookupByLibrary.simpleMessage("çoklu doymamış yağ"),
+        "transFatLabel": MessageLookupByLibrary.simpleMessage("trans yağ"),
+        "cholesterolLabel":
+            MessageLookupByLibrary.simpleMessage("kolesterol"),
+        "sodiumLabel": MessageLookupByLibrary.simpleMessage("sodyum"),
+        "potassiumLabel": MessageLookupByLibrary.simpleMessage("potasyum"),
+        "magnesiumLabel": MessageLookupByLibrary.simpleMessage("magnezyum"),
+        "calciumLabel": MessageLookupByLibrary.simpleMessage("kalsiyum"),
+        "ironLabel": MessageLookupByLibrary.simpleMessage("demir"),
+        "zincLabel": MessageLookupByLibrary.simpleMessage("çinko"),
+        "phosphorusLabel": MessageLookupByLibrary.simpleMessage("fosfor"),
+        "vitaminALabel": MessageLookupByLibrary.simpleMessage("A vitamini"),
+        "vitaminCLabel": MessageLookupByLibrary.simpleMessage("C vitamini"),
+        "vitaminDLabel": MessageLookupByLibrary.simpleMessage("D vitamini"),
+        "vitaminB6Label": MessageLookupByLibrary.simpleMessage("B6 vitamini"),
+        "vitaminB12Label":
+            MessageLookupByLibrary.simpleMessage("B12 vitamini"),
+        "niacinLabel": MessageLookupByLibrary.simpleMessage("niasin (B3)"),
+        "micronutrientsLabel":
+            MessageLookupByLibrary.simpleMessage("Mikro besinler"),
+        "settingsShowMicronutrientsLabel":
+            MessageLookupByLibrary.simpleMessage("Mikro besinleri göster"),
         "flOzUnit": MessageLookupByLibrary.simpleMessage("fl.oz"),
         "ftLabel": MessageLookupByLibrary.simpleMessage("ft"),
         "genderFemaleLabel": MessageLookupByLibrary.simpleMessage("♀ kadın"),

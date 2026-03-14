@@ -148,6 +148,31 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Export / Import erfolgreich"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("Fett"),
         "fiberLabel": MessageLookupByLibrary.simpleMessage("Ballaststoffe"),
+        "monounsaturatedFatLabel": MessageLookupByLibrary.simpleMessage(
+            "einfach ungesättigte Fettsäuren"),
+        "polyunsaturatedFatLabel": MessageLookupByLibrary.simpleMessage(
+            "mehrfach ungesättigte Fettsäuren"),
+        "transFatLabel":
+            MessageLookupByLibrary.simpleMessage("Transfettsäuren"),
+        "cholesterolLabel":
+            MessageLookupByLibrary.simpleMessage("Cholesterin"),
+        "sodiumLabel": MessageLookupByLibrary.simpleMessage("Natrium"),
+        "potassiumLabel": MessageLookupByLibrary.simpleMessage("Kalium"),
+        "magnesiumLabel": MessageLookupByLibrary.simpleMessage("Magnesium"),
+        "calciumLabel": MessageLookupByLibrary.simpleMessage("Calcium"),
+        "ironLabel": MessageLookupByLibrary.simpleMessage("Eisen"),
+        "zincLabel": MessageLookupByLibrary.simpleMessage("Zink"),
+        "phosphorusLabel": MessageLookupByLibrary.simpleMessage("Phosphor"),
+        "vitaminALabel": MessageLookupByLibrary.simpleMessage("Vitamin A"),
+        "vitaminCLabel": MessageLookupByLibrary.simpleMessage("Vitamin C"),
+        "vitaminDLabel": MessageLookupByLibrary.simpleMessage("Vitamin D"),
+        "vitaminB6Label": MessageLookupByLibrary.simpleMessage("Vitamin B6"),
+        "vitaminB12Label": MessageLookupByLibrary.simpleMessage("Vitamin B12"),
+        "niacinLabel": MessageLookupByLibrary.simpleMessage("Niacin (B3)"),
+        "micronutrientsLabel":
+            MessageLookupByLibrary.simpleMessage("Mikronährstoffe"),
+        "settingsShowMicronutrientsLabel":
+            MessageLookupByLibrary.simpleMessage("Mikronährstoffe anzeigen"),
         "flOzUnit": MessageLookupByLibrary.simpleMessage("fl.oz"),
         "genderFemaleLabel": MessageLookupByLibrary.simpleMessage("♀ weiblich"),
         "genderLabel": MessageLookupByLibrary.simpleMessage("Geschlecht"),

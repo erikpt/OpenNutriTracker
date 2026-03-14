@@ -40,7 +40,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           appVersion,
           userConfig.hasAcceptedSendAnonymousData,
           userConfig.appTheme,
-          usesImperialUnits));
+          usesImperialUnits,
+          showMicronutrients: userConfig.showMicronutrients));
     });
   }
 
@@ -84,6 +85,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       double carbGoalPct, double proteinGoalPct, double fatGoalPct) {
     _addConfigUsecase.setConfigMacroGoalPct(carbGoalPct.toInt() / 100,
         proteinGoalPct.toInt() / 100, fatGoalPct.toInt() / 100);
+  }
+
+  void setShowMicronutrients(bool show) {
+    _addConfigUsecase.setConfigShowMicronutrients(show);
   }
 
   void updateTrackedDay(DateTime day) async {

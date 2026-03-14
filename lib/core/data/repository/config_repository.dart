@@ -63,4 +63,8 @@ class ConfigRepository {
     _configDataSource.setConfigProteinGoalPct(protein);
     _configDataSource.setConfigFatGoalPct(fat);
   }
+
+  Future<void> setConfigShowMicronutrients(bool show) async {
+    _configDataSource.setConfigShowMicronutrients(show);
+  }
 }

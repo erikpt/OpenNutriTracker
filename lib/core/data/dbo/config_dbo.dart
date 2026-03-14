@@ -26,6 +26,8 @@ class ConfigDBO extends HiveObject {
   double? userProteinGoalPct;
   @HiveField(8)
   double? userFatGoalPct;
+  @HiveField(9)
+  bool? showMicronutrients; // #237: null means default (false)
 
   ConfigDBO(this.hasAcceptedDisclaimer, this.hasAcceptedPolicy,
       this.hasAcceptedSendAnonymousData, this.selectedAppTheme,

@@ -146,6 +146,28 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Export / Import successful"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("fat"),
         "fiberLabel": MessageLookupByLibrary.simpleMessage("fiber"),
+        "monounsaturatedFatLabel":
+            MessageLookupByLibrary.simpleMessage("monounsaturated fat"),
+        "polyunsaturatedFatLabel":
+            MessageLookupByLibrary.simpleMessage("polyunsaturated fat"),
+        "transFatLabel": MessageLookupByLibrary.simpleMessage("trans fat"),
+        "cholesterolLabel":
+            MessageLookupByLibrary.simpleMessage("cholesterol"),
+        "sodiumLabel": MessageLookupByLibrary.simpleMessage("sodium"),
+        "potassiumLabel": MessageLookupByLibrary.simpleMessage("potassium"),
+        "magnesiumLabel": MessageLookupByLibrary.simpleMessage("magnesium"),
+        "calciumLabel": MessageLookupByLibrary.simpleMessage("calcium"),
+        "ironLabel": MessageLookupByLibrary.simpleMessage("iron"),
+        "zincLabel": MessageLookupByLibrary.simpleMessage("zinc"),
+        "phosphorusLabel": MessageLookupByLibrary.simpleMessage("phosphorus"),
+        "vitaminALabel": MessageLookupByLibrary.simpleMessage("vitamin A"),
+        "vitaminCLabel": MessageLookupByLibrary.simpleMessage("vitamin C"),
+        "vitaminDLabel": MessageLookupByLibrary.simpleMessage("vitamin D"),
+        "vitaminB6Label": MessageLookupByLibrary.simpleMessage("vitamin B6"),
+        "vitaminB12Label": MessageLookupByLibrary.simpleMessage("vitamin B12"),
+        "niacinLabel": MessageLookupByLibrary.simpleMessage("niacin (B3)"),
+        "micronutrientsLabel":
+            MessageLookupByLibrary.simpleMessage("Micronutrients"),
         "flOzUnit": MessageLookupByLibrary.simpleMessage("fl.oz"),
         "ftLabel": MessageLookupByLibrary.simpleMessage("ft"),
         "genderFemaleLabel": MessageLookupByLibrary.simpleMessage("♀ female"),
@@ -639,6 +661,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Distance"),
         "settingsImperialLabel":
             MessageLookupByLibrary.simpleMessage("Imperial (lbs, ft, oz)"),
+        "settingsShowMicronutrientsLabel":
+            MessageLookupByLibrary.simpleMessage("Show Micronutrients"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Settings"),
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Licenses"),
