@@ -1,114 +1,82 @@
 # OpenNutriTracker — Overall Work Plan
 
-**Branch:** `erikpt/fix-issue-263-keyboard-dismissal`
-**PR:** #313 → simonoppowa/OpenNutriTracker
-**Last Updated:** 2026-03-11
+**Source of truth:** `erikpt/OpenNutriTracker` — `main`
+**Last Updated:** 2026-03-14
+
+All new branches must be cut from `erikpt/main`. PRs target fork `main` first, then upstream.
 
 ---
 
-## ✅ COMPLETED
+## ✅ COMPLETED (in main)
 
 ### Critical Bugs
-- ✅ **#262/#239/#220** — Keyboard dismissal / IME focus loss (add_meal_screen.dart)
-- ✅ **#212** — Duplicate food warning dialog (meal_detail_bottom_sheet.dart)
-- ✅ **#182 (partial)** — Diary date range (tracked_day_data_source.dart, from PR #6)
 - ✅ **#154** — Diary navigation after future entry (PR #6)
-
-### Input Validation
-- ✅ **#199** — Future birth dates (`lastDate: DateTime.now()`)
-- ✅ **#200/#201** — Zero weight/height
-- ✅ **#204** — Max height 15ft/457cm
-- ✅ **#207** — Future dates in diary calendar
-- ✅ **#208** — Activity indicator stale after deletion
-- ✅ **#209/#210** — Quantity > 0, ≤ 10000
-- ✅ **#211** — Meal name must contain a letter
-- ✅ **#214** — Custom food name required
-- ✅ **#215** — Save blocked: fixed (name is only required field for custom meals)
-- ✅ **#216/#217** — Negative weight/height
-- ✅ **#244** — Decimal weight
-- ✅ **#253** — Imperial weight minimum
-
-### Data Quality
+- ✅ **#182** — Diary kcal display and stale cache self-heal
+- ✅ **#212** — Duplicate food warning dialog
+- ✅ **#213** — Nutritional consistency validation (macros ≤ base qty, kcal ≤ base×9)
+- ✅ **#222** — FDC import validation
 - ✅ **#252** — FDC Atwater energy priority: 1008 → 958 → 957
+- ✅ **#262/#239/#220** — Keyboard dismissal / IME focus loss
 - ✅ **#288/#242** — Weight field showed "invalid height" error
 - ✅ **#306** — OFF search crash (null nutriments)
 
-### UX / Features
-- ✅ **#118/#143/#151** — Yoga, HIIT, calisthenics/squats added to activities
-- ✅ **#243** — "Next" keyboard action on height picker
+### Input Validation
+- ✅ **#199** — Future birth dates blocked
+- ✅ **#200/#201** — Zero weight/height prevented
+- ✅ **#204** — Max height 15ft/457cm
+- ✅ **#207** — Future dates in diary calendar blocked
+- ✅ **#208** — Activity indicator stale after deletion
+- ✅ **#209/#210** — Quantity > 0 and ≤ 10,000
+- ✅ **#211** — Meal name must contain a letter
+- ✅ **#214** — Custom food name required
+- ✅ **#216/#217** — Negative weight/height prevented
+- ✅ **#244** — Decimal weight supported
+- ✅ **#253** — Imperial weight minimum 20 lbs
+
+### Features / UX
+- ✅ **#118/#143/#151** — Yoga (2.5 MET), HIIT (8.0 MET), calisthenics (8.0 MET)
+- ✅ **#174/#267** — Custom meal templates persisted for discoverability
+- ✅ **#232** — Total nutrient input mode for custom meals
+- ✅ **#235** — Macro display per food item and meal
+- ✅ **#277** — Disable activity tracking (settings toggle)
 - ✅ **#282** — German l10n for unit system names
-- ✅ **#291** — Recent meals extended to 500
-- ✅ **#309** — Exceeded kcal display (red "X kcal exceeded")
+- ✅ **#291** — Recent meals list extended to 500
+- ✅ **#309** — Exceeded kcal shown in red ("X kcal exceeded")
 
-### Technical Debt (PR #7)
-- ✅ DayRating enum for calorie goal rating colors
-- ✅ assert → null guard in home_bloc.dart
-- ✅ use_build_context_synchronously crash in meal_detail_bottom_sheet.dart
+### Micronutrients (PR #8 / upstream PR #314 — open, pending merge)
+- ✅ **#237** — Full micronutrient tracking: 17 fields (lipids, minerals, vitamins), Settings toggle, EN/DE/TR l10n
 
 ---
 
-## 🔥 PRIORITY 1: REMAINING BUGS
+## 🎯 NEXT: OPEN ISSUES
 
-### #213 — Nonsensical nutritional info accepted
-- **Problem:** App accepts sugar > carbs, saturated fat > total fat, total macros > 100g per 100g
-- **File:** `lib/features/add_meal/domain/entity/meal_nutriments_entity.dart`
-- **Fix:** Add consistency validation in `fromOff/fromFDC` factories or in edit_meal_screen save
+### Low/Medium Effort
+| # | Title | Notes |
+|---|---|---|
+| **#281** | Update weight on landing screen | Home screen shortcut widget |
+| **#290** | Update to 2024 Compendium of Physical Activities | MET data update |
+| **#292** | Diary overwrites after 1 year | Hive key collision bug |
+| **#297** | Manual kcal/macro input in calculations | Text input instead of sliders |
 
-### #182 — Invalid diary display (0 kcal for some days)
-- **Problem:** Some days show 0 kcal even though food was logged
-- **File:** `lib/core/data/data_source/tracked_day_data_source.dart`
-- **Fix:** Inclusive date range comparison (may already be partially fixed)
+### Medium Effort
+| # | Title | Notes |
+|---|---|---|
+| **#284** | Weekly weight goal | New goal type, affects kcal calc |
+| **#298** | Custom food item creation UI | Improve UX for adding custom foods |
+| **#312** | Notification reminders | Platform notification API |
 
----
-
-## 🎯 PRIORITY 2: HIGH-VALUE FEATURES
-
-### #235 — Display macros per food item and meal
-- **Impact:** High visibility — users want to see carbs/fat/protein per item
-- **Files:** `lib/features/home/presentation/widgets/intake_vertical_list.dart`
-- **Effort:** Low (UI addition only)
-
-### #267/#174 — Custom/user-created meals not findable before first add
-- **Problem:** Custom meals only appear in "Recently Added" after being logged once
-- **Fix options:** (a) Store custom meals in a separate Hive box, search it alongside recent; (b) Document as expected behavior
-- **Effort:** Medium
-
-### #277 — Option to disable activity tracking
-- **Problem:** Users who don't track activity can't hide the activity section
-- **Fix:** Settings toggle to show/hide activity on home screen
-- **Effort:** Medium
-
-### #232 — Direct macro input for custom meals
-- **Problem:** Custom meal creation requires entering per-100g values; no option to input total macros
-- **Effort:** Medium
+### High Effort
+| # | Title | Notes |
+|---|---|---|
+| **#279** | Multi-ingredient meals | Most requested; significant data model work |
 
 ---
 
-## 🚀 PRIORITY 3: LARGER FEATURES
+## 📊 Status Summary
 
-### #279 — Multi-ingredient meal composition (most requested)
-- **Problem:** Can't create a meal from multiple food items
-- **Effort:** High (1-2 days)
-
-### #222 — FDC import validation
-- **Problem:** Bad data from FDC (e.g., fiber 20x too high, sugar > carbs)
-- **Note:** Was implemented in PR #4 then reverted in PR #5
-- **Fix:** Re-implement validation with sanitisation rules
-- **Effort:** High
-
-### #284 — Weekly weight goal
-- **Effort:** Medium
-
-### #237 — Micronutrient tracking
-- **Effort:** High (data model changes)
-
----
-
-## 📊 Status by Priority
-
-| Priority | Count Done | Total | % |
-|:---------|:----------:|:-----:|:-:|
-| Critical bugs | 15+ | ~18 | ~85% |
-| Input validation | 12 | 12 | 100% |
-| Features | 5 | 20+ | ~25% |
-| L10n / i18n | 2 | 5+ | ~40% |
+| Category | Done | Remaining |
+|:---------|:----:|:---------:|
+| Bug fixes | 14 | 1 (#292) |
+| Input validation | 11 | 0 |
+| Features / UX | 9 | 7 |
+| Micronutrients | 1 (PR open) | 0 |
