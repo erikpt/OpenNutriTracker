@@ -68,6 +68,10 @@ class ConfigRepository {
     _configDataSource.setConfigFatGoalPct(fat);
   }
 
+  Future<void> setConfigShowMicronutrients(bool show) async {
+    _configDataSource.setConfigShowMicronutrients(show);
+  }
+
   // #312: Notification reminder settings
   Future<void> setNotificationsEnabled(bool enabled) async {
     _configDataSource.setNotificationsEnabled(enabled);

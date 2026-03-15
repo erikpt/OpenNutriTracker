@@ -88,6 +88,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _homeBloc.add(LoadItemsEvent());
                   },
                 ),
+                SwitchListTile(
+                  secondary: const Icon(Icons.science_outlined),
+                  title: Text(S.of(context).settingsShowMicronutrientsLabel),
+                  value: state.showMicronutrients,
+                  onChanged: (bool value) {
+                    _settingsBloc.setShowMicronutrients(value);
+                    _settingsBloc.add(LoadSettingsEvent());
+                  },
+                ),
                 // #312: Daily reminder notification toggle + time picker
                 SwitchListTile(
                   secondary: const Icon(Icons.notifications_outlined),

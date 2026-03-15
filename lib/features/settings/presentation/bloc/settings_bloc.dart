@@ -44,7 +44,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           showActivityTracking: userConfig.showActivityTracking,
           notificationsEnabled: userConfig.notificationsEnabled,
           notificationHour: userConfig.notificationHour,
-          notificationMinute: userConfig.notificationMinute));
+          notificationMinute: userConfig.notificationMinute,
+          showMicronutrients: userConfig.showMicronutrients));
     });
   }
 
@@ -101,6 +102,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       double carbGoalPct, double proteinGoalPct, double fatGoalPct) {
     _addConfigUsecase.setConfigMacroGoalPct(carbGoalPct.toInt() / 100,
         proteinGoalPct.toInt() / 100, fatGoalPct.toInt() / 100);
+  }
+
+  void setShowMicronutrients(bool show) {
+    _addConfigUsecase.setConfigShowMicronutrients(show);
   }
 
   void updateTrackedDay(DateTime day) async {

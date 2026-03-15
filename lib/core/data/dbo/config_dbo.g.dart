@@ -30,13 +30,14 @@ class ConfigDBOAdapter extends TypeAdapter<ConfigDBO> {
       ..showActivityTracking = fields[9] as bool?
       ..notificationsEnabled = fields[10] as bool?
       ..notificationHour = fields[11] as int?
-      ..notificationMinute = fields[12] as int?;
+      ..notificationMinute = fields[12] as int?
+      ..showMicronutrients = fields[13] as bool?;
   }
 
   @override
   void write(BinaryWriter writer, ConfigDBO obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.hasAcceptedDisclaimer)
       ..writeByte(1)
@@ -62,7 +63,9 @@ class ConfigDBOAdapter extends TypeAdapter<ConfigDBO> {
       ..writeByte(11)
       ..write(obj.notificationHour)
       ..writeByte(12)
-      ..write(obj.notificationMinute);
+      ..write(obj.notificationMinute)
+      ..writeByte(13)
+      ..write(obj.showMicronutrients);
   }
 
   @override
@@ -94,7 +97,8 @@ ConfigDBO _$ConfigDBOFromJson(Map<String, dynamic> json) => ConfigDBO(
       ..showActivityTracking = json['showActivityTracking'] as bool?
       ..notificationsEnabled = json['notificationsEnabled'] as bool?
       ..notificationHour = (json['notificationHour'] as num?)?.toInt()
-      ..notificationMinute = (json['notificationMinute'] as num?)?.toInt();
+      ..notificationMinute = (json['notificationMinute'] as num?)?.toInt()
+      ..showMicronutrients = json['showMicronutrients'] as bool?;
 
 Map<String, dynamic> _$ConfigDBOToJson(ConfigDBO instance) => <String, dynamic>{
       'hasAcceptedDisclaimer': instance.hasAcceptedDisclaimer,
@@ -110,6 +114,7 @@ Map<String, dynamic> _$ConfigDBOToJson(ConfigDBO instance) => <String, dynamic>{
       'notificationsEnabled': instance.notificationsEnabled,
       'notificationHour': instance.notificationHour,
       'notificationMinute': instance.notificationMinute,
+      'showMicronutrients': instance.showMicronutrients,
     };
 
 const _$AppThemeDBOEnumMap = {
