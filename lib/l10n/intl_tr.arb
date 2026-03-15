@@ -459,5 +459,15 @@
   "paSkiingGeneral": "kayak",
   "paSkiingGeneralDesc": "genel",
   "paSnowShovingModerate": "kar küreme",
-  "paSnowShovingModerateDesc": "elle, orta derecede çaba"
+  "paSnowShovingModerateDesc": "elle, orta derecede çaba",
+  "waterLabel": "Su",
+  "waterDailyGoalLabel": "Günlük hedef: {goal}",
+  "@waterDailyGoalLabel": {
+    "placeholders": {
+      "goal": { "type": "String" }
+    }
+  },
+  "waterAddAmountLabel": "Su ekle",
+  "waterCustomAmountLabel": "Özel miktar (ml)",
+  "waterDeleteLabel": "Sil"
 }

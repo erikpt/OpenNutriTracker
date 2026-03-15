@@ -464,5 +464,15 @@
   "paSkiingGeneral": "skiing",
   "paSkiingGeneralDesc": "general",
   "paSnowShovingModerate": "snow shoveling",
-  "paSnowShovingModerateDesc": "by hand, moderate effort"
+  "paSnowShovingModerateDesc": "by hand, moderate effort",
+  "waterLabel": "Water",
+  "waterDailyGoalLabel": "Daily goal: {goal}",
+  "@waterDailyGoalLabel": {
+    "placeholders": {
+      "goal": { "type": "String" }
+    }
+  },
+  "waterAddAmountLabel": "Add water",
+  "waterCustomAmountLabel": "Custom amount (ml)",
+  "waterDeleteLabel": "Delete"
 }

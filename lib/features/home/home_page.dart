@@ -5,6 +5,7 @@ import 'package:opennutritracker/core/domain/entity/intake_entity.dart';
 import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
 import 'package:opennutritracker/core/domain/entity/tracked_day_entity.dart';
 import 'package:opennutritracker/core/domain/entity/user_activity_entity.dart';
+import 'package:opennutritracker/core/domain/entity/water_intake_entity.dart';
 import 'package:opennutritracker/core/presentation/widgets/activity_vertial_list.dart';
 import 'package:opennutritracker/core/presentation/widgets/edit_dialog.dart';
 import 'package:opennutritracker/core/presentation/widgets/delete_dialog.dart';
@@ -15,6 +16,7 @@ import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart'
 import 'package:opennutritracker/features/home/presentation/widgets/dashboard_widget.dart';
 import 'package:opennutritracker/features/home/presentation/widgets/intake_vertical_list.dart';
 import 'package:opennutritracker/features/home/presentation/widgets/quick_weight_widget.dart';
+import 'package:opennutritracker/features/home/presentation/widgets/water_widget.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
 class HomePage extends StatefulWidget {
@@ -73,7 +75,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               state.snackIntakeList,
               state.userActivityList,
               state.usesImperialUnits,
-              state.showActivityTracking);
+              state.showActivityTracking,
+              state.waterIntakesToday);
         } else {
           return _getLoadingContent();
         }
@@ -115,7 +118,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       List<IntakeEntity> snackIntakeList,
       List<UserActivityEntity> userActivities,
       bool usesImperialUnits,
-      bool showActivityTracking) {
+      bool showActivityTracking,
+      List<WaterIntakeEntity> waterIntakesToday) {
     if (showDisclaimerDialog) {
       _showDisclaimerDialog(context);
     }
@@ -184,6 +188,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           onDeleteIntakeCallback: onDeleteIntake,
           onItemDragCallback: onIntakeItemDrag,
           onItemTappedCallback: onIntakeItemTapped,
+          usesImperialUnits: usesImperialUnits,
+        ),
+        WaterWidget(
+          waterIntakes: waterIntakesToday,
           usesImperialUnits: usesImperialUnits,
         ),
         const SizedBox(height: 48.0)
