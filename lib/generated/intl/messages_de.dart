@@ -37,6 +37,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m7(time) => "Erinnerungszeit: ${time}";
 
+  static m8(goal) => "Tagesziel: ${goal}";
+
   @override
   final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
 
@@ -472,6 +474,11 @@ class MessageLookup extends MessageLookupByLibrary {
     'vitaminCLabel': MessageLookupByLibrary.simpleMessage('Vitamin C'),
     'vitaminDLabel': MessageLookupByLibrary.simpleMessage('Vitamin D'),
     'zincLabel': MessageLookupByLibrary.simpleMessage('Zink'),
-    'yearsLabel': m3
+    'yearsLabel': m3,
+    'waterLabel': MessageLookupByLibrary.simpleMessage('Wasser'),
+    'waterDailyGoalLabel': m8,
+    'waterAddAmountLabel': MessageLookupByLibrary.simpleMessage('Wasser hinzufügen'),
+    'waterCustomAmountLabel': MessageLookupByLibrary.simpleMessage('Benutzerdefinierte Menge (ml)'),
+    'waterDeleteLabel': MessageLookupByLibrary.simpleMessage('Löschen')
   };
 }

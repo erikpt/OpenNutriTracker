@@ -4386,6 +4386,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Water`
+  String get waterLabel {
+    return Intl.message(
+      'Water',
+      name: 'waterLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily goal: {goal}`
+  String waterDailyGoalLabel(String goal) {
+    return Intl.message(
+      'Daily goal: $goal',
+      name: 'waterDailyGoalLabel',
+      desc: '',
+      args: [goal],
+    );
+  }
+
+  /// `Add water`
+  String get waterAddAmountLabel {
+    return Intl.message(
+      'Add water',
+      name: 'waterAddAmountLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Custom amount (ml)`
+  String get waterCustomAmountLabel {
+    return Intl.message(
+      'Custom amount (ml)',
+      name: 'waterCustomAmountLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get waterDeleteLabel {
+    return Intl.message(
+      'Delete',
+      name: 'waterDeleteLabel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

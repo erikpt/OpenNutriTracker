@@ -37,6 +37,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m7(time) => "Hatırlatma zamanı: ${time}";
 
+  static m8(goal) => "Günlük hedef: ${goal}";
+
   @override
   final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
 
@@ -480,6 +482,11 @@ class MessageLookup extends MessageLookupByLibrary {
     'vitaminCLabel': MessageLookupByLibrary.simpleMessage('C vitamini'),
     'vitaminDLabel': MessageLookupByLibrary.simpleMessage('D vitamini'),
     'zincLabel': MessageLookupByLibrary.simpleMessage('çinko'),
-    'yearsLabel': m3
+    'yearsLabel': m3,
+    'waterLabel': MessageLookupByLibrary.simpleMessage('Su'),
+    'waterDailyGoalLabel': m8,
+    'waterAddAmountLabel': MessageLookupByLibrary.simpleMessage('Su ekle'),
+    'waterCustomAmountLabel': MessageLookupByLibrary.simpleMessage('Özel miktar (ml)'),
+    'waterDeleteLabel': MessageLookupByLibrary.simpleMessage('Sil')
   };
 }

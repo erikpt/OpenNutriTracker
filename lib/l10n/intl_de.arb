@@ -452,5 +452,15 @@
   "paSkiingGeneral": "Skifahren",
   "paSkiingGeneralDesc": "allgemein",
   "paSnowShovingModerate": "Schnee schaufeln",
-  "paSnowShovingModerateDesc": "manuell, mäßige Anstrengung"
+  "paSnowShovingModerateDesc": "manuell, mäßige Anstrengung",
+  "waterLabel": "Wasser",
+  "waterDailyGoalLabel": "Tagesziel: {goal}",
+  "@waterDailyGoalLabel": {
+    "placeholders": {
+      "goal": { "type": "String" }
+    }
+  },
+  "waterAddAmountLabel": "Wasser hinzufügen",
+  "waterCustomAmountLabel": "Benutzerdefinierte Menge (ml)",
+  "waterDeleteLabel": "Löschen"
 }

@@ -7,17 +7,20 @@ import 'package:opennutritracker/core/data/data_source/physical_activity_data_so
 import 'package:opennutritracker/core/data/data_source/tracked_day_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/user_activity_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/user_data_source.dart';
+import 'package:opennutritracker/core/data/data_source/water_data_source.dart';
 import 'package:opennutritracker/core/data/repository/config_repository.dart';
 import 'package:opennutritracker/core/data/repository/intake_repository.dart';
 import 'package:opennutritracker/core/data/repository/physical_activity_repository.dart';
 import 'package:opennutritracker/core/data/repository/tracked_day_repository.dart';
 import 'package:opennutritracker/core/data/repository/user_activity_repository.dart';
 import 'package:opennutritracker/core/data/repository/user_repository.dart';
+import 'package:opennutritracker/core/data/repository/water_repository.dart';
 import 'package:opennutritracker/core/domain/usecase/add_config_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/add_intake_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/add_tracked_day_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/add_user_activity_usercase.dart';
 import 'package:opennutritracker/core/domain/usecase/add_user_usecase.dart';
+import 'package:opennutritracker/core/domain/usecase/add_water_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/delete_intake_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/delete_user_activity_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/get_config_usecase.dart';
@@ -28,6 +31,7 @@ import 'package:opennutritracker/core/domain/usecase/get_physical_activity_useca
 import 'package:opennutritracker/core/domain/usecase/get_tracked_day_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/get_user_activity_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/get_user_usecase.dart';
+import 'package:opennutritracker/core/domain/usecase/get_water_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/update_intake_usecase.dart';
 import 'package:opennutritracker/core/utils/env.dart';
 import 'package:opennutritracker/core/utils/hive_db_provider.dart';
@@ -86,6 +90,7 @@ Future<void> initLocator() async {
   locator.registerLazySingleton<OnboardingBloc>(
       () => OnboardingBloc(locator(), locator()));
   locator.registerLazySingleton<HomeBloc>(() => HomeBloc(
+      locator(),
       locator(),
       locator(),
       locator(),
@@ -160,6 +165,10 @@ Future<void> initLocator() async {
       () => ExportDataUsecase(locator(), locator(), locator()));
   locator.registerLazySingleton(
       () => ImportDataUsecase(locator(), locator(), locator()));
+  locator.registerLazySingleton<AddWaterUsecase>(
+      () => AddWaterUsecase(locator()));
+  locator.registerLazySingleton<GetWaterUsecase>(
+      () => GetWaterUsecase(locator()));
 
   // Repositories
   locator.registerLazySingleton(() => ConfigRepository(locator()));
@@ -175,6 +184,8 @@ Future<void> initLocator() async {
       () => PhysicalActivityRepository(locator()));
   locator.registerLazySingleton<TrackedDayRepository>(
       () => TrackedDayRepository(locator()));
+  locator.registerLazySingleton<WaterRepository>(
+      () => WaterRepository(locator()));
 
   // DataSources
   locator
@@ -194,6 +205,8 @@ Future<void> initLocator() async {
       () => TrackedDayDataSource(hiveDBProvider.trackedDayBox));
   locator.registerLazySingleton(
       () => CustomMealDataSource(hiveDBProvider.customMealBox)); // #267
+  locator.registerLazySingleton<WaterDataSource>(
+      () => WaterDataSource(hiveDBProvider.waterIntakeBox));
 
   await _initializeConfig(locator());
   await _migrateTrackedDays(locator());
