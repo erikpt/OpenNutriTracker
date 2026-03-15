@@ -63,7 +63,7 @@ class IntakeDataSource {
         .toList();
   }
 
-  Future<List<IntakeDBO>> getRecentlyAddedIntake({int number = 100}) async {
+  Future<List<IntakeDBO>> getRecentlyAddedIntake({int number = 500}) async { // #291: Extend recent list
     final intakeList = _intakeBox.values.toList();
 
     //  sort list by date (newest first) and filter unique intake

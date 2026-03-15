@@ -124,4 +124,10 @@ class TrackedDayRepository {
         fatAmount: fatTracked,
         proteinAmount: proteinTracked);
   }
+
+  Future<void> reconcileDayTracked(DateTime day,
+      double calories, double carbs, double fat, double protein) async {
+    await _trackedDayDataSource.reconcileCaloriesAndMacrosTracked(
+        day, calories, carbs, fat, protein);
+  }
 }

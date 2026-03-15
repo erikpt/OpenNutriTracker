@@ -15,6 +15,13 @@ class SetHeightDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double selectedHeight = userHeight;
+    // Ensure minValue doesn't go negative
+    final minHeight = usesImperialUnits ? 1.0 : 50.0;
+    final calculatedMin = usesImperialUnits
+        ? selectedHeight - _heightRangeFt
+        : selectedHeight - _heightRangeCM;
+    final actualMin = calculatedMin > minHeight ? calculatedMin : minHeight;
+    
     return AlertDialog(
       title: Text(S.of(context).selectHeightDialogLabel),
       content: Wrap(
@@ -24,9 +31,7 @@ class SetHeightDialog extends StatelessWidget {
               HorizontalPicker(
                   height: 100,
                   backgroundColor: Colors.transparent,
-                  minValue: usesImperialUnits
-                      ? selectedHeight - _heightRangeFt
-                      : selectedHeight - _heightRangeCM,
+                  minValue: actualMin,
                   maxValue: usesImperialUnits
                       ? selectedHeight + _heightRangeFt
                       : selectedHeight + _heightRangeCM,
@@ -49,7 +54,21 @@ class SetHeightDialog extends StatelessWidget {
             child: Text(S.of(context).dialogCancelLabel)),
         TextButton(
             onPressed: () {
-              // TODO validate selected height
+              // Validate selected height (prevent negative and unrealistic values)
+              if (selectedHeight <= 0) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('${S.of(context).selectHeightDialogLabel} must be greater than 0')),
+                );
+                return;
+              }
+              // Maximum reasonable height check (8 feet / 244 cm)
+              final maxHeight = usesImperialUnits ? 8.0 : 244.0;
+              if (selectedHeight > maxHeight) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('${S.of(context).selectHeightDialogLabel} seems unrealistic')),
+                );
+                return;
+              }
               Navigator.pop(context, selectedHeight);
             },
             child: Text(S.of(context).dialogOKLabel))

@@ -63,10 +63,17 @@ class _IntakeVerticalListState extends State<IntakeVerticalList> {
     super.initState();
   }
 
-  double get totalKcal {
-    return widget.intakeList
-        .fold(0, (previousValue, element) => previousValue + element.totalKcal);
-  }
+  double get totalKcal =>
+      widget.intakeList.fold(0, (sum, e) => sum + e.totalKcal);
+
+  double get totalCarbs =>
+      widget.intakeList.fold(0, (sum, e) => sum + e.totalCarbsGram);
+
+  double get totalFat =>
+      widget.intakeList.fold(0, (sum, e) => sum + e.totalFatsGram);
+
+  double get totalProtein =>
+      widget.intakeList.fold(0, (sum, e) => sum + e.totalProteinsGram);
 
   @override
   Widget build(BuildContext context) {
@@ -89,13 +96,26 @@ class _IntakeVerticalListState extends State<IntakeVerticalList> {
               ),
               const Spacer(),
               if (totalKcal > 0) ...[
-                Text(
-                  '${totalKcal.toInt()} ${S.of(context).kcalLabel}',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withValues(alpha: 0.7)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      '${totalKcal.toInt()} ${S.of(context).kcalLabel}',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.7)),
+                    ),
+                    Text(
+                      'C ${totalCarbs.toInt()}g · F ${totalFat.toInt()}g · P ${totalProtein.toInt()}g',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.5)),
+                    ),
+                  ],
                 ),
                 PopupMenuButton<VerticalListPopupMenuSelections>(
                     onSelected:

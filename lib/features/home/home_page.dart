@@ -14,6 +14,7 @@ import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.da
 import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart';
 import 'package:opennutritracker/features/home/presentation/widgets/dashboard_widget.dart';
 import 'package:opennutritracker/features/home/presentation/widgets/intake_vertical_list.dart';
+import 'package:opennutritracker/features/home/presentation/widgets/quick_weight_widget.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
 class HomePage extends StatefulWidget {
@@ -71,7 +72,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               state.dinnerIntakeList,
               state.snackIntakeList,
               state.userActivityList,
-              state.usesImperialUnits);
+              state.usesImperialUnits,
+              state.showActivityTracking);
         } else {
           return _getLoadingContent();
         }
@@ -112,12 +114,15 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       List<IntakeEntity> dinnerIntakeList,
       List<IntakeEntity> snackIntakeList,
       List<UserActivityEntity> userActivities,
-      bool usesImperialUnits) {
+      bool usesImperialUnits,
+      bool showActivityTracking) {
     if (showDisclaimerDialog) {
       _showDisclaimerDialog(context);
     }
     return Stack(children: [
       ListView(children: [
+        QuickWeightWidget(usesImperialUnits: usesImperialUnits),
+        const SizedBox(height: 8.0),
         DashboardWidget(
           totalKcalDaily: totalKcalDaily,
           totalKcalLeft: totalKcalLeft,
@@ -130,12 +135,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           totalFatsGoal: totalFatsGoal,
           totalProteinsGoal: totalProteinsGoal,
         ),
-        ActivityVerticalList(
-          day: DateTime.now(),
-          title: S.of(context).activityLabel,
-          userActivityList: userActivities,
-          onItemLongPressedCallback: onActivityItemLongPressed,
-        ),
+        if (showActivityTracking)
+          ActivityVerticalList(
+            day: DateTime.now(),
+            title: S.of(context).activityLabel,
+            userActivityList: userActivities,
+            onItemLongPressedCallback: onActivityItemLongPressed,
+          ),
         IntakeVerticalList(
           day: DateTime.now(),
           title: S.of(context).breakfastLabel,

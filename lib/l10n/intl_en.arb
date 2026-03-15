@@ -5,6 +5,8 @@
   "alphaVersionName": "[Alpha]",
   "betaVersionName": "[Beta]",
   "addLabel": "Add",
+  "warningLabel": "Warning",
+  "duplicateMealDialogContent": "This food has already been added to this meal today. Add it again?",
   "createCustomDialogTitle": "Create custom meal item?",
   "createCustomDialogContent": "Do you want create a custom meal item?",
   "settingsLabel": "Settings",
@@ -58,6 +60,14 @@
   "settingsDisclaimerLabel": "Disclaimer",
   "settingsReportErrorLabel": "Report Error",
   "settingsPrivacySettings": "Privacy Settings",
+  "settingsShowActivityTracking": "Show Activity Tracking",
+  "settingsNotificationsLabel": "Daily Reminder",
+  "settingsNotificationsTimeLabel": "Reminder time: {time}",
+  "@settingsNotificationsTimeLabel": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
   "settingsSourceCodeLabel": "Source Code",
   "settingFeedbackLabel": "Feedback",
   "settingAboutLabel": "About",
@@ -114,6 +124,7 @@
   "suppliedLabel": "supplied",
   "burnedLabel": "burned",
   "kcalLeftLabel": "kcal left",
+  "kcalExceededLabel": "kcal exceeded",
   "nutritionInfoLabel": "Nutrition Information",
   "kcalLabel": "kcal",
   "carbsLabel": "carbs",
@@ -172,10 +183,18 @@
   "servingSizeLabelMetric": "Serving size (g/ml)",
   "servingSizeLabelImperial": "Serving size (oz/fl oz)",
   "mealUnitLabel": "Meal unit",
-  "mealKcalLabel": "kcal per",
-  "mealCarbsLabel": "carbs per",
-  "mealFatLabel": "fat per",
-  "mealProteinLabel": "protein per 100 g/ml",
+  "mealKcalLabel": "kcal",
+  "mealCarbsLabel": "Carbohydrates (g)",
+  "mealFatLabel": "Fat (g)",
+  "mealProteinLabel": "Protein (g)",
+  "mealNutrientsPerQtyLabel": "Per {qty} {unit}",
+  "@mealNutrientsPerQtyLabel": {
+    "placeholders": {
+      "qty": { "type": "String" },
+      "unit": { "type": "String" }
+    }
+  },
+  "mealNutrientsTotalLabel": "Total amount",
   "errorMealSave": "Error while saving meal. Did you input the correct meal information?",
   "bmiLabel": "BMI",
   "bmiInfo": "Body Mass Index (BMI) is a index to classify overweight and obesity in adults. It is defined as weight in kilograms divided by the square of height in meters (kg/m²).\n\nBMI does not differentiate between fat and muscle mass and can be misleading for some individuals.",
@@ -196,6 +215,21 @@
   "goalMaintainWeight": "Maintain Weight",
   "goalGainWeight": "Gain Weight",
   "goalLabel": "Goal",
+  "weeklyWeightGoalLabel": "Weekly rate",
+  "weeklyWeightGoalNoneLabel": "Not set",
+  "weeklyWeightGoalKgPerWeek": "{rate} kg/week",
+  "@weeklyWeightGoalKgPerWeek": {
+    "placeholders": {
+      "rate": { "type": "String" }
+    }
+  },
+  "weeklyWeightGoalLbsPerWeek": "{rate} lbs/week",
+  "@weeklyWeightGoalLbsPerWeek": {
+    "placeholders": {
+      "rate": { "type": "String" }
+    }
+  },
+  "chooseWeeklyWeightGoalLabel": "Weekly weight rate",
   "selectHeightDialogLabel": "Select Height",
   "heightLabel": "Height",
   "cmLabel": "cm",

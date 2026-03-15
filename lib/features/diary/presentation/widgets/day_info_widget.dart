@@ -185,21 +185,23 @@ class DayInfoWidget extends StatelessWidget {
     );
   }
 
-  String _getCaloriesTrackedDisplayString(TrackedDayEntity trackedDay) {
-    int caloriesTracked;
-    if (trackedDay.caloriesTracked.isNegative) {
-      caloriesTracked = 0;
-    } else {
-      caloriesTracked = trackedDay.caloriesTracked.toInt();
-    }
+  // #182: Compute from actual intakes instead of stale cached values
+  List<IntakeEntity> get _allIntakes =>
+      [...breakfastIntake, ...lunchIntake, ...dinnerIntake, ...snackIntake];
 
+  String _getCaloriesTrackedDisplayString(TrackedDayEntity trackedDay) {
+    final actualKcal = _allIntakes.fold(0.0, (sum, i) => sum + i.totalKcal);
+    final caloriesTracked = actualKcal < 0 ? 0 : actualKcal.toInt();
     return '$caloriesTracked/${trackedDay.calorieGoal.toInt()} kcal';
   }
 
   String _getMacroTrackedDisplayString(TrackedDayEntity trackedDay) {
-    final carbsTracked = trackedDay.carbsTracked?.floor().toString() ?? '?';
-    final fatTracked = trackedDay.fatTracked?.floor().toString() ?? '?';
-    final proteinTracked = trackedDay.proteinTracked?.floor().toString() ?? '?';
+    final carbsTracked =
+        _allIntakes.fold(0.0, (sum, i) => sum + i.totalCarbsGram).floor();
+    final fatTracked =
+        _allIntakes.fold(0.0, (sum, i) => sum + i.totalFatsGram).floor();
+    final proteinTracked =
+        _allIntakes.fold(0.0, (sum, i) => sum + i.totalProteinsGram).floor();
 
     final carbsGoal = trackedDay.carbsGoal?.floor().toString() ?? '?';
     final fatGoal = trackedDay.fatGoal?.floor().toString() ?? '?';
