@@ -2,26 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:horizontal_picker/horizontal_picker.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
-class SetHeightDialog extends StatelessWidget {
+class SetHeightDialog extends StatefulWidget {
   static const _heightRangeCM = 100.0;
-  static const _heightRangeFt = 10;
+  static const _heightRangeFt = 10.0;
 
   final double userHeight;
   final bool usesImperialUnits;
 
-  const SetHeightDialog(
-      {super.key, required this.userHeight, required this.usesImperialUnits});
+  const SetHeightDialog({
+    super.key,
+    required this.userHeight,
+    required this.usesImperialUnits,
+  });
+
+  @override
+  State<SetHeightDialog> createState() => _SetHeightDialogState();
+}
+
+class _SetHeightDialogState extends State<SetHeightDialog> {
+  late double selectedHeight;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedHeight = widget.userHeight;
+  }
 
   @override
   Widget build(BuildContext context) {
-    double selectedHeight = userHeight;
-    // Ensure minValue doesn't go negative
-    final minHeight = usesImperialUnits ? 1.0 : 50.0;
-    final calculatedMin = usesImperialUnits
-        ? selectedHeight - _heightRangeFt
-        : selectedHeight - _heightRangeCM;
-    final actualMin = calculatedMin > minHeight ? calculatedMin : minHeight;
-    
+    final minValue = widget.usesImperialUnits
+        ? widget.userHeight - SetHeightDialog._heightRangeFt
+        : widget.userHeight - SetHeightDialog._heightRangeCM;
+
+    final maxValue = widget.usesImperialUnits
+        ? widget.userHeight + SetHeightDialog._heightRangeFt
+        : widget.userHeight + SetHeightDialog._heightRangeCM;
+
+
     return AlertDialog(
       title: Text(S.of(context).selectHeightDialogLabel),
       content: Wrap(
@@ -29,49 +46,44 @@ class SetHeightDialog extends StatelessWidget {
           Column(
             children: [
               HorizontalPicker(
-                  height: 100,
-                  backgroundColor: Colors.transparent,
-                  minValue: actualMin,
-                  maxValue: usesImperialUnits
-                      ? selectedHeight + _heightRangeFt
-                      : selectedHeight + _heightRangeCM,
-                  divisions: 400,
-                  suffix: usesImperialUnits
-                      ? S.of(context).ftLabel
-                      : S.of(context).cmLabel,
-                  onChanged: (value) {
-                    selectedHeight = value;
-                  })
+                height: 100,
+                backgroundColor: Colors.transparent,
+                // Prevent negative minimum height
+                minValue: minValue < 0 ? 1 : minValue, // setting it to 1, because 0 triggers zero-division error
+                maxValue: maxValue,
+                divisions: 400,
+                suffix: widget.usesImperialUnits
+                    ? S.of(context).ftLabel
+                    : S.of(context).cmLabel,
+                onChanged: (value) {
+                  setState(() {
+                    // Prevent negative height values
+                    selectedHeight = value < 0 ? 1 : value;
+                  });
+                },
+              ),
             ],
-          )
+          ),
         ],
       ),
       actions: <Widget>[
         TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(S.of(context).dialogCancelLabel)),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(S.of(context).dialogCancelLabel),
+        ),
         TextButton(
-            onPressed: () {
-              // Validate selected height (prevent negative and unrealistic values)
-              if (selectedHeight <= 0) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('${S.of(context).selectHeightDialogLabel} must be greater than 0')),
-                );
-                return;
-              }
-              // Maximum reasonable height check (8 feet / 244 cm)
-              final maxHeight = usesImperialUnits ? 8.0 : 244.0;
-              if (selectedHeight > maxHeight) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('${S.of(context).selectHeightDialogLabel} seems unrealistic')),
-                );
-                return;
-              }
-              Navigator.pop(context, selectedHeight);
-            },
-            child: Text(S.of(context).dialogOKLabel))
+          onPressed: () {
+            // Cap at 15ft / 457cm (#204)
+            final maxHeight = widget.usesImperialUnits ? 15.0 : 457.0;
+            if (selectedHeight > maxHeight) {
+              selectedHeight = maxHeight;
+            }
+            Navigator.pop(context, selectedHeight);
+          },
+          child: Text(S.of(context).dialogOKLabel),
+        ),
       ],
     );
   }

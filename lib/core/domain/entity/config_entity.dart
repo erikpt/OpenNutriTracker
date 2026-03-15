@@ -12,16 +12,18 @@ class ConfigEntity extends Equatable {
   final double? userCarbGoalPct;
   final double? userProteinGoalPct;
   final double? userFatGoalPct;
-  final bool showActivityTracking; // #277
 
-  const ConfigEntity(this.hasAcceptedDisclaimer, this.hasAcceptedPolicy,
-      this.hasAcceptedSendAnonymousData, this.appTheme,
-      {this.usesImperialUnits = false,
-      this.userKcalAdjustment,
-      this.userCarbGoalPct,
-      this.userProteinGoalPct,
-      this.userFatGoalPct,
-      this.showActivityTracking = true});
+  const ConfigEntity(
+    this.hasAcceptedDisclaimer,
+    this.hasAcceptedPolicy,
+    this.hasAcceptedSendAnonymousData,
+    this.appTheme, {
+    this.usesImperialUnits = false,
+    this.userKcalAdjustment,
+    this.userCarbGoalPct,
+    this.userProteinGoalPct,
+    this.userFatGoalPct,
+  });
 
   factory ConfigEntity.fromConfigDBO(ConfigDBO dbo) => ConfigEntity(
         dbo.hasAcceptedDisclaimer,
@@ -33,7 +35,6 @@ class ConfigEntity extends Equatable {
         userCarbGoalPct: dbo.userCarbGoalPct,
         userProteinGoalPct: dbo.userProteinGoalPct,
         userFatGoalPct: dbo.userFatGoalPct,
-        showActivityTracking: dbo.showActivityTracking ?? true,
       );
 
   @override
@@ -46,6 +47,5 @@ class ConfigEntity extends Equatable {
         userCarbGoalPct,
         userProteinGoalPct,
         userFatGoalPct,
-        showActivityTracking,
       ];
 }

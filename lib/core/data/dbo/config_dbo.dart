@@ -26,24 +26,26 @@ class ConfigDBO extends HiveObject {
   double? userProteinGoalPct;
   @HiveField(8)
   double? userFatGoalPct;
-  @HiveField(9)
-  bool? showActivityTracking; // #277: null means default (true)
 
-  ConfigDBO(this.hasAcceptedDisclaimer, this.hasAcceptedPolicy,
-      this.hasAcceptedSendAnonymousData, this.selectedAppTheme,
-      {this.usesImperialUnits = false,
-      this.userKcalAdjustment,
-      this.showActivityTracking});
+  ConfigDBO(
+    this.hasAcceptedDisclaimer,
+    this.hasAcceptedPolicy,
+    this.hasAcceptedSendAnonymousData,
+    this.selectedAppTheme, {
+    this.usesImperialUnits = false,
+    this.userKcalAdjustment,
+  });
 
   factory ConfigDBO.empty() =>
       ConfigDBO(false, false, false, AppThemeDBO.system);
 
   factory ConfigDBO.fromConfigEntity(ConfigEntity entity) => ConfigDBO(
-      entity.hasAcceptedDisclaimer,
-      entity.hasAcceptedPolicy,
-      entity.hasAcceptedSendAnonymousData,
-      AppThemeDBO.fromAppThemeEntity(entity.appTheme),
-      usesImperialUnits: entity.usesImperialUnits);
+        entity.hasAcceptedDisclaimer,
+        entity.hasAcceptedPolicy,
+        entity.hasAcceptedSendAnonymousData,
+        AppThemeDBO.fromAppThemeEntity(entity.appTheme),
+        usesImperialUnits: entity.usesImperialUnits,
+      );
 
   factory ConfigDBO.fromJson(Map<String, dynamic> json) =>
       _$ConfigDBOFromJson(json);

@@ -22,14 +22,12 @@ class HiveDBProvider extends ChangeNotifier {
   static const userActivityBoxName = 'UserActivityBox';
   static const userBoxName = 'UserBox';
   static const trackedDayBoxName = 'TrackedDayBox';
-  static const customMealBoxName = 'CustomMealBox'; // #267
 
   late Box<ConfigDBO> configBox;
   late Box<IntakeDBO> intakeBox;
   late Box<UserActivityDBO> userActivityBox;
   late Box<UserDBO> userBox;
   late Box<TrackedDayDBO> trackedDayBox;
-  late Box<MealDBO> customMealBox; // #267
 
   Future<void> initHiveDB(Uint8List encryptionKey) async {
     final encryptionCypher = HiveAesCipher(encryptionKey);
@@ -50,18 +48,26 @@ class HiveDBProvider extends ChangeNotifier {
     Hive.registerAdapter(PhysicalActivityTypeDBOAdapter());
     Hive.registerAdapter(AppThemeDBOAdapter());
 
-    configBox =
-        await Hive.openBox(configBoxName, encryptionCipher: encryptionCypher);
-    intakeBox =
-        await Hive.openBox(intakeBoxName, encryptionCipher: encryptionCypher);
-    userActivityBox = await Hive.openBox(userActivityBoxName,
-        encryptionCipher: encryptionCypher);
-    userBox =
-        await Hive.openBox(userBoxName, encryptionCipher: encryptionCypher);
-    trackedDayBox = await Hive.openBox(trackedDayBoxName,
-        encryptionCipher: encryptionCypher);
-    customMealBox = await Hive.openBox(customMealBoxName, // #267
-        encryptionCipher: encryptionCypher);
+    configBox = await Hive.openBox(
+      configBoxName,
+      encryptionCipher: encryptionCypher,
+    );
+    intakeBox = await Hive.openBox(
+      intakeBoxName,
+      encryptionCipher: encryptionCypher,
+    );
+    userActivityBox = await Hive.openBox(
+      userActivityBoxName,
+      encryptionCipher: encryptionCypher,
+    );
+    userBox = await Hive.openBox(
+      userBoxName,
+      encryptionCipher: encryptionCypher,
+    );
+    trackedDayBox = await Hive.openBox(
+      trackedDayBoxName,
+      encryptionCipher: encryptionCypher,
+    );
   }
 
   static generateNewHiveEncryptionKey() => Hive.generateSecureKey();
