@@ -67,4 +67,13 @@ class ConfigRepository {
     _configDataSource.setConfigProteinGoalPct(protein);
     _configDataSource.setConfigFatGoalPct(fat);
   }
+
+  // #312: Notification reminder settings
+  Future<void> setNotificationsEnabled(bool enabled) async {
+    _configDataSource.setNotificationsEnabled(enabled);
+  }
+
+  Future<void> setNotificationTime(int hour, int minute) async {
+    _configDataSource.setNotificationTime(hour, minute);
+  }
 }

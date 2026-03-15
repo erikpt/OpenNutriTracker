@@ -31,6 +31,7 @@ import 'package:opennutritracker/core/domain/usecase/get_user_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/update_intake_usecase.dart';
 import 'package:opennutritracker/core/utils/env.dart';
 import 'package:opennutritracker/core/utils/hive_db_provider.dart';
+import 'package:opennutritracker/core/utils/notification_service.dart';
 import 'package:opennutritracker/core/utils/ont_image_cache_manager.dart';
 import 'package:opennutritracker/core/utils/secure_app_storage_provider.dart';
 import 'package:opennutritracker/features/activity_detail/presentation/bloc/activity_detail_bloc.dart';
@@ -73,6 +74,9 @@ Future<void> initLocator() async {
   await Supabase.initialize(
       url: Env.supabaseProjectUrl, anonKey: Env.supabaseProjectAnonKey);
   locator.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
+
+  // Notification service (#312)
+  locator.registerLazySingleton<NotificationService>(() => NotificationService());
 
   // Cache manager
   locator

@@ -5,6 +5,7 @@ import 'package:opennutritracker/core/presentation/widgets/app_banner_version.da
 import 'package:opennutritracker/core/presentation/widgets/disclaimer_dialog.dart';
 import 'package:opennutritracker/core/utils/app_const.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
+import 'package:opennutritracker/core/utils/notification_service.dart';
 import 'package:opennutritracker/core/utils/theme_mode_provider.dart';
 import 'package:opennutritracker/core/utils/url_const.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/calendar_day_bloc.dart';
@@ -87,6 +88,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _homeBloc.add(LoadItemsEvent());
                   },
                 ),
+                // #312: Daily reminder notification toggle + time picker
+                SwitchListTile(
+                  secondary: const Icon(Icons.notifications_outlined),
+                  title: Text(S.of(context).settingsNotificationsLabel),
+                  subtitle: state.notificationsEnabled
+                      ? Text(S.of(context).settingsNotificationsTimeLabel(
+                          _formatNotificationTime(
+                              state.notificationHour, state.notificationMinute)))
+                      : null,
+                  value: state.notificationsEnabled,
+                  onChanged: (bool value) =>
+                      _onNotificationToggled(context, value, state),
+                ),
+                if (state.notificationsEnabled)
+                  ListTile(
+                    leading: const Icon(Icons.access_time_outlined),
+                    title: Text(S.of(context).settingsNotificationsTimeLabel(
+                        _formatNotificationTime(state.notificationHour,
+                            state.notificationMinute))),
+                    onTap: () => _pickNotificationTime(
+                        context,
+                        TimeOfDay(
+                            hour: state.notificationHour,
+                            minute: state.notificationMinute)),
+                  ),
                 ListTile(
                   leading: const Icon(Icons.import_export),
                   title: Text(S.of(context).exportImportLabel),
@@ -122,6 +148,58 @@ class _SettingsScreenState extends State<SettingsScreen> {
         },
       ),
     );
+  }
+
+  String _formatNotificationTime(int hour, int minute) {
+    final h = hour.toString().padLeft(2, '0');
+    final m = minute.toString().padLeft(2, '0');
+    return '$h:$m';
+  }
+
+  Future<void> _onNotificationToggled(
+      BuildContext context, bool enabled, SettingsLoadedState state) async {
+    final notificationService = locator<NotificationService>();
+    await notificationService.initialize();
+    if (enabled) {
+      final granted = await notificationService.requestPermission();
+      if (!granted) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text('Notification permission denied.')),
+          );
+        }
+        return;
+      }
+      await notificationService.scheduleDailyReminder(
+        hour: state.notificationHour,
+        minute: state.notificationMinute,
+        title: 'OpenNutriTracker',
+        body: 'Don\'t forget to log your meals today!',
+      );
+    } else {
+      await notificationService.cancelDailyReminder();
+    }
+    _settingsBloc.setNotificationsEnabled(enabled);
+    _settingsBloc.add(LoadSettingsEvent());
+  }
+
+  Future<void> _pickNotificationTime(
+      BuildContext context, TimeOfDay current) async {
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: current,
+    );
+    if (picked == null) return;
+    _settingsBloc.setNotificationTime(picked.hour, picked.minute);
+    final notificationService = locator<NotificationService>();
+    await notificationService.scheduleDailyReminder(
+      hour: picked.hour,
+      minute: picked.minute,
+      title: 'OpenNutriTracker',
+      body: 'Don\'t forget to log your meals today!',
+    );
+    _settingsBloc.add(LoadSettingsEvent());
   }
 
   void _showUnitsDialog(BuildContext context, bool usesImperialUnits) async {

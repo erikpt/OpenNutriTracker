@@ -27,13 +27,16 @@ class ConfigDBOAdapter extends TypeAdapter<ConfigDBO> {
       ..userCarbGoalPct = fields[6] as double?
       ..userProteinGoalPct = fields[7] as double?
       ..userFatGoalPct = fields[8] as double?
-      ..showActivityTracking = fields[9] as bool?;
+      ..showActivityTracking = fields[9] as bool?
+      ..notificationsEnabled = fields[10] as bool?
+      ..notificationHour = fields[11] as int?
+      ..notificationMinute = fields[12] as int?;
   }
 
   @override
   void write(BinaryWriter writer, ConfigDBO obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.hasAcceptedDisclaimer)
       ..writeByte(1)
@@ -53,7 +56,13 @@ class ConfigDBOAdapter extends TypeAdapter<ConfigDBO> {
       ..writeByte(8)
       ..write(obj.userFatGoalPct)
       ..writeByte(9)
-      ..write(obj.showActivityTracking);
+      ..write(obj.showActivityTracking)
+      ..writeByte(10)
+      ..write(obj.notificationsEnabled)
+      ..writeByte(11)
+      ..write(obj.notificationHour)
+      ..writeByte(12)
+      ..write(obj.notificationMinute);
   }
 
   @override
@@ -82,7 +91,10 @@ ConfigDBO _$ConfigDBOFromJson(Map<String, dynamic> json) => ConfigDBO(
       ..userCarbGoalPct = (json['userCarbGoalPct'] as num?)?.toDouble()
       ..userProteinGoalPct = (json['userProteinGoalPct'] as num?)?.toDouble()
       ..userFatGoalPct = (json['userFatGoalPct'] as num?)?.toDouble()
-      ..showActivityTracking = json['showActivityTracking'] as bool?;
+      ..showActivityTracking = json['showActivityTracking'] as bool?
+      ..notificationsEnabled = json['notificationsEnabled'] as bool?
+      ..notificationHour = (json['notificationHour'] as num?)?.toInt()
+      ..notificationMinute = (json['notificationMinute'] as num?)?.toInt();
 
 Map<String, dynamic> _$ConfigDBOToJson(ConfigDBO instance) => <String, dynamic>{
       'hasAcceptedDisclaimer': instance.hasAcceptedDisclaimer,
@@ -95,6 +107,9 @@ Map<String, dynamic> _$ConfigDBOToJson(ConfigDBO instance) => <String, dynamic>{
       'userProteinGoalPct': instance.userProteinGoalPct,
       'userFatGoalPct': instance.userFatGoalPct,
       'showActivityTracking': instance.showActivityTracking,
+      'notificationsEnabled': instance.notificationsEnabled,
+      'notificationHour': instance.notificationHour,
+      'notificationMinute': instance.notificationMinute,
     };
 
 const _$AppThemeDBOEnumMap = {

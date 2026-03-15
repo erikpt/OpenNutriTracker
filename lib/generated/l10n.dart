@@ -670,6 +670,26 @@ class S {
     );
   }
 
+  /// `Daily Reminder`
+  String get settingsNotificationsLabel {
+    return Intl.message(
+      'Daily Reminder',
+      name: 'settingsNotificationsLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reminder time: {time}`
+  String settingsNotificationsTimeLabel(String time) {
+    return Intl.message(
+      'Reminder time: $time',
+      name: 'settingsNotificationsTimeLabel',
+      desc: '',
+      args: [time],
+    );
+  }
+
   /// `Source Code`
   String get settingsSourceCodeLabel {
     return Intl.message(
@@ -1614,38 +1634,58 @@ class S {
   /// `kcal per`
   String get mealKcalLabel {
     return Intl.message(
-      'kcal per',
+      'kcal',
       name: 'mealKcalLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `carbs per`
+  /// `Carbohydrates (g)`
   String get mealCarbsLabel {
     return Intl.message(
-      'carbs per',
+      'Carbohydrates (g)',
       name: 'mealCarbsLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `fat per`
+  /// `Fat (g)`
   String get mealFatLabel {
     return Intl.message(
-      'fat per',
+      'Fat (g)',
       name: 'mealFatLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `protein per 100 g/ml`
+  /// `Protein (g)`
   String get mealProteinLabel {
     return Intl.message(
-      'protein per 100 g/ml',
+      'Protein (g)',
       name: 'mealProteinLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Per {qty} {unit}`
+  String mealNutrientsPerQtyLabel(String qty, String unit) {
+    return Intl.message(
+      'Per $qty $unit',
+      name: 'mealNutrientsPerQtyLabel',
+      desc: '',
+      args: [qty, unit],
+    );
+  }
+
+  /// `Total amount`
+  String get mealNutrientsTotalLabel {
+    return Intl.message(
+      'Total amount',
+      name: 'mealNutrientsTotalLabel',
       desc: '',
       args: [],
     );
@@ -1846,6 +1886,56 @@ class S {
     return Intl.message(
       'Goal',
       name: 'goalLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weekly rate`
+  String get weeklyWeightGoalLabel {
+    return Intl.message(
+      'Weekly rate',
+      name: 'weeklyWeightGoalLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not set`
+  String get weeklyWeightGoalNoneLabel {
+    return Intl.message(
+      'Not set',
+      name: 'weeklyWeightGoalNoneLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{rate} kg/week`
+  String weeklyWeightGoalKgPerWeek(String rate) {
+    return Intl.message(
+      '$rate kg/week',
+      name: 'weeklyWeightGoalKgPerWeek',
+      desc: '',
+      args: [rate],
+    );
+  }
+
+  /// `{rate} lbs/week`
+  String weeklyWeightGoalLbsPerWeek(String rate) {
+    return Intl.message(
+      '$rate lbs/week',
+      name: 'weeklyWeightGoalLbsPerWeek',
+      desc: '',
+      args: [rate],
+    );
+  }
+
+  /// `Weekly weight rate`
+  String get chooseWeeklyWeightGoalLabel {
+    return Intl.message(
+      'Weekly weight rate',
+      name: 'chooseWeeklyWeightGoalLabel',
       desc: '',
       args: [],
     );

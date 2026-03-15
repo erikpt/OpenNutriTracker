@@ -13,6 +13,9 @@ class ConfigEntity extends Equatable {
   final double? userProteinGoalPct;
   final double? userFatGoalPct;
   final bool showActivityTracking; // #277
+  final bool notificationsEnabled; // #312
+  final int notificationHour; // #312: 0-23
+  final int notificationMinute; // #312: 0-59
 
   const ConfigEntity(this.hasAcceptedDisclaimer, this.hasAcceptedPolicy,
       this.hasAcceptedSendAnonymousData, this.appTheme,
@@ -21,7 +24,10 @@ class ConfigEntity extends Equatable {
       this.userCarbGoalPct,
       this.userProteinGoalPct,
       this.userFatGoalPct,
-      this.showActivityTracking = true});
+      this.showActivityTracking = true,
+      this.notificationsEnabled = false,
+      this.notificationHour = 8,
+      this.notificationMinute = 0});
 
   factory ConfigEntity.fromConfigDBO(ConfigDBO dbo) => ConfigEntity(
         dbo.hasAcceptedDisclaimer,
@@ -34,6 +40,9 @@ class ConfigEntity extends Equatable {
         userProteinGoalPct: dbo.userProteinGoalPct,
         userFatGoalPct: dbo.userFatGoalPct,
         showActivityTracking: dbo.showActivityTracking ?? true,
+        notificationsEnabled: dbo.notificationsEnabled ?? false,
+        notificationHour: dbo.notificationHour ?? 8,
+        notificationMinute: dbo.notificationMinute ?? 0,
       );
 
   @override
@@ -47,5 +56,8 @@ class ConfigEntity extends Equatable {
         userProteinGoalPct,
         userFatGoalPct,
         showActivityTracking,
+        notificationsEnabled,
+        notificationHour,
+        notificationMinute,
       ];
 }

@@ -41,7 +41,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           userConfig.hasAcceptedSendAnonymousData,
           userConfig.appTheme,
           usesImperialUnits,
-          showActivityTracking: userConfig.showActivityTracking));
+          showActivityTracking: userConfig.showActivityTracking,
+          notificationsEnabled: userConfig.notificationsEnabled,
+          notificationHour: userConfig.notificationHour,
+          notificationMinute: userConfig.notificationMinute));
     });
   }
 
@@ -60,6 +63,15 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   void setShowActivityTracking(bool showActivityTracking) {
     _addConfigUsecase.setConfigShowActivityTracking(showActivityTracking);
+  }
+
+  // #312: Notification reminder helpers
+  void setNotificationsEnabled(bool enabled) {
+    _addConfigUsecase.setNotificationsEnabled(enabled);
+  }
+
+  void setNotificationTime(int hour, int minute) {
+    _addConfigUsecase.setNotificationTime(hour, minute);
   }
 
   Future<double> getKcalAdjustment() async {

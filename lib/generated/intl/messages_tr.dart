@@ -29,6 +29,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m3(age) => "${age} yıl";
 
+  static m4(rate) => "${rate} kg/hafta";
+
+  static m5(rate) => "${rate} lbs/hafta";
+
+  static m6(qty, unit) => "${qty} ${unit} başına";
+
+  static m7(time) => "Hatırlatma zamanı: ${time}";
+
   @override
   final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
 
@@ -113,6 +121,11 @@ class MessageLookup extends MessageLookupByLibrary {
     'genderMaleLabel': MessageLookupByLibrary.simpleMessage('♂ erkek'),
     'goalGainWeight': MessageLookupByLibrary.simpleMessage('Kilo Al'),
     'goalLabel': MessageLookupByLibrary.simpleMessage('Hedef'),
+    'weeklyWeightGoalLabel': MessageLookupByLibrary.simpleMessage('Haftalık oran'),
+    'weeklyWeightGoalNoneLabel': MessageLookupByLibrary.simpleMessage('Ayarlanmadı'),
+    'weeklyWeightGoalKgPerWeek': m4,
+    'weeklyWeightGoalLbsPerWeek': m5,
+    'chooseWeeklyWeightGoalLabel': MessageLookupByLibrary.simpleMessage('Haftalık kilo oranı'),
     'goalLoseWeight': MessageLookupByLibrary.simpleMessage('Kilo Ver'),
     'goalMaintainWeight': MessageLookupByLibrary.simpleMessage('Kilo Koru'),
     'gramMilliliterUnit': MessageLookupByLibrary.simpleMessage('g/ml'),
@@ -133,11 +146,13 @@ class MessageLookup extends MessageLookupByLibrary {
     'lunchLabel': MessageLookupByLibrary.simpleMessage('Öğle Yemeği'),
     'macroDistributionLabel': MessageLookupByLibrary.simpleMessage('Makro besin Dağılımı:'),
     'mealBrandsLabel': MessageLookupByLibrary.simpleMessage('Markalar'),
-    'mealCarbsLabel': MessageLookupByLibrary.simpleMessage('karbonhidrat başına'),
-    'mealFatLabel': MessageLookupByLibrary.simpleMessage('yağ başına'),
-    'mealKcalLabel': MessageLookupByLibrary.simpleMessage('kcal başına'),
+    'mealCarbsLabel': MessageLookupByLibrary.simpleMessage('Karbonhidrat (g)'),
+    'mealFatLabel': MessageLookupByLibrary.simpleMessage('Yağ (g)'),
+    'mealKcalLabel': MessageLookupByLibrary.simpleMessage('kcal'),
     'mealNameLabel': MessageLookupByLibrary.simpleMessage('Yemek adı'),
-    'mealProteinLabel': MessageLookupByLibrary.simpleMessage('protein başına 100 g/ml'),
+    'mealProteinLabel': MessageLookupByLibrary.simpleMessage('Protein (g)'),
+    'mealNutrientsPerQtyLabel': m6,
+    'mealNutrientsTotalLabel': MessageLookupByLibrary.simpleMessage('Toplam miktar'),
     'mealSizeLabel': MessageLookupByLibrary.simpleMessage('Yemek boyutu (g/ml)'),
     'mealSizeLabelImperial': MessageLookupByLibrary.simpleMessage('Yemek boyutu (oz/fl oz)'),
     'mealUnitLabel': MessageLookupByLibrary.simpleMessage('Yemek birimi'),
@@ -429,6 +444,8 @@ class MessageLookup extends MessageLookupByLibrary {
     'settingsMetricLabel': MessageLookupByLibrary.simpleMessage('Metrik (kg, cm, ml)'),
     'settingsPrivacySettings': MessageLookupByLibrary.simpleMessage('Gizlilik Ayarları'),
     'settingsReportErrorLabel': MessageLookupByLibrary.simpleMessage('Hata Bildir'),
+    'settingsNotificationsLabel': MessageLookupByLibrary.simpleMessage('Günlük Hatırlatıcı'),
+    'settingsNotificationsTimeLabel': m7,
     'settingsSourceCodeLabel': MessageLookupByLibrary.simpleMessage('Kaynak Kodu'),
     'settingsSystemLabel': MessageLookupByLibrary.simpleMessage('Sistem'),
     'settingsThemeDarkLabel': MessageLookupByLibrary.simpleMessage('Koyu'),

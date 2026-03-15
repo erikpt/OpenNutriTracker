@@ -28,12 +28,21 @@ class ConfigDBO extends HiveObject {
   double? userFatGoalPct;
   @HiveField(9)
   bool? showActivityTracking; // #277: null means default (true)
+  @HiveField(10)
+  bool? notificationsEnabled; // #312
+  @HiveField(11)
+  int? notificationHour; // #312: hour of daily reminder (0-23)
+  @HiveField(12)
+  int? notificationMinute; // #312: minute of daily reminder (0-59)
 
   ConfigDBO(this.hasAcceptedDisclaimer, this.hasAcceptedPolicy,
       this.hasAcceptedSendAnonymousData, this.selectedAppTheme,
       {this.usesImperialUnits = false,
       this.userKcalAdjustment,
-      this.showActivityTracking});
+      this.showActivityTracking,
+      this.notificationsEnabled,
+      this.notificationHour,
+      this.notificationMinute});
 
   factory ConfigDBO.empty() =>
       ConfigDBO(false, false, false, AppThemeDBO.system);
