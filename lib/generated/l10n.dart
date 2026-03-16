@@ -110,26 +110,6 @@ class S {
     );
   }
 
-  /// `Warning`
-  String get warningLabel {
-    return Intl.message(
-      'Warning',
-      name: 'warningLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `This food has already been added to this meal today. Add it again?`
-  String get duplicateMealDialogContent {
-    return Intl.message(
-      'This food has already been added to this meal today. Add it again?',
-      name: 'duplicateMealDialogContent',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Create custom meal item?`
   String get createCustomDialogTitle {
     return Intl.message(
@@ -660,36 +640,6 @@ class S {
     );
   }
 
-  /// `Show Activity Tracking`
-  String get settingsShowActivityTracking {
-    return Intl.message(
-      'Show Activity Tracking',
-      name: 'settingsShowActivityTracking',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Daily Reminder`
-  String get settingsNotificationsLabel {
-    return Intl.message(
-      'Daily Reminder',
-      name: 'settingsNotificationsLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Reminder time: {time}`
-  String settingsNotificationsTimeLabel(String time) {
-    return Intl.message(
-      'Reminder time: $time',
-      name: 'settingsNotificationsTimeLabel',
-      desc: '',
-      args: [time],
-    );
-  }
-
   /// `Source Code`
   String get settingsSourceCodeLabel {
     return Intl.message(
@@ -698,6 +648,11 @@ class S {
       desc: '',
       args: [],
     );
+  }
+  /// `Show Micronutrients`
+  String get settingsShowMicronutrientsLabel {
+    return Intl.message('Show Micronutrients',
+        name: 'settingsShowMicronutrientsLabel', desc: '', args: []);
   }
 
   /// `Feedback`
@@ -758,12 +713,6 @@ class S {
       desc: '',
       args: [],
     );
-  }
-
-  /// `Show Micronutrients`
-  String get settingsShowMicronutrientsLabel {
-    return Intl.message('Show Micronutrients',
-        name: 'settingsShowMicronutrientsLabel', desc: '', args: []);
   }
 
   /// `Distance`
@@ -1227,16 +1176,6 @@ class S {
     );
   }
 
-  /// `kcal exceeded`
-  String get kcalExceededLabel {
-    return Intl.message(
-      'kcal exceeded',
-      name: 'kcalExceededLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Nutrition Information`
   String get nutritionInfoLabel {
     return Intl.message(
@@ -1336,6 +1275,7 @@ class S {
       args: [],
     );
   }
+
 
   /// `monounsaturated fat`
   String get monounsaturatedFatLabel {
@@ -1740,58 +1680,38 @@ class S {
   /// `kcal per`
   String get mealKcalLabel {
     return Intl.message(
-      'kcal',
+      'kcal per',
       name: 'mealKcalLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Carbohydrates (g)`
+  /// `carbs per`
   String get mealCarbsLabel {
     return Intl.message(
-      'Carbohydrates (g)',
+      'carbs per',
       name: 'mealCarbsLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Fat (g)`
+  /// `fat per`
   String get mealFatLabel {
     return Intl.message(
-      'Fat (g)',
+      'fat per',
       name: 'mealFatLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Protein (g)`
+  /// `protein per 100 g/ml`
   String get mealProteinLabel {
     return Intl.message(
-      'Protein (g)',
+      'protein per 100 g/ml',
       name: 'mealProteinLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Per {qty} {unit}`
-  String mealNutrientsPerQtyLabel(String qty, String unit) {
-    return Intl.message(
-      'Per $qty $unit',
-      name: 'mealNutrientsPerQtyLabel',
-      desc: '',
-      args: [qty, unit],
-    );
-  }
-
-  /// `Total amount`
-  String get mealNutrientsTotalLabel {
-    return Intl.message(
-      'Total amount',
-      name: 'mealNutrientsTotalLabel',
       desc: '',
       args: [],
     );
@@ -1992,56 +1912,6 @@ class S {
     return Intl.message(
       'Goal',
       name: 'goalLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Weekly rate`
-  String get weeklyWeightGoalLabel {
-    return Intl.message(
-      'Weekly rate',
-      name: 'weeklyWeightGoalLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Not set`
-  String get weeklyWeightGoalNoneLabel {
-    return Intl.message(
-      'Not set',
-      name: 'weeklyWeightGoalNoneLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `{rate} kg/week`
-  String weeklyWeightGoalKgPerWeek(String rate) {
-    return Intl.message(
-      '$rate kg/week',
-      name: 'weeklyWeightGoalKgPerWeek',
-      desc: '',
-      args: [rate],
-    );
-  }
-
-  /// `{rate} lbs/week`
-  String weeklyWeightGoalLbsPerWeek(String rate) {
-    return Intl.message(
-      '$rate lbs/week',
-      name: 'weeklyWeightGoalLbsPerWeek',
-      desc: '',
-      args: [rate],
-    );
-  }
-
-  /// `Weekly weight rate`
-  String get chooseWeeklyWeightGoalLabel {
-    return Intl.message(
-      'Weekly weight rate',
-      name: 'chooseWeeklyWeightGoalLabel',
       desc: '',
       args: [],
     );
@@ -4394,8 +4264,11 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'cz'),
       Locale.fromSubtags(languageCode: 'de'),
+      Locale.fromSubtags(languageCode: 'it'),
       Locale.fromSubtags(languageCode: 'tr'),
+      Locale.fromSubtags(languageCode: 'uk'),
     ];
   }
 

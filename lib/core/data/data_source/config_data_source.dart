@@ -23,16 +23,19 @@ class ConfigDataSource {
 
   Future<void> setConfigDisclaimer(bool hasAcceptedDisclaimer) async {
     _log.fine(
-        'Updating config hasAcceptedDisclaimer to $hasAcceptedDisclaimer');
+      'Updating config hasAcceptedDisclaimer to $hasAcceptedDisclaimer',
+    );
     final config = _configBox.get(_configKey);
     config?.hasAcceptedDisclaimer = hasAcceptedDisclaimer;
     config?.save();
   }
 
   Future<void> setConfigAcceptedAnonymousData(
-      bool hasAcceptedAnonymousData) async {
+    bool hasAcceptedAnonymousData,
+  ) async {
     _log.fine(
-        'Updating config hasAcceptedAnonymousData to $hasAcceptedAnonymousData');
+      'Updating config hasAcceptedAnonymousData to $hasAcceptedAnonymousData',
+    );
     final config = _configBox.get(_configKey);
     config?.hasAcceptedSendAnonymousData = hasAcceptedAnonymousData;
     config?.save();
@@ -90,26 +93,10 @@ class ConfigDataSource {
     config?.save();
   }
 
-  Future<void> setConfigShowActivityTracking(bool show) async {
-    _log.fine('Updating config showActivityTracking to $show');
+  Future<void> setConfigShowMicronutrients(bool show) async {
+    _log.fine('Updating config showMicronutrients to $show');
     final config = _configBox.get(_configKey);
-    config?.showActivityTracking = show;
-    config?.save();
-  }
-
-  // #312: Notification reminder settings
-  Future<void> setNotificationsEnabled(bool enabled) async {
-    _log.fine('Updating config notificationsEnabled to $enabled');
-    final config = _configBox.get(_configKey);
-    config?.notificationsEnabled = enabled;
-    config?.save();
-  }
-
-  Future<void> setNotificationTime(int hour, int minute) async {
-    _log.fine('Updating config notification time to $hour:$minute');
-    final config = _configBox.get(_configKey);
-    config?.notificationHour = hour;
-    config?.notificationMinute = minute;
+    config?.showMicronutrients = show;
     config?.save();
   }
 
@@ -120,12 +107,5 @@ class ConfigDataSource {
   Future<bool> getHasAcceptedAnonymousData() async {
     final config = _configBox.get(_configKey);
     return config?.hasAcceptedSendAnonymousData ?? false;
-  }
-
-  Future<void> setConfigShowMicronutrients(bool show) async {
-    _log.fine('Updating config showMicronutrients to $show');
-    final config = _configBox.get(_configKey);
-    config?.showMicronutrients = show;
-    config?.save();
   }
 }

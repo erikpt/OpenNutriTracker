@@ -87,7 +87,8 @@ class MealNutrimentsDBO extends HiveObject {
   });
 
   factory MealNutrimentsDBO.fromProductNutrimentsEntity(
-      MealNutrimentsEntity nutriments) {
+    MealNutrimentsEntity nutriments,
+  ) {
     return MealNutrimentsDBO(
       energyKcal100: nutriments.energyKcal100,
       carbohydrates100: nutriments.carbohydrates100,

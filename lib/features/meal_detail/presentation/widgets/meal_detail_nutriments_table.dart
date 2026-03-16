@@ -10,22 +10,22 @@ class MealDetailNutrimentsTable extends StatelessWidget {
   final String? servingUnit;
   final bool showMicronutrients;
 
-  const MealDetailNutrimentsTable(
-      {super.key,
-      required this.product,
-      required this.usesImperialUnits,
-      this.servingQuantity,
-      this.servingUnit,
-      this.showMicronutrients = false});
+  const MealDetailNutrimentsTable({
+    super.key,
+    required this.product,
+    required this.usesImperialUnits,
+    this.servingQuantity,
+    this.servingUnit,
+    this.showMicronutrients = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     final textStyleNormal =
         Theme.of(context).textTheme.bodyMedium ?? const TextStyle();
-    final textStyleBold = Theme.of(context)
-            .textTheme
-            .bodyMedium
-            ?.copyWith(fontWeight: FontWeight.bold) ??
+    final textStyleBold = Theme.of(
+          context,
+        ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold) ??
         const TextStyle();
 
     final headerText = usesImperialUnits && servingQuantity != null
@@ -39,46 +39,55 @@ class MealDetailNutrimentsTable extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(S.of(context).nutritionInfoLabel,
-            style: Theme.of(context).textTheme.titleLarge),
+        Text(
+          S.of(context).nutritionInfoLabel,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         const SizedBox(height: 16.0),
         Table(
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           border: TableBorder.all(
-              color: Theme.of(context)
-                  .colorScheme
-                  .onSurface
-                  .withValues(alpha: 0.5)),
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.5),
+          ),
           children: <TableRow>[
             _getNutrimentsTableRow("", headerText, textStyleBold),
             _getNutrimentsTableRow(
-                S.of(context).energyLabel,
-                "${_adj(n.energyKcal100?.toDouble() ?? 0).toInt()} ${S.of(context).kcalLabel}",
-                textStyleNormal),
+              S.of(context).energyLabel,
+              "${_adjustValueForServing(n.energyKcal100?.toDouble() ?? 0).toInt()} ${S.of(context).kcalLabel}",
+              textStyleNormal,
+            ),
             _getNutrimentsTableRow(
-                S.of(context).fatLabel,
-                "${_adj(n.fat100 ?? 0).roundToPrecision(2)}g",
-                textStyleNormal),
+              S.of(context).fatLabel,
+              "${_adjustValueForServing(n.fat100 ?? 0).roundToPrecision(2)}g",
+              textStyleNormal,
+            ),
             _getNutrimentsTableRow(
-                '   ${S.of(context).saturatedFatLabel}',
-                "${_adj(n.saturatedFat100 ?? 0).roundToPrecision(2)}g",
-                textStyleNormal),
+              '   ${S.of(context).saturatedFatLabel}',
+              "${_adjustValueForServing(n.saturatedFat100 ?? 0).roundToPrecision(2)}g",
+              textStyleNormal,
+            ),
             _getNutrimentsTableRow(
-                S.of(context).carbohydrateLabel,
-                "${_adj(n.carbohydrates100 ?? 0).roundToPrecision(2)}g",
-                textStyleNormal),
+              S.of(context).carbohydrateLabel,
+              "${_adjustValueForServing(n.carbohydrates100 ?? 0).roundToPrecision(2)}g",
+              textStyleNormal,
+            ),
             _getNutrimentsTableRow(
-                '    ${S.of(context).sugarLabel}',
-                "${_adj(n.sugars100 ?? 0).roundToPrecision(2)}g",
-                textStyleNormal),
+              '    ${S.of(context).sugarLabel}',
+              "${_adjustValueForServing(n.sugars100 ?? 0).roundToPrecision(2)}g",
+              textStyleNormal,
+            ),
             _getNutrimentsTableRow(
-                S.of(context).fiberLabel,
-                "${_adj(n.fiber100 ?? 0).roundToPrecision(2)}g",
-                textStyleNormal),
+              S.of(context).fiberLabel,
+              "${_adjustValueForServing(n.fiber100 ?? 0).roundToPrecision(2)}g",
+              textStyleNormal,
+            ),
             _getNutrimentsTableRow(
-                S.of(context).proteinLabel,
-                "${_adj(n.proteins100 ?? 0).roundToPrecision(2)}g",
-                textStyleNormal),
+              S.of(context).proteinLabel,
+              "${_adjustValueForServing(n.proteins100 ?? 0).roundToPrecision(2)}g",
+              textStyleNormal,
+            ),
           ],
         ),
         if (showSection) ...[
@@ -87,40 +96,51 @@ class MealDetailNutrimentsTable extends StatelessWidget {
             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
             child: ExpansionTile(
               tilePadding: EdgeInsets.zero,
-              title: Text(S.of(context).micronutrientsLabel,
-                  style: Theme.of(context).textTheme.titleMedium),
+              title: Text(
+                S.of(context).micronutrientsLabel,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               initiallyExpanded: hasMicroData,
               children: [
                 Table(
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   border: TableBorder.all(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withValues(alpha: 0.5)),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.5),
+                  ),
                   children: [
                     // Extended lipid profile
-                    _getMicroRow(context, '   ${S.of(context).monounsaturatedFatLabel}',
-                        n.monounsaturatedFat100, 'g', textStyleNormal),
-                    _getMicroRow(context, '   ${S.of(context).polyunsaturatedFatLabel}',
-                        n.polyunsaturatedFat100, 'g', textStyleNormal),
+                    _getMicroRow(
+                        context,
+                        '   ${S.of(context).monounsaturatedFatLabel}',
+                        n.monounsaturatedFat100,
+                        'g',
+                        textStyleNormal),
+                    _getMicroRow(
+                        context,
+                        '   ${S.of(context).polyunsaturatedFatLabel}',
+                        n.polyunsaturatedFat100,
+                        'g',
+                        textStyleNormal),
                     _getMicroRow(context, '   ${S.of(context).transFatLabel}',
                         n.transFat100, 'g', textStyleNormal),
                     _getMicroRow(context, S.of(context).cholesterolLabel,
                         n.cholesterol100, 'mg', textStyleNormal),
                     // Minerals
-                    _getMicroRow(context, S.of(context).sodiumLabel,
-                        n.sodium100, 'mg', textStyleNormal),
+                    _getMicroRow(context, S.of(context).sodiumLabel, n.sodium100,
+                        'mg', textStyleNormal),
                     _getMicroRow(context, S.of(context).potassiumLabel,
                         n.potassium100, 'mg', textStyleNormal),
                     _getMicroRow(context, S.of(context).magnesiumLabel,
                         n.magnesium100, 'mg', textStyleNormal),
                     _getMicroRow(context, S.of(context).calciumLabel,
                         n.calcium100, 'mg', textStyleNormal),
-                    _getMicroRow(context, S.of(context).ironLabel,
-                        n.iron100, 'mg', textStyleNormal),
-                    _getMicroRow(context, S.of(context).zincLabel,
-                        n.zinc100, 'mg', textStyleNormal),
+                    _getMicroRow(context, S.of(context).ironLabel, n.iron100,
+                        'mg', textStyleNormal),
+                    _getMicroRow(context, S.of(context).zincLabel, n.zinc100,
+                        'mg', textStyleNormal),
                     _getMicroRow(context, S.of(context).phosphorusLabel,
                         n.phosphorus100, 'mg', textStyleNormal),
                     // Vitamins
@@ -146,28 +166,38 @@ class MealDetailNutrimentsTable extends StatelessWidget {
     );
   }
 
-  double _adj(double value) {
-    if (!usesImperialUnits || servingQuantity == null) return value;
+  double _adjustValueForServing(double value) {
+    if (!usesImperialUnits || servingQuantity == null) {
+      return value;
+    }
+    // Calculate per serving value based on 100g reference
     return (value * servingQuantity!) / 100;
   }
 
   String _fmtMicro(double? valuePer100, String unit) {
     if (valuePer100 == null) return '—';
-    final adjusted = _adj(valuePer100);
+    final adjusted = _adjustValueForServing(valuePer100);
     return '${adjusted.roundToPrecision(2)}$unit';
   }
 
   TableRow _getNutrimentsTableRow(
-      String label, String quantityString, TextStyle textStyle) {
-    return TableRow(children: <Widget>[
-      Container(
+    String label,
+    String quantityString,
+    TextStyle textStyle,
+  ) {
+    return TableRow(
+      children: <Widget>[
+        Container(
           padding: const EdgeInsets.only(left: 8.0),
-          child: Text(label, style: textStyle)),
-      Container(
+          child: Text(label, style: textStyle),
+        ),
+        Container(
           padding: const EdgeInsets.only(right: 8.0),
           alignment: Alignment.centerRight,
-          child: Text(quantityString, style: textStyle)),
-    ]);
+          child: Text(quantityString, style: textStyle),
+        ),
+      ],
+    );
   }
 
   TableRow _getMicroRow(BuildContext context, String label, double? value,

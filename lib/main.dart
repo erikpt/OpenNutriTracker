@@ -12,7 +12,6 @@ import 'package:opennutritracker/core/styles/fonts.dart';
 import 'package:opennutritracker/core/utils/env.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/core/utils/logger_config.dart';
-import 'package:opennutritracker/core/utils/notification_service.dart';
 import 'package:opennutritracker/core/utils/navigation_options.dart';
 import 'package:opennutritracker/core/utils/theme_mode_provider.dart';
 import 'package:opennutritracker/features/activity_detail/activity_detail_screen.dart';
@@ -33,19 +32,6 @@ Future<void> main() async {
   await initLocator();
   final isUserInitialized = await locator<UserDataSource>().hasUserData();
   final configRepo = locator<ConfigRepository>();
-
-  // #312: Restore scheduled notifications after app start / device reboot
-  final config = await configRepo.getConfig();
-  if (config.notificationsEnabled) {
-    final notificationService = locator<NotificationService>();
-    await notificationService.initialize();
-    await notificationService.scheduleDailyReminder(
-      hour: config.notificationHour,
-      minute: config.notificationMinute,
-      title: 'OpenNutriTracker',
-      body: 'Don\'t forget to log your meals today!',
-    );
-  }
   final hasAcceptedAnonymousData =
       await configRepo.getConfigHasAcceptedAnonymousData();
   final savedAppTheme = await configRepo.getConfigAppTheme();
@@ -63,20 +49,29 @@ Future<void> main() async {
 }
 
 void _runAppWithSentryReporting(
-    bool isUserInitialized, AppThemeEntity savedAppTheme) async {
-  await SentryFlutter.init((options) {
-    options.dsn = Env.sentryDns;
-    options.tracesSampleRate = 1.0;
-  },
-      appRunner: () =>
-          runAppWithChangeNotifiers(isUserInitialized, savedAppTheme));
+  bool isUserInitialized,
+  AppThemeEntity savedAppTheme,
+) async {
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = Env.sentryDns;
+      options.tracesSampleRate = 1.0;
+    },
+    appRunner: () =>
+        runAppWithChangeNotifiers(isUserInitialized, savedAppTheme),
+  );
 }
 
 void runAppWithChangeNotifiers(
-        bool userInitialized, AppThemeEntity savedAppTheme) =>
-    runApp(ChangeNotifierProvider(
+  bool userInitialized,
+  AppThemeEntity savedAppTheme,
+) =>
+    runApp(
+      ChangeNotifierProvider(
         create: (_) => ThemeModeProvider(appTheme: savedAppTheme),
-        child: OpenNutriTrackerApp(userInitialized: userInitialized)));
+        child: OpenNutriTrackerApp(userInitialized: userInitialized),
+      ),
+    );
 
 class OpenNutriTrackerApp extends StatelessWidget {
   final bool userInitialized;
@@ -89,13 +84,15 @@ class OpenNutriTrackerApp extends StatelessWidget {
       onGenerateTitle: (context) => S.of(context).appTitle,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: lightColorScheme,
-          textTheme: appTextTheme),
+        useMaterial3: true,
+        colorScheme: lightColorScheme,
+        textTheme: appTextTheme,
+      ),
       darkTheme: ThemeData(
-          useMaterial3: true,
-          colorScheme: darkColorScheme,
-          textTheme: appTextTheme),
+        useMaterial3: true,
+        colorScheme: darkColorScheme,
+        textTheme: appTextTheme,
+      ),
       themeMode: Provider.of<ThemeModeProvider>(context).themeMode,
       localizationsDelegates: const [
         S.delegate,

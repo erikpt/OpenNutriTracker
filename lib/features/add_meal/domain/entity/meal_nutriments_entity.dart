@@ -36,8 +36,11 @@ class MealNutrimentsEntity extends Equatable {
   final double? niacin100; // mg (B3)
 
   double? get energyPerUnit => _getValuePerUnit(energyKcal100);
+
   double? get carbohydratesPerUnit => _getValuePerUnit(carbohydrates100);
+
   double? get fatPerUnit => _getValuePerUnit(fat100);
+
   double? get proteinsPerUnit => _getValuePerUnit(proteins100);
 
   bool get hasMicronutrientData =>
@@ -87,16 +90,18 @@ class MealNutrimentsEntity extends Equatable {
   });
 
   factory MealNutrimentsEntity.empty() => const MealNutrimentsEntity(
-      energyKcal100: null,
-      carbohydrates100: null,
-      fat100: null,
-      proteins100: null,
-      sugars100: null,
-      saturatedFat100: null,
-      fiber100: null);
+        energyKcal100: null,
+        carbohydrates100: null,
+        fat100: null,
+        proteins100: null,
+        sugars100: null,
+        saturatedFat100: null,
+        fiber100: null,
+      );
 
   factory MealNutrimentsEntity.fromMealNutrimentsDBO(
-      MealNutrimentsDBO nutriments) {
+    MealNutrimentsDBO nutriments,
+  ) {
     return MealNutrimentsEntity(
       energyKcal100: nutriments.energyKcal100,
       carbohydrates100: nutriments.carbohydrates100,
@@ -126,7 +131,8 @@ class MealNutrimentsEntity extends Equatable {
   }
 
   factory MealNutrimentsEntity.fromOffNutriments(
-      OFFProductNutrimentsDTO? offNutriments) {
+    OFFProductNutrimentsDTO? offNutriments,
+  ) {
     // #306: nutriments may be null for products with incomplete OFF data
     if (offNutriments == null) return MealNutrimentsEntity.empty();
     // 1. OFF product nutriments can either be String, int, double or null
@@ -174,7 +180,8 @@ class MealNutrimentsEntity extends Equatable {
   }
 
   factory MealNutrimentsEntity.fromFDCNutriments(
-      List<FDCFoodNutrimentDTO> fdcNutriment) {
+    List<FDCFoodNutrimentDTO> fdcNutriment,
+  ) {
     double? fdcAmount(int nutrientId) => fdcNutriment
         .firstWhereOrNull((n) => n.nutrientId == nutrientId)
         ?.amount;
@@ -225,6 +232,10 @@ class MealNutrimentsEntity extends Equatable {
   }
 
   @override
-  List<Object?> get props =>
-      [energyKcal100, carbohydrates100, fat100, proteins100];
+  List<Object?> get props => [
+        energyKcal100,
+        carbohydrates100,
+        fat100,
+        proteins100,
+      ];
 }

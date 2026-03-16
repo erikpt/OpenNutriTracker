@@ -8,7 +8,9 @@ class CalorieGoalCalc {
   static const double gainWeightKcalAdjustment = 500;
 
   static double getDailyKcalLeft(
-          double totalKcalGoal, double totalKcalIntake) =>
+    double totalKcalGoal,
+    double totalKcalIntake,
+  ) =>
       totalKcalGoal - totalKcalIntake;
 
   static double getTdee(UserEntity userEntity) =>
@@ -18,8 +20,10 @@ class CalorieGoalCalc {
   static const double _kcalPerKgPerWeekDaily = 1100.0;
 
   static double getTotalKcalGoal(
-          UserEntity userEntity, double totalKcalActivities,
-          {double? kcalUserAdjustment}) =>
+    UserEntity userEntity,
+    double totalKcalActivities, {
+    double? kcalUserAdjustment,
+  }) =>
       getTdee(userEntity) +
       getKcalGoalAdjustment(userEntity.goal,
           weeklyWeightGoalKg: userEntity.weeklyWeightGoalKg) +
