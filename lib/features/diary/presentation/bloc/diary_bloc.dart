@@ -26,8 +26,7 @@ class DiaryBloc extends Bloc<DiaryEvent, DiaryState> {
           (await _getConfigUsecase.getConfig()).usesImperialUnits;
 
       currentDay = DateTime.now();
-      // #292: Extended to match calendar range (5 years back)
-      const yearDuration = Duration(days: 365 * 5);
+      const yearDuration = Duration(days: 356);
 
       final trackedDays = await _getDayTrackedUsecase.getTrackedDaysByRange(
         currentDay.subtract(yearDuration),
