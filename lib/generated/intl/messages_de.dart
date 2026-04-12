@@ -174,6 +174,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Eintrag aktualisiert"),
         "kcalLabel": MessageLookupByLibrary.simpleMessage("kcal"),
         "kcalLeftLabel": MessageLookupByLibrary.simpleMessage("kcal übrig"),
+        "kcalTooMuchLabel":
+            MessageLookupByLibrary.simpleMessage("kcal zu viel"),
         "kgLabel": MessageLookupByLibrary.simpleMessage("kg"),
         "lunchExample": MessageLookupByLibrary.simpleMessage(
             "z. B. Pizza, Salat, Reis ..."),
@@ -654,6 +656,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Lizenzen"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Masse"),
+        "settingsMetricLabel":
+            MessageLookupByLibrary.simpleMessage("Metrisch (kg, cm, ml)"),
         "settingsPrivacySettings":
             MessageLookupByLibrary.simpleMessage("Datenschutzeinstellungen"),
         "settingsReportErrorLabel":

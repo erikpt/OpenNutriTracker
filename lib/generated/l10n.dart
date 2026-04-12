@@ -1171,6 +1171,16 @@ class S {
     );
   }
 
+  /// `kcal too much`
+  String get kcalTooMuchLabel {
+    return Intl.message(
+      'kcal too much',
+      name: 'kcalTooMuchLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Nutrition Information`
   String get nutritionInfoLabel {
     return Intl.message(
@@ -4158,8 +4168,11 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'cz'),
       Locale.fromSubtags(languageCode: 'de'),
+      Locale.fromSubtags(languageCode: 'it'),
       Locale.fromSubtags(languageCode: 'tr'),
+      Locale.fromSubtags(languageCode: 'uk'),
     ];
   }
 
