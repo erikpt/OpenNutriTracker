@@ -30,6 +30,13 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
   bool get _isImperialSelected => _isUnitSelected[1];
 
   @override
+  void initState() {
+    super.initState();
+    _heightFocusNode.attach(context);
+    _weightFocusNode.attach(context);
+  }
+
+  @override
   void dispose() {
     _heightFocusNode.dispose();
     _weightFocusNode.dispose();
@@ -81,7 +88,6 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
                 ),
               ),
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              textInputAction: TextInputAction.next,
               inputFormatters: [
                 !_isImperialSelected
                     ? FilteringTextInputFormatter.digitsOnly
