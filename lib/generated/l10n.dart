@@ -1201,6 +1201,16 @@ class S {
     );
   }
 
+  /// `{count} item(s) could not be fetched from OpenFoodFacts.`
+  String importOffFetchFailedLabel(int count) {
+    return Intl.message(
+      '$count item(s) could not be fetched from OpenFoodFacts.',
+      name: 'importOffFetchFailedLabel',
+      desc: '',
+      args: [count],
+    );
+  }
+
   /// `Copy code`
   String get copyCodeLabel {
     return Intl.message(

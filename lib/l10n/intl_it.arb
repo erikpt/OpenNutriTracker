@@ -125,6 +125,12 @@
   },
   "importMealSuccessLabel": "Pasto importato",
   "importMealErrorLabel": "Codice QR non valido",
+  "importOffFetchFailedLabel": "{count} elemento/i non è stato possibile recuperare da OpenFoodFacts.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "copyCodeLabel": "Copia codice",
   "shareCodeLabel": "Condividi codice",
   "codeCopiedLabel": "Codice copiato",

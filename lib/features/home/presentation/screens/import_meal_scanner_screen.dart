@@ -4,6 +4,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.dart';
+import 'package:opennutritracker/features/scanner/domain/usecase/search_product_by_barcode_usecase.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/calendar_day_bloc.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/diary_bloc.dart';
 import 'package:opennutritracker/features/home/domain/entity/shared_meal_payload.dart';
@@ -29,6 +30,7 @@ class ImportMealScannerScreen extends StatefulWidget {
 
 class _ImportMealScannerScreenState extends State<ImportMealScannerScreen> {
   late MealDetailBloc _mealDetailBloc;
+  late SearchProductByBarcodeUseCase _searchProductByBarcodeUseCase;
   late IntakeTypeEntity _intakeTypeEntity;
   late AddMealType _addMealType;
   late DateTime _day;
@@ -37,6 +39,7 @@ class _ImportMealScannerScreenState extends State<ImportMealScannerScreen> {
   @override
   void initState() {
     _mealDetailBloc = locator<MealDetailBloc>();
+    _searchProductByBarcodeUseCase = locator<SearchProductByBarcodeUseCase>();
     super.initState();
   }
 
@@ -120,7 +123,7 @@ class _ImportMealScannerScreenState extends State<ImportMealScannerScreen> {
       if (!mounted) return;
       final confirmed = await _showConfirmDialog(payload);
       if (confirmed == true && mounted) {
-        _importItems(payload);
+        await _importItems(payload);
         _refreshPages();
         if (mounted) {
           Navigator.of(context).pop();
@@ -145,7 +148,7 @@ class _ImportMealScannerScreenState extends State<ImportMealScannerScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(
-          S.of(ctx).importMealConfirmTitle(payload.items.length),
+          S.of(ctx).importMealConfirmTitle(payload.totalCount),
         ),
         content: Text(
           S.of(ctx).importMealConfirmContent(_addMealType.getTypeName(ctx)),
@@ -164,7 +167,7 @@ class _ImportMealScannerScreenState extends State<ImportMealScannerScreen> {
     );
   }
 
-  void _importItems(SharedMealPayload payload) {
+  Future<void> _importItems(SharedMealPayload payload) async {
     final meals = payload.toMealEntities();
     for (var i = 0; i < meals.length; i++) {
       _mealDetailBloc.addIntake(
@@ -174,6 +177,32 @@ class _ImportMealScannerScreenState extends State<ImportMealScannerScreen> {
         _intakeTypeEntity,
         meals[i],
         _day,
+      );
+    }
+
+    final offResults = await Future.wait(payload.offRefs.map((ref) async {
+      try {
+        final meal = await _searchProductByBarcodeUseCase.searchProductByBarcode(ref.barcode);
+        return (ref: ref, meal: meal);
+      } catch (_) {
+        return null;
+      }
+    }));
+
+    if (!mounted) return;
+
+    var skipped = 0;
+    for (final r in offResults) {
+      if (r != null) {
+        _mealDetailBloc.addIntake(context, r.ref.unit, r.ref.amount.toString(), _intakeTypeEntity, r.meal, _day);
+      } else {
+        skipped++;
+      }
+    }
+
+    if (skipped > 0 && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(S.of(context).importOffFetchFailedLabel(skipped))),
       );
     }
   }

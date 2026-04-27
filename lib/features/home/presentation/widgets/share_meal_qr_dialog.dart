@@ -109,8 +109,10 @@ class _ShareMealQrDialogState extends State<ShareMealQrDialog> {
     final contentSize = size - 2 * margin;
     final painter = QrPainter.withQr(
       qr: qrCode,
-      eyeStyle: const QrEyeStyle(color: Color(0xFF000000), eyeShape: QrEyeShape.square),
-      dataModuleStyle: const QrDataModuleStyle(color: Color(0xFF000000), dataModuleShape: QrDataModuleShape.square),
+      eyeStyle: const QrEyeStyle(
+          color: Color(0xFF000000), eyeShape: QrEyeShape.square),
+      dataModuleStyle: const QrDataModuleStyle(
+          color: Color(0xFF000000), dataModuleShape: QrDataModuleShape.square),
     );
     final recorder = ui.PictureRecorder();
     final canvas = ui.Canvas(recorder);

@@ -126,6 +126,12 @@
   },
   "importMealSuccessLabel": "Jídlo importováno",
   "importMealErrorLabel": "Neplatný QR kód",
+  "importOffFetchFailedLabel": "{count} položek nebylo možné načíst z OpenFoodFacts.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "copyCodeLabel": "Kopírovat kód",
   "shareCodeLabel": "Sdílet kód",
   "codeCopiedLabel": "Kód zkopírován",

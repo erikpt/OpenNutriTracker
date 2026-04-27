@@ -124,6 +124,12 @@
   },
   "importMealSuccessLabel": "Meal imported",
   "importMealErrorLabel": "Invalid QR code",
+  "importOffFetchFailedLabel": "{count} öğe OpenFoodFacts'ten alınamadı.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "copyCodeLabel": "Kodu kopyala",
   "shareCodeLabel": "Kodu paylaş",
   "codeCopiedLabel": "Kod kopyalandı",

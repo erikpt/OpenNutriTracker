@@ -125,6 +125,12 @@
   },
   "importMealSuccessLabel": "Meal imported",
   "importMealErrorLabel": "Invalid QR code",
+  "importOffFetchFailedLabel": "{count} елемент(ів) не вдалося отримати з OpenFoodFacts.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "copyCodeLabel": "Копіювати код",
   "shareCodeLabel": "Поділитися кодом",
   "codeCopiedLabel": "Код скопійовано",

@@ -87,7 +87,8 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [
                 !_isImperialSelected
                     ? FilteringTextInputFormatter.digitsOnly

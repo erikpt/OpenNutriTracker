@@ -126,6 +126,12 @@
   },
   "importMealSuccessLabel": "Meal imported",
   "importMealErrorLabel": "Invalid QR code",
+  "importOffFetchFailedLabel": "{count} item(s) could not be fetched from OpenFoodFacts.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "copyCodeLabel": "Copy code",
   "shareCodeLabel": "Share code",
   "codeCopiedLabel": "Code copied",

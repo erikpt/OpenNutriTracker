@@ -11,6 +11,41 @@ class SharedMealParseException implements Exception {
   SharedMealParseException(this.message);
 }
 
+// Emit int for whole numbers, round to 1dp otherwise — shrinks JSON before compression
+num? _compact(double? v) {
+  if (v == null) return null;
+  if (v == v.truncateToDouble()) return v.toInt();
+  return double.parse(v.toStringAsFixed(1));
+}
+
+// OFF ref field order: [barcode, amount, unit]
+class SharedMealOffRef {
+  final String barcode;
+  final double amount;
+  final String unit;
+
+  const SharedMealOffRef(
+      {required this.barcode, required this.amount, required this.unit});
+
+  factory SharedMealOffRef.fromIntakeEntity(IntakeEntity intake) {
+    return SharedMealOffRef(
+      barcode: intake.meal.code!,
+      amount: intake.amount,
+      unit: intake.unit,
+    );
+  }
+
+  factory SharedMealOffRef.fromArray(List<dynamic> a) {
+    return SharedMealOffRef(
+      barcode: a[0] as String,
+      amount: (a[1] as num).toDouble(),
+      unit: (a[2] as String?) ?? 'g',
+    );
+  }
+
+  List<dynamic> toArray() => [barcode, _compact(amount), unit];
+}
+
 // Array field order: [name, brands, unit, amount, ec, cb, ft, pr, sg, sf, fb, thumbUrl, imgUrl]
 class SharedMealItem {
   final String? name;
@@ -81,25 +116,6 @@ class SharedMealItem {
     );
   }
 
-  // Legacy map format (v1 object encoding) — decode only
-  factory SharedMealItem.fromMap(Map<String, dynamic> map) {
-    return SharedMealItem(
-      name: map['n'] as String?,
-      brands: map['br'] as String?,
-      unit: (map['u'] as String?) ?? 'g',
-      amount: (map['a'] as num?)?.toDouble() ?? 100.0,
-      energyKcal100: (map['ec'] as num?)?.toDouble(),
-      carbohydrates100: (map['cb'] as num?)?.toDouble(),
-      fat100: (map['ft'] as num?)?.toDouble(),
-      proteins100: (map['pr'] as num?)?.toDouble(),
-      sugars100: (map['sg'] as num?)?.toDouble(),
-      saturatedFat100: (map['sf'] as num?)?.toDouble(),
-      fiber100: (map['fb'] as num?)?.toDouble(),
-      thumbnailImageUrl: null,
-      mainImageUrl: null,
-    );
-  }
-
   List<dynamic> toArray() {
     return [
       name,
@@ -116,13 +132,6 @@ class SharedMealItem {
       thumbnailImageUrl,
       mainImageUrl,
     ];
-  }
-
-  // Emit int for whole numbers, round to 1dp otherwise — shrinks JSON before compression
-  static num? _compact(double? v) {
-    if (v == null) return null;
-    if (v == v.truncateToDouble()) return v.toInt();
-    return double.parse(v.toStringAsFixed(1));
   }
 
   MealEntity toMealEntity() {
@@ -153,17 +162,30 @@ class SharedMealItem {
 }
 
 class SharedMealPayload {
-  static const int _currentVersion = 2;
+  static const int _currentVersion = 1;
 
   final int version;
+  final List<SharedMealOffRef> offRefs;
   final List<SharedMealItem> items;
 
-  const SharedMealPayload({required this.version, required this.items});
+  int get totalCount => offRefs.length + items.length;
+
+  const SharedMealPayload(
+      {required this.version, required this.offRefs, required this.items});
 
   factory SharedMealPayload.fromIntakeList(List<IntakeEntity> intakes) {
     return SharedMealPayload(
       version: _currentVersion,
-      items: intakes.map(SharedMealItem.fromIntakeEntity).toList(),
+      offRefs: intakes
+          .where((i) =>
+              i.meal.source == MealSourceEntity.off && i.meal.code != null)
+          .map(SharedMealOffRef.fromIntakeEntity)
+          .toList(),
+      items: intakes
+          .where((i) =>
+              i.meal.source != MealSourceEntity.off || i.meal.code == null)
+          .map(SharedMealItem.fromIntakeEntity)
+          .toList(),
     );
   }
 
@@ -171,34 +193,31 @@ class SharedMealPayload {
     try {
       String jsonString;
       try {
-        jsonString = utf8.decode(gzip.decode(base64Url.decode(base64Url.normalize(input))));
+        jsonString = utf8
+            .decode(gzip.decode(base64Url.decode(base64Url.normalize(input))));
       } catch (_) {
         jsonString = input;
       }
 
       final decoded = jsonDecode(jsonString);
+      if (decoded is! List) throw SharedMealParseException('Invalid payload format');
 
-      if (decoded is List) {
-        // v2 array format: [version, [[item arrays...]]]
-        final version = decoded[0] as int;
-        if (version > _currentVersion) {
-          throw SharedMealParseException('Unsupported payload version: $version');
-        }
-        final rawItems = decoded[1] as List<dynamic>;
-        final items = rawItems.map((e) => SharedMealItem.fromArray(e as List<dynamic>)).toList();
-        return SharedMealPayload(version: version, items: items);
-      } else {
-        // v1 legacy map format
-        final map = decoded as Map<String, dynamic>;
-        final version = map['v'] as int?;
-        if (version == null || version > _currentVersion) {
-          throw SharedMealParseException('Unsupported payload version: $version');
-        }
-        final rawItems = map['items'] as List<dynamic>?;
-        if (rawItems == null) throw SharedMealParseException('Missing items field');
-        final items = rawItems.map((e) => SharedMealItem.fromMap(e as Map<String, dynamic>)).toList();
-        return SharedMealPayload(version: version, items: items);
+      final version = decoded[0] as int;
+      if (version != _currentVersion) {
+        throw SharedMealParseException('Unsupported payload version: $version');
       }
+
+      final rawOffRefs = decoded[1] as List<dynamic>;
+      final rawItems = decoded[2] as List<dynamic>;
+      return SharedMealPayload(
+        version: version,
+        offRefs: rawOffRefs
+            .map((e) => SharedMealOffRef.fromArray(e as List<dynamic>))
+            .toList(),
+        items: rawItems
+            .map((e) => SharedMealItem.fromArray(e as List<dynamic>))
+            .toList(),
+      );
     } on SharedMealParseException {
       rethrow;
     } catch (e) {
@@ -207,11 +226,14 @@ class SharedMealPayload {
   }
 
   String toJsonString() {
-    final json = jsonEncode([version, items.map((i) => i.toArray()).toList()]);
+    final json = jsonEncode([
+      version,
+      offRefs.map((r) => r.toArray()).toList(),
+      items.map((i) => i.toArray()).toList(),
+    ]);
     return base64Url.encode(gzip.encode(utf8.encode(json)));
   }
 
-  List<MealEntity> toMealEntities() {
-    return items.map((i) => i.toMealEntity()).toList();
-  }
+  List<MealEntity> toMealEntities() =>
+      items.map((i) => i.toMealEntity()).toList();
 }

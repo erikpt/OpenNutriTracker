@@ -25,7 +25,8 @@ void main() {
       expect(maxSelectableWeight(140, true), 240);
     });
 
-    test('extreme negative persisted values still produce a valid metric range', () {
+    test('extreme negative persisted values still produce a valid metric range',
+        () {
       expect(
         maxSelectableHeight(-200, false) >= minSelectableHeight(-200, false),
         isTrue,

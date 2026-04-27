@@ -121,6 +121,12 @@
   },
   "importMealSuccessLabel": "Mahlzeit importiert",
   "importMealErrorLabel": "Ungültiger QR-Code",
+  "importOffFetchFailedLabel": "{count} Einträge konnten nicht von OpenFoodFacts abgerufen werden.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "copyCodeLabel": "Code kopieren",
   "shareCodeLabel": "Code teilen",
   "codeCopiedLabel": "Code kopiert",

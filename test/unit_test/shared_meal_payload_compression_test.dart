@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io' show gzip;
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:opennutritracker/core/domain/entity/intake_entity.dart';
 import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
@@ -6,18 +9,21 @@ import 'package:opennutritracker/features/add_meal/domain/entity/meal_nutriments
 import 'package:opennutritracker/features/home/domain/entity/shared_meal_payload.dart';
 
 void main() {
-  MealEntity createTestMeal({
+  MealEntity createMeal({
     required String code,
     required String name,
     String? brands,
+    MealSourceEntity source = MealSourceEntity.custom,
     bool fullNutritionData = false,
   }) {
     return MealEntity(
       code: code,
       name: name,
       brands: brands,
-      thumbnailImageUrl: fullNutritionData ? 'https://example.com/thumb.jpg' : null,
-      mainImageUrl: fullNutritionData ? 'https://example.com/main.jpg' : null,
+      thumbnailImageUrl:
+          fullNutritionData ? 'https://images.openfoodfacts.org/images/products/123/front.100.jpg' : null,
+      mainImageUrl:
+          fullNutritionData ? 'https://images.openfoodfacts.org/images/products/123/front.400.jpg' : null,
       url: null,
       mealQuantity: null,
       mealUnit: null,
@@ -26,79 +32,140 @@ void main() {
       servingSize: null,
       nutriments: fullNutritionData
           ? MealNutrimentsEntity(
-              energyKcal100: 100.5,
-              carbohydrates100: 50.2,
-              fat100: 25.1,
-              proteins100: 20.0,
-              sugars100: 10.0,
-              saturatedFat100: 5.0,
-              fiber100: 3.0,
+              energyKcal100: 192.7,
+              carbohydrates100: 22.0,
+              fat100: 7.9,
+              proteins100: 6.7,
+              sugars100: 3.5,
+              saturatedFat100: 2.6,
+              fiber100: 2.0,
             )
           : MealNutrimentsEntity.empty(),
-      source: MealSourceEntity.custom,
+      source: source,
     );
   }
 
-  List<IntakeEntity> createIntakes(List<MealEntity> meals) {
-    return meals
-        .asMap()
-        .entries
-        .map((e) => IntakeEntity(
-              id: 'intake_${e.key}',
-              meal: e.value,
-              amount: 100 + e.key * 10,
-              unit: 'g',
-              dateTime: DateTime.now().subtract(Duration(days: e.key)),
-              type: IntakeTypeEntity.breakfast,
-            ))
-        .toList();
+  IntakeEntity makeIntake(MealEntity meal, {int index = 0}) {
+    return IntakeEntity(
+      id: 'intake_$index',
+      meal: meal,
+      amount: 100 + index * 10.0,
+      unit: 'g',
+      dateTime: DateTime(2026, 4, 27),
+      type: IntakeTypeEntity.breakfast,
+    );
   }
 
   group('SharedMealPayload', () {
     // QR v40, error correction M: 3917 alphanumeric characters capacity
     const qrMaxChars = 3917;
 
-    test('payloads for typical meal counts fit within QR v40/M capacity', () {
-      final payload1 = SharedMealPayload.fromIntakeList(
-        createIntakes([createTestMeal(code: '1', name: 'Apple')]),
+    test('OFF items are encoded as 3-field barcode refs', () {
+      final offMeal = createMeal(
+        code: '4001724039143',
+        name: 'Pizza Vegetale',
+        brands: 'Dr. Oetker',
+        source: MealSourceEntity.off,
+        fullNutritionData: true,
       );
-      expect(payload1.toJsonString().length, lessThan(qrMaxChars));
+      final payload = SharedMealPayload.fromIntakeList([makeIntake(offMeal)]);
 
-      final meals5 = List.generate(
+      expect(payload.offRefs.length, 1);
+      expect(payload.items.length, 0);
+      expect(payload.offRefs[0].barcode, '4001724039143');
+      expect(payload.offRefs[0].amount, 100.0);
+      expect(payload.offRefs[0].unit, 'g');
+    });
+
+    test('custom items are encoded as full-data arrays', () {
+      final customMeal = createMeal(
+        code: 'some-uuid',
+        name: 'Homemade Soup',
+        source: MealSourceEntity.custom,
+        fullNutritionData: true,
+      );
+      final payload = SharedMealPayload.fromIntakeList([makeIntake(customMeal)]);
+
+      expect(payload.offRefs.length, 0);
+      expect(payload.items.length, 1);
+      expect(payload.items[0].name, 'Homemade Soup');
+    });
+
+    test('round-trip preserves OFF refs and custom items', () {
+      final intakes = [
+        makeIntake(
+          createMeal(
+            code: '4001724039143',
+            name: 'Pizza Vegetale',
+            brands: 'Dr. Oetker',
+            source: MealSourceEntity.off,
+            fullNutritionData: true,
+          ),
+          index: 0,
+        ),
+        makeIntake(
+          createMeal(
+            code: 'some-uuid',
+            name: 'Homemade Soup',
+            source: MealSourceEntity.custom,
+            fullNutritionData: true,
+          ),
+          index: 1,
+        ),
+      ];
+
+      final encoded = SharedMealPayload.fromIntakeList(intakes).toJsonString();
+      final decoded = SharedMealPayload.fromJsonString(encoded);
+
+      expect(decoded.version, 1);
+      expect(decoded.offRefs.length, 1);
+      expect(decoded.offRefs[0].barcode, '4001724039143');
+      expect(decoded.offRefs[0].amount, 100.0);
+      expect(decoded.items.length, 1);
+      expect(decoded.items[0].name, 'Homemade Soup');
+      expect(decoded.items[0].energyKcal100, 192.7);
+    });
+
+    test('payloads for typical meal counts fit within QR v40/M capacity', () {
+      // 5 OFF items: only barcodes stored — very small
+      final offIntakes = List.generate(
         5,
-        (i) => createTestMeal(code: '$i', name: 'Meal $i', brands: 'Brand $i', fullNutritionData: true),
+        (i) => makeIntake(
+          createMeal(code: '400172403914$i', name: 'Product $i', source: MealSourceEntity.off),
+          index: i,
+        ),
       );
       expect(
-        SharedMealPayload.fromIntakeList(createIntakes(meals5)).toJsonString().length,
+        SharedMealPayload.fromIntakeList(offIntakes).toJsonString().length,
         lessThan(qrMaxChars),
       );
 
-      final meals10 = List.generate(
+      // 10 custom items with full nutritional data — worst case
+      final customIntakes = List.generate(
         10,
-        (i) => createTestMeal(code: '$i', name: 'Meal Item $i', brands: 'Brand Name $i', fullNutritionData: true),
+        (i) => makeIntake(
+          createMeal(
+            code: 'uuid-$i',
+            name: 'Meal Item $i',
+            brands: 'Brand $i',
+            source: MealSourceEntity.custom,
+            fullNutritionData: true,
+          ),
+          index: i,
+        ),
       );
       expect(
-        SharedMealPayload.fromIntakeList(createIntakes(meals10)).toJsonString().length,
+        SharedMealPayload.fromIntakeList(customIntakes).toJsonString().length,
         lessThan(qrMaxChars),
       );
     });
 
-    test('round-trip encoding/decoding preserves data integrity', () {
-      final meals = [
-        createTestMeal(code: '1', name: 'Complex Meal Name', brands: 'Complex Brand', fullNutritionData: true),
-        createTestMeal(code: '2', name: 'Simple', fullNutritionData: false),
-      ];
-      final intakes = createIntakes(meals);
-      final original = SharedMealPayload.fromIntakeList(intakes);
-
-      final encoded = original.toJsonString();
-      final decoded = SharedMealPayload.fromJsonString(encoded);
-
-      expect(decoded.version, original.version);
-      expect(decoded.items.length, original.items.length);
-      expect(decoded.items[0].name, 'Complex Meal Name');
-      expect(decoded.items[0].brands, 'Complex Brand');
-      expect(decoded.items[0].energyKcal100, 100.5);
+    test('unsupported version throws SharedMealParseException', () {
+      final raw = base64Url.encode(gzip.encode(utf8.encode('[99,[],[]]')));
+      expect(
+        () => SharedMealPayload.fromJsonString(raw),
+        throwsA(isA<SharedMealParseException>()),
+      );
     });
   });
 }
