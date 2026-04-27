@@ -29,6 +29,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(age) => "${age} let";
 
+  static String m4(count) => "Import ${count} items?";
+
+  static String m5(mealType) => "These items will be added to your ${mealType}.";
+
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -100,6 +105,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "dataCollectionLabel": MessageLookupByLibrary.simpleMessage(
             "Poskytněte anonymní data týkající se používání aplikace pro pomoc s jejím vývojem"),
         "deleteAllLabel": MessageLookupByLibrary.simpleMessage("Smazat vše"),
+        "shareMealLabel": MessageLookupByLibrary.simpleMessage("Sdílet jídlo"),
+        "importMealLabel": MessageLookupByLibrary.simpleMessage("Importovat sdílené jídlo"),
+        "importMealConfirmTitle": m4,
+        "importMealConfirmContent": m5,
+        "importMealSuccessLabel": MessageLookupByLibrary.simpleMessage("Jídlo importováno"),
+        "importMealErrorLabel": MessageLookupByLibrary.simpleMessage("Neplatný QR kód"),
+        "copyCodeLabel": MessageLookupByLibrary.simpleMessage("Kopírovat kód"),
+        "shareCodeLabel": MessageLookupByLibrary.simpleMessage("Sdílet kód"),
+        "codeCopiedLabel": MessageLookupByLibrary.simpleMessage("Kód zkopírován"),
+        "pasteCodeLabel": MessageLookupByLibrary.simpleMessage("Vložit kód"),
+        "pasteCodeHint": MessageLookupByLibrary.simpleMessage("Vložte sem sdílený kód jídla"),
         "deleteTimeDialogContent": MessageLookupByLibrary.simpleMessage(
             "Přejete si vymazat označený záznam?"),
         "deleteTimeDialogPluralContent": MessageLookupByLibrary.simpleMessage(

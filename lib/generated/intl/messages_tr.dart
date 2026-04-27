@@ -29,6 +29,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(age) => "${age} yıl";
 
+  static String m4(count) => "Import ${count} items?";
+
+  static String m5(mealType) => "These items will be added to your ${mealType}.";
+
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -112,6 +117,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("BUGÜNE KOPYALA"),
         "dialogDeleteLabel": MessageLookupByLibrary.simpleMessage("SİL"),
         "dialogOKLabel": MessageLookupByLibrary.simpleMessage("TAMAM"),
+        "shareMealLabel": MessageLookupByLibrary.simpleMessage("Share meal"),
+        "importMealLabel": MessageLookupByLibrary.simpleMessage("Import shared meal"),
+        "importMealConfirmTitle": m4,
+        "importMealConfirmContent": m5,
+        "importMealSuccessLabel": MessageLookupByLibrary.simpleMessage("Meal imported"),
+        "importMealErrorLabel": MessageLookupByLibrary.simpleMessage("Invalid QR code"),
+        "copyCodeLabel": MessageLookupByLibrary.simpleMessage("Kodu kopyala"),
+        "shareCodeLabel": MessageLookupByLibrary.simpleMessage("Kodu paylaş"),
+        "codeCopiedLabel": MessageLookupByLibrary.simpleMessage("Kod kopyalandı"),
+        "pasteCodeLabel": MessageLookupByLibrary.simpleMessage("Kodu yapıştır"),
+        "pasteCodeHint": MessageLookupByLibrary.simpleMessage("Paylaşılan yemek kodunu buraya yapıştırın"),
         "diaryLabel": MessageLookupByLibrary.simpleMessage("Günlük"),
         "dinnerExample":
             MessageLookupByLibrary.simpleMessage("ör. çorba, tavuk, şarap ..."),

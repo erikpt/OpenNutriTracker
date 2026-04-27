@@ -1141,6 +1141,116 @@ class S {
     );
   }
 
+  /// `Share meal`
+  String get shareMealLabel {
+    return Intl.message(
+      'Share meal',
+      name: 'shareMealLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import shared meal`
+  String get importMealLabel {
+    return Intl.message(
+      'Import shared meal',
+      name: 'importMealLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import {count} items?`
+  String importMealConfirmTitle(int count) {
+    return Intl.message(
+      'Import $count items?',
+      name: 'importMealConfirmTitle',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `These items will be added to your {mealType}.`
+  String importMealConfirmContent(String mealType) {
+    return Intl.message(
+      'These items will be added to your $mealType.',
+      name: 'importMealConfirmContent',
+      desc: '',
+      args: [mealType],
+    );
+  }
+
+  /// `Meal imported`
+  String get importMealSuccessLabel {
+    return Intl.message(
+      'Meal imported',
+      name: 'importMealSuccessLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid QR code`
+  String get importMealErrorLabel {
+    return Intl.message(
+      'Invalid QR code',
+      name: 'importMealErrorLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copy code`
+  String get copyCodeLabel {
+    return Intl.message(
+      'Copy code',
+      name: 'copyCodeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share code`
+  String get shareCodeLabel {
+    return Intl.message(
+      'Share code',
+      name: 'shareCodeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code copied`
+  String get codeCopiedLabel {
+    return Intl.message(
+      'Code copied',
+      name: 'codeCopiedLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paste code`
+  String get pasteCodeLabel {
+    return Intl.message(
+      'Paste code',
+      name: 'pasteCodeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paste the shared meal code here`
+  String get pasteCodeHint {
+    return Intl.message(
+      'Paste the shared meal code here',
+      name: 'pasteCodeHint',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `supplied`
   String get suppliedLabel {
     return Intl.message(

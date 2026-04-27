@@ -110,6 +110,28 @@
 
   "deleteAllLabel": "Delete all",
 
+  "shareMealLabel": "Share meal",
+  "importMealLabel": "Import shared meal",
+  "importMealConfirmTitle": "Import {count} items?",
+  "@importMealConfirmTitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "importMealConfirmContent": "These items will be added to your {mealType}.",
+  "@importMealConfirmContent": {
+    "placeholders": {
+      "mealType": { "type": "String" }
+    }
+  },
+  "importMealSuccessLabel": "Meal imported",
+  "importMealErrorLabel": "Invalid QR code",
+  "copyCodeLabel": "Copy code",
+  "shareCodeLabel": "Share code",
+  "codeCopiedLabel": "Code copied",
+  "pasteCodeLabel": "Paste code",
+  "pasteCodeHint": "Paste the shared meal code here",
+
   "suppliedLabel": "supplied",
   "burnedLabel": "burned",
   "kcalLeftLabel": "kcal left",

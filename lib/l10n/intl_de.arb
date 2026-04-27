@@ -105,6 +105,28 @@
   "dialogDeleteLabel": "LÖSCHEN",
   "deleteAllLabel": "Alle löschen",
 
+  "shareMealLabel": "Mahlzeit teilen",
+  "importMealLabel": "Geteilte Mahlzeit importieren",
+  "importMealConfirmTitle": "{count} Einträge importieren?",
+  "@importMealConfirmTitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "importMealConfirmContent": "Diese Einträge werden zu {mealType} hinzugefügt.",
+  "@importMealConfirmContent": {
+    "placeholders": {
+      "mealType": { "type": "String" }
+    }
+  },
+  "importMealSuccessLabel": "Mahlzeit importiert",
+  "importMealErrorLabel": "Ungültiger QR-Code",
+  "copyCodeLabel": "Code kopieren",
+  "shareCodeLabel": "Code teilen",
+  "codeCopiedLabel": "Code kopiert",
+  "pasteCodeLabel": "Code einfügen",
+  "pasteCodeHint": "Füge hier den geteilten Mahlzeitencode ein",
+
   "suppliedLabel": "zugeführt",
   "burnedLabel": "verbrannt",
   "kcalLeftLabel": "kcal übrig",

@@ -29,6 +29,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(age) => "${age} років";
 
+  static String m4(count) => "Import ${count} items?";
+
+  static String m5(mealType) => "These items will be added to your ${mealType}.";
+
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -100,6 +105,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "dataCollectionLabel": MessageLookupByLibrary.simpleMessage(
             "Підтримайте розробку, надаючи анонімні дані про використання"),
         "deleteAllLabel": MessageLookupByLibrary.simpleMessage("Видалити все"),
+        "shareMealLabel": MessageLookupByLibrary.simpleMessage("Share meal"),
+        "importMealLabel": MessageLookupByLibrary.simpleMessage("Import shared meal"),
+        "importMealConfirmTitle": m4,
+        "importMealConfirmContent": m5,
+        "importMealSuccessLabel": MessageLookupByLibrary.simpleMessage("Meal imported"),
+        "importMealErrorLabel": MessageLookupByLibrary.simpleMessage("Invalid QR code"),
+        "copyCodeLabel": MessageLookupByLibrary.simpleMessage("Копіювати код"),
+        "shareCodeLabel": MessageLookupByLibrary.simpleMessage("Поділитися кодом"),
+        "codeCopiedLabel": MessageLookupByLibrary.simpleMessage("Код скопійовано"),
+        "pasteCodeLabel": MessageLookupByLibrary.simpleMessage("Вставити код"),
+        "pasteCodeHint": MessageLookupByLibrary.simpleMessage("Вставте сюди код спільного прийому їжі"),
         "deleteTimeDialogContent": MessageLookupByLibrary.simpleMessage(
             "Ви хочете видалити вибраний елемент?"),
         "deleteTimeDialogPluralContent": MessageLookupByLibrary.simpleMessage(
