@@ -182,7 +182,8 @@ class _ImportMealScannerScreenState extends State<ImportMealScannerScreen> {
 
     final offResults = await Future.wait(payload.offRefs.map((ref) async {
       try {
-        final meal = await _searchProductByBarcodeUseCase.searchProductByBarcode(ref.barcode);
+        final meal = await _searchProductByBarcodeUseCase
+            .searchProductByBarcode(ref.barcode);
         return (ref: ref, meal: meal);
       } catch (_) {
         return null;
@@ -194,7 +195,8 @@ class _ImportMealScannerScreenState extends State<ImportMealScannerScreen> {
     var skipped = 0;
     for (final r in offResults) {
       if (r != null) {
-        _mealDetailBloc.addIntake(context, r.ref.unit, r.ref.amount.toString(), _intakeTypeEntity, r.meal, _day);
+        _mealDetailBloc.addIntake(context, r.ref.unit, r.ref.amount.toString(),
+            _intakeTypeEntity, r.meal, _day);
       } else {
         skipped++;
       }
@@ -202,7 +204,8 @@ class _ImportMealScannerScreenState extends State<ImportMealScannerScreen> {
 
     if (skipped > 0 && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(S.of(context).importOffFetchFailedLabel(skipped))),
+        SnackBar(
+            content: Text(S.of(context).importOffFetchFailedLabel(skipped))),
       );
     }
   }

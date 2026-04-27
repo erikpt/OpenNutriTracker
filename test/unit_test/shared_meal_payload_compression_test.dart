@@ -20,10 +20,12 @@ void main() {
       code: code,
       name: name,
       brands: brands,
-      thumbnailImageUrl:
-          fullNutritionData ? 'https://images.openfoodfacts.org/images/products/123/front.100.jpg' : null,
-      mainImageUrl:
-          fullNutritionData ? 'https://images.openfoodfacts.org/images/products/123/front.400.jpg' : null,
+      thumbnailImageUrl: fullNutritionData
+          ? 'https://images.openfoodfacts.org/images/products/123/front.100.jpg'
+          : null,
+      mainImageUrl: fullNutritionData
+          ? 'https://images.openfoodfacts.org/images/products/123/front.400.jpg'
+          : null,
       url: null,
       mealQuantity: null,
       mealUnit: null,
@@ -84,7 +86,8 @@ void main() {
         source: MealSourceEntity.custom,
         fullNutritionData: true,
       );
-      final payload = SharedMealPayload.fromIntakeList([makeIntake(customMeal)]);
+      final payload =
+          SharedMealPayload.fromIntakeList([makeIntake(customMeal)]);
 
       expect(payload.offRefs.length, 0);
       expect(payload.items.length, 1);
@@ -131,7 +134,10 @@ void main() {
       final offIntakes = List.generate(
         5,
         (i) => makeIntake(
-          createMeal(code: '400172403914$i', name: 'Product $i', source: MealSourceEntity.off),
+          createMeal(
+              code: '400172403914$i',
+              name: 'Product $i',
+              source: MealSourceEntity.off),
           index: i,
         ),
       );
