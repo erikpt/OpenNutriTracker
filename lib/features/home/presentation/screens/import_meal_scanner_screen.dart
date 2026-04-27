@@ -12,6 +12,18 @@ import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart'
 import 'package:opennutritracker/features/meal_detail/presentation/bloc/meal_detail_bloc.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
+Future<T> _withRetry<T>(Future<T> Function() fn, {int attempts = 3}) async {
+  for (var i = 0; i < attempts; i++) {
+    try {
+      return await fn();
+    } catch (e) {
+      if (i == attempts - 1) rethrow;
+      await Future.delayed(Duration(seconds: 1 << i));
+    }
+  }
+  throw StateError('unreachable');
+}
+
 class ImportMealScannerArguments {
   final IntakeTypeEntity intakeTypeEntity;
   final AddMealType addMealType;
@@ -182,8 +194,9 @@ class _ImportMealScannerScreenState extends State<ImportMealScannerScreen> {
 
     final offResults = await Future.wait(payload.offRefs.map((ref) async {
       try {
-        final meal = await _searchProductByBarcodeUseCase
-            .searchProductByBarcode(ref.barcode);
+        final meal = await _withRetry(
+          () => _searchProductByBarcodeUseCase.searchProductByBarcode(ref.barcode),
+        );
         return (ref: ref, meal: meal);
       } catch (_) {
         return null;
