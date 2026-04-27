@@ -15,10 +15,12 @@ format *OPTIONS:
 # Regenerate intl files
 run_intl: && format
   dart run intl_translation:generate_from_arb --output-dir {{intl_output_dir}} lib/**/*.dart ./lib/l10n/*.arb
+  dart pub global run intl_utils:generate
 
 # Check if intl files are correctly generated
-check_intl: run_intl 
-  git diff  --exit-code {{intl_output_dir}}
+check_intl: run_intl
+  git diff --exit-code {{intl_output_dir}}
+  git diff --exit-code lib/generated/l10n.dart
 
 # Run tests
 test:
