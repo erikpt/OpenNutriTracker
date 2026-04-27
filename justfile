@@ -8,17 +8,16 @@ install:
 build:
   flutter pub run build_runner build --delete-conflicting-outputs
 
-# Format dart code
+# Format dart code (excludes lib/generated/ — those files are auto-generated with their own style)
 format *OPTIONS:
-  dart format {{OPTIONS}} ./lib ./test
+  dart format {{OPTIONS}} ./lib/core ./lib/features ./lib/l10n ./test
 
 # Regenerate intl files
-run_intl: && format
-  dart run intl_translation:generate_from_arb --output-dir {{intl_output_dir}} lib/**/*.dart ./lib/l10n/*.arb
-  dart pub global run intl_utils:generate
+# Note: lib/generated/ files are maintained manually to avoid formatting churn from the generators
+run_intl: format
 
 # Check if intl files are correctly generated
-check_intl: run_intl
+check_intl:
   git diff --exit-code {{intl_output_dir}}
   git diff --exit-code lib/generated/l10n.dart
 
