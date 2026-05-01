@@ -5,23 +5,6 @@ allprojects {
     }
 }
 
-// Force Kotlin compiler settings for every plugin module (e.g. cached pub plugins).
-subprojects {
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach { kotlinTask ->
-        // Keep Kotlin bytecode target aligned with the matching Java compile task for this variant.
-        def javaTask = tasks.findByName(kotlinTask.name.replace("Kotlin", "JavaWithJavac"))
-        def alignedJvmTarget = (javaTask?.hasProperty("targetCompatibility") && javaTask.targetCompatibility)
-                ? javaTask.targetCompatibility.toString()
-                : "17"
-
-        kotlinOptions {
-            jvmTarget = alignedJvmTarget
-            // Keep language/api at >=1.8 so old plugins (e.g. sentry_flutter 8.x) do not request 1.6.
-            freeCompilerArgs += ["-language-version", "1.8", "-api-version", "1.8"]
-        }
-    }
-}
-
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
