@@ -14,7 +14,7 @@ class PhysicalActivityEntity extends Equatable {
   final String description;
   final double mets;
 
-  get displayIcon => getDisplayIcon();
+  IconData get displayIcon => getDisplayIcon();
 
   final List<String> tags;
 

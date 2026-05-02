@@ -359,11 +359,11 @@ class _EditMealScreenState extends State<EditMealScreen> {
   String _unitSuffixForSelected(BuildContext context) {
     final u = selectedUnit ?? _units[2];
     if (u == 'g') {
-      return _usesImperialUnits ? ' ' + S.of(context).ozUnit : ' ' + S.of(context).gramUnit;
+      return _usesImperialUnits ? ' ${S.of(context).ozUnit}' : ' ${S.of(context).gramUnit}';
     } else if (u == 'ml') {
-      return _usesImperialUnits ? ' ' + S.of(context).flOzUnit : ' ' + S.of(context).milliliterUnit;
+      return _usesImperialUnits ? ' ${S.of(context).flOzUnit}' : ' ${S.of(context).milliliterUnit}';
     }
-    return ' ' + S.of(context).gramMilliliterUnit;
+    return ' ${S.of(context).gramMilliliterUnit}';
   }
 
   String _convertToImperial(String value, String unit) {

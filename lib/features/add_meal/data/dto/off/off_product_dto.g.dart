@@ -27,7 +27,8 @@ OFFProductDTO _$OFFProductDTOFromJson(Map<String, dynamic> json) =>
       nutriments: json['nutriments'] == null
           ? null
           : OFFProductNutrimentsDTO.fromJson(
-              json['nutriments'] as Map<String, dynamic>),
+              json['nutriments'] as Map<String, dynamic>,
+            ),
     );
 
 Map<String, dynamic> _$OFFProductDTOToJson(OFFProductDTO instance) =>
