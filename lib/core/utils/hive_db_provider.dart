@@ -70,5 +70,5 @@ class HiveDBProvider extends ChangeNotifier {
     );
   }
 
-  static generateNewHiveEncryptionKey() => Hive.generateSecureKey();
+  static List<int> generateNewHiveEncryptionKey() => Hive.generateSecureKey();
 }
