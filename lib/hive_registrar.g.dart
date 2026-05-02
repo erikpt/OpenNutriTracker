@@ -2,7 +2,7 @@
 // Do not modify
 // Check in to version control
 
-import 'package:hive_ce/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:opennutritracker/core/data/data_source/user_activity_dbo.dart';
 import 'package:opennutritracker/core/data/dbo/app_theme_dbo.dart';
 import 'package:opennutritracker/core/data/dbo/config_dbo.dart';

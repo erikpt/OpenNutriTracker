@@ -42,7 +42,7 @@ Use paths for SDKs without spaces and special characters.
 
 5.⁠ ⁠Run Build Runner to generate Files.
 
-```flutter pub run build_runner build```
+```dart run build_runner build```
 
 At the best revert all the visible generated files now, only env.g.dart is needed, it is not checked in because it is in .gitignore.
 
