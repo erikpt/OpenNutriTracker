@@ -37,7 +37,7 @@
         devShells.default = pkgs.mkShell {
             ANDROID_SDK_ROOT = "${androidPkgs.androidsdk}/libexec/android-sdk";
             buildInputs = [
-              pkgs.flutter319
+              pkgs.flutter
               pkgs.jdk17
               androidPkgs.androidsdk
               emulator  # execute emulator with: run-test-emulator
