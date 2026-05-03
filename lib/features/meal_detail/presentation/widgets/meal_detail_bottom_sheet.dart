@@ -88,7 +88,8 @@ class MealDetailBottomSheet extends StatelessWidget {
                         Expanded(
                           child: DropdownButtonFormField(
                             isExpanded: true,
-                            value: selectedUnit,
+                            initialValue: selectedUnit,
+                            key: ValueKey(selectedUnit),
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
                               labelText: S.of(context).unitLabel,

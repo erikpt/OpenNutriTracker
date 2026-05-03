@@ -74,7 +74,7 @@ class ExportDataUsecase {
 
     // Save the zip file to the user specified location
     final zipBytes = ZipEncoder().encode(archive);
-    final result = await FilePicker.platform.saveFile(
+    final result = await FilePicker.saveFile(
       fileName: exportZipFileName,
       type: FileType.custom,
       allowedExtensions: ['zip'],

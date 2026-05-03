@@ -31,7 +31,7 @@ class ImportDataUsecase {
     String trackedDayJsonFileName,
   ) async {
     // Allow user to pick a zip file
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: FileType.any,
       // allowedExtensions: ['zip'],
     );
