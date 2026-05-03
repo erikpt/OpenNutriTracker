@@ -1,46 +1,65 @@
-# Getting Started
+# Getting started
+
+## Android development with Windows 11
+
+This IDE setup is tested on Windows 11.
+
 For setup first you need the following things:
-- Flutter Version 3.27.1
+
+- Android SDK and Android Emulator
+- Flutter
 - IDE like Android Studio or VS Code with Flutter Plugin installed.
 
-## Steps to run App
-1.⁠ ⁠Clone the repository with Git
+Use paths for SDKs without spaces and special characters.
 
-```git clone https://github.com/simonoppowa/OpenNutriTracker.git```
+### Setup Android SDK and Emulator
 
-2.⁠ ⁠Get Dependencies
+1. Download Android Studio from https://developer.android.com/studio and install. Keep "Android Virtual Device" checked. Start Android Studio after installation.
 
-```flutter pub get```
+2. Install the Android SDK when asked.
 
-3.⁠ ⁠Run Build Runner to generate Files
+3. After finishing the SDK installation you should the "Welcome to Android Studio" Screen. Click on "More Actions" -> "SDK Manager", switch to "SDK Tools" tab and check "Android SDK Command-line Tools (latest)", click "OK" and install the tools.
 
-```flutter pub run build_runner build```
+4. Check under "More Actions" -> "Virtual Device Manager" if a virtual phone was set up, if not create one, e.g. a Medium Phone with Default Settings.
 
-4.⁠ ⁠Run App
+5. Close Android Studio.
 
-```flutter run lib/main.dart```
+### Setup Flutter SDK
 
-## Running the Application
+This project uses [FVM](https://fvm.app/) to pin the Flutter version. FVM reads `.fvmrc` in the repo root and installs the correct SDK automatically.
 
-The application can be run on multiple platforms. Here are the commands for each:
+1. Install FVM by following the instructions at [fvm.app/documentation/getting-started/installation](https://fvm.app/documentation/getting-started/installation).
 
-### Web (Chrome)
-```bash
-flutter run -d chrome
+2. In the cloned repository folder, run:
+
+```sh
+fvm install
 ```
 
-### iOS
-```bash
-open -a Simulator
-flutter run
-```
+This downloads the pinned Flutter version (defined in `.fvmrc`) and creates a `.fvm/flutter_sdk` symlink in the project folder. VS Code picks this up automatically via the `dart.flutterSdkPath` setting in `.vscode/settings.json`.
 
-### macOS
-```bash
-flutter run -d macos
-```
+### Setup the Workspace in Visual Studio Code (VSC)
 
-### Android
-```bash
-flutter run -d android
-```
+1. Create a new folder, open the folder in VSC.
+
+2. Configure the Android SDK path for Flutter:
+
+`flutter config --android-sdk "e:\path\to\androidSDK"`
+
+3.⁠ ⁠Clone the repository with git in a VSC terminal (make sure the active folder in the terminal is your created folder from step 1):
+
+`git clone https://github.com/simonoppowa/OpenNutriTracker.git .`
+
+4.⁠ ⁠Get Dependencies.
+
+`flutter pub get`
+
+5.⁠ ⁠Run Build Runner to generate Files.
+
+`dart run build_runner build`
+
+At the best revert all the visible generated files now, only env.g.dart is needed, it is not checked in because it is in .gitignore.
+
+6.⁠ ⁠Restart VSC, VSC detects now that this is a flutter project. On the Bottom Right "No Device" ist displayed, click on it, then select "Start Medium Phone" on the command Palette on the top. Wait for the phone to boot up.
+
+7. Press F5 to start a debug session (may take a while on the first time). Keep the virtual phone running all the time, just start and stop Debugging.

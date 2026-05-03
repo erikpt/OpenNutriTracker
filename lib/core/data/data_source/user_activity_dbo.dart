@@ -1,4 +1,4 @@
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:opennutritracker/core/data/dbo/physical_activity_dbo.dart';
 import 'package:opennutritracker/core/domain/entity/user_activity_entity.dart';
@@ -20,18 +20,26 @@ class UserActivityDBO extends HiveObject {
   @HiveField(4)
   final PhysicalActivityDBO physicalActivityDBO;
 
-  UserActivityDBO(this.id, this.duration, this.burnedKcal, this.date,
-      this.physicalActivityDBO);
+  UserActivityDBO(
+    this.id,
+    this.duration,
+    this.burnedKcal,
+    this.date,
+    this.physicalActivityDBO,
+  );
 
   factory UserActivityDBO.fromUserActivityEntity(
-      UserActivityEntity userActivityEntity) {
+    UserActivityEntity userActivityEntity,
+  ) {
     return UserActivityDBO(
-        userActivityEntity.id,
-        userActivityEntity.duration,
-        userActivityEntity.burnedKcal,
-        userActivityEntity.date,
-        PhysicalActivityDBO.fromPhysicalActivityEntity(
-            userActivityEntity.physicalActivityEntity));
+      userActivityEntity.id,
+      userActivityEntity.duration,
+      userActivityEntity.burnedKcal,
+      userActivityEntity.date,
+      PhysicalActivityDBO.fromPhysicalActivityEntity(
+        userActivityEntity.physicalActivityEntity,
+      ),
+    );
   }
 
   factory UserActivityDBO.fromJson(Map<String, dynamic> json) =>

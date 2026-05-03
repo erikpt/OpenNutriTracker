@@ -409,6 +409,40 @@
   "paSkiingGeneral": "narciarstwo",
   "paSkiingGeneralDesc": "ogólne",
   "paSnowShovingModerate": "odśnieżanie",
-  "paSnowShovingModerateDesc": "ręcznie, umiarkowany wysiłek"
+  "paSnowShovingModerateDesc": "ręcznie, umiarkowany wysiłek",
+  "kcalTooMuchLabel": "kcal za dużo",
+  "shareMealLabel": "Udostępnij posiłek",
+  "importMealLabel": "Importuj udostępniony posiłek",
+  "importMealConfirmTitle": "Zaimportować {count} elementów?",
+  "@importMealConfirmTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importMealConfirmContent": "Te elementy zostaną dodane do Twojego {mealType}.",
+  "@importMealConfirmContent": {
+    "placeholders": {
+      "mealType": {
+        "type": "String"
+      }
+    }
+  },
+  "importMealSuccessLabel": "Posiłek zaimportowany",
+  "importMealErrorLabel": "Nieprawidłowy kod QR",
+  "importOffFetchFailedLabel": "{count} element(ów) nie można pobrać z OpenFoodFacts.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "copyCodeLabel": "Kopiuj kod",
+  "shareCodeLabel": "Udostępnij kod",
+  "codeCopiedLabel": "Kod skopiowany",
+  "pasteCodeLabel": "Wklej kod",
+  "pasteCodeHint": "Wklej tutaj kod udostępnionego posiłku"
 }
 

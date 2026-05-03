@@ -1,4 +1,4 @@
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:opennutritracker/core/domain/entity/app_theme_entity.dart';
 
 part 'app_theme_dbo.g.dart';
@@ -26,7 +26,7 @@ enum AppThemeDBO {
       case AppThemeEntity.system:
         dbo = AppThemeDBO.system;
         break;
-      }
+    }
     return dbo;
   }
 }

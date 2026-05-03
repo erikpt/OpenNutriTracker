@@ -29,6 +29,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(age) => "${age} lat";
 
+  static String m4(count) => "Zaimportować ${count} elementów?";
+
+  static String m5(mealType) =>
+      "Te elementy zostaną dodane do Twojego ${mealType}.";
+
+  static String m6(count) =>
+      "${count} element(ów) nie można pobrać z OpenFoodFacts.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -86,6 +94,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Wybierz cel wagowy"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("cm"),
+        "codeCopiedLabel":
+            MessageLookupByLibrary.simpleMessage("Kod skopiowany"),
+        "copyCodeLabel": MessageLookupByLibrary.simpleMessage("Kopiuj kod"),
         "copyDialogTitle": MessageLookupByLibrary.simpleMessage(
             "Do jakiego typu posiłku chcesz skopiować?"),
         "copyOrDeleteTimeDialogContent": MessageLookupByLibrary.simpleMessage(
@@ -163,6 +174,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "heightLabel": MessageLookupByLibrary.simpleMessage("Wzrost"),
         "homeLabel": MessageLookupByLibrary.simpleMessage("Strona główna"),
         "importAction": MessageLookupByLibrary.simpleMessage("Importuj"),
+        "importMealConfirmContent": m5,
+        "importMealConfirmTitle": m4,
+        "importMealErrorLabel":
+            MessageLookupByLibrary.simpleMessage("Nieprawidłowy kod QR"),
+        "importMealLabel": MessageLookupByLibrary.simpleMessage(
+            "Importuj udostępniony posiłek"),
+        "importMealSuccessLabel":
+            MessageLookupByLibrary.simpleMessage("Posiłek zaimportowany"),
+        "importOffFetchFailedLabel": m6,
         "infoAddedActivityLabel":
             MessageLookupByLibrary.simpleMessage("Dodano nową aktywność"),
         "infoAddedIntakeLabel":
@@ -173,6 +193,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Pozycja zaktualizowana"),
         "kcalLabel": MessageLookupByLibrary.simpleMessage("kcal"),
         "kcalLeftLabel": MessageLookupByLibrary.simpleMessage("kcal pozostało"),
+        "kcalTooMuchLabel":
+            MessageLookupByLibrary.simpleMessage("kcal za dużo"),
         "kgLabel": MessageLookupByLibrary.simpleMessage("kg"),
         "lbsLabel": MessageLookupByLibrary.simpleMessage("lbs"),
         "lunchExample":
@@ -603,6 +625,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Głównie chodzenie, bieganie lub dźwiganie ciężarów w pracy oraz aktywne zajęcia w wolnym czasie"),
         "palVeryActiveLabel":
             MessageLookupByLibrary.simpleMessage("Bardzo aktywny"),
+        "pasteCodeHint": MessageLookupByLibrary.simpleMessage(
+            "Wklej tutaj kod udostępnionego posiłku"),
+        "pasteCodeLabel": MessageLookupByLibrary.simpleMessage("Wklej kod"),
         "per100gmlLabel": MessageLookupByLibrary.simpleMessage("Na 100g/ml"),
         "perServingLabel": MessageLookupByLibrary.simpleMessage("Na porcję"),
         "privacyPolicyLabel":
@@ -675,6 +700,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Domyślny systemu"),
         "settingsUnitsLabel": MessageLookupByLibrary.simpleMessage("Jednostki"),
         "settingsVolumeLabel": MessageLookupByLibrary.simpleMessage("Objętość"),
+        "shareCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Udostępnij kod"),
+        "shareMealLabel":
+            MessageLookupByLibrary.simpleMessage("Udostępnij posiłek"),
         "snackExample": MessageLookupByLibrary.simpleMessage(
             "np. jabłko, lody, czekolada ..."),
         "snackLabel": MessageLookupByLibrary.simpleMessage("Przekąska"),

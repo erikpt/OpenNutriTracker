@@ -1,4 +1,4 @@
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:logging/logging.dart';
 import 'package:opennutritracker/core/data/dbo/app_theme_dbo.dart';
 import 'package:opennutritracker/core/data/dbo/config_dbo.dart';
@@ -23,16 +23,19 @@ class ConfigDataSource {
 
   Future<void> setConfigDisclaimer(bool hasAcceptedDisclaimer) async {
     _log.fine(
-        'Updating config hasAcceptedDisclaimer to $hasAcceptedDisclaimer');
+      'Updating config hasAcceptedDisclaimer to $hasAcceptedDisclaimer',
+    );
     final config = _configBox.get(_configKey);
     config?.hasAcceptedDisclaimer = hasAcceptedDisclaimer;
     config?.save();
   }
 
   Future<void> setConfigAcceptedAnonymousData(
-      bool hasAcceptedAnonymousData) async {
+    bool hasAcceptedAnonymousData,
+  ) async {
     _log.fine(
-        'Updating config hasAcceptedAnonymousData to $hasAcceptedAnonymousData');
+      'Updating config hasAcceptedAnonymousData to $hasAcceptedAnonymousData',
+    );
     final config = _configBox.get(_configKey);
     config?.hasAcceptedSendAnonymousData = hasAcceptedAnonymousData;
     config?.save();
