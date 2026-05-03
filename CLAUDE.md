@@ -48,7 +48,14 @@ After editing `.env`, run `just build` to regenerate `lib/core/utils/env.g.dart`
 
 ## Code Generation
 
-Run `just build` (i.e. `dart run build_runner build --delete-conflicting-outputs`) whenever you add or modify any of the source files listed below. Every generated file starts with `// GENERATED CODE - DO NOT MODIFY BY HAND` or an equivalent header — never edit them directly.
+Run `just build` (i.e. `dart run build_runner build`) whenever you add or modify any of the source files listed below. Every generated file starts with `// GENERATED CODE - DO NOT MODIFY BY HAND` or an equivalent header — never edit them directly.
+
+If `build_runner` fails with `PackageNotFoundException: hive` after pulling from an older checkout, the build cache is stale from the pre-`hive_ce` days. Fix it with:
+
+```sh
+rm -rf .dart_tool/build
+dart run build_runner build
+```
 
 ### What gets generated and when
 
