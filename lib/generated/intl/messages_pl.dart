@@ -31,11 +31,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m4(count) => "Zaimportować ${count} elementów?";
 
-  static String m5(mealType) =>
-      "Te elementy zostaną dodane do Twojego ${mealType}.";
+  static String m5(mealType) => "Te elementy zostaną dodane do: ${mealType}.";
 
   static String m6(count) =>
-      "${count} element(ów) nie można pobrać z OpenFoodFacts.";
+      "Nie udało się pobrać ${count} pozycji z OpenFoodFacts.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
