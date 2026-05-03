@@ -29,6 +29,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(age) => "${age} anni";
 
+  static String m4(mealType) =>
+      "Questi elementi verranno aggiunti a ${mealType}.";
+
+  static String m5(count) => "Importare ${count} voci?";
+
+  static String m6(count) =>
+      "${count} elemento/i non è stato possibile recuperare da OpenFoodFacts.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -87,6 +95,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Scegli obiettivo di peso"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("cm"),
+        "codeCopiedLabel":
+            MessageLookupByLibrary.simpleMessage("Codice copiato"),
+        "copyCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Copia codice"),
         "copyDialogTitle": MessageLookupByLibrary.simpleMessage(
             "Quale tipo di pasto vuoi copiare?"),
         "copyOrDeleteTimeDialogContent": MessageLookupByLibrary.simpleMessage(
@@ -163,6 +175,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "heightLabel": MessageLookupByLibrary.simpleMessage("Altezza"),
         "homeLabel": MessageLookupByLibrary.simpleMessage("Home"),
         "importAction": MessageLookupByLibrary.simpleMessage("Importa"),
+        "importMealConfirmContent": m4,
+        "importMealConfirmTitle": m5,
+        "importMealErrorLabel":
+            MessageLookupByLibrary.simpleMessage("Codice QR non valido"),
+        "importMealLabel":
+            MessageLookupByLibrary.simpleMessage("Importa pasto condiviso"),
+        "importMealSuccessLabel":
+            MessageLookupByLibrary.simpleMessage("Pasto importato"),
+        "importOffFetchFailedLabel": m6,
         "infoAddedActivityLabel":
             MessageLookupByLibrary.simpleMessage("Nuova attività aggiunta"),
         "infoAddedIntakeLabel":
@@ -393,6 +414,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "paHeadingDancing": MessageLookupByLibrary.simpleMessage("danza"),
         "paHeadingRunning": MessageLookupByLibrary.simpleMessage("corsa"),
         "paHeadingSports": MessageLookupByLibrary.simpleMessage("sport"),
+        "pasteCodeHint": MessageLookupByLibrary.simpleMessage(
+            "Incolla qui il codice del pasto condiviso"),
+        "pasteCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Incolla codice"),
         "paHeadingWalking": MessageLookupByLibrary.simpleMessage("camminata"),
         "paHeadingWaterActivities":
             MessageLookupByLibrary.simpleMessage("attività acquatiche"),
@@ -675,6 +700,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Predefinito del sistema"),
         "settingsUnitsLabel": MessageLookupByLibrary.simpleMessage("Unità"),
         "settingsVolumeLabel": MessageLookupByLibrary.simpleMessage("Volume"),
+        "shareCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Condividi codice"),
+        "shareMealLabel":
+            MessageLookupByLibrary.simpleMessage("Condividi pasto"),
         "snackExample": MessageLookupByLibrary.simpleMessage(
             "es. mela, gelato, cioccolato ..."),
         "snackLabel": MessageLookupByLibrary.simpleMessage("Spuntino"),

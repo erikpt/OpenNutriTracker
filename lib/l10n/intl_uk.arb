@@ -108,6 +108,35 @@
   "dialogCopyLabel": "Скопіювати на сьогодні",
   "dialogDeleteLabel": "ВИДАЛИТИ",
   "deleteAllLabel": "Видалити все",
+
+  "shareMealLabel": "Share meal",
+  "importMealLabel": "Import shared meal",
+  "importMealConfirmTitle": "Import {count} items?",
+  "@importMealConfirmTitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "importMealConfirmContent": "These items will be added to your {mealType}.",
+  "@importMealConfirmContent": {
+    "placeholders": {
+      "mealType": { "type": "String" }
+    }
+  },
+  "importMealSuccessLabel": "Meal imported",
+  "importMealErrorLabel": "Invalid QR code",
+  "importOffFetchFailedLabel": "{count} елемент(ів) не вдалося отримати з OpenFoodFacts.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "copyCodeLabel": "Копіювати код",
+  "shareCodeLabel": "Поділитися кодом",
+  "codeCopiedLabel": "Код скопійовано",
+  "pasteCodeLabel": "Вставити код",
+  "pasteCodeHint": "Вставте сюди код спільного прийому їжі",
+
   "suppliedLabel": "спожито",
   "burnedLabel": "спалено",
   "kcalLeftLabel": "залишилось ккал",

@@ -1,8 +1,11 @@
 # Getting started
+
 ## Android development with Windows 11
+
 This IDE setup is tested on Windows 11.
 
 For setup first you need the following things:
+
 - Android SDK and Android Emulator
 - Flutter
 - IDE like Android Studio or VS Code with Flutter Plugin installed.
@@ -10,39 +13,50 @@ For setup first you need the following things:
 Use paths for SDKs without spaces and special characters.
 
 ### Setup Android SDK and Emulator
+
 1. Download Android Studio from https://developer.android.com/studio and install. Keep "Android Virtual Device" checked. Start Android Studio after installation.
 
 2. Install the Android SDK when asked.
 
-3. After finishing the SDK installation you should the "Welcome to Android Studio" Screen. Click on "More Actions" -> "SDK Manager", switch to "SDK Tools" tab and check "Android SDK Command-line Tools (latest)", click "OK" and install the tools. 
+3. After finishing the SDK installation you should the "Welcome to Android Studio" Screen. Click on "More Actions" -> "SDK Manager", switch to "SDK Tools" tab and check "Android SDK Command-line Tools (latest)", click "OK" and install the tools.
 
 4. Check under "More Actions" -> "Virtual Device Manager" if a virtual phone was set up, if not create one, e.g. a Medium Phone with Default Settings.
 
 5. Close Android Studio.
 
 ### Setup Flutter SDK
-1. Download Flutter 3.27.1 from https://docs.flutter.dev/install/archive and extract.
 
-2. Add the bin folder in the folder where you extracted Flutter to the Path variable in "Advanced System Settings" -> "Environment Variables..." -> "System variables" -> "Path"
+This project uses [FVM](https://fvm.app/) to pin the Flutter version. FVM reads `.fvmrc` in the repo root and installs the correct SDK automatically.
+
+1. Install FVM by following the instructions at [fvm.app/documentation/getting-started/installation](https://fvm.app/documentation/getting-started/installation).
+
+2. In the cloned repository folder, run:
+
+```sh
+fvm install
+```
+
+This downloads the pinned Flutter version (defined in `.fvmrc`) and creates a `.fvm/flutter_sdk` symlink in the project folder. VS Code picks this up automatically via the `dart.flutterSdkPath` setting in `.vscode/settings.json`.
 
 ### Setup the Workspace in Visual Studio Code (VSC)
+
 1. Create a new folder, open the folder in VSC.
 
 2. Configure the Android SDK path for Flutter:
 
-```flutter config --android-sdk "e:\path\to\androidSDK"```
+`flutter config --android-sdk "e:\path\to\androidSDK"`
 
 3.⁠ ⁠Clone the repository with git in a VSC terminal (make sure the active folder in the terminal is your created folder from step 1):
 
-```git clone https://github.com/simonoppowa/OpenNutriTracker.git .```
+`git clone https://github.com/simonoppowa/OpenNutriTracker.git .`
 
 4.⁠ ⁠Get Dependencies.
 
-```flutter pub get```
+`flutter pub get`
 
 5.⁠ ⁠Run Build Runner to generate Files.
 
-```dart run build_runner build```
+`dart run build_runner build`
 
 At the best revert all the visible generated files now, only env.g.dart is needed, it is not checked in because it is in .gitignore.
 

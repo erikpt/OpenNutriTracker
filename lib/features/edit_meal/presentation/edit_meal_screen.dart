@@ -243,18 +243,19 @@ class _EditMealScreenState extends State<EditMealScreen> {
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
         const SizedBox(height: 48),
-
         ValueListenableBuilder<TextEditingValue>(
           valueListenable: _baseQuantityTextController,
           builder: (context, value, _) {
-            final base = (value.text.isEmpty ? '100' : value.text) + _unitSuffixForSelected(context);
+            final base = (value.text.isEmpty ? '100' : value.text) +
+                _unitSuffixForSelected(context);
             return TextFormField(
               controller: _kcalTextController,
               inputFormatters: CustomTextInputFormatter.doubleOnly(),
               decoration: InputDecoration(
                   labelText: S.of(context).mealKcalLabel + base,
                   border: const OutlineInputBorder()),
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
             );
           },
         ),
@@ -262,14 +263,16 @@ class _EditMealScreenState extends State<EditMealScreen> {
         ValueListenableBuilder<TextEditingValue>(
           valueListenable: _baseQuantityTextController,
           builder: (context, value, _) {
-            final base = (value.text.isEmpty ? '100' : value.text) + _unitSuffixForSelected(context);
+            final base = (value.text.isEmpty ? '100' : value.text) +
+                _unitSuffixForSelected(context);
             return TextFormField(
               controller: _carbsTextController,
               inputFormatters: CustomTextInputFormatter.doubleOnly(),
               decoration: InputDecoration(
                   labelText: S.of(context).mealCarbsLabel + base,
                   border: const OutlineInputBorder()),
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
             );
           },
         ),
@@ -277,14 +280,16 @@ class _EditMealScreenState extends State<EditMealScreen> {
         ValueListenableBuilder<TextEditingValue>(
           valueListenable: _baseQuantityTextController,
           builder: (context, value, _) {
-            final base = (value.text.isEmpty ? '100' : value.text) + _unitSuffixForSelected(context);
+            final base = (value.text.isEmpty ? '100' : value.text) +
+                _unitSuffixForSelected(context);
             return TextFormField(
               controller: _fatTextController,
               inputFormatters: CustomTextInputFormatter.doubleOnly(),
               decoration: InputDecoration(
                   labelText: S.of(context).mealFatLabel + base,
                   border: const OutlineInputBorder()),
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
             );
           },
         ),
@@ -292,14 +297,16 @@ class _EditMealScreenState extends State<EditMealScreen> {
         ValueListenableBuilder<TextEditingValue>(
           valueListenable: _baseQuantityTextController,
           builder: (context, value, _) {
-            final base = (value.text.isEmpty ? '100' : value.text) + _unitSuffixForSelected(context);
+            final base = (value.text.isEmpty ? '100' : value.text) +
+                _unitSuffixForSelected(context);
             return TextFormField(
               controller: _proteinTextController,
               inputFormatters: CustomTextInputFormatter.doubleOnly(),
               decoration: InputDecoration(
                   labelText: S.of(context).mealProteinLabel + base,
                   border: const OutlineInputBorder()),
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
             );
           },
         ),
@@ -312,7 +319,8 @@ class _EditMealScreenState extends State<EditMealScreen> {
       // Convert meal size back to metric units if necessary
       final mealUnitForConversion = selectedUnit ?? _mealEntity.mealUnit ?? '0';
       final mealQuantity = usesImperialUnits
-          ? _convertToMetric(_mealQuantityTextController.text, mealUnitForConversion)
+          ? _convertToMetric(
+              _mealQuantityTextController.text, mealUnitForConversion)
           : _mealQuantityTextController.text;
 
       final newMealEntity = _editMealBloc.createNewMealEntity(
