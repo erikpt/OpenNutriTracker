@@ -40,6 +40,9 @@ class OFFProductDTO {
       case SupportedLanguage.de:
         localeName = product_name_de;
         break;
+      case SupportedLanguage.pl:
+        localeName = product_name;
+        break;
     }
 
     // If local language is not available, return available language
