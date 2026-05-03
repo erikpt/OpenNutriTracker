@@ -6,7 +6,7 @@ install:
 
 # Build OpenNutriTracker
 build:
-  flutter pub run build_runner build --delete-conflicting-outputs
+  dart run build_runner build
 
 # Format dart code (excludes lib/generated/ — those files are auto-generated with their own style)
 format *OPTIONS:
