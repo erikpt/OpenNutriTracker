@@ -48,13 +48,24 @@ After editing `.env`, run `just build` to regenerate `lib/core/utils/env.g.dart`
 
 ## Code Generation
 
-The project uses `build_runner` to generate code for three things:
+Run `just build` (i.e. `dart run build_runner build --delete-conflicting-outputs`) whenever you add or modify any of the source files listed below. Every generated file starts with `// GENERATED CODE - DO NOT MODIFY BY HAND` or an equivalent header — never edit them directly.
 
-- **Hive adapters** — `*.g.dart` next to every DBO file (database objects)
-- **JSON serialization** — `*.g.dart` next to every DTO file (API response objects)
-- **Env secrets** — `lib/core/utils/env.g.dart` from `.env` via `envied`
+### What gets generated and when
 
-Run `just build` whenever you add/modify a DBO, DTO, or the `.env` file.
+| Trigger                            | Generated file(s)                                                                                         | Tool                |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ------------------- |
+| Any `@HiveType` / `@HiveField` DBO | `<dbo_file>.g.dart` alongside the source                                                                  | `hive_ce_generator` |
+| Any new DBO added anywhere         | `lib/hive_registrar.g.dart` — the `HiveRegistrar` extension that calls `registerAdapter()` for every type | `hive_ce_generator` |
+| Any `@JsonSerializable` DTO        | `<dto_file>.g.dart` alongside the source                                                                  | `json_serializable` |
+| `.env` file edited                 | `lib/core/utils/env.g.dart` (**gitignored** — must regenerate after every clone)                          | `envied_generator`  |
+
+**DBO files** live in `lib/core/data/dbo/` and `lib/core/data/data_source/` (one `.g.dart` per file). Whenever you add a `@HiveField` or change a field's type, regenerate — otherwise the binary reader/writer will be out of sync.
+
+**`lib/hive_registrar.g.dart`** is checked in to version control (it has no machine-specific content). Regenerate it any time you add or remove a DBO type. The `HiveDBProvider` registers adapters by calling `Hive.registerAdapters()` which delegates to this file.
+
+**DTO files** live under `lib/features/add_meal/data/dto/` (OFF, FDC, and Supabase FDC subfolders). Regenerate when you add or change API response fields.
+
+**`lib/core/utils/env.g.dart`** is the only generated file that is gitignored. After a fresh clone, run `just build` with a valid `.env` file before the app will compile.
 
 ## Localization
 
