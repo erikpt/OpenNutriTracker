@@ -64,6 +64,8 @@ dependencies:
   animated_flip_counter: ^0.3.4
 
   mobile_scanner: ^7.2.0
+  qr_flutter: ^4.1.0
+  share_plus: ^10.0.0
 
   hive_ce: ^2.19.3
   hive_ce_flutter: ^2.3.4

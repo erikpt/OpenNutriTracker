@@ -29,6 +29,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(age) => "${age} років";
 
+  static String m4(mealType) =>
+      "These items will be added to your ${mealType}.";
+
+  static String m5(count) => "Import ${count} items?";
+
+  static String m6(count) =>
+      "${count} елемент(ів) не вдалося отримати з OpenFoodFacts.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -85,6 +93,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Виберіть ціль ваги"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("см"),
+        "codeCopiedLabel":
+            MessageLookupByLibrary.simpleMessage("Код скопійовано"),
+        "copyCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Копіювати код"),
         "copyDialogTitle": MessageLookupByLibrary.simpleMessage(
             "До якого типу страви скопіювати?"),
         "copyOrDeleteTimeDialogContent": MessageLookupByLibrary.simpleMessage(
@@ -162,6 +174,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "heightLabel": MessageLookupByLibrary.simpleMessage("Зріст"),
         "homeLabel": MessageLookupByLibrary.simpleMessage("Головна"),
         "importAction": MessageLookupByLibrary.simpleMessage("Імпортувати"),
+        "importMealConfirmContent": m4,
+        "importMealConfirmTitle": m5,
+        "importMealErrorLabel":
+            MessageLookupByLibrary.simpleMessage("Invalid QR code"),
+        "importMealLabel":
+            MessageLookupByLibrary.simpleMessage("Import shared meal"),
+        "importMealSuccessLabel":
+            MessageLookupByLibrary.simpleMessage("Meal imported"),
+        "importOffFetchFailedLabel": m6,
         "infoAddedActivityLabel":
             MessageLookupByLibrary.simpleMessage("Додано нову активність"),
         "infoAddedIntakeLabel":
@@ -396,6 +417,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "paHeadingDancing": MessageLookupByLibrary.simpleMessage("танці"),
         "paHeadingRunning": MessageLookupByLibrary.simpleMessage("біг"),
         "paHeadingSports": MessageLookupByLibrary.simpleMessage("спорт"),
+        "pasteCodeHint": MessageLookupByLibrary.simpleMessage(
+            "Вставте сюди код спільного прийому їжі"),
+        "pasteCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Вставити код"),
         "paHeadingWalking": MessageLookupByLibrary.simpleMessage("ходьба"),
         "paHeadingWaterActivities":
             MessageLookupByLibrary.simpleMessage("водні види спорту"),
@@ -676,6 +701,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsUnitsLabel":
             MessageLookupByLibrary.simpleMessage("Одиниці вимірювання"),
         "settingsVolumeLabel": MessageLookupByLibrary.simpleMessage("Об\'єм"),
+        "shareCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Поділитися кодом"),
+        "shareMealLabel": MessageLookupByLibrary.simpleMessage("Share meal"),
         "snackExample": MessageLookupByLibrary.simpleMessage(
             "наприклад, яблуко, морозиво, шоколад ..."),
         "snackLabel": MessageLookupByLibrary.simpleMessage("Перекус"),

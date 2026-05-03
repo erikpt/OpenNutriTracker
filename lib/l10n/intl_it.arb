@@ -108,6 +108,35 @@
   "dialogCopyLabel": "Copia a oggi",
   "dialogDeleteLabel": "ELIMINA",
   "deleteAllLabel": "Elimina tutto",
+
+  "shareMealLabel": "Condividi pasto",
+  "importMealLabel": "Importa pasto condiviso",
+  "importMealConfirmTitle": "Importare {count} voci?",
+  "@importMealConfirmTitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "importMealConfirmContent": "Questi elementi verranno aggiunti a {mealType}.",
+  "@importMealConfirmContent": {
+    "placeholders": {
+      "mealType": { "type": "String" }
+    }
+  },
+  "importMealSuccessLabel": "Pasto importato",
+  "importMealErrorLabel": "Codice QR non valido",
+  "importOffFetchFailedLabel": "{count} elemento/i non è stato possibile recuperare da OpenFoodFacts.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "copyCodeLabel": "Copia codice",
+  "shareCodeLabel": "Condividi codice",
+  "codeCopiedLabel": "Codice copiato",
+  "pasteCodeLabel": "Incolla codice",
+  "pasteCodeHint": "Incolla qui il codice del pasto condiviso",
+
   "suppliedLabel": "assunte",
   "burnedLabel": "bruciate",
   "kcalLeftLabel": "kcal rimanenti",
