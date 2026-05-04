@@ -33,6 +33,7 @@ class HomeLoadedState extends HomeState {
   final List<IntakeEntity> snackIntakeList;
   final bool usesImperialUnits;
   final bool showActivityTracking; // #277
+  final bool showMealMacros;
 
   const HomeLoadedState({
     required this.showDisclaimerDialog,
@@ -53,6 +54,7 @@ class HomeLoadedState extends HomeState {
     required this.snackIntakeList,
     required this.usesImperialUnits,
     this.showActivityTracking = true,
+    this.showMealMacros = true,
   });
 
   @override

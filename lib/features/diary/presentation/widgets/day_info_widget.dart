@@ -22,6 +22,7 @@ class DayInfoWidget extends StatelessWidget {
   final List<IntakeEntity> snackIntake;
 
   final bool usesImperialUnits;
+  final bool showMealMacros;
   final Function(IntakeEntity intake, TrackedDayEntity? trackedDayEntity)
       onDeleteIntake;
   final Function(
@@ -52,6 +53,7 @@ class DayInfoWidget extends StatelessWidget {
     required this.dinnerIntake,
     required this.snackIntake,
     required this.usesImperialUnits,
+    this.showMealMacros = true,
     required this.onDeleteIntake,
     required this.onDeleteActivity,
     required this.onCopyIntake,
@@ -165,6 +167,7 @@ class DayInfoWidget extends StatelessWidget {
                       ? null
                       : onCopyIntake,
               usesImperialUnits: usesImperialUnits,
+              showMealMacros: showMealMacros,
               trackedDayEntity: trackedDay,
             ),
             IntakeVerticalList(
@@ -177,6 +180,7 @@ class DayInfoWidget extends StatelessWidget {
               onItemLongPressedCallback: onIntakeItemLongPressed,
               onItemTappedCallback: onEditIntake,
               usesImperialUnits: usesImperialUnits,
+              showMealMacros: showMealMacros,
               onCopyIntakeCallback:
                   DateUtils.isSameDay(selectedDay, DateTime.now())
                       ? null
@@ -197,6 +201,7 @@ class DayInfoWidget extends StatelessWidget {
                       ? null
                       : onCopyIntake,
               usesImperialUnits: usesImperialUnits,
+              showMealMacros: showMealMacros,
             ),
             IntakeVerticalList(
               day: selectedDay,
@@ -208,6 +213,7 @@ class DayInfoWidget extends StatelessWidget {
               onItemLongPressedCallback: onIntakeItemLongPressed,
               onItemTappedCallback: onEditIntake,
               usesImperialUnits: usesImperialUnits,
+              showMealMacros: showMealMacros,
               onCopyIntakeCallback:
                   DateUtils.isSameDay(selectedDay, DateTime.now())
                       ? null

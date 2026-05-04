@@ -101,6 +101,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _homeBloc.add(LoadItemsEvent());
                   },
                 ),
+                SwitchListTile(
+                  secondary: const Icon(Icons.bar_chart_outlined),
+                  title: Text(S.of(context).settingsShowMealMacros),
+                  value: state.showMealMacros,
+                  onChanged: (bool value) {
+                    _settingsBloc.setShowMealMacros(value);
+                    _settingsBloc.add(LoadSettingsEvent());
+                    _homeBloc.add(LoadItemsEvent());
+                  },
+                ),
                 const Divider(),
                 // App
                 ListTile(

@@ -94,6 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("TDEE方程式"),
         "carbohydrateLabel": MessageLookupByLibrary.simpleMessage("碳水化合物"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("碳水"),
+        "carbsLabelShort": MessageLookupByLibrary.simpleMessage("碳"),
         "chooseWeeklyWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("每周体重速率"),
         "chooseWeightGoalLabel": MessageLookupByLibrary.simpleMessage("选择体重目标"),
@@ -162,6 +163,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "exportImportSuccessLabel":
             MessageLookupByLibrary.simpleMessage("导出/导入成功"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("脂肪"),
+        "fatLabelShort": MessageLookupByLibrary.simpleMessage("脂"),
         "fiberLabel": MessageLookupByLibrary.simpleMessage("膳食纤维"),
         "flOzUnit": MessageLookupByLibrary.simpleMessage("fl.oz"),
         "ftLabel": MessageLookupByLibrary.simpleMessage("英尺"),
@@ -550,6 +552,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacyPolicyLabel": MessageLookupByLibrary.simpleMessage("隐私政策"),
         "profileLabel": MessageLookupByLibrary.simpleMessage("个人资料"),
         "proteinLabel": MessageLookupByLibrary.simpleMessage("蛋白质"),
+        "proteinLabelShort": MessageLookupByLibrary.simpleMessage("蛋"),
         "quantityLabel": MessageLookupByLibrary.simpleMessage("数量"),
         "readLabel": MessageLookupByLibrary.simpleMessage("我已阅读并接受隐私政策。"),
         "recentlyAddedLabel": MessageLookupByLibrary.simpleMessage("最近"),
@@ -596,6 +599,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("报告错误"),
         "settingsShowActivityTracking":
             MessageLookupByLibrary.simpleMessage("显示活动追踪"),
+        "settingsShowMealMacros":
+            MessageLookupByLibrary.simpleMessage("显示餐食宏量"),
         "settingsSourceCodeLabel": MessageLookupByLibrary.simpleMessage("源代码"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("系统"),
         "settingsThemeDarkLabel": MessageLookupByLibrary.simpleMessage("深色"),

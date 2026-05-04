@@ -679,6 +679,15 @@ class S {
     );
   }
 
+  String get settingsShowMealMacros {
+    return Intl.message(
+      'Show Meal Macros',
+      name: 'settingsShowMealMacros',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Daily Reminder`
   String get settingsNotificationsLabel {
     return Intl.message(
@@ -1490,6 +1499,16 @@ class S {
     );
   }
 
+  /// `c`
+  String get carbsLabelShort {
+    return Intl.message(
+      'c',
+      name: 'carbsLabelShort',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `fat`
   String get fatLabel {
     return Intl.message(
@@ -1500,11 +1519,31 @@ class S {
     );
   }
 
+  /// `f`
+  String get fatLabelShort {
+    return Intl.message(
+      'f',
+      name: 'fatLabelShort',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `protein`
   String get proteinLabel {
     return Intl.message(
       'protein',
       name: 'proteinLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `p`
+  String get proteinLabelShort {
+    return Intl.message(
+      'p',
+      name: 'proteinLabelShort',
       desc: '',
       args: [],
     );

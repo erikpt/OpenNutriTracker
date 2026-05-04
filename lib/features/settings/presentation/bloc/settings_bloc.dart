@@ -43,6 +43,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           userConfig.appTheme,
           usesImperialUnits,
           showActivityTracking: userConfig.showActivityTracking,
+          showMealMacros: userConfig.showMealMacros,
           notificationsEnabled: userConfig.notificationsEnabled,
           notificationHour: userConfig.notificationHour,
           notificationMinute: userConfig.notificationMinute,
@@ -68,6 +69,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   void setShowActivityTracking(bool showActivityTracking) {
     _addConfigUsecase.setConfigShowActivityTracking(showActivityTracking);
+  }
+
+  void setShowMealMacros(bool showMealMacros) {
+    _addConfigUsecase.setConfigShowMealMacros(showMealMacros);
   }
 
   void setNotificationsEnabled(bool enabled) {

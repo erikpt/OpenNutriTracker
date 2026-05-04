@@ -100,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "carbohydrateLabel":
             MessageLookupByLibrary.simpleMessage("carbohydrate"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("carbs"),
+        "carbsLabelShort": MessageLookupByLibrary.simpleMessage("c"),
         "chooseWeeklyWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Weekly weight rate"),
         "chooseWeightGoalLabel":
@@ -179,6 +180,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "exportImportSuccessLabel":
             MessageLookupByLibrary.simpleMessage("Export / Import successful"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("fat"),
+        "fatLabelShort": MessageLookupByLibrary.simpleMessage("f"),
         "fiberLabel": MessageLookupByLibrary.simpleMessage("fiber"),
         "flOzUnit": MessageLookupByLibrary.simpleMessage("fl.oz"),
         "ftLabel": MessageLookupByLibrary.simpleMessage("ft"),
@@ -678,6 +680,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Privacy policy"),
         "profileLabel": MessageLookupByLibrary.simpleMessage("Profile"),
         "proteinLabel": MessageLookupByLibrary.simpleMessage("protein"),
+        "proteinLabelShort": MessageLookupByLibrary.simpleMessage("p"),
         "quantityLabel": MessageLookupByLibrary.simpleMessage("Quantity"),
         "readLabel": MessageLookupByLibrary.simpleMessage(
             "I have read and accept the privacy policy."),
@@ -739,6 +742,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Report Error"),
         "settingsShowActivityTracking":
             MessageLookupByLibrary.simpleMessage("Show Activity Tracking"),
+        "settingsShowMealMacros":
+            MessageLookupByLibrary.simpleMessage("Show Meal Macros"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Source Code"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("System"),

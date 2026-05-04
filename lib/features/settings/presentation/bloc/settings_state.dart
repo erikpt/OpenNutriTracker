@@ -20,6 +20,7 @@ class SettingsLoadedState extends SettingsState {
   final AppThemeEntity appTheme;
   final bool usesImperialUnits;
   final bool showActivityTracking;
+  final bool showMealMacros;
   final bool notificationsEnabled;
   final int notificationHour;
   final int notificationMinute;
@@ -31,6 +32,7 @@ class SettingsLoadedState extends SettingsState {
     this.appTheme,
     this.usesImperialUnits, {
     this.showActivityTracking = true,
+    this.showMealMacros = true,
     this.notificationsEnabled = false,
     this.notificationHour = 8,
     this.notificationMinute = 0,
@@ -44,6 +46,7 @@ class SettingsLoadedState extends SettingsState {
         appTheme,
         usesImperialUnits,
         showActivityTracking,
+        showMealMacros,
         notificationsEnabled,
         notificationHour,
         notificationMinute,

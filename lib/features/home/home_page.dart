@@ -76,6 +76,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             state.snackIntakeList,
             state.userActivityList,
             state.usesImperialUnits,
+            state.showMealMacros,
           );
         } else {
           return _getLoadingContent();
@@ -116,6 +117,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     List<IntakeEntity> snackIntakeList,
     List<UserActivityEntity> userActivities,
     bool usesImperialUnits,
+    bool showMealMacros,
   ) {
     if (showDisclaimerDialog) {
       _showDisclaimerDialog(context);
@@ -156,6 +158,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               onItemDragCallback: onIntakeItemDrag,
               onItemTappedCallback: onIntakeItemTapped,
               usesImperialUnits: usesImperialUnits,
+              showMealMacros: showMealMacros,
             ),
             IntakeVerticalList(
               day: DateTime.now(),
@@ -167,6 +170,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               onItemDragCallback: onIntakeItemDrag,
               onItemTappedCallback: onIntakeItemTapped,
               usesImperialUnits: usesImperialUnits,
+              showMealMacros: showMealMacros,
             ),
             IntakeVerticalList(
               day: DateTime.now(),
@@ -178,6 +182,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               onItemDragCallback: onIntakeItemDrag,
               onItemTappedCallback: onIntakeItemTapped,
               usesImperialUnits: usesImperialUnits,
+              showMealMacros: showMealMacros,
             ),
             IntakeVerticalList(
               day: DateTime.now(),
@@ -189,6 +194,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               onItemDragCallback: onIntakeItemDrag,
               onItemTappedCallback: onIntakeItemTapped,
               usesImperialUnits: usesImperialUnits,
+              showMealMacros: showMealMacros,
             ),
             const SizedBox(height: 48.0),
           ],
