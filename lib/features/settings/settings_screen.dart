@@ -63,6 +63,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
             return ListView(
               children: [
                 const SizedBox(height: 16.0),
+                // Nutrition
+                ListTile(
+                  leading: const Icon(Icons.restaurant_menu_outlined),
+                  title: Text(S.of(context).settingsCustomMealsLabel),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BlocProvider(
+                        create: (_) => locator<CustomMealsBloc>()
+                          ..add(LoadCustomMealsEvent()),
+                        child: CustomMealsScreen(
+                          usesImperialUnits: state.usesImperialUnits,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 ListTile(
                   leading: const Icon(Icons.ac_unit_outlined),
                   title: Text(S.of(context).settingsUnitsLabel),
@@ -74,11 +91,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: Text(S.of(context).settingsCalculationsLabel),
                   onTap: () => _showCalculationsDialog(context),
                 ),
-                ListTile(
-                  leading: const Icon(Icons.brightness_medium_outlined),
-                  title: Text(S.of(context).settingsThemeLabel),
-                  onTap: () => _showThemeDialog(context, state.appTheme),
-                ),
                 SwitchListTile(
                   secondary: const Icon(Icons.directions_run_outlined),
                   title: Text(S.of(context).settingsShowActivityTracking),
@@ -88,6 +100,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _settingsBloc.add(LoadSettingsEvent());
                     _homeBloc.add(LoadItemsEvent());
                   },
+                ),
+                const Divider(),
+                // App
+                ListTile(
+                  leading: const Icon(Icons.brightness_medium_outlined),
+                  title: Text(S.of(context).settingsThemeLabel),
+                  onTap: () => _showThemeDialog(context, state.appTheme),
                 ),
                 ListTile(
                   leading: const Icon(Icons.language_outlined),
@@ -122,24 +141,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             hour: state.notificationHour,
                             minute: state.notificationMinute)),
                   ),
-                ListTile(
-                  leading: const Icon(Icons.restaurant_menu_outlined),
-                  title: Text(S.of(context).settingsCustomMealsLabel),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => BlocProvider(
-                        create: (_) => locator<CustomMealsBloc>()
-                          ..add(LoadCustomMealsEvent()),
-                        child: const CustomMealsScreen(),
-                      ),
-                    ),
-                  ),
-                ),
+                const Divider(),
+                // Data
                 ListTile(
                   leading: const Icon(Icons.import_export),
                   title: Text(S.of(context).exportImportLabel),
                   onTap: () => _showExportImportDialog(context),
+                ),
+                const Divider(),
+                // About
+                ListTile(
+                  leading: const Icon(Icons.policy_outlined),
+                  title: Text(S.of(context).settingsPrivacySettings),
+                  onTap: () =>
+                      _showPrivacyDialog(context, state.sendAnonymousData),
                 ),
                 ListTile(
                   leading: const Icon(Icons.description_outlined),
@@ -150,12 +165,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   leading: const Icon(Icons.bug_report_outlined),
                   title: Text(S.of(context).settingsReportErrorLabel),
                   onTap: () => _showReportErrorDialog(context),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.policy_outlined),
-                  title: Text(S.of(context).settingsPrivacySettings),
-                  onTap: () =>
-                      _showPrivacyDialog(context, state.sendAnonymousData),
                 ),
                 ListTile(
                   leading: const Icon(Icons.error_outline_outlined),

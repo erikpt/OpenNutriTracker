@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
+import 'package:opennutritracker/core/utils/navigation_options.dart';
 import 'package:opennutritracker/features/add_meal/domain/entity/meal_entity.dart';
+import 'package:opennutritracker/features/edit_meal/presentation/edit_meal_screen.dart';
 import 'package:opennutritracker/features/settings/presentation/bloc/custom_meals_bloc.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
 class CustomMealsScreen extends StatelessWidget {
-  const CustomMealsScreen({super.key});
+  final bool usesImperialUnits;
+
+  const CustomMealsScreen({super.key, required this.usesImperialUnits});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +31,7 @@ class CustomMealsScreen extends StatelessWidget {
                 return ListTile(
                   title: Text(meal.name ?? ''),
                   subtitle: meal.brands != null ? Text(meal.brands!) : null,
+                  onTap: () => _openEditMeal(context, meal),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete_outline),
                     onPressed: () => _confirmDelete(context, meal),
@@ -38,6 +44,21 @@ class CustomMealsScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<void> _openEditMeal(BuildContext context, MealEntity meal) async {
+    final bloc = context.read<CustomMealsBloc>();
+    await Navigator.of(context).pushNamed(
+      NavigationOptions.editMealRoute,
+      arguments: EditMealScreenArguments(
+        DateTime.now(),
+        meal,
+        IntakeTypeEntity.breakfast,
+        usesImperialUnits,
+        editOnly: true,
+      ),
+    );
+    bloc.add(LoadCustomMealsEvent());
   }
 
   Future<void> _confirmDelete(BuildContext context, MealEntity meal) async {
