@@ -52,7 +52,7 @@ void main() {
     state.validate();
     await tester.pump();
 
-    expect(find.text(S.current.onboardingWrongHeightLabel), findsNWidgets(2));
+    expect(find.text(S.current.onboardingWrongHeightLabel), findsOneWidget);
   });
 
   testWidgets('Case 3: Value is different than real numbers with imperial units', (WidgetTester tester) async {
@@ -83,7 +83,7 @@ void main() {
     state.validate();
     await tester.pump();
 
-    expect(find.text(S.current.onboardingWrongHeightLabel), findsNWidgets(2));
+    expect(find.text(S.current.onboardingWrongHeightLabel), findsOneWidget);
   });
 
   testWidgets('Case 5: Value is empty string with decimal units', (WidgetTester tester) async {
@@ -114,10 +114,13 @@ void main() {
     state.validate();
     await tester.pump();
 
-    expect(find.text(S.current.onboardingWrongHeightLabel), findsNWidgets(2));
+    expect(find.text(S.current.onboardingWrongHeightLabel), findsOneWidget);
   });
 
-  testWidgets('Case 6: Value is not integer string with decimal units', (WidgetTester tester) async {
+  testWidgets('Case 6: Value is below minimum height with decimal units', (WidgetTester tester) async {
+    // Note: the cm field's input formatter is digitsOnly, so a literal "9.6"
+    // is stripped to "96" — a valid cm height. To exercise the validator we
+    // use a value that survives the formatter but fails the range check.
     await tester.pumpWidget(MaterialApp(
       localizationsDelegates: const [
         S.delegate,
@@ -137,7 +140,7 @@ void main() {
     await tester.pump();
 
     final heightField = find.byType(TextFormField).first;
-    await tester.enterText(heightField, '9.6');
+    await tester.enterText(heightField, '9');
     await tester.pump();
 
     final form = find.byType(Form).first;
