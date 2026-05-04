@@ -39,7 +39,9 @@ class ActivityCard extends StatelessWidget {
                     onTap: onItemTapped != null
                         ? () => onItemTapped!(context, activityEntity)
                         : null,
-                    onLongPress: () => onItemLongPressed(context, activityEntity),
+                    onLongPress: onItemDragCallback == null
+                        ? () => onItemLongPressed(context, activityEntity)
+                        : null,
                     child: Stack(
                       children: [
                         Container(
