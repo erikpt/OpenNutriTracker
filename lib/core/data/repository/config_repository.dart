@@ -71,10 +71,6 @@ class ConfigRepository {
     _configDataSource.setConfigFatGoalPct(fat);
   }
 
-  Future<void> setConfigShowActivityTracking(bool show) async {
-    _configDataSource.setConfigShowActivityTracking(show);
-  }
-
   Future<void> setNotificationsEnabled(bool enabled) async {
     _configDataSource.setNotificationsEnabled(enabled);
   }

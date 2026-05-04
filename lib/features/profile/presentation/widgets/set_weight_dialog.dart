@@ -33,9 +33,6 @@ class _SetWeightDialogState extends State<SetWeightDialog> {
     final maxWeight =
         maxSelectableWeight(widget.userWeight, widget.usesImperialUnits);
 
-    // Enforce minimum weight (#216, #253): 10kg or 20lbs
-    final minWeight = widget.usesImperialUnits ? 20.0 : 10.0;
-
     return AlertDialog(
       title: Text(S.of(context).selectWeightDialogLabel),
       content: Wrap(

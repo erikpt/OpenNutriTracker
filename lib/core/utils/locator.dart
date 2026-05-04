@@ -1,6 +1,7 @@
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get_it/get_it.dart';
 import 'package:opennutritracker/core/data/data_source/config_data_source.dart';
+import 'package:opennutritracker/core/data/data_source/custom_meal_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/intake_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/physical_activity_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/tracked_day_data_source.dart';
@@ -143,7 +144,7 @@ Future<void> initLocator() async {
     () => MealDetailBloc(locator(), locator(), locator(), locator()),
   );
   locator.registerFactory<ScannerBloc>(() => ScannerBloc(locator(), locator()));
-  locator.registerFactory<EditMealBloc>(() => EditMealBloc(locator()));
+  locator.registerFactory<EditMealBloc>(() => EditMealBloc(locator(), locator()));
   locator.registerFactory<AddMealBloc>(() => AddMealBloc(locator()));
   locator.registerFactory<ProductsBloc>(
     () => ProductsBloc(locator(), locator()),
@@ -256,6 +257,9 @@ Future<void> initLocator() async {
   locator.registerLazySingleton<SpFdcDataSource>(() => SpFdcDataSource());
   locator.registerLazySingleton(
     () => TrackedDayDataSource(hiveDBProvider.trackedDayBox),
+  );
+  locator.registerLazySingleton(
+    () => CustomMealDataSource(hiveDBProvider.customMealBox),
   );
 
   await _initializeConfig(locator());

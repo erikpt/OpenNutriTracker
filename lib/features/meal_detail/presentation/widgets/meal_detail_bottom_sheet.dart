@@ -228,7 +228,7 @@ class _MealDetailBottomSheetState extends State<MealDetailBottomSheet> {
 
     // Refresh Diary Page - Pass the day to preserve selection (#154)
     locator<DiaryBloc>().add(const LoadDiaryYearEvent());
-    locator<CalendarDayBloc>().add(RefreshCalendarDayEvent(dayToRefresh: widget.day));
+    locator<CalendarDayBloc>().add(const RefreshCalendarDayEvent());
 
     // Show snackbar and return to dashboard
     ScaffoldMessenger.of(
