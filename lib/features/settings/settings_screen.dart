@@ -97,16 +97,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       _showLanguageDialog(context, state.selectedLocale),
                 ),
                 SwitchListTile(
-                  secondary: const Icon(Icons.directions_run_outlined),
-                  title: Text(S.of(context).settingsShowActivityTracking),
-                  value: state.showActivityTracking,
-                  onChanged: (bool value) {
-                    _settingsBloc.setShowActivityTracking(value);
-                    _settingsBloc.add(LoadSettingsEvent());
-                    _homeBloc.add(LoadItemsEvent());
-                  },
-                ),
-                SwitchListTile(
                   secondary: const Icon(Icons.notifications_outlined),
                   title: Text(S.of(context).settingsNotificationsLabel),
                   subtitle: state.notificationsEnabled
