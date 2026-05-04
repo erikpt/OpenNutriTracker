@@ -10,7 +10,15 @@ class OnboardingFirstPageBody extends StatefulWidget {
     DateTime? birthday,
   ) setPageContent;
 
-  const OnboardingFirstPageBody({super.key, required this.setPageContent});
+  final UserGenderSelectionEntity? initialGender;
+  final DateTime? initialBirthday;
+
+  const OnboardingFirstPageBody({
+    super.key,
+    required this.setPageContent,
+    this.initialGender,
+    this.initialBirthday,
+  });
 
   @override
   State<OnboardingFirstPageBody> createState() =>
@@ -23,6 +31,25 @@ class _OnboardingFirstPageBodyState extends State<OnboardingFirstPageBody> {
 
   bool _maleSelected = false;
   bool _femaleSelected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _maleSelected = widget.initialGender == UserGenderSelectionEntity.genderMale;
+    _femaleSelected =
+        widget.initialGender == UserGenderSelectionEntity.genderFemale;
+    _selectedDate = widget.initialBirthday;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Format the birthday once a localization context is available.
+    if (_selectedDate != null && _dateInput.text.isEmpty) {
+      _dateInput.text =
+          MaterialLocalizations.of(context).formatCompactDate(_selectedDate!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
