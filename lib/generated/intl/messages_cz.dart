@@ -45,6 +45,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m11(time) => "Čas připomínky: ${time}";
 
+  static String m12(count) => "Importováno ${count} jídel z CSV souboru.";
+
+  static String m13(imported, skipped) =>
+      "Importováno ${imported} jídel; ${skipped} řádků přeskočeno kvůli neplatným datům.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -167,6 +172,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "Zatím žádná vlastní jídla uložena."),
         "settingsCustomMealsLabel":
             MessageLookupByLibrary.simpleMessage("Vlastní jídla"),
+        "csvImportContributeOffAndroidLink":
+            MessageLookupByLibrary.simpleMessage("Android"),
+        "csvImportContributeOffIosLink":
+            MessageLookupByLibrary.simpleMessage("iOS"),
+        "csvImportContributeOffPrefix": MessageLookupByLibrary.simpleMessage(
+            "Máte čárový kód? Přispějte produktem do Open Food Facts:"),
+        "csvImportErrorLabel": MessageLookupByLibrary.simpleMessage(
+            "Nelze přečíst CSV soubor. Zkontrolujte formát a zkuste znovu."),
+        "csvImportPartialLabel": m13,
+        "csvImportSuccessLabel": m12,
+        "downloadSampleCsvAction":
+            MessageLookupByLibrary.simpleMessage("Vzorové CSV"),
+        "importMealsCsvAction":
+            MessageLookupByLibrary.simpleMessage("Importovat jídla (CSV)"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Export"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "Můžete uložit data z aplikace do .zip archívu a později je znovu importovat. To je užitečné, pokud potřebujete data zálohovat, nebo přenést na jiné zařízení.\n\nAplikace pro ukládání dat nepoužívá žádné cloudové služby."),

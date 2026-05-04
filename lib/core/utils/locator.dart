@@ -56,8 +56,10 @@ import 'package:opennutritracker/features/onboarding/presentation/bloc/onboardin
 import 'package:opennutritracker/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:opennutritracker/features/scanner/domain/usecase/search_product_by_barcode_usecase.dart';
 import 'package:opennutritracker/features/scanner/presentation/scanner_bloc.dart';
+import 'package:opennutritracker/features/settings/domain/usecase/download_sample_csv_usecase.dart';
 import 'package:opennutritracker/features/settings/domain/usecase/export_data_usecase.dart';
 import 'package:opennutritracker/features/settings/domain/usecase/import_data_usecase.dart';
+import 'package:opennutritracker/features/settings/domain/usecase/import_meals_csv_usecase.dart';
 import 'package:opennutritracker/features/settings/presentation/bloc/custom_meals_bloc.dart';
 import 'package:opennutritracker/features/settings/presentation/bloc/export_import_bloc.dart';
 import 'package:opennutritracker/features/settings/presentation/bloc/settings_bloc.dart';
@@ -126,7 +128,9 @@ Future<void> initLocator() async {
   locator.registerLazySingleton(
     () => SettingsBloc(locator(), locator(), locator(), locator(), locator()),
   );
-  locator.registerFactory(() => ExportImportBloc(locator(), locator()));
+  locator.registerFactory(
+    () => ExportImportBloc(locator(), locator(), locator(), locator()),
+  );
   locator.registerFactory<CustomMealsBloc>(
     () => CustomMealsBloc(locator(), locator(), locator(), locator()),
   );
@@ -173,7 +177,7 @@ Future<void> initLocator() async {
     () => SearchProductsUseCase(locator(), locator()),
   );
   locator.registerLazySingleton<SearchProductByBarcodeUseCase>(
-    () => SearchProductByBarcodeUseCase(locator()),
+    () => SearchProductByBarcodeUseCase(locator(), locator()),
   );
   locator.registerLazySingleton<GetIntakeUsecase>(
     () => GetIntakeUsecase(locator()),
@@ -218,6 +222,8 @@ Future<void> initLocator() async {
   locator.registerLazySingleton(
     () => ImportDataUsecase(locator(), locator(), locator()),
   );
+  locator.registerLazySingleton(() => ImportMealsCsvUsecase(locator()));
+  locator.registerLazySingleton(() => DownloadSampleCsvUsecase());
 
   // Repositories
   locator.registerLazySingleton(() => ConfigRepository(locator()));

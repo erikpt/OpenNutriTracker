@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
@@ -6,8 +7,14 @@ import 'package:opennutritracker/features/diary/presentation/bloc/diary_bloc.dar
 import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart';
 import 'package:opennutritracker/features/settings/presentation/bloc/export_import_bloc.dart';
 import 'package:opennutritracker/generated/l10n.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ExportImportDialog extends StatelessWidget {
+  static final _offAndroidUrl = Uri.parse(
+      'https://play.google.com/store/apps/details?id=org.openfoodfacts.scanner');
+  static final _offIosUrl = Uri.parse(
+      'https://apps.apple.com/us/app/open-food-facts-product-scan/id588797948');
+
   final exportImportBloc = locator<ExportImportBloc>();
 
   final _homeBloc = locator<HomeBloc>();
@@ -27,6 +34,7 @@ class ExportImportDialog extends StatelessWidget {
       content: Wrap(
         children: [
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BlocBuilder<ExportImportBloc, ExportImportState>(
                 bloc: exportImportBloc,
@@ -47,7 +55,7 @@ class ExportImportDialog extends StatelessWidget {
                           Icons.check_circle,
                           color: Theme.of(context).colorScheme.primary,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(S.of(context).exportImportSuccessLabel),
                       ],
                     );
@@ -58,8 +66,24 @@ class ExportImportDialog extends StatelessWidget {
                           Icons.error,
                           color: Theme.of(context).colorScheme.error,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(S.of(context).exportImportErrorLabel),
+                      ],
+                    );
+                  } else if (state is CsvImportResultState) {
+                    refreshScreens();
+                    return _buildCsvResult(context, state);
+                  } else if (state is CsvImportErrorState) {
+                    return Row(
+                      children: [
+                        Icon(
+                          Icons.error,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(S.of(context).csvImportErrorLabel),
+                        ),
                       ],
                     );
                   }
@@ -72,17 +96,79 @@ class ExportImportDialog extends StatelessWidget {
       ),
       actions: <Widget>[
         TextButton(
-          onPressed: () {
-            exportImportBloc.add(ExportDataEvent());
-          },
+          onPressed: () => exportImportBloc.add(ExportDataEvent()),
           child: Text(S.of(context).exportAction),
         ),
         TextButton(
-          onPressed: () {
-            exportImportBloc.add(ImportDataEvent());
-          },
+          onPressed: () => exportImportBloc.add(ImportDataEvent()),
           child: Text(S.of(context).importAction),
         ),
+        TextButton(
+          onPressed: () => exportImportBloc.add(DownloadSampleCsvEvent()),
+          child: Text(S.of(context).downloadSampleCsvAction),
+        ),
+        TextButton(
+          onPressed: () => exportImportBloc.add(ImportMealsCsvEvent()),
+          child: Text(S.of(context).importMealsCsvAction),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCsvResult(BuildContext context, CsvImportResultState state) {
+    final summary = state.skipped == 0
+        ? S.of(context).csvImportSuccessLabel(state.imported)
+        : S
+            .of(context)
+            .csvImportPartialLabel(state.imported, state.skipped);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.check_circle,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            const SizedBox(width: 8),
+            Expanded(child: Text(summary)),
+          ],
+        ),
+        if (state.anyHadBarcode) ...[
+          const SizedBox(height: 12),
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: S.of(context).csvImportContributeOffPrefix,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const TextSpan(text: ' '),
+                TextSpan(
+                  text: S.of(context).csvImportContributeOffAndroidLink,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        decoration: TextDecoration.underline,
+                      ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => launchUrl(_offAndroidUrl,
+                        mode: LaunchMode.externalApplication),
+                ),
+                const TextSpan(text: ' / '),
+                TextSpan(
+                  text: S.of(context).csvImportContributeOffIosLink,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        decoration: TextDecoration.underline,
+                      ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => launchUrl(_offIosUrl,
+                        mode: LaunchMode.externalApplication),
+                ),
+              ],
+            ),
+          ),
+        ],
       ],
     );
   }

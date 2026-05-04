@@ -47,6 +47,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m11(time) => "Hatırlatma zamanı: ${time}";
 
+  static String m12(count) => "CSV dosyasından ${count} öğün içe aktarıldı.";
+
+  static String m13(imported, skipped) =>
+      "${imported} öğün içe aktarıldı; geçersiz veri nedeniyle ${skipped} satır atlandı.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -171,6 +176,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "Henüz özel yemek kaydedilmedi."),
         "settingsCustomMealsLabel":
             MessageLookupByLibrary.simpleMessage("Özel Yemekler"),
+        "csvImportContributeOffAndroidLink":
+            MessageLookupByLibrary.simpleMessage("Android"),
+        "csvImportContributeOffIosLink":
+            MessageLookupByLibrary.simpleMessage("iOS"),
+        "csvImportContributeOffPrefix": MessageLookupByLibrary.simpleMessage(
+            "Barkod var mı? Ürünü Open Food Facts'e katkıda bulunun:"),
+        "csvImportErrorLabel": MessageLookupByLibrary.simpleMessage(
+            "CSV dosyası okunamadı. Biçimi kontrol edin ve tekrar deneyin."),
+        "csvImportPartialLabel": m13,
+        "csvImportSuccessLabel": m12,
+        "downloadSampleCsvAction":
+            MessageLookupByLibrary.simpleMessage("Örnek CSV"),
+        "importMealsCsvAction":
+            MessageLookupByLibrary.simpleMessage("Yemekleri içe aktar (CSV)"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Dışa Aktar"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "Uygulama verilerini bir zip dosyasına dışa aktarabilir ve daha sonra içe aktarabilirsiniz. Bu, verilerinizi yedeklemek veya başka bir cihaza aktarmak istiyorsanız kullanışlıdır.\n\nUygulama, verilerinizi saklamak için herhangi bir bulut hizmeti kullanmaz."),

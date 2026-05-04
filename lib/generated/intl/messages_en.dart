@@ -47,6 +47,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m11(time) => "Reminder time: ${time}";
 
+  static String m12(count) =>
+      "Imported ${count} meal(s) from the CSV file.";
+
+  static String m13(imported, skipped) =>
+      "Imported ${imported} meal(s); ${skipped} row(s) were skipped due to invalid data.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -162,6 +168,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "Error while opening email app"),
         "errorProductNotFound":
             MessageLookupByLibrary.simpleMessage("Product not found"),
+        "csvImportContributeOffAndroidLink":
+            MessageLookupByLibrary.simpleMessage("Android"),
+        "csvImportContributeOffIosLink":
+            MessageLookupByLibrary.simpleMessage("iOS"),
+        "csvImportContributeOffPrefix": MessageLookupByLibrary.simpleMessage(
+            "Have a barcode? Help everyone by contributing the product to Open Food Facts:"),
+        "csvImportErrorLabel": MessageLookupByLibrary.simpleMessage(
+            "Could not read CSV file. Check the format and try again."),
+        "csvImportPartialLabel": m13,
+        "csvImportSuccessLabel": m12,
+        "downloadSampleCsvAction":
+            MessageLookupByLibrary.simpleMessage("Sample CSV"),
+        "importMealsCsvAction":
+            MessageLookupByLibrary.simpleMessage("Import meals (CSV)"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Export"),
         "customMealsDeleteConfirmContent": MessageLookupByLibrary.simpleMessage(
             "All diary entries using this meal will also be removed."),

@@ -102,6 +102,25 @@
   "exportImportErrorLabel": "Export / Import error",
   "exportAction": "Export",
   "importAction": "Import",
+  "downloadSampleCsvAction": "Sample CSV",
+  "importMealsCsvAction": "Import meals (CSV)",
+  "csvImportSuccessLabel": "Imported {count} meal(s) from the CSV file.",
+  "@csvImportSuccessLabel": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "csvImportPartialLabel": "Imported {imported} meal(s); {skipped} row(s) were skipped due to invalid data.",
+  "@csvImportPartialLabel": {
+    "placeholders": {
+      "imported": {"type": "int"},
+      "skipped": {"type": "int"}
+    }
+  },
+  "csvImportErrorLabel": "Could not read CSV file. Check the format and try again.",
+  "csvImportContributeOffPrefix": "Have a barcode? Help everyone by contributing the product to Open Food Facts:",
+  "csvImportContributeOffAndroidLink": "Android",
+  "csvImportContributeOffIosLink": "iOS",
   "addItemLabel": "Add new Item:",
   "activityLabel": "Activity",
   "activityExample": "e.g. running, biking, yoga ...",

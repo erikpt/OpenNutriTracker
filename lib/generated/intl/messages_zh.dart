@@ -43,6 +43,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m11(time) => "提醒时间：${time}";
 
+  static String m12(count) => "已从 CSV 文件导入 ${count} 项餐食。";
+
+  static String m13(imported, skipped) =>
+      "已导入 ${imported} 项餐食；因数据无效跳过 ${skipped} 行。";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample":
@@ -154,6 +159,20 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("尚未保存自定义餐食。"),
         "settingsCustomMealsLabel":
             MessageLookupByLibrary.simpleMessage("自定义餐食"),
+        "csvImportContributeOffAndroidLink":
+            MessageLookupByLibrary.simpleMessage("Android"),
+        "csvImportContributeOffIosLink":
+            MessageLookupByLibrary.simpleMessage("iOS"),
+        "csvImportContributeOffPrefix": MessageLookupByLibrary.simpleMessage(
+            "有条形码？请把产品贡献到 Open Food Facts："),
+        "csvImportErrorLabel": MessageLookupByLibrary.simpleMessage(
+            "无法读取 CSV 文件。请检查格式后重试。"),
+        "csvImportPartialLabel": m13,
+        "csvImportSuccessLabel": m12,
+        "downloadSampleCsvAction":
+            MessageLookupByLibrary.simpleMessage("示例 CSV"),
+        "importMealsCsvAction":
+            MessageLookupByLibrary.simpleMessage("导入餐食 (CSV)"),
         "exportAction": MessageLookupByLibrary.simpleMessage("导出"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "您可以将应用数据导出到zip文件并稍后导入。这在您想要备份数据或传输到另一台设备时很有用。\n\n应用不会使用任何云服务存储您的数据。"),

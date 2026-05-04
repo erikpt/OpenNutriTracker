@@ -47,6 +47,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m11(time) => "Erinnerungszeit: ${time}";
 
+  static String m12(count) =>
+      "${count} Mahlzeit(en) aus der CSV-Datei importiert.";
+
+  static String m13(imported, skipped) =>
+      "${imported} Mahlzeit(en) importiert; ${skipped} Zeile(n) wegen ungültiger Daten übersprungen.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -173,6 +179,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "Noch keine eigenen Mahlzeiten gespeichert."),
         "settingsCustomMealsLabel":
             MessageLookupByLibrary.simpleMessage("Eigene Mahlzeiten"),
+        "csvImportContributeOffAndroidLink":
+            MessageLookupByLibrary.simpleMessage("Android"),
+        "csvImportContributeOffIosLink":
+            MessageLookupByLibrary.simpleMessage("iOS"),
+        "csvImportContributeOffPrefix": MessageLookupByLibrary.simpleMessage(
+            "Barcode dabei? Trag das Produkt zu Open Food Facts bei:"),
+        "csvImportErrorLabel": MessageLookupByLibrary.simpleMessage(
+            "CSV-Datei konnte nicht gelesen werden. Format prüfen und erneut versuchen."),
+        "csvImportPartialLabel": m13,
+        "csvImportSuccessLabel": m12,
+        "downloadSampleCsvAction":
+            MessageLookupByLibrary.simpleMessage("Beispiel-CSV"),
+        "importMealsCsvAction":
+            MessageLookupByLibrary.simpleMessage("Mahlzeiten importieren (CSV)"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Exportieren"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "Sie können die App-Daten in eine Zip-Datei exportieren und später importieren. Dies ist nützlich, wenn Sie Ihre Daten sichern oder auf ein anderes Gerät übertragen möchten.\n\nDie App nutzt keinen Cloud-Dienst, um Ihre Daten zu speichern."),
