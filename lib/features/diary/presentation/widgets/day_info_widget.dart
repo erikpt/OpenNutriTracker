@@ -37,8 +37,6 @@ class DayInfoWidget extends StatelessWidget {
     UserActivityEntity userActivityEntity,
     TrackedDayEntity? trackedDayEntity,
   ) onCopyActivity;
-  final Function(BuildContext context, IntakeEntity intake, bool usesImperialUnits)?
-      onEditIntake;
 
   const DayInfoWidget({
     super.key,
@@ -54,7 +52,6 @@ class DayInfoWidget extends StatelessWidget {
     required this.onDeleteActivity,
     required this.onCopyIntake,
     required this.onCopyActivity,
-    this.onEditIntake,
   });
 
   @override
@@ -150,7 +147,6 @@ class DayInfoWidget extends StatelessWidget {
               intakeList: breakfastIntake,
               onDeleteIntakeCallback: onDeleteIntake,
               onItemLongPressedCallback: onIntakeItemLongPressed,
-              onItemTappedCallback: onEditIntake,
               onCopyIntakeCallback:
                   DateUtils.isSameDay(selectedDay, DateTime.now())
                       ? null
@@ -166,7 +162,6 @@ class DayInfoWidget extends StatelessWidget {
               intakeList: lunchIntake,
               onDeleteIntakeCallback: onDeleteIntake,
               onItemLongPressedCallback: onIntakeItemLongPressed,
-              onItemTappedCallback: onEditIntake,
               usesImperialUnits: usesImperialUnits,
               onCopyIntakeCallback:
                   DateUtils.isSameDay(selectedDay, DateTime.now())
@@ -182,7 +177,6 @@ class DayInfoWidget extends StatelessWidget {
               intakeList: dinnerIntake,
               onDeleteIntakeCallback: onDeleteIntake,
               onItemLongPressedCallback: onIntakeItemLongPressed,
-              onItemTappedCallback: onEditIntake,
               onCopyIntakeCallback:
                   DateUtils.isSameDay(selectedDay, DateTime.now())
                       ? null
@@ -197,7 +191,6 @@ class DayInfoWidget extends StatelessWidget {
               intakeList: snackIntake,
               onDeleteIntakeCallback: onDeleteIntake,
               onItemLongPressedCallback: onIntakeItemLongPressed,
-              onItemTappedCallback: onEditIntake,
               usesImperialUnits: usesImperialUnits,
               onCopyIntakeCallback:
                   DateUtils.isSameDay(selectedDay, DateTime.now())

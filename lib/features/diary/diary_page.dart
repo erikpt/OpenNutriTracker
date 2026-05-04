@@ -5,7 +5,6 @@ import 'package:opennutritracker/core/domain/entity/intake_entity.dart';
 import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
 import 'package:opennutritracker/core/domain/entity/tracked_day_entity.dart';
 import 'package:opennutritracker/core/domain/entity/user_activity_entity.dart';
-import 'package:opennutritracker/core/presentation/widgets/edit_dialog.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/calendar_day_bloc.dart';
@@ -118,7 +117,6 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
                 onDeleteActivity: _onDeleteActivityItem,
                 onCopyIntake: _onCopyIntakeItem,
                 onCopyActivity: _onCopyActivityItem,
-                onEditIntake: _onEditIntakeItem,
                 usesImperialUnits: usesImperialUnits,
               );
             }
@@ -194,35 +192,6 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
     TrackedDayEntity? trackedDayEntity,
   ) async {
     log.info("Should copy activity");
-  }
-
-  void _onEditIntakeItem(
-    BuildContext context,
-    IntakeEntity intakeEntity,
-    bool usesImperialUnits,
-  ) async {
-    final changeIntakeAmount = await showDialog<double>(
-      context: context,
-      builder: (context) => EditDialog(
-        intakeEntity: intakeEntity,
-        usesImperialUnits: usesImperialUnits,
-      ),
-    );
-    if (changeIntakeAmount != null) {
-      await _calendarDayBloc.updateIntakeItem(
-        intakeEntity.id,
-        {'amount': changeIntakeAmount},
-        _selectedDate,
-      );
-      _diaryBloc.add(const LoadDiaryYearEvent());
-      _calendarDayBloc.add(LoadCalendarDayEvent(_selectedDate));
-      _diaryBloc.updateHomePage();
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(S.of(context).itemUpdatedSnackbar)),
-        );
-      }
-    }
   }
 
   void _onDateSelected(
