@@ -135,6 +135,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dialogDeleteLabel": MessageLookupByLibrary.simpleMessage("USUŃ"),
         "dialogOKLabel": MessageLookupByLibrary.simpleMessage("OK"),
         "diaryLabel": MessageLookupByLibrary.simpleMessage("Dziennik"),
+        "diaryFutureDateWarning":
+            MessageLookupByLibrary.simpleMessage("Edytujesz przyszłą datę"),
         "dinnerExample":
             MessageLookupByLibrary.simpleMessage("np. zupa, kurczak, wino ..."),
         "dinnerLabel": MessageLookupByLibrary.simpleMessage("Kolacja"),
@@ -156,6 +158,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Błąd podczas otwierania aplikacji e-mail"),
         "errorProductNotFound":
             MessageLookupByLibrary.simpleMessage("Nie znaleziono produktu"),
+        "customMealsDeleteConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "Wszystkie wpisy w dzienniku używające tego posiłku zostaną również usunięte."),
+        "customMealsDeleteConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("Usunąć własny posiłek?"),
+        "customMealsEmptyLabel": MessageLookupByLibrary.simpleMessage(
+            "Brak zapisanych własnych posiłków."),
+        "settingsCustomMealsLabel":
+            MessageLookupByLibrary.simpleMessage("Własne posiłki"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Eksportuj"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "Możesz wyeksportować dane aplikacji do pliku zip i zaimportować je później. Jest to przydatne, jeśli chcesz wykonać kopię zapasową danych lub przenieść je na inne urządzenie.\n\nAplikacja nie korzysta z żadnej usługi chmurowej do przechowywania danych."),

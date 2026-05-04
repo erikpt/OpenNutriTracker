@@ -13,6 +13,8 @@ import 'package:opennutritracker/features/diary/presentation/bloc/calendar_day_b
 import 'package:opennutritracker/features/diary/presentation/bloc/diary_bloc.dart';
 import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart';
 import 'package:opennutritracker/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:opennutritracker/features/settings/custom_meals_screen.dart';
+import 'package:opennutritracker/features/settings/presentation/bloc/custom_meals_bloc.dart';
 import 'package:opennutritracker/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:opennutritracker/features/settings/presentation/widgets/export_import_dialog.dart';
 import 'package:opennutritracker/generated/l10n.dart';
@@ -120,6 +122,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             hour: state.notificationHour,
                             minute: state.notificationMinute)),
                   ),
+                ListTile(
+                  leading: const Icon(Icons.restaurant_menu_outlined),
+                  title: Text(S.of(context).settingsCustomMealsLabel),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BlocProvider(
+                        create: (_) => locator<CustomMealsBloc>()
+                          ..add(LoadCustomMealsEvent()),
+                        child: const CustomMealsScreen(),
+                      ),
+                    ),
+                  ),
+                ),
                 ListTile(
                   leading: const Icon(Icons.import_export),
                   title: Text(S.of(context).exportImportLabel),

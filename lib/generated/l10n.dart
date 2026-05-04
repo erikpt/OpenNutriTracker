@@ -900,6 +900,46 @@ class S {
     );
   }
 
+  /// `Custom Meals`
+  String get settingsCustomMealsLabel {
+    return Intl.message(
+      'Custom Meals',
+      name: 'settingsCustomMealsLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No custom meals saved yet.`
+  String get customMealsEmptyLabel {
+    return Intl.message(
+      'No custom meals saved yet.',
+      name: 'customMealsEmptyLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete custom meal?`
+  String get customMealsDeleteConfirmTitle {
+    return Intl.message(
+      'Delete custom meal?',
+      name: 'customMealsDeleteConfirmTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All diary entries using this meal will also be removed.`
+  String get customMealsDeleteConfirmContent {
+    return Intl.message(
+      'All diary entries using this meal will also be removed.',
+      name: 'customMealsDeleteConfirmContent',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Export / Import data`
   String get exportImportLabel {
     return Intl.message(
@@ -1195,6 +1235,16 @@ class S {
     return Intl.message(
       'Item updated',
       name: 'itemUpdatedSnackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are editing a future date`
+  String get diaryFutureDateWarning {
+    return Intl.message(
+      'You are editing a future date',
+      name: 'diaryFutureDateWarning',
       desc: '',
       args: [],
     );

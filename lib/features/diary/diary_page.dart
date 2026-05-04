@@ -280,6 +280,11 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
       _focusedDate = newDate;
       _calendarDayBloc.add(LoadCalendarDayEvent(newDate));
     });
+    if (newDate.isAfter(_currentDate) && !DateUtils.isSameDay(newDate, _currentDate)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(S.of(context).diaryFutureDateWarning)),
+      );
+    }
   }
 
   void _refreshPageOnDayChange() {

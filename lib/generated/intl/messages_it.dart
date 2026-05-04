@@ -137,6 +137,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dialogDeleteLabel": MessageLookupByLibrary.simpleMessage("ELIMINA"),
         "dialogOKLabel": MessageLookupByLibrary.simpleMessage("OK"),
         "diaryLabel": MessageLookupByLibrary.simpleMessage("Diario"),
+        "diaryFutureDateWarning": MessageLookupByLibrary.simpleMessage(
+            "Stai modificando una data futura"),
         "dinnerExample":
             MessageLookupByLibrary.simpleMessage("es. zuppa, pollo, vino ..."),
         "dinnerLabel": MessageLookupByLibrary.simpleMessage("Cena"),
@@ -158,6 +160,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Errore durante l\'apertura dell\'app email"),
         "errorProductNotFound":
             MessageLookupByLibrary.simpleMessage("Prodotto non trovato"),
+        "customMealsDeleteConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "Tutte le voci del diario che utilizzano questo pasto verranno rimosse."),
+        "customMealsDeleteConfirmTitle": MessageLookupByLibrary.simpleMessage(
+            "Eliminare il pasto personalizzato?"),
+        "customMealsEmptyLabel": MessageLookupByLibrary.simpleMessage(
+            "Nessun pasto personalizzato salvato."),
+        "settingsCustomMealsLabel":
+            MessageLookupByLibrary.simpleMessage("Pasti personalizzati"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Esporta"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "Puoi esportare i dati dell\'app in un file zip e importarli successivamente. Utile per backup o trasferimento su un altro dispositivo.\n\nL\'app non utilizza servizi cloud per memorizzare i tuoi dati."),

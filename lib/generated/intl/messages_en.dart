@@ -136,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dialogDeleteLabel": MessageLookupByLibrary.simpleMessage("DELETE"),
         "dialogOKLabel": MessageLookupByLibrary.simpleMessage("OK"),
         "diaryLabel": MessageLookupByLibrary.simpleMessage("Diary"),
+        "diaryFutureDateWarning":
+            MessageLookupByLibrary.simpleMessage("You are editing a future date"),
         "dinnerExample": MessageLookupByLibrary.simpleMessage(
             "e.g. soup, chicken, wine ..."),
         "dinnerLabel": MessageLookupByLibrary.simpleMessage("Dinner"),
@@ -160,6 +162,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "errorProductNotFound":
             MessageLookupByLibrary.simpleMessage("Product not found"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Export"),
+        "customMealsDeleteConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "All diary entries using this meal will also be removed."),
+        "customMealsDeleteConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("Delete custom meal?"),
+        "customMealsEmptyLabel":
+            MessageLookupByLibrary.simpleMessage("No custom meals saved yet."),
+        "settingsCustomMealsLabel":
+            MessageLookupByLibrary.simpleMessage("Custom Meals"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "You can export the app data to a zip file and import it later. This is useful if you want to backup your data or transfer it to another device.\n\nThe app does not use any cloud service to store your data."),
         "exportImportErrorLabel":
