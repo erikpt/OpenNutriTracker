@@ -35,6 +35,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m6(count) => "无法从OpenFoodFacts获取 ${count} 个项目。";
 
+  static String m8(rate) => "${rate} 千克/周";
+
+  static String m9(rate) => "${rate} 磅/周";
+
+  static String m10(qty, unit) => "每 ${qty} ${unit}";
+
+  static String m11(time) => "提醒时间：${time}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample":
@@ -86,6 +94,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("TDEE方程式"),
         "carbohydrateLabel": MessageLookupByLibrary.simpleMessage("碳水化合物"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("碳水"),
+        "chooseWeeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("每周体重速率"),
         "chooseWeightGoalLabel": MessageLookupByLibrary.simpleMessage("选择体重目标"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("厘米"),
         "codeCopiedLabel": MessageLookupByLibrary.simpleMessage("代码已复制"),
@@ -182,6 +192,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "mealFatLabel": MessageLookupByLibrary.simpleMessage("脂肪每"),
         "mealKcalLabel": MessageLookupByLibrary.simpleMessage("卡路里每"),
         "mealNameLabel": MessageLookupByLibrary.simpleMessage("餐食名称"),
+        "mealNutrientsPerQtyLabel": m10,
+        "mealNutrientsTotalLabel":
+            MessageLookupByLibrary.simpleMessage("总量"),
         "mealProteinLabel":
             MessageLookupByLibrary.simpleMessage("蛋白质每 100 克/毫升"),
         "mealSizeLabel": MessageLookupByLibrary.simpleMessage("餐食大小 (克/毫升)"),
@@ -564,9 +577,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("质量"),
         "settingsMetricLabel":
             MessageLookupByLibrary.simpleMessage("公制（千克、厘米、毫升）"),
+        "settingsNotificationsLabel":
+            MessageLookupByLibrary.simpleMessage("每日提醒"),
+        "settingsNotificationsTimeLabel": m11,
         "settingsPrivacySettings": MessageLookupByLibrary.simpleMessage("隐私设置"),
         "settingsReportErrorLabel":
             MessageLookupByLibrary.simpleMessage("报告错误"),
+        "settingsShowActivityTracking":
+            MessageLookupByLibrary.simpleMessage("显示活动追踪"),
         "settingsSourceCodeLabel": MessageLookupByLibrary.simpleMessage("源代码"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("系统"),
         "settingsThemeDarkLabel": MessageLookupByLibrary.simpleMessage("深色"),
@@ -584,6 +602,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "sugarLabel": MessageLookupByLibrary.simpleMessage("糖"),
         "suppliedLabel": MessageLookupByLibrary.simpleMessage("提供"),
         "unitLabel": MessageLookupByLibrary.simpleMessage("单位"),
+        "weeklyWeightGoalKgPerWeek": m8,
+        "weeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("每周速率"),
+        "weeklyWeightGoalLbsPerWeek": m9,
+        "weeklyWeightGoalNoneLabel":
+            MessageLookupByLibrary.simpleMessage("未设置"),
         "weightLabel": MessageLookupByLibrary.simpleMessage("体重"),
         "yearsLabel": m3
       };

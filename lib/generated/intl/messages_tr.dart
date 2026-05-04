@@ -37,6 +37,16 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(count) =>
       "${count} öğe OpenFoodFacts'ten alınamadı.";
 
+  static String m7(count) => "Import ${count} activities?";
+
+  static String m8(rate) => "${rate} kg/hafta";
+
+  static String m9(rate) => "${rate} lbs/hafta";
+
+  static String m10(qty, unit) => "${qty} ${unit} başına";
+
+  static String m11(time) => "Hatırlatma zamanı: ${time}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -90,6 +100,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "carbohydrateLabel":
             MessageLookupByLibrary.simpleMessage("karbonhidrat"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("karbonhidrat"),
+        "chooseWeeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Haftalık kilo oranı"),
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Kilo Hedefini Seçin"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("cm"),
@@ -125,6 +137,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dialogDeleteLabel": MessageLookupByLibrary.simpleMessage("SİL"),
         "dialogOKLabel": MessageLookupByLibrary.simpleMessage("TAMAM"),
         "diaryLabel": MessageLookupByLibrary.simpleMessage("Günlük"),
+        "duplicateMealDialogContent": MessageLookupByLibrary.simpleMessage(
+            "Bu yiyecek bugün bu öğüne zaten eklenmiş. Tekrar eklensin mi?"),
         "dinnerExample":
             MessageLookupByLibrary.simpleMessage("ör. çorba, tavuk, şarap ..."),
         "dinnerLabel": MessageLookupByLibrary.simpleMessage("Akşam Yemeği"),
@@ -188,6 +202,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Öğe silindi"),
         "itemUpdatedSnackbar":
             MessageLookupByLibrary.simpleMessage("Öğe güncellendi"),
+        "kcalExceededLabel": MessageLookupByLibrary.simpleMessage("kcal aşıldı"),
         "kcalLabel": MessageLookupByLibrary.simpleMessage("kcal"),
         "kcalLeftLabel": MessageLookupByLibrary.simpleMessage("kalan kcal"),
         "kgLabel": MessageLookupByLibrary.simpleMessage("kg"),
@@ -203,6 +218,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "mealFatLabel": MessageLookupByLibrary.simpleMessage("yağ başına"),
         "mealKcalLabel": MessageLookupByLibrary.simpleMessage("kcal başına"),
         "mealNameLabel": MessageLookupByLibrary.simpleMessage("Yemek adı"),
+        "mealNutrientsPerQtyLabel": m10,
+        "mealNutrientsTotalLabel":
+            MessageLookupByLibrary.simpleMessage("Toplam miktar"),
         "mealProteinLabel":
             MessageLookupByLibrary.simpleMessage("protein başına 100 g/ml"),
         "mealSizeLabel":
@@ -663,6 +681,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Kütle"),
         "settingsMetricLabel":
             MessageLookupByLibrary.simpleMessage("Metrik (kg, cm, ml)"),
+        "settingsNotificationsLabel":
+            MessageLookupByLibrary.simpleMessage("Günlük Hatırlatıcı"),
+        "settingsNotificationsTimeLabel": m11,
         "settingsPrivacySettings":
             MessageLookupByLibrary.simpleMessage("Gizlilik Ayarları"),
         "settingsReportErrorLabel":
@@ -685,6 +706,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "sugarLabel": MessageLookupByLibrary.simpleMessage("şeker"),
         "suppliedLabel": MessageLookupByLibrary.simpleMessage("tüketilen"),
         "unitLabel": MessageLookupByLibrary.simpleMessage("Birim"),
+        "warningLabel": MessageLookupByLibrary.simpleMessage("Uyarı"),
+        "weeklyWeightGoalKgPerWeek": m8,
+        "weeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Haftalık oran"),
+        "weeklyWeightGoalLbsPerWeek": m9,
+        "weeklyWeightGoalNoneLabel":
+            MessageLookupByLibrary.simpleMessage("Ayarlanmadı"),
         "weightLabel": MessageLookupByLibrary.simpleMessage("Kilo"),
         "yearsLabel": m3
       };

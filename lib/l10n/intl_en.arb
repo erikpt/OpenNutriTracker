@@ -58,6 +58,14 @@
   "settingsDisclaimerLabel": "Disclaimer",
   "settingsReportErrorLabel": "Report Error",
   "settingsPrivacySettings": "Privacy Settings",
+  "settingsShowActivityTracking": "Show Activity Tracking",
+  "settingsNotificationsLabel": "Daily Reminder",
+  "settingsNotificationsTimeLabel": "Reminder time: {time}",
+  "@settingsNotificationsTimeLabel": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
   "settingsSourceCodeLabel": "Source Code",
   "settingFeedbackLabel": "Feedback",
   "settingAboutLabel": "About",
@@ -164,7 +172,7 @@
   "fiberLabel": "fiber",
   "per100gmlLabel": "Per 100g/ml",
   "additionalInfoLabelOFF": "More Information at\nOpenFoodFacts",
-  "offDisclaimer": "The data provided to you by this app are retrieved from the Open Food Facts database. No guarantees can be made for the accuracy, completeness, or reliability of the information provided. The data are provided “as is” and the originating source for the data (Open Food Facts) is not liable for any damages arising out of the use of the data.",
+  "offDisclaimer": "The data provided to you by this app are retrieved from the Open Food Facts database. No guarantees can be made for the accuracy, completeness, or reliability of the information provided. The data are provided "as is" and the originating source for the data (Open Food Facts) is not liable for any damages arising out of the use of the data.",
   "additionalInfoLabelFDC": "More Information at\nFoodData Central",
   "additionalInfoLabelUnknown": "Unknown Meal Item",
   "additionalInfoLabelCustom": "Custom Meal Item",
@@ -192,10 +200,18 @@
   "servingSizeLabelMetric": "Serving size (g/ml)",
   "servingSizeLabelImperial": "Serving size (oz/fl oz)",
   "mealUnitLabel": "Meal unit",
-  "mealKcalLabel": "kcal per",
-  "mealCarbsLabel": "carbs per",
-  "mealFatLabel": "fat per",
-  "mealProteinLabel": "protein per 100 g/ml",
+  "mealKcalLabel": "kcal",
+  "mealCarbsLabel": "Carbohydrates (g)",
+  "mealFatLabel": "Fat (g)",
+  "mealProteinLabel": "Protein (g)",
+  "mealNutrientsPerQtyLabel": "Per {qty} {unit}",
+  "@mealNutrientsPerQtyLabel": {
+    "placeholders": {
+      "qty": { "type": "String" },
+      "unit": { "type": "String" }
+    }
+  },
+  "mealNutrientsTotalLabel": "Total amount",
   "errorMealSave": "Error while saving meal. Did you input the correct meal information?",
   "bmiLabel": "BMI",
   "bmiInfo": "Body Mass Index (BMI) is a index to classify overweight and obesity in adults. It is defined as weight in kilograms divided by the square of height in meters (kg/m²).\n\nBMI does not differentiate between fat and muscle mass and can be misleading for some individuals.",
@@ -216,6 +232,21 @@
   "goalMaintainWeight": "Maintain Weight",
   "goalGainWeight": "Gain Weight",
   "goalLabel": "Goal",
+  "weeklyWeightGoalLabel": "Weekly rate",
+  "weeklyWeightGoalNoneLabel": "Not set",
+  "weeklyWeightGoalKgPerWeek": "{rate} kg/week",
+  "@weeklyWeightGoalKgPerWeek": {
+    "placeholders": {
+      "rate": { "type": "String" }
+    }
+  },
+  "weeklyWeightGoalLbsPerWeek": "{rate} lbs/week",
+  "@weeklyWeightGoalLbsPerWeek": {
+    "placeholders": {
+      "rate": { "type": "String" }
+    }
+  },
+  "chooseWeeklyWeightGoalLabel": "Weekly weight rate",
   "selectHeightDialogLabel": "Select Height",
   "heightLabel": "Height",
   "cmLabel": "cm",
@@ -301,7 +332,7 @@
   "paBoxingGeneralDesc": "in ring, general",
   "paBroomball": "broomball",
   "paBroomballDesc": "general",
-  "paChildrenGame": "children’s games",
+  "paChildrenGame": "children's games",
   "paChildrenGameDesc": "(e.g., hopscotch, 4-square, dodgeball, playground apparatus, t-ball, tetherball, marbles, arcade games), moderate effort",
   "paCheerleading": "cheerleading",
   "paCheerleadingDesc": "gymnastic moves, competitive",

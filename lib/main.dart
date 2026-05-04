@@ -12,6 +12,7 @@ import 'package:opennutritracker/core/styles/fonts.dart';
 import 'package:opennutritracker/core/utils/env.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/core/utils/logger_config.dart';
+import 'package:opennutritracker/core/utils/notification_service.dart';
 import 'package:opennutritracker/core/utils/navigation_options.dart';
 import 'package:opennutritracker/core/utils/theme_mode_provider.dart';
 import 'package:opennutritracker/features/activity_detail/activity_detail_screen.dart';
@@ -34,6 +35,19 @@ Future<void> main() async {
   await initLocator();
   final isUserInitialized = await locator<UserDataSource>().hasUserData();
   final configRepo = locator<ConfigRepository>();
+
+  // #312: Restore scheduled notifications after app start / device reboot
+  final config = await configRepo.getConfig();
+  if (config.notificationsEnabled) {
+    final notificationService = locator<NotificationService>();
+    await notificationService.initialize();
+    await notificationService.scheduleDailyReminder(
+      hour: config.notificationHour,
+      minute: config.notificationMinute,
+      title: 'OpenNutriTracker',
+      body: 'Don\'t forget to log your meals today!',
+    );
+  }
   final hasAcceptedAnonymousData =
       await configRepo.getConfigHasAcceptedAnonymousData();
   final savedAppTheme = await configRepo.getConfigAppTheme();

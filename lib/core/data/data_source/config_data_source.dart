@@ -93,6 +93,29 @@ class ConfigDataSource {
     config?.save();
   }
 
+  Future<void> setConfigShowActivityTracking(bool show) async {
+    _log.fine('Updating config showActivityTracking to $show');
+    final config = _configBox.get(_configKey);
+    config?.showActivityTracking = show;
+    config?.save();
+  }
+
+  Future<void> setNotificationsEnabled(bool enabled) async {
+    _log.fine('Updating config notificationsEnabled to $enabled');
+    final config = _configBox.get(_configKey);
+    config?.notificationsEnabled = enabled;
+    config?.save();
+  }
+
+  Future<void> setNotificationTime(int hour, int minute) async {
+    _log.fine('Updating config notification time to $hour:$minute');
+    final config = _configBox.get(_configKey);
+    config?.notificationHour = hour;
+    config?.notificationMinute = minute;
+    config?.save();
+  }
+
+
   Future<ConfigDBO> getConfig() async {
     return _configBox.get(_configKey) ?? ConfigDBO.empty();
   }

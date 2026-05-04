@@ -108,19 +108,22 @@
   "dialogCopyLabel": "Copia a oggi",
   "dialogDeleteLabel": "ELIMINA",
   "deleteAllLabel": "Elimina tutto",
-
   "shareMealLabel": "Condividi pasto",
   "importMealLabel": "Importa pasto condiviso",
   "importMealConfirmTitle": "Importare {count} voci?",
   "@importMealConfirmTitle": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "importMealConfirmContent": "Questi elementi verranno aggiunti a {mealType}.",
   "@importMealConfirmContent": {
     "placeholders": {
-      "mealType": { "type": "String" }
+      "mealType": {
+        "type": "String"
+      }
     }
   },
   "importMealSuccessLabel": "Pasto importato",
@@ -128,7 +131,9 @@
   "importOffFetchFailedLabel": "{count} elemento/i non è stato possibile recuperare da OpenFoodFacts.",
   "@importOffFetchFailedLabel": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "copyCodeLabel": "Copia codice",
@@ -136,7 +141,6 @@
   "codeCopiedLabel": "Codice copiato",
   "pasteCodeLabel": "Incolla codice",
   "pasteCodeHint": "Incolla qui il codice del pasto condiviso",
-
   "suppliedLabel": "assunte",
   "burnedLabel": "bruciate",
   "kcalLeftLabel": "kcal rimanenti",
@@ -438,5 +442,15 @@
   "paSkiingGeneral": "sci",
   "paSkiingGeneralDesc": "generale",
   "paSnowShovingModerate": "spalare neve",
-  "paSnowShovingModerateDesc": "a mano, sforzo moderato"
+  "paSnowShovingModerateDesc": "a mano, sforzo moderato",
+  "settingsShowActivityTracking": "Mostra tracciamento attività",
+  "settingsNotificationsLabel": "Promemoria giornaliero",
+  "settingsNotificationsTimeLabel": "Orario promemoria: {time}",
+  "mealNutrientsPerQtyLabel": "Per {qty} {unit}",
+  "mealNutrientsTotalLabel": "Quantità totale",
+  "weeklyWeightGoalLabel": "Ritmo settimanale",
+  "weeklyWeightGoalNoneLabel": "Non impostato",
+  "weeklyWeightGoalKgPerWeek": "{rate} kg/settimana",
+  "weeklyWeightGoalLbsPerWeek": "{rate} lbs/settimana",
+  "chooseWeeklyWeightGoalLabel": "Ritmo peso settimanale"
 }

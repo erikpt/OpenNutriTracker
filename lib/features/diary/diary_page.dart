@@ -34,7 +34,8 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
   late MealDetailBloc _mealDetailBloc;
   late ActivityDetailBloc _activityDetailBloc;
 
-  static const _calendarDurationDays = Duration(days: 356);
+  // #292: Extended from 356 days (~1 year) to 5 years so old entries are never truncated
+  static const _calendarDurationDays = Duration(days: 365 * 5);
   final _currentDate = DateTime.now();
   var _selectedDate = DateTime.now();
   var _focusedDate = DateTime.now();

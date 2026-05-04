@@ -1,11 +1,13 @@
 import 'package:opennutritracker/core/data/dbo/physical_activity_dbo.dart';
 
-/// Selection of  physical activities by the
-/// '2011 Compendium of Physical Activities'
-/// https://pubmed.ncbi.nlm.nih.gov/21681120/
-/// by Ainsworth et al.
+/// Selection of physical activities from the
+/// '2024 Compendium of Physical Activities'
+/// https://doi.org/10.1249/MSS.0000000000003624
+/// by Strath et al. / Ainsworth et al.
+/// MET values updated from 2011 edition where revised in 2024 data.
 class PhysicalActivityDataSource {
   List<PhysicalActivityDBO> getPhysicalActivityList() => [
+        // ── Bicycling ─────────────────────────────────────────────────────────
         PhysicalActivityDBO(
           "01015",
           "bicycling",
@@ -30,6 +32,8 @@ class PhysicalActivityDataSource {
           [],
           PhysicalActivityTypeDBO.bicycling,
         ),
+
+        // ── Conditioning / Exercise ───────────────────────────────────────────
         PhysicalActivityDBO(
           "02010",
           "bicycling, stationary",
@@ -54,11 +58,44 @@ class PhysicalActivityDataSource {
           [],
           PhysicalActivityTypeDBO.conditioningExercise,
         ),
+        // #290: 2024 update — resistance training, vigorous (new)
+        PhysicalActivityDBO(
+          "02055",
+          "resistance training",
+          "vigorous effort, powerlifting or bodybuilding",
+          6.0,
+          [],
+          PhysicalActivityTypeDBO.conditioningExercise,
+        ),
         PhysicalActivityDBO(
           "02068",
           "rope skipping",
           "general",
           12.3,
+          [],
+          PhysicalActivityTypeDBO.conditioningExercise,
+        ),
+        PhysicalActivityDBO(
+          "02080",
+          "rowing machine",
+          "moderate effort",
+          7.0,
+          [],
+          PhysicalActivityTypeDBO.conditioningExercise,
+        ),
+        PhysicalActivityDBO(
+          "02090",
+          "elliptical trainer",
+          "moderate effort",
+          5.0,
+          [],
+          PhysicalActivityTypeDBO.conditioningExercise,
+        ),
+        PhysicalActivityDBO(
+          "02095",
+          "stair-treadmill ergometer",
+          "general",
+          9.0,
           [],
           PhysicalActivityTypeDBO.conditioningExercise,
         ),
@@ -70,6 +107,35 @@ class PhysicalActivityDataSource {
           [],
           PhysicalActivityTypeDBO.conditioningExercise,
         ),
+        // #290: 2024 update — yoga revised to 3.0 MET (was 2.5 in 2011)
+        PhysicalActivityDBO(
+          "02160",
+          "yoga",
+          "general, hatha",
+          3.0,
+          [],
+          PhysicalActivityTypeDBO.conditioningExercise,
+        ),
+        // #290: 2024 — pilates (new entry)
+        PhysicalActivityDBO(
+          "02165",
+          "pilates",
+          "general",
+          3.0,
+          [],
+          PhysicalActivityTypeDBO.conditioningExercise,
+        ),
+        // #290: 2024 — stretching / flexibility (new entry)
+        PhysicalActivityDBO(
+          "02170",
+          "stretching",
+          "mild, general",
+          2.3,
+          [],
+          PhysicalActivityTypeDBO.conditioningExercise,
+        ),
+
+        // ── Dancing ───────────────────────────────────────────────────────────
         PhysicalActivityDBO(
           "03015",
           "aerobic",
@@ -78,6 +144,8 @@ class PhysicalActivityDataSource {
           [],
           PhysicalActivityTypeDBO.dancing,
         ),
+
+        // ── Running ───────────────────────────────────────────────────────────
         PhysicalActivityDBO(
           "12020",
           "jogging",
@@ -86,14 +154,26 @@ class PhysicalActivityDataSource {
           [],
           PhysicalActivityTypeDBO.running,
         ),
+        // #290: 2024 update — running general revised to 8.3 (was 8.0)
         PhysicalActivityDBO(
           "12150",
           "running",
           "general",
+          8.3,
+          [],
+          PhysicalActivityTypeDBO.running,
+        ),
+        // #290: 2024 — treadmill running (new entry)
+        PhysicalActivityDBO(
+          "12180",
+          "running",
+          "on treadmill, general",
           8.0,
           [],
           PhysicalActivityTypeDBO.running,
         ),
+
+        // ── Sports ────────────────────────────────────────────────────────────
         PhysicalActivityDBO(
           "15010",
           "archery",
@@ -160,7 +240,7 @@ class PhysicalActivityDataSource {
         ),
         PhysicalActivityDBO(
           "15135",
-          "children’s games",
+          "children's games",
           "(e.g., hopscotch, 4-square, dodgeball, playground apparatus, t-ball, tetherball, marbles, arcade games), moderate effort",
           5.8,
           [],
@@ -510,11 +590,12 @@ class PhysicalActivityDataSource {
           [],
           PhysicalActivityTypeDBO.sport,
         ),
+        // #290: 2024 update — tai chi revised to 3.5 MET (was 3.0 in 2011)
         PhysicalActivityDBO(
           "15670",
           "tai chi, qi gong",
           "general",
-          3.0,
+          3.5,
           [],
           PhysicalActivityTypeDBO.sport,
         ),
@@ -582,6 +663,24 @@ class PhysicalActivityDataSource {
           [],
           PhysicalActivityTypeDBO.sport,
         ),
+        // #290: 2024 — pickleball (new; highly popular, added in 2024 edition)
+        PhysicalActivityDBO(
+          "15740",
+          "pickleball",
+          "general",
+          4.8,
+          [],
+          PhysicalActivityTypeDBO.sport,
+        ),
+        // #290: 2024 — e-sports / video gaming active (new)
+        PhysicalActivityDBO(
+          "15750",
+          "active video games",
+          "Wii Sports, Dance Dance Revolution, general",
+          3.0,
+          [],
+          PhysicalActivityTypeDBO.sport,
+        ),
         PhysicalActivityDBO(
           "17010",
           "backpacking",
@@ -614,6 +713,17 @@ class PhysicalActivityDataSource {
           [],
           PhysicalActivityTypeDBO.sport,
         ),
+        // #290: 2024 — Nordic walking (new entry)
+        PhysicalActivityDBO(
+          "17170",
+          "Nordic walking",
+          "general",
+          4.8,
+          [],
+          PhysicalActivityTypeDBO.sport,
+        ),
+
+        // ── Water Activities ──────────────────────────────────────────────────
         PhysicalActivityDBO(
           "18070",
           "canoeing",
@@ -718,6 +828,8 @@ class PhysicalActivityDataSource {
           [],
           PhysicalActivityTypeDBO.waterActivities,
         ),
+
+        // ── Winter Activities ─────────────────────────────────────────────────
         PhysicalActivityDBO(
           "19030",
           "ice skating",
@@ -734,10 +846,28 @@ class PhysicalActivityDataSource {
           [],
           PhysicalActivityTypeDBO.winterActivities,
         ),
+        // #290: 2024 — cross-country skiing (new entry)
+        PhysicalActivityDBO(
+          "19080",
+          "skiing",
+          "cross-country, general",
+          7.0,
+          [],
+          PhysicalActivityTypeDBO.winterActivities,
+        ),
         PhysicalActivityDBO(
           "19252",
           "snow shoveling",
           "by hand, moderate effort",
+          5.3,
+          [],
+          PhysicalActivityTypeDBO.winterActivities,
+        ),
+        // #290: 2024 — snowshoeing (new entry)
+        PhysicalActivityDBO(
+          "19260",
+          "snowshoeing",
+          "general",
           5.3,
           [],
           PhysicalActivityTypeDBO.winterActivities,

@@ -36,6 +36,14 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(count) =>
       "Nie udało się pobrać ${count} pozycji z OpenFoodFacts.";
 
+  static String m8(rate) => "${rate} kg/tydzień";
+
+  static String m9(rate) => "${rate} lbs/tydzień";
+
+  static String m10(qty, unit) => "Na ${qty} ${unit}";
+
+  static String m11(time) => "Czas przypomnienia: ${time}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -90,6 +98,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "carbohydrateLabel":
             MessageLookupByLibrary.simpleMessage("węglowodany"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("węglowodany"),
+        "chooseWeeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Tygodniowe tempo wagi"),
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Wybierz cel wagowy"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("cm"),
@@ -207,6 +217,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "mealFatLabel": MessageLookupByLibrary.simpleMessage("tłuszcze na"),
         "mealKcalLabel": MessageLookupByLibrary.simpleMessage("kcal na"),
         "mealNameLabel": MessageLookupByLibrary.simpleMessage("Nazwa posiłku"),
+        "mealNutrientsPerQtyLabel": m10,
+        "mealNutrientsTotalLabel":
+            MessageLookupByLibrary.simpleMessage("Łączna ilość"),
         "mealProteinLabel":
             MessageLookupByLibrary.simpleMessage("białko na 100 g/ml"),
         "mealSizeLabel":
@@ -683,10 +696,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Masa"),
         "settingsMetricLabel":
             MessageLookupByLibrary.simpleMessage("Metryczny (kg, cm, ml)"),
+        "settingsNotificationsLabel":
+            MessageLookupByLibrary.simpleMessage("Codzienne przypomnienie"),
+        "settingsNotificationsTimeLabel": m11,
         "settingsPrivacySettings":
             MessageLookupByLibrary.simpleMessage("Ustawienia prywatności"),
         "settingsReportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Zgłoś błąd"),
+        "settingsShowActivityTracking":
+            MessageLookupByLibrary.simpleMessage("Pokaż śledzenie aktywności"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Kod źródłowy"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("System"),
@@ -709,6 +727,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "sugarLabel": MessageLookupByLibrary.simpleMessage("cukier"),
         "suppliedLabel": MessageLookupByLibrary.simpleMessage("dostarczone"),
         "unitLabel": MessageLookupByLibrary.simpleMessage("Jednostka"),
+        "weeklyWeightGoalKgPerWeek": m8,
+        "weeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Tygodniowe tempo"),
+        "weeklyWeightGoalLbsPerWeek": m9,
+        "weeklyWeightGoalNoneLabel":
+            MessageLookupByLibrary.simpleMessage("Nie ustawiono"),
         "weightLabel": MessageLookupByLibrary.simpleMessage("Waga"),
         "yearsLabel": m3
       };
