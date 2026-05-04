@@ -11,15 +11,28 @@ class _FakeProductsRepository implements ProductsRepository {
   final Map<String, List<MealEntity>> offResults = {};
   final Map<String, List<MealEntity>> fdcResults = {};
 
+  /// Search strings whose remote call should throw (simulates rate-limit /
+  /// network failure / 5xx).
+  final Set<String> offThrowOn = {};
+  final Set<String> fdcThrowOn = {};
+
   @override
-  Future<List<MealEntity>> getOFFProductsByString(String searchString) async =>
-      offResults[searchString] ?? const [];
+  Future<List<MealEntity>> getOFFProductsByString(String searchString) async {
+    if (offThrowOn.contains(searchString)) {
+      throw Exception('OFF HTTP 429');
+    }
+    return offResults[searchString] ?? const [];
+  }
 
   @override
   Future<List<MealEntity>> getSupabaseFDCFoodsByString(
     String searchString,
-  ) async =>
-      fdcResults[searchString] ?? const [];
+  ) async {
+    if (fdcThrowOn.contains(searchString)) {
+      throw Exception('FDC HTTP 429');
+    }
+    return fdcResults[searchString] ?? const [];
+  }
 
   // Other ProductsRepository methods aren't exercised here — throw via
   // noSuchMethod if anything unexpectedly hits them.
@@ -85,7 +98,8 @@ void main() {
 
       final result = await useCase.searchOFFProductsByString('tofu');
 
-      expect(result, [customMatch, offApiResult]);
+      expect(result.meals, [customMatch, offApiResult]);
+      expect(result.remoteSourceEmpty, isFalse);
     });
 
     test('deduplicates repeated custom meals for FDC search', () async {
@@ -106,7 +120,8 @@ void main() {
 
       final result = await useCase.searchFDCFoodByString('apple');
 
-      expect(result, [customMatch, fdcApiResult]);
+      expect(result.meals, [customMatch, fdcApiResult]);
+      expect(result.remoteSourceEmpty, isFalse);
     });
 
     test('does not query recent intake for blank search strings', () async {
@@ -117,7 +132,7 @@ void main() {
 
       final result = await useCase.searchOFFProductsByString('   ');
 
-      expect(result, [offApiResult]);
+      expect(result.meals, [offApiResult]);
       expect(getIntakeUsecase.recentIntakeCallCount, 0);
     });
 
@@ -146,7 +161,8 @@ void main() {
 
       final result = await useCase.searchFDCFoodByString('ALMOND');
 
-      expect(result, [customBrandMatch, fdcApiResult]);
+      expect(result.meals, [customBrandMatch, fdcApiResult]);
+      expect(result.remoteSourceEmpty, isFalse);
     });
 
     test('deduplicates custom meals when code is missing by fallback name key',
@@ -178,8 +194,78 @@ void main() {
 
       final result = await useCase.searchOFFProductsByString('peanut');
 
-      expect(result, [customNoCode, offApiResult]);
+      expect(result.meals, [customNoCode, offApiResult]);
+      expect(result.remoteSourceEmpty, isFalse);
     });
+
+    test(
+      'returns custom meals + remoteSourceEmpty=true when OFF rate-limits',
+      () async {
+        final customMatch = _meal(
+            code: 'custom-tofu',
+            name: 'Tofu Bowl',
+            source: MealSourceEntity.custom);
+
+        productsRepository.offThrowOn.add('tofu');
+        getIntakeUsecase.recentIntake = [_intake('i1', customMatch)];
+
+        final result = await useCase.searchOFFProductsByString('tofu');
+
+        expect(result.meals, [customMatch]);
+        expect(result.remoteSourceEmpty, isTrue);
+      },
+    );
+
+    test(
+      'returns custom meals + remoteSourceEmpty=true when FDC rate-limits',
+      () async {
+        final customMatch = _meal(
+            code: 'custom-apple',
+            name: 'Apple Mix',
+            source: MealSourceEntity.custom);
+
+        productsRepository.fdcThrowOn.add('apple');
+        getIntakeUsecase.recentIntake = [_intake('i1', customMatch)];
+
+        final result = await useCase.searchFDCFoodByString('apple');
+
+        expect(result.meals, [customMatch]);
+        expect(result.remoteSourceEmpty, isTrue);
+      },
+    );
+
+    test(
+      'returns empty meals + remoteSourceEmpty=true when remote fails and no '
+      'custom meals match',
+      () async {
+        productsRepository.offThrowOn.add('xyzzy');
+        getIntakeUsecase.recentIntake = const [];
+
+        final result = await useCase.searchOFFProductsByString('xyzzy');
+
+        expect(result.meals, isEmpty);
+        expect(result.remoteSourceEmpty, isTrue);
+      },
+    );
+
+    test(
+      'remoteSourceEmpty=true when remote returns an empty list (not just on '
+      'failure)',
+      () async {
+        final customMatch = _meal(
+            code: 'custom-tofu',
+            name: 'Tofu Bowl',
+            source: MealSourceEntity.custom);
+
+        // No offResults entry for 'tofu' → fake returns []
+        getIntakeUsecase.recentIntake = [_intake('i1', customMatch)];
+
+        final result = await useCase.searchOFFProductsByString('tofu');
+
+        expect(result.meals, [customMatch]);
+        expect(result.remoteSourceEmpty, isTrue);
+      },
+    );
   });
 }
 
