@@ -100,6 +100,13 @@ class ConfigDataSource {
     config?.save();
   }
 
+  Future<void> setConfigShowMealMacros(bool show) async {
+    _log.fine('Updating config showMealMacros to $show');
+    final config = _configBox.get(_configKey);
+    config?.showMealMacros = show;
+    config?.save();
+  }
+
   Future<void> setNotificationsEnabled(bool enabled) async {
     _log.fine('Updating config notificationsEnabled to $enabled');
     final config = _configBox.get(_configKey);

@@ -65,6 +65,10 @@ class ConfigRepository {
     _configDataSource.setConfigShowActivityTracking(show);
   }
 
+  Future<void> setConfigShowMealMacros(bool show) async {
+    _configDataSource.setConfigShowMealMacros(show);
+  }
+
   Future<void> setUserMacroPct(double carbs, double protein, double fat) async {
     _configDataSource.setConfigCarbGoalPct(carbs);
     _configDataSource.setConfigProteinGoalPct(protein);

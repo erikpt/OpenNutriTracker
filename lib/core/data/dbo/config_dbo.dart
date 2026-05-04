@@ -36,6 +36,8 @@ class ConfigDBO extends HiveObject {
   int? notificationMinute;
   @HiveField(13)
   String? selectedLocale;
+  @HiveField(14)
+  bool? showMealMacros;
 
   ConfigDBO(
     this.hasAcceptedDisclaimer,
@@ -45,6 +47,7 @@ class ConfigDBO extends HiveObject {
     this.usesImperialUnits = false,
     this.userKcalAdjustment,
     this.showActivityTracking,
+    this.showMealMacros,
     this.notificationsEnabled,
     this.notificationHour,
     this.notificationMinute,

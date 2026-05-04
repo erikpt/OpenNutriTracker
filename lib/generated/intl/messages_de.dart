@@ -725,6 +725,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Datenschutzeinstellungen"),
         "settingsReportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Fehler melden"),
+        "settingsShowActivityTracking":
+            MessageLookupByLibrary.simpleMessage("Aktivitätstracking anzeigen"),
+        "settingsShowMealMacros":
+            MessageLookupByLibrary.simpleMessage("Makros je Mahlzeit anzeigen"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Quellcode"),
         "settingsSystemLabel":

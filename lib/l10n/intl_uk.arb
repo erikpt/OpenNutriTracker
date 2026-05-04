@@ -452,6 +452,7 @@
   "paSnowShovingModerate": "розчищення снігу",
   "paSnowShovingModerateDesc": "Розчишення снігу, помірні зусилля",
   "settingsShowActivityTracking": "Показати відстеження активності",
+  "settingsShowMealMacros": "Показати макроси страви",
   "settingsNotificationsLabel": "Щоденне нагадування",
   "settingsNotificationsTimeLabel": "Час нагадування: {time}",
   "mealNutrientsPerQtyLabel": "На {qty} {unit}",

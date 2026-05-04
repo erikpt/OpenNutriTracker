@@ -59,6 +59,8 @@
   "settingsDisclaimerLabel": "Hinweis",
   "settingsReportErrorLabel": "Fehler melden",
   "settingsPrivacySettings": "Datenschutzeinstellungen",
+  "settingsShowActivityTracking": "Aktivitätstracking anzeigen",
+  "settingsShowMealMacros": "Makros je Mahlzeit anzeigen",
   "settingsNotificationsLabel": "Tägliche Erinnerung",
   "settingsNotificationsTimeLabel": "Erinnerungszeit: {time}",
   "@settingsNotificationsTimeLabel": {

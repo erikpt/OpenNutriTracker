@@ -48,6 +48,10 @@ class AddConfigUsecase {
     _configRepository.setConfigShowActivityTracking(show);
   }
 
+  Future<void> setConfigShowMealMacros(bool show) async {
+    _configRepository.setConfigShowMealMacros(show);
+  }
+
   Future<void> setNotificationsEnabled(bool enabled) async {
     _configRepository.setNotificationsEnabled(enabled);
   }

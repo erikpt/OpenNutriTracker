@@ -453,6 +453,7 @@
   "pasteCodeLabel": "Wklej kod",
   "pasteCodeHint": "Wklej tutaj kod udostępnionego posiłku",
   "settingsShowActivityTracking": "Pokaż śledzenie aktywności",
+  "settingsShowMealMacros": "Pokaż makro posiłku",
   "settingsNotificationsLabel": "Codzienne przypomnienie",
   "settingsNotificationsTimeLabel": "Czas przypomnienia: {time}",
   "mealNutrientsPerQtyLabel": "Na {qty} {unit}",

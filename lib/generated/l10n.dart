@@ -679,6 +679,15 @@ class S {
     );
   }
 
+  String get settingsShowMealMacros {
+    return Intl.message(
+      'Show Meal Macros',
+      name: 'settingsShowMealMacros',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Daily Reminder`
   String get settingsNotificationsLabel {
     return Intl.message(

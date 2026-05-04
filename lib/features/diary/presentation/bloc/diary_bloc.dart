@@ -22,8 +22,9 @@ class DiaryBloc extends Bloc<DiaryEvent, DiaryState> {
     on<LoadDiaryYearEvent>((event, emit) async {
       emit(DiaryLoadingState());
 
-      final usesImperialUnits =
-          (await _getConfigUsecase.getConfig()).usesImperialUnits;
+      final config = await _getConfigUsecase.getConfig();
+      final usesImperialUnits = config.usesImperialUnits;
+      final showMealMacros = config.showMealMacros;
 
       currentDay = DateTime.now();
       // #292: Extended to match calendar range (5 years back)
@@ -39,7 +40,11 @@ class DiaryBloc extends Bloc<DiaryEvent, DiaryState> {
           trackedDay.day.toParsedDay(): trackedDay,
       };
 
-      emit(DiaryLoadedState(trackedDaysMap, usesImperialUnits));
+      emit(DiaryLoadedState(
+        trackedDaysMap,
+        usesImperialUnits,
+        showMealMacros: showMealMacros,
+      ));
     });
   }
 

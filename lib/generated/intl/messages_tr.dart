@@ -702,6 +702,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Gizlilik Ayarları"),
         "settingsReportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Hata Bildir"),
+        "settingsShowActivityTracking":
+            MessageLookupByLibrary.simpleMessage("Aktivite takibini göster"),
+        "settingsShowMealMacros":
+            MessageLookupByLibrary.simpleMessage("Öğün makrolarını göster"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Kaynak Kodu"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("Sistem"),

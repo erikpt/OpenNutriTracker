@@ -452,6 +452,7 @@
   "paSnowShovingModerate": "spalare neve",
   "paSnowShovingModerateDesc": "a mano, sforzo moderato",
   "settingsShowActivityTracking": "Mostra tracciamento attività",
+  "settingsShowMealMacros": "Mostra macro pasto",
   "settingsNotificationsLabel": "Promemoria giornaliero",
   "settingsNotificationsTimeLabel": "Orario promemoria: {time}",
   "mealNutrientsPerQtyLabel": "Per {qty} {unit}",

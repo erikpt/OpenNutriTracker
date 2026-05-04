@@ -62,6 +62,7 @@
   "settingsReportErrorLabel": "Report Error",
   "settingsPrivacySettings": "Privacy Settings",
   "settingsShowActivityTracking": "Show Activity Tracking",
+  "settingsShowMealMacros": "Show Meal Macros",
   "settingsNotificationsLabel": "Daily Reminder",
   "settingsNotificationsTimeLabel": "Reminder time: {time}",
   "@settingsNotificationsTimeLabel": {

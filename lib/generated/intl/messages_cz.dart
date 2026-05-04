@@ -715,6 +715,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Nahlásit chybu"),
         "settingsShowActivityTracking":
             MessageLookupByLibrary.simpleMessage("Zobrazit sledování aktivity"),
+        "settingsShowMealMacros":
+            MessageLookupByLibrary.simpleMessage("Zobrazit makra jídla"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Zdrojový kód"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("Systém"),

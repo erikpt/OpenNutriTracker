@@ -599,6 +599,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("报告错误"),
         "settingsShowActivityTracking":
             MessageLookupByLibrary.simpleMessage("显示活动追踪"),
+        "settingsShowMealMacros":
+            MessageLookupByLibrary.simpleMessage("显示餐食宏量"),
         "settingsSourceCodeLabel": MessageLookupByLibrary.simpleMessage("源代码"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("系统"),
         "settingsThemeDarkLabel": MessageLookupByLibrary.simpleMessage("深色"),

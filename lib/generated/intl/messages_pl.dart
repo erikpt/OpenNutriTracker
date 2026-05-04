@@ -720,6 +720,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Zgłoś błąd"),
         "settingsShowActivityTracking":
             MessageLookupByLibrary.simpleMessage("Pokaż śledzenie aktywności"),
+        "settingsShowMealMacros":
+            MessageLookupByLibrary.simpleMessage("Pokaż makro posiłku"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Kod źródłowy"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("System"),

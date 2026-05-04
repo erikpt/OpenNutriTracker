@@ -59,6 +59,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final configData = await _getConfigUsecase.getConfig();
       final usesImperialUnits = configData.usesImperialUnits;
       final showDisclaimerDialog = !configData.hasAcceptedDisclaimer;
+      final showMealMacros = configData.showMealMacros;
 
       final breakfastIntakeList =
           await _getIntakeUsecase.getTodayBreakfastIntake();
@@ -142,6 +143,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           snackIntakeList: snackIntakeList,
           userActivityList: userActivities,
           usesImperialUnits: usesImperialUnits,
+          showMealMacros: showMealMacros,
         ),
       );
     });

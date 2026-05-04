@@ -23,6 +23,7 @@ class IntakeVerticalList extends StatefulWidget {
   final AddMealType addMealType;
   final List<IntakeEntity> intakeList;
   final bool usesImperialUnits;
+  final bool showMealMacros;
   final Function(IntakeEntity intake, TrackedDayEntity? trackedDayEntity)
       onDeleteIntakeCallback;
   final Function(BuildContext, IntakeEntity)? onItemLongPressedCallback;
@@ -40,6 +41,7 @@ class IntakeVerticalList extends StatefulWidget {
     required this.addMealType,
     required this.intakeList,
     required this.usesImperialUnits,
+    this.showMealMacros = true,
     required this.onDeleteIntakeCallback,
     this.onItemLongPressedCallback,
     this.onItemDragCallback,
@@ -105,8 +107,10 @@ class _IntakeVerticalListState extends State<IntakeVerticalList> {
               const Spacer(),
               if (totalKcal > 0) ...[
                 Text(
-                  '${totalKcal.toInt()} ${S.of(context).kcalLabel}\n'
-                  '${totalCarbsGram.toInt()} ${S.of(context).carbsLabelShort}  ${totalFatsGram.toInt()} ${S.of(context).fatLabelShort}  ${totalProteinsGram.toInt()} ${S.of(context).proteinLabelShort}',
+                  widget.showMealMacros
+                      ? '${totalKcal.toInt()} ${S.of(context).kcalLabel}\n'
+                          '${totalCarbsGram.toInt()} ${S.of(context).carbsLabelShort}  ${totalFatsGram.toInt()} ${S.of(context).fatLabelShort}  ${totalProteinsGram.toInt()} ${S.of(context).proteinLabelShort}'
+                      : '${totalKcal.toInt()} ${S.of(context).kcalLabel}',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: Theme.of(context)
                           .colorScheme
