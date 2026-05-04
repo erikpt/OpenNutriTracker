@@ -97,13 +97,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  List<PageViewModel> _getPageViewModels() => <PageViewModel>[
+  List<PageViewModel> _getPageViewModels() {
+    final selection = _onboardingBloc.userSelection;
+    return <PageViewModel>[
         PageViewModel(
           title: S.of(context).onboardingWelcomeLabel,
           decoration: _pageDecoration,
           image: _defaultImageWidget,
-          bodyWidget:
-              OnboardingIntroPageBody(setPageContent: _setIntroPageData),
+          bodyWidget: OnboardingIntroPageBody(
+            setPageContent: _setIntroPageData,
+            initialAcceptedPolicy: _introPageButtonActive,
+            initialAcceptedDataCollection: selection.acceptDataCollection,
+          ),
           footer: HighlightButton(
             buttonLabel: S.of(context).buttonStartLabel,
             onButtonPressed: () => _scrollToPage(1),
@@ -115,8 +120,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           // empty
           decoration: _pageDecoration,
           image: _defaultImageWidget,
-          bodyWidget:
-              OnboardingFirstPageBody(setPageContent: _setFirstPageData),
+          bodyWidget: OnboardingFirstPageBody(
+            setPageContent: _setFirstPageData,
+            initialGender: selection.gender,
+            initialBirthday: selection.birthday,
+          ),
           footer: HighlightButton(
             buttonLabel: S.of(context).buttonNextLabel,
             onButtonPressed: () => _scrollToPage(2),
@@ -130,6 +138,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           image: _defaultImageWidget,
           bodyWidget: OnboardingSecondPageBody(
             setButtonContent: _setSecondPageData,
+            initialHeightCm: selection.height,
+            initialWeightKg: selection.weight,
+            initialUsesImperial: selection.usesImperialUnits,
           ),
           footer: HighlightButton(
             buttonLabel: S.of(context).buttonNextLabel,
@@ -144,6 +155,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           image: _defaultImageWidget,
           bodyWidget: OnboardingThirdPageBody(
             setButtonContent: _setThirdPageButton,
+            initialActivity: selection.activity,
           ),
           footer: HighlightButton(
             buttonLabel: S.of(context).buttonNextLabel,
@@ -158,6 +170,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           image: _defaultImageWidget,
           bodyWidget: OnboardingFourthPageBody(
             setButtonContent: _setFourthPageButton,
+            initialGoal: selection.goal,
           ),
           footer: HighlightButton(
             buttonLabel: S.of(context).buttonNextLabel,
@@ -193,6 +206,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
         ),
       ];
+  }
 
   void _scrollToPage(int page) {
     FocusScope.of(context).requestFocus(FocusNode()); // Dismiss Keyboard

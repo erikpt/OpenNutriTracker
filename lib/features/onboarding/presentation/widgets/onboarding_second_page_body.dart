@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:opennutritracker/core/utils/bounds/validator.dart';
+import 'package:opennutritracker/core/utils/calc/unit_calc.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
 class OnboardingSecondPageBody extends StatefulWidget {
@@ -11,7 +12,24 @@ class OnboardingSecondPageBody extends StatefulWidget {
     bool usesImperialUnits,
   ) setButtonContent;
 
-  const OnboardingSecondPageBody({super.key, required this.setButtonContent});
+  /// Already-stored height in centimetres (always metric in the parent's
+  /// userSelection model). The widget converts to feet for display when
+  /// [initialUsesImperial] is true.
+  final double? initialHeightCm;
+
+  /// Already-stored weight in kilograms (always metric in the parent's
+  /// userSelection model). The widget converts to pounds for display when
+  /// [initialUsesImperial] is true.
+  final double? initialWeightKg;
+  final bool initialUsesImperial;
+
+  const OnboardingSecondPageBody({
+    super.key,
+    required this.setButtonContent,
+    this.initialHeightCm,
+    this.initialWeightKg,
+    this.initialUsesImperial = false,
+  });
 
   @override
   State<OnboardingSecondPageBody> createState() =>
@@ -23,7 +41,12 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
   final _weightFormKey = GlobalKey<FormState>();
   final _heightFocusNode = FocusNode();
   final _weightFocusNode = FocusNode();
-  final _isUnitSelected = [true, false];
+  final _heightController = TextEditingController();
+  final _weightController = TextEditingController();
+  late final List<bool> _isUnitSelected = [
+    !widget.initialUsesImperial,
+    widget.initialUsesImperial,
+  ];
   double? _parsedHeight;
   double? _parsedWeight;
 
@@ -34,12 +57,43 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
     super.initState();
     _heightFocusNode.attach(context);
     _weightFocusNode.attach(context);
+
+    // Restore state if the parent passed previously-entered values (e.g.,
+    // the user navigated back then forward). Stored values are always in
+    // metric units; convert to feet/lbs when the user picked imperial.
+    final initialHeightCm = widget.initialHeightCm;
+    final initialWeightKg = widget.initialWeightKg;
+    if (initialHeightCm != null) {
+      final displayHeight = widget.initialUsesImperial
+          ? UnitCalc.cmToFeet(initialHeightCm)
+          : initialHeightCm;
+      _parsedHeight = initialHeightCm;
+      _heightController.text = _formatRestoredNumber(displayHeight);
+    }
+    if (initialWeightKg != null) {
+      final displayWeight = widget.initialUsesImperial
+          ? UnitCalc.kgToLbs(initialWeightKg)
+          : initialWeightKg;
+      _parsedWeight = initialWeightKg;
+      _weightController.text = _formatRestoredNumber(displayWeight);
+    }
+  }
+
+  /// Trim a restored value to one decimal place when needed, and drop the
+  /// trailing '.0' for whole numbers — matches what users typically type.
+  String _formatRestoredNumber(double value) {
+    if (value == value.roundToDouble()) {
+      return value.toInt().toString();
+    }
+    return value.toStringAsFixed(1);
   }
 
   @override
   void dispose() {
     _heightFocusNode.dispose();
     _weightFocusNode.dispose();
+    _heightController.dispose();
+    _weightController.dispose();
     super.dispose();
   }
 
@@ -63,6 +117,7 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
           Form(
             key: _heightFormKey,
             child: TextFormField(
+              controller: _heightController,
               focusNode: _heightFocusNode,
               onChanged: (text) {
                 if (_heightFormKey.currentState!.validate()) {
@@ -140,6 +195,7 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
           Form(
             key: _weightFormKey,
             child: TextFormField(
+              controller: _weightController,
               focusNode: _weightFocusNode,
               onChanged: (text) {
                 if (_weightFormKey.currentState!.validate()) {
