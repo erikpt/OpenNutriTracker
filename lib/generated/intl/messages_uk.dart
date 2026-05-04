@@ -54,7 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Додати новий елемент:"),
         "addLabel": MessageLookupByLibrary.simpleMessage("Додати"),
         "additionalInfoLabelCompendium2011": MessageLookupByLibrary.simpleMessage(
-            "Інформація надана\n \"2011 Compendium\n of Physical Activities\""),
+            "Інформація надана\n \"2024 Compendium\n of Physical Activities\""),
         "additionalInfoLabelCustom":
             MessageLookupByLibrary.simpleMessage("Власний елемент їжі"),
         "additionalInfoLabelFDC": MessageLookupByLibrary.simpleMessage(

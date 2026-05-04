@@ -55,7 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addItemLabel": MessageLookupByLibrary.simpleMessage("Add new Item:"),
         "addLabel": MessageLookupByLibrary.simpleMessage("Add"),
         "additionalInfoLabelCompendium2011": MessageLookupByLibrary.simpleMessage(
-            "Information provided\n by the \n\'2011 Compendium\n of Physical Activities\'"),
+            "Information provided\n by the \n\'2024 Compendium\n of Physical Activities\'"),
         "additionalInfoLabelCustom":
             MessageLookupByLibrary.simpleMessage("Custom Meal Item"),
         "additionalInfoLabelFDC": MessageLookupByLibrary.simpleMessage(
@@ -322,6 +322,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "onboardingYourMacrosGoalLabel":
             MessageLookupByLibrary.simpleMessage("Your macronutrient goals:"),
         "ozUnit": MessageLookupByLibrary.simpleMessage("oz"),
+        "paActiveVideoGames":
+            MessageLookupByLibrary.simpleMessage("active video games"),
         "paAmericanFootballGeneral":
             MessageLookupByLibrary.simpleMessage("football"),
         "paAmericanFootballGeneralDesc":
@@ -390,6 +392,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("batting, bowling, fielding"),
         "paCroquet": MessageLookupByLibrary.simpleMessage("croquet"),
         "paCroquetDesc": MessageLookupByLibrary.simpleMessage("general"),
+        "paCrossCountrySkiing":
+            MessageLookupByLibrary.simpleMessage("cross-country skiing"),
         "paCurling": MessageLookupByLibrary.simpleMessage("curling"),
         "paCurlingDesc": MessageLookupByLibrary.simpleMessage("general"),
         "paDancingAerobicGeneral":
@@ -499,6 +503,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paPaddleball": MessageLookupByLibrary.simpleMessage("paddleball"),
         "paPaddleballDesc":
             MessageLookupByLibrary.simpleMessage("casual, general"),
+        "paPickleball": MessageLookupByLibrary.simpleMessage("pickleball"),
+        "paPilates": MessageLookupByLibrary.simpleMessage("pilates"),
         "paPoloHorse": MessageLookupByLibrary.simpleMessage("polo"),
         "paPoloHorseDesc": MessageLookupByLibrary.simpleMessage("on horseback"),
         "paRacquetball": MessageLookupByLibrary.simpleMessage("racquetball"),
@@ -507,6 +513,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("resistance training"),
         "paResistanceTrainingDesc": MessageLookupByLibrary.simpleMessage(
             "weight lifting, free weight, nautilus or universal"),
+        "paResistanceTrainingVigorous": MessageLookupByLibrary.simpleMessage(
+            "resistance training (vigorous)"),
         "paRodeoSportGeneralModerate":
             MessageLookupByLibrary.simpleMessage("rodeo sports"),
         "paRodeoSportGeneralModerateDesc":
@@ -531,6 +539,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("touch, non-competitive"),
         "paRunningGeneral": MessageLookupByLibrary.simpleMessage("running"),
         "paRunningGeneralDesc": MessageLookupByLibrary.simpleMessage("general"),
+        "paTreadmillRunning":
+            MessageLookupByLibrary.simpleMessage("running on treadmill"),
         "paSailingGeneral": MessageLookupByLibrary.simpleMessage("sailing"),
         "paSailingGeneralDesc": MessageLookupByLibrary.simpleMessage(
             "boat and board sailing, windsurfing, ice sailing, general"),
@@ -558,6 +568,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("snow shoveling"),
         "paSnowShovingModerateDesc":
             MessageLookupByLibrary.simpleMessage("by hand, moderate effort"),
+        "paSnowshoeing": MessageLookupByLibrary.simpleMessage("snowshoeing"),
         "paSoccerGeneral": MessageLookupByLibrary.simpleMessage("soccer"),
         "paSoccerGeneralDesc":
             MessageLookupByLibrary.simpleMessage("casual, general"),
@@ -567,6 +578,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("fast or slow pitch, general"),
         "paSquashGeneral": MessageLookupByLibrary.simpleMessage("squash"),
         "paSquashGeneralDesc": MessageLookupByLibrary.simpleMessage("general"),
+        "paStretching": MessageLookupByLibrary.simpleMessage("stretching"),
         "paSurfing": MessageLookupByLibrary.simpleMessage("surfing"),
         "paSurfingDesc":
             MessageLookupByLibrary.simpleMessage("body or board, general"),
@@ -607,6 +619,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paWalkingTheDog":
             MessageLookupByLibrary.simpleMessage("walking the dog"),
         "paWalkingTheDogDesc": MessageLookupByLibrary.simpleMessage("general"),
+        "paNordicWalking":
+            MessageLookupByLibrary.simpleMessage("nordic walking"),
         "paWallyball": MessageLookupByLibrary.simpleMessage("wallyball"),
         "paWallyballDesc": MessageLookupByLibrary.simpleMessage("general"),
         "paWaterAerobics":

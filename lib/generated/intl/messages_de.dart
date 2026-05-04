@@ -56,7 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Neuen Eintrag hinzufügen:"),
         "addLabel": MessageLookupByLibrary.simpleMessage("Hinzufügen"),
         "additionalInfoLabelCompendium2011": MessageLookupByLibrary.simpleMessage(
-            "Informationen bereitgestellt von\n\'2011 Compendium\n of Physical Activities\'"),
+            "Informationen bereitgestellt von\n\'2024 Compendium\n of Physical Activities\'"),
         "additionalInfoLabelCustom":
             MessageLookupByLibrary.simpleMessage("Benutzerdefinierte Mahlzeit"),
         "additionalInfoLabelFDC": MessageLookupByLibrary.simpleMessage(

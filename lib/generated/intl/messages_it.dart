@@ -54,7 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aggiungi nuovo alimento:"),
         "addLabel": MessageLookupByLibrary.simpleMessage("Aggiungi"),
         "additionalInfoLabelCompendium2011": MessageLookupByLibrary.simpleMessage(
-            "Informazioni fornite\ndal\n\'2011 Compendium\ndelle Attività Fisiche\'"),
+            "Informazioni fornite\ndal\n\'2024 Compendium\ndelle Attività Fisiche\'"),
         "additionalInfoLabelCustom":
             MessageLookupByLibrary.simpleMessage("Alimento personalizzato"),
         "additionalInfoLabelFDC": MessageLookupByLibrary.simpleMessage(

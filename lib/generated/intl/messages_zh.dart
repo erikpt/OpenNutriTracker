@@ -51,7 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addItemLabel": MessageLookupByLibrary.simpleMessage("添加新项目："),
         "addLabel": MessageLookupByLibrary.simpleMessage("添加"),
         "additionalInfoLabelCompendium2011":
-            MessageLookupByLibrary.simpleMessage("信息由\n\'2011年体力活动指南\'\n提供"),
+            MessageLookupByLibrary.simpleMessage("信息由\n\'2024年体力活动指南\'\n提供"),
         "additionalInfoLabelCustom":
             MessageLookupByLibrary.simpleMessage("自定义餐食项目"),
         "additionalInfoLabelFDC":
