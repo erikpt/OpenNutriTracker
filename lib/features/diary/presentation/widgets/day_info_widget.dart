@@ -37,6 +37,10 @@ class DayInfoWidget extends StatelessWidget {
     UserActivityEntity userActivityEntity,
     TrackedDayEntity? trackedDayEntity,
   ) onCopyActivity;
+  final Function(BuildContext context, IntakeEntity intake, bool usesImperialUnits)?
+      onEditIntake;
+  final Function(BuildContext context, UserActivityEntity activity)?
+      onEditActivity;
 
   const DayInfoWidget({
     super.key,
@@ -52,6 +56,8 @@ class DayInfoWidget extends StatelessWidget {
     required this.onDeleteActivity,
     required this.onCopyIntake,
     required this.onCopyActivity,
+    this.onEditIntake,
+    this.onEditActivity,
   });
 
   @override
@@ -138,6 +144,12 @@ class DayInfoWidget extends StatelessWidget {
               title: S.of(context).activityLabel,
               userActivityList: userActivities,
               onItemLongPressedCallback: onActivityItemLongPressed,
+              onItemTappedCallback: onEditActivity,
+              onCopyActivityCallback:
+                  DateUtils.isSameDay(selectedDay, DateTime.now())
+                      ? null
+                      : (activity) =>
+                          onCopyActivity(activity, trackedDayEntity),
             ),
             IntakeVerticalList(
               day: selectedDay,
@@ -147,6 +159,7 @@ class DayInfoWidget extends StatelessWidget {
               intakeList: breakfastIntake,
               onDeleteIntakeCallback: onDeleteIntake,
               onItemLongPressedCallback: onIntakeItemLongPressed,
+              onItemTappedCallback: onEditIntake,
               onCopyIntakeCallback:
                   DateUtils.isSameDay(selectedDay, DateTime.now())
                       ? null
@@ -162,6 +175,7 @@ class DayInfoWidget extends StatelessWidget {
               intakeList: lunchIntake,
               onDeleteIntakeCallback: onDeleteIntake,
               onItemLongPressedCallback: onIntakeItemLongPressed,
+              onItemTappedCallback: onEditIntake,
               usesImperialUnits: usesImperialUnits,
               onCopyIntakeCallback:
                   DateUtils.isSameDay(selectedDay, DateTime.now())
@@ -177,6 +191,7 @@ class DayInfoWidget extends StatelessWidget {
               intakeList: dinnerIntake,
               onDeleteIntakeCallback: onDeleteIntake,
               onItemLongPressedCallback: onIntakeItemLongPressed,
+              onItemTappedCallback: onEditIntake,
               onCopyIntakeCallback:
                   DateUtils.isSameDay(selectedDay, DateTime.now())
                       ? null
@@ -191,6 +206,7 @@ class DayInfoWidget extends StatelessWidget {
               intakeList: snackIntake,
               onDeleteIntakeCallback: onDeleteIntake,
               onItemLongPressedCallback: onIntakeItemLongPressed,
+              onItemTappedCallback: onEditIntake,
               usesImperialUnits: usesImperialUnits,
               onCopyIntakeCallback:
                   DateUtils.isSameDay(selectedDay, DateTime.now())
@@ -286,13 +302,26 @@ class DayInfoWidget extends StatelessWidget {
     BuildContext context,
     UserActivityEntity activityEntity,
   ) async {
-    final shouldDeleteActivity = await showDialog<bool>(
-      context: context,
-      builder: (context) => const DeleteDialog(),
-    );
-
-    if (shouldDeleteActivity != null) {
-      onDeleteActivity(activityEntity, trackedDayEntity);
+    if (DateUtils.isSameDay(selectedDay, DateTime.now())) {
+      final shouldDelete = await showDialog<bool>(
+        context: context,
+        builder: (context) => const DeleteDialog(),
+      );
+      if (shouldDelete != null) {
+        onDeleteActivity(activityEntity, trackedDayEntity);
+      }
+    } else {
+      final copyOrDelete = await showDialog<bool>(
+        context: context,
+        builder: (context) => const CopyOrDeleteDialog(),
+      );
+      if (context.mounted) {
+        if (copyOrDelete == false) {
+          onDeleteActivity(activityEntity, trackedDayEntity);
+        } else if (copyOrDelete == true) {
+          onCopyActivity(activityEntity, trackedDayEntity);
+        }
+      }
     }
   }
 }

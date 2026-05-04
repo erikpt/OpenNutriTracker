@@ -32,7 +32,7 @@
   "onboardingYourGoalLabel": "Vář kalorický cíl:",
   "onboardingYourMacrosGoalLabel": "Vaše nutriční cíle:",
   "onboardingKcalPerDayLabel": "kcal denně",
-    "onboardingIntroDescription": "Než začnete, aplikace o Vás potřebuje zadat několik údajů, aby mohla spočítat Váš denní kalorický cíl.\nVeškeré osobní údaje jsou bezpečně uloženy pouze ve Vašem zařízení.",
+  "onboardingIntroDescription": "Než začnete, aplikace o Vás potřebuje zadat několik údajů, aby mohla spočítat Váš denní kalorický cíl.\nVeškeré osobní údaje jsou bezpečně uloženy pouze ve Vašem zařízení.",
   "onboardingGenderQuestionSubtitle": "Jaké je Vaše pohlaví?",
   "onboardingEnterBirthdayLabel": "Datum narození",
   "onboardingBirthdayHint": "Vložte datum",
@@ -107,9 +107,40 @@
   "copyOrDeleteTimeDialogContent": "Pomocí \"Kopírovat pro dnešek\" můžete vytvořit kopii pro dnešní jídlo. Volbou \"Smazat\" odstraníte zvolený pokrm.",
   "dialogCopyLabel": "Kopírovat pro dnešek",
   "dialogDeleteLabel": "SMAZAT",
-
   "deleteAllLabel": "Smazat vše",
-
+  "shareMealLabel": "Sdílet jídlo",
+  "importMealLabel": "Importovat sdílené jídlo",
+  "importMealConfirmTitle": "Importovat {count} položek?",
+  "@importMealConfirmTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importMealConfirmContent": "Tyto položky budou přidány do {mealType}.",
+  "@importMealConfirmContent": {
+    "placeholders": {
+      "mealType": {
+        "type": "String"
+      }
+    }
+  },
+  "importMealSuccessLabel": "Jídlo importováno",
+  "importMealErrorLabel": "Neplatný QR kód",
+  "importOffFetchFailedLabel": "{count} položek nebylo možné načíst z OpenFoodFacts.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "copyCodeLabel": "Kopírovat kód",
+  "shareCodeLabel": "Sdílet kód",
+  "codeCopiedLabel": "Kód zkopírován",
+  "pasteCodeLabel": "Vložit kód",
+  "pasteCodeHint": "Vložte sem sdílený kód jídla",
   "suppliedLabel": "přijato",
   "burnedLabel": "vydáno",
   "kcalLeftLabel": "kcal zbývá",
@@ -125,11 +156,11 @@
   "fiberLabel": "vláknina",
   "per100gmlLabel": "Na 100g/ml",
   "additionalInfoLabelOFF": "Více informací najdete na\nOpenFoodFacts",
-  "offDisclaimer": "Data poskytnutá aplikací jsou získána z databáze Open Food Facts. Nelze garantovat jejich přesnost, kompletnost nebo spolehlivost. Data jsou poskytována bez záruky a jejich původní poskytovatel (Open Food Facts) není zodpovědný za jakékoliv újmy vzniklé jejich používáním.",  
+  "offDisclaimer": "Data poskytnutá aplikací jsou získána z databáze Open Food Facts. Nelze garantovat jejich přesnost, kompletnost nebo spolehlivost. Data jsou poskytována bez záruky a jejich původní poskytovatel (Open Food Facts) není zodpovědný za jakékoliv újmy vzniklé jejich používáním.",
   "additionalInfoLabelFDC": "Více informadcí na\nFoodData Central",
   "additionalInfoLabelUnknown": "Neznámá položka jídla",
   "additionalInfoLabelCustom": "Vlastní jídlo",
-  "additionalInfoLabelCompendium2011": "Informace poskytnutá\n během \n'2011 Compendium\n of Physical Activities'",
+  "additionalInfoLabelCompendium2011": "Informace poskytnutá\n během \n'2024 Compendium\n of Physical Activities'",
   "quantityLabel": "Množství",
   "baseQuantityLabel": "Základní množství (g/ml)",
   "unitLabel": "Jednotka",
@@ -314,7 +345,7 @@
   "paLacrosseDesc": "obecný",
   "paLawnBowling": "trávníkový bowling",
   "paLawnBowlingDesc": "bocce ball (italský bowling), venkovní bowling",
-  "paMotoCross": "moto-cross"                               ,
+  "paMotoCross": "moto-cross",
   "paMotoCrossDesc": "off-road jízda, terénní vozy, obecný",
   "paOrienteering": "orientační běh",
   "paOrienteeringDesc": "obecný",
@@ -411,5 +442,16 @@
   "paSkiingGeneral": "lyžování",
   "paSkiingGeneralDesc": "obecné",
   "paSnowShovingModerate": "odhrabování sněhu",
-  "paSnowShovingModerateDesc": "ručně, střední námaha"
+  "paSnowShovingModerateDesc": "ručně, střední námaha",
+  "settingsShowActivityTracking": "Zobrazit sledování aktivity",
+  "settingsNotificationsLabel": "Denní připomínka",
+  "settingsNotificationsTimeLabel": "Čas připomínky: {time}",
+  "mealNutrientsPerQtyLabel": "Na {qty} {unit}",
+  "mealNutrientsTotalLabel": "Celkové množství",
+  "weeklyWeightGoalLabel": "Týdenní tempo",
+  "weeklyWeightGoalNoneLabel": "Nenastaveno",
+  "weeklyWeightGoalKgPerWeek": "{rate} kg/týden",
+  "weeklyWeightGoalLbsPerWeek": "{rate} lbs/týden",
+  "chooseWeeklyWeightGoalLabel": "Týdenní tempo hmotnosti",
+  "settingsLanguageLabel": "Jazyk"
 }

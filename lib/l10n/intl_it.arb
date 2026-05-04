@@ -108,6 +108,39 @@
   "dialogCopyLabel": "Copia a oggi",
   "dialogDeleteLabel": "ELIMINA",
   "deleteAllLabel": "Elimina tutto",
+  "shareMealLabel": "Condividi pasto",
+  "importMealLabel": "Importa pasto condiviso",
+  "importMealConfirmTitle": "Importare {count} voci?",
+  "@importMealConfirmTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importMealConfirmContent": "Questi elementi verranno aggiunti a {mealType}.",
+  "@importMealConfirmContent": {
+    "placeholders": {
+      "mealType": {
+        "type": "String"
+      }
+    }
+  },
+  "importMealSuccessLabel": "Pasto importato",
+  "importMealErrorLabel": "Codice QR non valido",
+  "importOffFetchFailedLabel": "{count} elemento/i non è stato possibile recuperare da OpenFoodFacts.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "copyCodeLabel": "Copia codice",
+  "shareCodeLabel": "Condividi codice",
+  "codeCopiedLabel": "Codice copiato",
+  "pasteCodeLabel": "Incolla codice",
+  "pasteCodeHint": "Incolla qui il codice del pasto condiviso",
   "suppliedLabel": "assunte",
   "burnedLabel": "bruciate",
   "kcalLeftLabel": "kcal rimanenti",
@@ -127,7 +160,7 @@
   "additionalInfoLabelFDC": "Maggiori informazioni su\nFoodData Central",
   "additionalInfoLabelUnknown": "Alimento sconosciuto",
   "additionalInfoLabelCustom": "Alimento personalizzato",
-  "additionalInfoLabelCompendium2011": "Informazioni fornite\ndal\n'2011 Compendium\ndelle Attività Fisiche'",
+  "additionalInfoLabelCompendium2011": "Informazioni fornite\ndal\n'2024 Compendium\ndelle Attività Fisiche'",
   "quantityLabel": "Quantità",
   "baseQuantityLabel": "Quantità base (g/ml)",
   "unitLabel": "Unità",
@@ -409,5 +442,16 @@
   "paSkiingGeneral": "sci",
   "paSkiingGeneralDesc": "generale",
   "paSnowShovingModerate": "spalare neve",
-  "paSnowShovingModerateDesc": "a mano, sforzo moderato"
+  "paSnowShovingModerateDesc": "a mano, sforzo moderato",
+  "settingsShowActivityTracking": "Mostra tracciamento attività",
+  "settingsNotificationsLabel": "Promemoria giornaliero",
+  "settingsNotificationsTimeLabel": "Orario promemoria: {time}",
+  "mealNutrientsPerQtyLabel": "Per {qty} {unit}",
+  "mealNutrientsTotalLabel": "Quantità totale",
+  "weeklyWeightGoalLabel": "Ritmo settimanale",
+  "weeklyWeightGoalNoneLabel": "Non impostato",
+  "weeklyWeightGoalKgPerWeek": "{rate} kg/settimana",
+  "weeklyWeightGoalLbsPerWeek": "{rate} lbs/settimana",
+  "chooseWeeklyWeightGoalLabel": "Ritmo peso settimanale",
+  "settingsLanguageLabel": "Lingua"
 }

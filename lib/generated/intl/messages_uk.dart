@@ -29,6 +29,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(age) => "${age} років";
 
+  static String m4(mealType) =>
+      "These items will be added to your ${mealType}.";
+
+  static String m5(count) => "Import ${count} items?";
+
+  static String m6(count) =>
+      "${count} елемент(ів) не вдалося отримати з OpenFoodFacts.";
+
+  static String m8(rate) => "${rate} кг/тиждень";
+
+  static String m9(rate) => "${rate} фунт/тиждень";
+
+  static String m10(qty, unit) => "На ${qty} ${unit}";
+
+  static String m11(time) => "Час нагадування: ${time}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -38,7 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Додати новий елемент:"),
         "addLabel": MessageLookupByLibrary.simpleMessage("Додати"),
         "additionalInfoLabelCompendium2011": MessageLookupByLibrary.simpleMessage(
-            "Інформація надана\n \"2011 Compendium\n of Physical Activities\""),
+            "Інформація надана\n \"2024 Compendium\n of Physical Activities\""),
         "additionalInfoLabelCustom":
             MessageLookupByLibrary.simpleMessage("Власний елемент їжі"),
         "additionalInfoLabelFDC": MessageLookupByLibrary.simpleMessage(
@@ -82,9 +98,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Розрахунок TDEE"),
         "carbohydrateLabel": MessageLookupByLibrary.simpleMessage("вуглеводи"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("вуглеводи"),
+        "chooseWeeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Тижневий темп ваги"),
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Виберіть ціль ваги"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("см"),
+        "codeCopiedLabel":
+            MessageLookupByLibrary.simpleMessage("Код скопійовано"),
+        "copyCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Копіювати код"),
         "copyDialogTitle": MessageLookupByLibrary.simpleMessage(
             "До якого типу страви скопіювати?"),
         "copyOrDeleteTimeDialogContent": MessageLookupByLibrary.simpleMessage(
@@ -162,6 +184,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "heightLabel": MessageLookupByLibrary.simpleMessage("Зріст"),
         "homeLabel": MessageLookupByLibrary.simpleMessage("Головна"),
         "importAction": MessageLookupByLibrary.simpleMessage("Імпортувати"),
+        "importMealConfirmContent": m4,
+        "importMealConfirmTitle": m5,
+        "importMealErrorLabel":
+            MessageLookupByLibrary.simpleMessage("Invalid QR code"),
+        "importMealLabel":
+            MessageLookupByLibrary.simpleMessage("Import shared meal"),
+        "importMealSuccessLabel":
+            MessageLookupByLibrary.simpleMessage("Meal imported"),
+        "importOffFetchFailedLabel": m6,
         "infoAddedActivityLabel":
             MessageLookupByLibrary.simpleMessage("Додано нову активність"),
         "infoAddedIntakeLabel":
@@ -185,6 +216,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "mealFatLabel": MessageLookupByLibrary.simpleMessage("жири на"),
         "mealKcalLabel": MessageLookupByLibrary.simpleMessage("ккал на"),
         "mealNameLabel": MessageLookupByLibrary.simpleMessage("Назва страви"),
+        "mealNutrientsPerQtyLabel": m10,
+        "mealNutrientsTotalLabel":
+            MessageLookupByLibrary.simpleMessage("Загальна кількість"),
         "mealProteinLabel":
             MessageLookupByLibrary.simpleMessage("білки на 100 г/мл"),
         "mealSizeLabel":
@@ -396,6 +430,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "paHeadingDancing": MessageLookupByLibrary.simpleMessage("танці"),
         "paHeadingRunning": MessageLookupByLibrary.simpleMessage("біг"),
         "paHeadingSports": MessageLookupByLibrary.simpleMessage("спорт"),
+        "pasteCodeHint": MessageLookupByLibrary.simpleMessage(
+            "Вставте сюди код спільного прийому їжі"),
+        "pasteCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Вставити код"),
         "paHeadingWalking": MessageLookupByLibrary.simpleMessage("ходьба"),
         "paHeadingWaterActivities":
             MessageLookupByLibrary.simpleMessage("водні види спорту"),
@@ -655,15 +693,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsImperialLabel": MessageLookupByLibrary.simpleMessage(
             "Імперська (фунти, фут, унції)"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Налаштування"),
+        "settingsLanguageLabel":
+            MessageLookupByLibrary.simpleMessage("Мова"),
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Ліцензії"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Маса"),
         "settingsMetricLabel":
             MessageLookupByLibrary.simpleMessage("Метрична (кг, см, мл)"),
+        "settingsNotificationsLabel":
+            MessageLookupByLibrary.simpleMessage("Щоденне нагадування"),
+        "settingsNotificationsTimeLabel": m11,
         "settingsPrivacySettings": MessageLookupByLibrary.simpleMessage(
             "Налаштування конфіденційності"),
         "settingsReportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Повідомити про помилку"),
+        "settingsShowActivityTracking":
+            MessageLookupByLibrary.simpleMessage("Показати відстеження активності"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Вихідний код"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("Система"),
@@ -676,12 +721,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsUnitsLabel":
             MessageLookupByLibrary.simpleMessage("Одиниці вимірювання"),
         "settingsVolumeLabel": MessageLookupByLibrary.simpleMessage("Об\'єм"),
+        "shareCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Поділитися кодом"),
+        "shareMealLabel": MessageLookupByLibrary.simpleMessage("Share meal"),
         "snackExample": MessageLookupByLibrary.simpleMessage(
             "наприклад, яблуко, морозиво, шоколад ..."),
         "snackLabel": MessageLookupByLibrary.simpleMessage("Перекус"),
         "sugarLabel": MessageLookupByLibrary.simpleMessage("цукор"),
         "suppliedLabel": MessageLookupByLibrary.simpleMessage("спожито"),
         "unitLabel": MessageLookupByLibrary.simpleMessage("Одиниця"),
+        "weeklyWeightGoalKgPerWeek": m8,
+        "weeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Тижневий темп"),
+        "weeklyWeightGoalLbsPerWeek": m9,
+        "weeklyWeightGoalNoneLabel":
+            MessageLookupByLibrary.simpleMessage("Не встановлено"),
         "weightLabel": MessageLookupByLibrary.simpleMessage("Вага"),
         "yearsLabel": m3
       };

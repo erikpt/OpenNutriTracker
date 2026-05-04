@@ -42,6 +42,11 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           userConfig.hasAcceptedSendAnonymousData,
           userConfig.appTheme,
           usesImperialUnits,
+          showActivityTracking: userConfig.showActivityTracking,
+          notificationsEnabled: userConfig.notificationsEnabled,
+          notificationHour: userConfig.notificationHour,
+          notificationMinute: userConfig.notificationMinute,
+          selectedLocale: userConfig.selectedLocale,
         ),
       );
     });
@@ -60,6 +65,23 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   void setUsesImperialUnits(bool usesImperialUnits) {
     _addConfigUsecase.setConfigUsesImperialUnits(usesImperialUnits);
   }
+
+  void setShowActivityTracking(bool showActivityTracking) {
+    _addConfigUsecase.setConfigShowActivityTracking(showActivityTracking);
+  }
+
+  void setNotificationsEnabled(bool enabled) {
+    _addConfigUsecase.setNotificationsEnabled(enabled);
+  }
+
+  void setNotificationTime(int hour, int minute) {
+    _addConfigUsecase.setNotificationTime(hour, minute);
+  }
+
+  void setSelectedLocale(String? locale) {
+    _addConfigUsecase.setSelectedLocale(locale);
+  }
+
 
   Future<double> getKcalAdjustment() async {
     final config = await _getConfigUsecase.getConfig();
@@ -98,7 +120,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   }
 
   void updateTrackedDay(DateTime day) async {
-    final day = DateTime.now();
     final totalKcalGoal = await _getKcalGoalUsecase.getKcalGoal();
     final totalCarbsGoal = await _getMacroGoalUsecase.getCarbsGoal(
       totalKcalGoal,

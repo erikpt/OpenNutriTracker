@@ -1,4 +1,4 @@
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:opennutritracker/core/data/dbo/app_theme_dbo.dart';
 import 'package:opennutritracker/core/domain/entity/config_entity.dart';
@@ -26,6 +26,16 @@ class ConfigDBO extends HiveObject {
   double? userProteinGoalPct;
   @HiveField(8)
   double? userFatGoalPct;
+  @HiveField(9)
+  bool? showActivityTracking;
+  @HiveField(10)
+  bool? notificationsEnabled;
+  @HiveField(11)
+  int? notificationHour;
+  @HiveField(12)
+  int? notificationMinute;
+  @HiveField(13)
+  String? selectedLocale;
 
   ConfigDBO(
     this.hasAcceptedDisclaimer,
@@ -34,6 +44,11 @@ class ConfigDBO extends HiveObject {
     this.selectedAppTheme, {
     this.usesImperialUnits = false,
     this.userKcalAdjustment,
+    this.showActivityTracking,
+    this.notificationsEnabled,
+    this.notificationHour,
+    this.notificationMinute,
+    this.selectedLocale,
   });
 
   factory ConfigDBO.empty() =>

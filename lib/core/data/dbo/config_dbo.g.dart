@@ -8,7 +8,7 @@ part of 'config_dbo.dart';
 
 class ConfigDBOAdapter extends TypeAdapter<ConfigDBO> {
   @override
-  final int typeId = 13;
+  final typeId = 13;
 
   @override
   ConfigDBO read(BinaryReader reader) {
@@ -17,23 +17,27 @@ class ConfigDBOAdapter extends TypeAdapter<ConfigDBO> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ConfigDBO(
-      fields[0] as bool,
-      fields[1] as bool,
-      fields[2] as bool,
-      fields[3] as AppThemeDBO,
-      usesImperialUnits: fields[4] as bool?,
-      userKcalAdjustment: fields[5] as double?,
-    )
-      ..userCarbGoalPct = fields[6] as double?
-      ..userProteinGoalPct = fields[7] as double?
-      ..userFatGoalPct = fields[8] as double?
-      ..showActivityTracking = fields[9] as bool?;
+        fields[0] as bool,
+        fields[1] as bool,
+        fields[2] as bool,
+        fields[3] as AppThemeDBO,
+        usesImperialUnits: fields[4] == null ? false : fields[4] as bool?,
+        userKcalAdjustment: (fields[5] as num?)?.toDouble(),
+        showActivityTracking: fields[9] as bool?,
+        notificationsEnabled: fields[10] as bool?,
+        notificationHour: (fields[11] as num?)?.toInt(),
+        notificationMinute: (fields[12] as num?)?.toInt(),
+        selectedLocale: fields[13] as String?,
+      )
+      ..userCarbGoalPct = (fields[6] as num?)?.toDouble()
+      ..userProteinGoalPct = (fields[7] as num?)?.toDouble()
+      ..userFatGoalPct = (fields[8] as num?)?.toDouble();
   }
 
   @override
   void write(BinaryWriter writer, ConfigDBO obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.hasAcceptedDisclaimer)
       ..writeByte(1)
@@ -53,7 +57,15 @@ class ConfigDBOAdapter extends TypeAdapter<ConfigDBO> {
       ..writeByte(8)
       ..write(obj.userFatGoalPct)
       ..writeByte(9)
-      ..write(obj.showActivityTracking);
+      ..write(obj.showActivityTracking)
+      ..writeByte(10)
+      ..write(obj.notificationsEnabled)
+      ..writeByte(11)
+      ..write(obj.notificationHour)
+      ..writeByte(12)
+      ..write(obj.notificationMinute)
+      ..writeByte(13)
+      ..write(obj.selectedLocale);
   }
 
   @override
@@ -71,31 +83,40 @@ class ConfigDBOAdapter extends TypeAdapter<ConfigDBO> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-ConfigDBO _$ConfigDBOFromJson(Map<String, dynamic> json) => ConfigDBO(
-      json['hasAcceptedDisclaimer'] as bool,
-      json['hasAcceptedPolicy'] as bool,
-      json['hasAcceptedSendAnonymousData'] as bool,
-      $enumDecode(_$AppThemeDBOEnumMap, json['selectedAppTheme']),
-      usesImperialUnits: json['usesImperialUnits'] as bool? ?? false,
-      userKcalAdjustment: (json['userKcalAdjustment'] as num?)?.toDouble(),
-    )
+ConfigDBO _$ConfigDBOFromJson(Map<String, dynamic> json) =>
+    ConfigDBO(
+        json['hasAcceptedDisclaimer'] as bool,
+        json['hasAcceptedPolicy'] as bool,
+        json['hasAcceptedSendAnonymousData'] as bool,
+        $enumDecode(_$AppThemeDBOEnumMap, json['selectedAppTheme']),
+        usesImperialUnits: json['usesImperialUnits'] as bool? ?? false,
+        userKcalAdjustment: (json['userKcalAdjustment'] as num?)?.toDouble(),
+        showActivityTracking: json['showActivityTracking'] as bool?,
+        notificationsEnabled: json['notificationsEnabled'] as bool?,
+        notificationHour: (json['notificationHour'] as num?)?.toInt(),
+        notificationMinute: (json['notificationMinute'] as num?)?.toInt(),
+        selectedLocale: json['selectedLocale'] as String?,
+      )
       ..userCarbGoalPct = (json['userCarbGoalPct'] as num?)?.toDouble()
       ..userProteinGoalPct = (json['userProteinGoalPct'] as num?)?.toDouble()
-      ..userFatGoalPct = (json['userFatGoalPct'] as num?)?.toDouble()
-      ..showActivityTracking = json['showActivityTracking'] as bool?;
+      ..userFatGoalPct = (json['userFatGoalPct'] as num?)?.toDouble();
 
 Map<String, dynamic> _$ConfigDBOToJson(ConfigDBO instance) => <String, dynamic>{
-      'hasAcceptedDisclaimer': instance.hasAcceptedDisclaimer,
-      'hasAcceptedPolicy': instance.hasAcceptedPolicy,
-      'hasAcceptedSendAnonymousData': instance.hasAcceptedSendAnonymousData,
-      'selectedAppTheme': _$AppThemeDBOEnumMap[instance.selectedAppTheme]!,
-      'usesImperialUnits': instance.usesImperialUnits,
-      'userKcalAdjustment': instance.userKcalAdjustment,
-      'userCarbGoalPct': instance.userCarbGoalPct,
-      'userProteinGoalPct': instance.userProteinGoalPct,
-      'userFatGoalPct': instance.userFatGoalPct,
-      'showActivityTracking': instance.showActivityTracking,
-    };
+  'hasAcceptedDisclaimer': instance.hasAcceptedDisclaimer,
+  'hasAcceptedPolicy': instance.hasAcceptedPolicy,
+  'hasAcceptedSendAnonymousData': instance.hasAcceptedSendAnonymousData,
+  'selectedAppTheme': _$AppThemeDBOEnumMap[instance.selectedAppTheme]!,
+  'usesImperialUnits': instance.usesImperialUnits,
+  'userKcalAdjustment': instance.userKcalAdjustment,
+  'userCarbGoalPct': instance.userCarbGoalPct,
+  'userProteinGoalPct': instance.userProteinGoalPct,
+  'userFatGoalPct': instance.userFatGoalPct,
+  'showActivityTracking': instance.showActivityTracking,
+  'notificationsEnabled': instance.notificationsEnabled,
+  'notificationHour': instance.notificationHour,
+  'notificationMinute': instance.notificationMinute,
+  'selectedLocale': instance.selectedLocale,
+};
 
 const _$AppThemeDBOEnumMap = {
   AppThemeDBO.light: 'light',

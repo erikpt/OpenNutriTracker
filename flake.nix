@@ -1,5 +1,5 @@
 {
-  description = "Flutter 3.27.x";
+  description = "Flutter 3.41.7";
   inputs = {
     nixpkgs.url = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
@@ -33,11 +33,11 @@
         # run once:
         #   avdmanager create avd -n flutter_emulator -k 'system-images;android-27;google_apis_playstore;x86' -d pixel
         #   flutter emulators --launch flutter_emulator
-        #   flutter pub run build_runner build --delete-conflicting-outputs
+        #   dart run build_runner build
         devShells.default = pkgs.mkShell {
             ANDROID_SDK_ROOT = "${androidPkgs.androidsdk}/libexec/android-sdk";
             buildInputs = [
-              pkgs.flutter319
+              pkgs.flutter
               pkgs.jdk17
               androidPkgs.androidsdk
               emulator  # execute emulator with: run-test-emulator

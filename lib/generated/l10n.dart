@@ -621,6 +621,15 @@ class S {
   }
 
   /// `Licenses`
+  String get settingsLanguageLabel {
+    return Intl.message(
+      'Language',
+      name: 'settingsLanguageLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get settingsLicensesLabel {
     return Intl.message(
       'Licenses',
@@ -667,6 +676,26 @@ class S {
       name: 'settingsShowActivityTracking',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Daily Reminder`
+  String get settingsNotificationsLabel {
+    return Intl.message(
+      'Daily Reminder',
+      name: 'settingsNotificationsLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reminder time: {time}`
+  String settingsNotificationsTimeLabel(String time) {
+    return Intl.message(
+      'Reminder time: $time',
+      name: 'settingsNotificationsTimeLabel',
+      desc: '',
+      args: [time],
     );
   }
 
@@ -931,6 +960,116 @@ class S {
     );
   }
 
+  /// `Import shared meal`
+  String get importMealLabel {
+    return Intl.message(
+      'Import shared meal',
+      name: 'importMealLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import {count} items?`
+  String importMealConfirmTitle(int count) {
+    return Intl.message(
+      'Import $count items?',
+      name: 'importMealConfirmTitle',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `These items will be added to your {mealType}.`
+  String importMealConfirmContent(String mealType) {
+    return Intl.message(
+      'These items will be added to your $mealType.',
+      name: 'importMealConfirmContent',
+      desc: '',
+      args: [mealType],
+    );
+  }
+
+  /// `Meal imported`
+  String get importMealSuccessLabel {
+    return Intl.message(
+      'Meal imported',
+      name: 'importMealSuccessLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid QR code`
+  String get importMealErrorLabel {
+    return Intl.message(
+      'Invalid QR code',
+      name: 'importMealErrorLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share workout`
+  String get shareActivityLabel {
+    return Intl.message(
+      'Share workout',
+      name: 'shareActivityLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import shared workout`
+  String get importActivityLabel {
+    return Intl.message(
+      'Import shared workout',
+      name: 'importActivityLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import {count} activities?`
+  String importActivityConfirmTitle(int count) {
+    return Intl.message(
+      'Import $count activities?',
+      name: 'importActivityConfirmTitle',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `These activities will be added to today.`
+  String get importActivityConfirmContent {
+    return Intl.message(
+      'These activities will be added to today.',
+      name: 'importActivityConfirmContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Workout imported`
+  String get importActivitySuccessLabel {
+    return Intl.message(
+      'Workout imported',
+      name: 'importActivitySuccessLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} item(s) could not be fetched from OpenFoodFacts.`
+  String importOffFetchFailedLabel(int count) {
+    return Intl.message(
+      '$count item(s) could not be fetched from OpenFoodFacts.',
+      name: 'importOffFetchFailedLabel',
+      desc: '',
+      args: [count],
+    );
+  }
+
   /// `Add new Item:`
   String get addItemLabel {
     return Intl.message(
@@ -1111,6 +1250,66 @@ class S {
     );
   }
 
+  /// `Share meal`
+  String get shareMealLabel {
+    return Intl.message(
+      'Share meal',
+      name: 'shareMealLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copy code`
+  String get copyCodeLabel {
+    return Intl.message(
+      'Copy code',
+      name: 'copyCodeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share code`
+  String get shareCodeLabel {
+    return Intl.message(
+      'Share code',
+      name: 'shareCodeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code copied`
+  String get codeCopiedLabel {
+    return Intl.message(
+      'Code copied',
+      name: 'codeCopiedLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paste code`
+  String get pasteCodeLabel {
+    return Intl.message(
+      'Paste code',
+      name: 'pasteCodeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paste the shared meal code here`
+  String get pasteCodeHint {
+    return Intl.message(
+      'Paste the shared meal code here',
+      name: 'pasteCodeHint',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Which meal type do you want to copy to?`
   String get copyDialogTitle {
     return Intl.message(
@@ -1201,11 +1400,11 @@ class S {
     );
   }
 
-  /// `kcal exceeded`
-  String get kcalExceededLabel {
+  /// `kcal too much`
+  String get kcalTooMuchLabel {
     return Intl.message(
-      'kcal exceeded',
-      name: 'kcalExceededLabel',
+      'kcal too much',
+      name: 'kcalTooMuchLabel',
       desc: '',
       args: [],
     );
@@ -1331,10 +1530,10 @@ class S {
     );
   }
 
-  /// `The data provided to you by this app are retrieved from the Open Food Facts database. No guarantees can be made for the accuracy, completeness, or reliability of the information provided. The data are provided “as is” and the originating source for the data (Open Food Facts) is not liable for any damages arising out of the use of the data.`
+  /// `The data provided to you by this app are retrieved from the Open Food Facts database. No guarantees can be made for the accuracy, completeness, or reliability of the information provided. The data are provided "as is" and the originating source for the data (Open Food Facts) is not liable for any damages arising out of the use of the data.`
   String get offDisclaimer {
     return Intl.message(
-      'The data provided to you by this app are retrieved from the Open Food Facts database. No guarantees can be made for the accuracy, completeness, or reliability of the information provided. The data are provided “as is” and the originating source for the data (Open Food Facts) is not liable for any damages arising out of the use of the data.',
+      'The data provided to you by this app are retrieved from the Open Food Facts database. No guarantees can be made for the accuracy, completeness, or reliability of the information provided. The data are provided "as is" and the originating source for the data (Open Food Facts) is not liable for any damages arising out of the use of the data.',
       name: 'offDisclaimer',
       desc: '',
       args: [],
@@ -1371,10 +1570,10 @@ class S {
     );
   }
 
-  /// `Information provided\n by the \n'2011 Compendium\n of Physical Activities'`
+  /// `Information provided\n by the \n'2024 Compendium\n of Physical Activities'`
   String get additionalInfoLabelCompendium2011 {
     return Intl.message(
-      'Information provided\n by the \n\'2011 Compendium\n of Physical Activities\'',
+      'Information provided\n by the \n\'2024 Compendium\n of Physical Activities\'',
       name: 'additionalInfoLabelCompendium2011',
       desc: '',
       args: [],
@@ -1614,38 +1813,58 @@ class S {
   /// `kcal per`
   String get mealKcalLabel {
     return Intl.message(
-      'kcal per',
+      'kcal',
       name: 'mealKcalLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `carbs per`
+  /// `Carbohydrates (g)`
   String get mealCarbsLabel {
     return Intl.message(
-      'carbs per',
+      'Carbohydrates (g)',
       name: 'mealCarbsLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `fat per`
+  /// `Fat (g)`
   String get mealFatLabel {
     return Intl.message(
-      'fat per',
+      'Fat (g)',
       name: 'mealFatLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `protein per 100 g/ml`
+  /// `Protein (g)`
   String get mealProteinLabel {
     return Intl.message(
-      'protein per 100 g/ml',
+      'Protein (g)',
       name: 'mealProteinLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Per {qty} {unit}`
+  String mealNutrientsPerQtyLabel(String qty, String unit) {
+    return Intl.message(
+      'Per $qty $unit',
+      name: 'mealNutrientsPerQtyLabel',
+      desc: '',
+      args: [qty, unit],
+    );
+  }
+
+  /// `Total amount`
+  String get mealNutrientsTotalLabel {
+    return Intl.message(
+      'Total amount',
+      name: 'mealNutrientsTotalLabel',
       desc: '',
       args: [],
     );
@@ -1846,6 +2065,56 @@ class S {
     return Intl.message(
       'Goal',
       name: 'goalLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weekly rate`
+  String get weeklyWeightGoalLabel {
+    return Intl.message(
+      'Weekly rate',
+      name: 'weeklyWeightGoalLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not set`
+  String get weeklyWeightGoalNoneLabel {
+    return Intl.message(
+      'Not set',
+      name: 'weeklyWeightGoalNoneLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{rate} kg/week`
+  String weeklyWeightGoalKgPerWeek(String rate) {
+    return Intl.message(
+      '$rate kg/week',
+      name: 'weeklyWeightGoalKgPerWeek',
+      desc: '',
+      args: [rate],
+    );
+  }
+
+  /// `{rate} lbs/week`
+  String weeklyWeightGoalLbsPerWeek(String rate) {
+    return Intl.message(
+      '$rate lbs/week',
+      name: 'weeklyWeightGoalLbsPerWeek',
+      desc: '',
+      args: [rate],
+    );
+  }
+
+  /// `Weekly weight rate`
+  String get chooseWeeklyWeightGoalLabel {
+    return Intl.message(
+      'Weekly weight rate',
+      name: 'chooseWeeklyWeightGoalLabel',
       desc: '',
       args: [],
     );
@@ -2411,6 +2680,56 @@ class S {
     );
   }
 
+  /// `resistance training (vigorous)`
+  String get paResistanceTrainingVigorous {
+    return Intl.message(
+      'resistance training (vigorous)',
+      name: 'paResistanceTrainingVigorous',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `vigorous effort, powerlifting or bodybuilding`
+  String get paResistanceTrainingVigorousDesc {
+    return Intl.message(
+      'vigorous effort, powerlifting or bodybuilding',
+      name: 'paResistanceTrainingVigorousDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pilates`
+  String get paPilates {
+    return Intl.message(
+      'pilates',
+      name: 'paPilates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `stretching`
+  String get paStretching {
+    return Intl.message(
+      'stretching',
+      name: 'paStretching',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `mild, general`
+  String get paStretchingDesc {
+    return Intl.message(
+      'mild, general',
+      name: 'paStretchingDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `rope skipping`
   String get paRopeSkippingGeneral {
     return Intl.message(
@@ -2526,6 +2845,26 @@ class S {
     return Intl.message(
       'general',
       name: 'paRunningGeneralDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `running on treadmill`
+  String get paTreadmillRunning {
+    return Intl.message(
+      'running on treadmill',
+      name: 'paTreadmillRunning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `on treadmill, general`
+  String get paTreadmillRunningDesc {
+    return Intl.message(
+      'on treadmill, general',
+      name: 'paTreadmillRunningDesc',
       desc: '',
       args: [],
     );
@@ -2691,10 +3030,10 @@ class S {
     );
   }
 
-  /// `children’s games`
+  /// `children's games`
   String get paChildrenGame {
     return Intl.message(
-      'children’s games',
+      "children's games",
       name: 'paChildrenGame',
       desc: '',
       args: [],
@@ -3291,6 +3630,36 @@ class S {
     );
   }
 
+  /// `pickleball`
+  String get paPickleball {
+    return Intl.message(
+      'pickleball',
+      name: 'paPickleball',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `active video games`
+  String get paActiveVideoGames {
+    return Intl.message(
+      'active video games',
+      name: 'paActiveVideoGames',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wii Sports, Dance Dance Revolution, general`
+  String get paActiveVideoGamesDesc {
+    return Intl.message(
+      'Wii Sports, Dance Dance Revolution, general',
+      name: 'paActiveVideoGamesDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `racquetball`
   String get paRacquetball {
     return Intl.message(
@@ -3851,6 +4220,16 @@ class S {
     );
   }
 
+  /// `nordic walking`
+  String get paNordicWalking {
+    return Intl.message(
+      'nordic walking',
+      name: 'paNordicWalking',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `canoeing`
   String get paCanoeingGeneral {
     return Intl.message(
@@ -4190,6 +4569,36 @@ class S {
       args: [],
     );
   }
+
+  /// `cross-country skiing`
+  String get paCrossCountrySkiing {
+    return Intl.message(
+      'cross-country skiing',
+      name: 'paCrossCountrySkiing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `cross-country, general`
+  String get paCrossCountrySkiingDesc {
+    return Intl.message(
+      'cross-country, general',
+      name: 'paCrossCountrySkiingDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `snowshoeing`
+  String get paSnowshoeing {
+    return Intl.message(
+      'snowshoeing',
+      name: 'paSnowshoeing',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -4201,8 +4610,10 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
       Locale.fromSubtags(languageCode: 'cz'),
       Locale.fromSubtags(languageCode: 'de'),
       Locale.fromSubtags(languageCode: 'it'),
+      Locale.fromSubtags(languageCode: 'pl'),
       Locale.fromSubtags(languageCode: 'tr'),
       Locale.fromSubtags(languageCode: 'uk'),
+      Locale.fromSubtags(languageCode: 'zh'),
     ];
   }
 

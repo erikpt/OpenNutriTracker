@@ -5,6 +5,8 @@ import 'package:opennutritracker/core/presentation/widgets/app_banner_version.da
 import 'package:opennutritracker/core/presentation/widgets/disclaimer_dialog.dart';
 import 'package:opennutritracker/core/utils/app_const.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
+import 'package:opennutritracker/core/utils/notification_service.dart';
+import 'package:opennutritracker/core/utils/locale_provider.dart';
 import 'package:opennutritracker/core/utils/theme_mode_provider.dart';
 import 'package:opennutritracker/core/utils/url_const.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/calendar_day_bloc.dart';
@@ -86,6 +88,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   },
                 ),
                 ListTile(
+                  leading: const Icon(Icons.language_outlined),
+                  title: Text(S.of(context).settingsLanguageLabel),
+                  subtitle: Text(
+                      _localeDisplayName(state.selectedLocale) ??
+                          S.of(context).settingsThemeSystemDefaultLabel),
+                  onTap: () =>
+                      _showLanguageDialog(context, state.selectedLocale),
+                ),
+                SwitchListTile(
+                  secondary: const Icon(Icons.directions_run_outlined),
+                  title: Text(S.of(context).settingsShowActivityTracking),
+                  value: state.showActivityTracking,
+                  onChanged: (bool value) {
+                    _settingsBloc.setShowActivityTracking(value);
+                    _settingsBloc.add(LoadSettingsEvent());
+                    _homeBloc.add(LoadItemsEvent());
+                  },
+                ),
+                SwitchListTile(
+                  secondary: const Icon(Icons.notifications_outlined),
+                  title: Text(S.of(context).settingsNotificationsLabel),
+                  subtitle: state.notificationsEnabled
+                      ? Text(S.of(context).settingsNotificationsTimeLabel(
+                          _formatNotificationTime(
+                              state.notificationHour, state.notificationMinute)))
+                      : null,
+                  value: state.notificationsEnabled,
+                  onChanged: (bool value) =>
+                      _onNotificationToggled(context, value, state),
+                ),
+                if (state.notificationsEnabled)
+                  ListTile(
+                    leading: const Icon(Icons.access_time_outlined),
+                    title: Text(S.of(context).settingsNotificationsTimeLabel(
+                        _formatNotificationTime(state.notificationHour,
+                            state.notificationMinute))),
+                    onTap: () => _pickNotificationTime(
+                        context,
+                        TimeOfDay(
+                            hour: state.notificationHour,
+                            minute: state.notificationMinute)),
+                  ),
+                ListTile(
                   leading: const Icon(Icons.import_export),
                   title: Text(S.of(context).exportImportLabel),
                   onTap: () => _showExportImportDialog(context),
@@ -122,6 +167,58 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  String _formatNotificationTime(int hour, int minute) {
+    final h = hour.toString().padLeft(2, '0');
+    final m = minute.toString().padLeft(2, '0');
+    return '$h:$m';
+  }
+
+  Future<void> _onNotificationToggled(
+      BuildContext context, bool enabled, SettingsLoadedState state) async {
+    final notificationService = locator<NotificationService>();
+    await notificationService.initialize();
+    if (enabled) {
+      final granted = await notificationService.requestPermission();
+      if (!granted) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text('Notification permission denied.')),
+          );
+        }
+        return;
+      }
+      await notificationService.scheduleDailyReminder(
+        hour: state.notificationHour,
+        minute: state.notificationMinute,
+        title: 'OpenNutriTracker',
+        body: 'Don\'t forget to log your meals today!',
+      );
+    } else {
+      await notificationService.cancelDailyReminder();
+    }
+    _settingsBloc.setNotificationsEnabled(enabled);
+    _settingsBloc.add(LoadSettingsEvent());
+  }
+
+  Future<void> _pickNotificationTime(
+      BuildContext context, TimeOfDay current) async {
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: current,
+    );
+    if (picked == null) return;
+    _settingsBloc.setNotificationTime(picked.hour, picked.minute);
+    final notificationService = locator<NotificationService>();
+    await notificationService.scheduleDailyReminder(
+      hour: picked.hour,
+      minute: picked.minute,
+      title: 'OpenNutriTracker',
+      body: 'Don\'t forget to log your meals today!',
+    );
+    _settingsBloc.add(LoadSettingsEvent());
+  }
+
   void _showUnitsDialog(BuildContext context, bool usesImperialUnits) async {
     SystemDropDownType selectedUnit = usesImperialUnits
         ? SystemDropDownType.imperial
@@ -136,7 +233,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Column(
                 children: [
                   DropdownButtonFormField(
-                    value: selectedUnit,
+                    initialValue: selectedUnit,
+                    key: ValueKey(selectedUnit),
                     decoration: InputDecoration(
                       enabled: true,
                       filled: false,
@@ -214,40 +312,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
               BuildContext context,
               void Function(void Function()) setState,
             ) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  RadioListTile(
-                    title: Text(S.of(context).settingsThemeSystemDefaultLabel),
-                    value: AppThemeEntity.system,
-                    groupValue: selectedTheme,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedTheme = value as AppThemeEntity;
-                      });
-                    },
-                  ),
-                  RadioListTile(
-                    title: Text(S.of(context).settingsThemeLightLabel),
-                    value: AppThemeEntity.light,
-                    groupValue: selectedTheme,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedTheme = value as AppThemeEntity;
-                      });
-                    },
-                  ),
-                  RadioListTile(
-                    title: Text(S.of(context).settingsThemeDarkLabel),
-                    value: AppThemeEntity.dark,
-                    groupValue: selectedTheme,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedTheme = value as AppThemeEntity;
-                      });
-                    },
-                  ),
-                ],
+              return RadioGroup(
+                groupValue: selectedTheme,
+                onChanged: (value) {
+                  setState(() {
+                    selectedTheme = value as AppThemeEntity;
+                  });
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RadioListTile(
+                      title: Text(S.of(context).settingsThemeSystemDefaultLabel),
+                      value: AppThemeEntity.system,
+                    ),
+                    RadioListTile(
+                      title: Text(S.of(context).settingsThemeLightLabel),
+                      value: AppThemeEntity.light,
+                    ),
+                    RadioListTile(
+                      title: Text(S.of(context).settingsThemeDarkLabel),
+                      value: AppThemeEntity.dark,
+                    ),
+                  ],
+                ),
               );
             },
           ),
@@ -269,6 +357,80 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     listen: false,
                   ).updateTheme(selectedTheme);
                 });
+                Navigator.of(context).pop();
+              },
+              child: Text(S.of(context).dialogOKLabel),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  static const _supportedLocales = <String, String>{
+    'en': 'English',
+    'de': 'Deutsch',
+    'tr': 'Türkçe',
+    'cz': 'Čeština',
+    'it': 'Italiano',
+    'uk': 'Українська',
+    'zh': '中文',
+    'pl': 'Polski',
+  };
+
+  String? _localeDisplayName(String? code) => _supportedLocales[code];
+
+  // Sentinel value meaning "follow system locale"
+  static const _systemLocale = '';
+
+  void _showLanguageDialog(BuildContext context, String? currentLocale) {
+    String selectedCode = currentLocale ?? _systemLocale;
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          title: Text(S.of(context).settingsLanguageLabel),
+          content: StatefulBuilder(
+            builder: (BuildContext context,
+                void Function(void Function()) setState) {
+              return RadioGroup<String>(
+                groupValue: selectedCode,
+                onChanged: (v) => setState(() => selectedCode = v as String),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RadioListTile<String>(
+                      title:
+                          Text(S.of(context).settingsThemeSystemDefaultLabel),
+                      value: _systemLocale,
+                    ),
+                    ..._supportedLocales.entries.map(
+                      (e) => RadioListTile<String>(
+                        title: Text(e.value),
+                        value: e.key,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(S.of(context).dialogCancelLabel),
+            ),
+            TextButton(
+              onPressed: () {
+                final locale =
+                    selectedCode.isEmpty ? null : selectedCode;
+                _settingsBloc.setSelectedLocale(locale);
+                _settingsBloc.add(LoadSettingsEvent());
+                Provider.of<LocaleProvider>(context, listen: false)
+                    .updateLocale(
+                  locale != null ? Locale(locale) : null,
+                );
                 Navigator.of(context).pop();
               },
               child: Text(S.of(context).dialogOKLabel),

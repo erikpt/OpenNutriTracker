@@ -13,6 +13,8 @@ import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.da
 import 'package:opennutritracker/features/diary/presentation/bloc/calendar_day_bloc.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/diary_bloc.dart';
 import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart';
+import 'package:opennutritracker/features/home/presentation/screens/import_meal_scanner_screen.dart';
+import 'package:opennutritracker/features/home/presentation/widgets/share_meal_qr_dialog.dart';
 import 'package:opennutritracker/features/meal_detail/presentation/bloc/meal_detail_bloc.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
@@ -95,7 +97,7 @@ class _IntakeVerticalListState extends State<IntakeVerticalList> {
                     ),
               ),
               const Spacer(),
-              if (totalKcal > 0) ...[
+              if (totalKcal > 0)
                 Text(
                   '${totalKcal.toInt()} ${S.of(context).kcalLabel}',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -104,57 +106,86 @@ class _IntakeVerticalListState extends State<IntakeVerticalList> {
                         ).colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                 ),
-                PopupMenuButton<VerticalListPopupMenuSelections>(
-                  onSelected: (
-                    VerticalListPopupMenuSelections selection,
-                  ) async {
-                    switch (selection) {
-                      case VerticalListPopupMenuSelections.onCopy:
-                        const copyDialog = CopyDialog();
-                        final selectedMealType = await showDialog<AddMealType>(
-                          context: context,
-                          builder: (context) => copyDialog,
-                        );
-                        if (selectedMealType != null) {
-                          for (IntakeEntity intake in widget.intakeList) {
-                            widget.onCopyIntakeCallback!(
-                              intake,
-                              null,
-                              selectedMealType,
-                            );
-                          }
+              PopupMenuButton<VerticalListPopupMenuSelections>(
+                onSelected: (
+                  VerticalListPopupMenuSelections selection,
+                ) async {
+                  switch (selection) {
+                    case VerticalListPopupMenuSelections.onCopy:
+                      const copyDialog = CopyDialog();
+                      final selectedMealType = await showDialog<AddMealType>(
+                        context: context,
+                        builder: (context) => copyDialog,
+                      );
+                      if (selectedMealType != null) {
+                        for (IntakeEntity intake in widget.intakeList) {
+                          widget.onCopyIntakeCallback!(
+                            intake,
+                            null,
+                            selectedMealType,
+                          );
+                        }
+                      }
+                      break;
+                    case VerticalListPopupMenuSelections.onDelete:
+                      final shouldDeleteIntakes = await showDialog<bool>(
+                        context: context,
+                        builder: (context) => const DeleteAllDialog(),
+                      );
+                      if (shouldDeleteIntakes != null) {
+                        for (IntakeEntity intake in widget.intakeList) {
+                          widget.onDeleteIntakeCallback(
+                            intake,
+                            widget.trackedDayEntity,
+                          );
                         }
                         break;
-                      case VerticalListPopupMenuSelections.onDelete:
-                        final shouldDeleteIntakes = await showDialog<bool>(
+                      }
+                    case VerticalListPopupMenuSelections.onShare:
+                      if (context.mounted) {
+                        await showDialog(
                           context: context,
-                          builder: (context) => const DeleteAllDialog(),
+                          builder: (_) => ShareMealQrDialog(
+                            intakeList: widget.intakeList,
+                          ),
                         );
-                        if (shouldDeleteIntakes != null) {
-                          for (IntakeEntity intake in widget.intakeList) {
-                            widget.onDeleteIntakeCallback(
-                              intake,
-                              widget.trackedDayEntity,
-                            );
-                          }
-                          break;
-                        }
-                    }
-                  },
-                  itemBuilder: (BuildContext context) =>
-                      <PopupMenuEntry<VerticalListPopupMenuSelections>>[
-                    if (widget.onCopyIntakeCallback != null)
-                      PopupMenuItem<VerticalListPopupMenuSelections>(
-                        value: VerticalListPopupMenuSelections.onCopy,
-                        child: Text(S.of(context).dialogCopyLabel),
-                      ),
+                      }
+                    case VerticalListPopupMenuSelections.onImport:
+                      if (context.mounted) {
+                        Navigator.of(context).pushNamed(
+                          NavigationOptions.importMealScannerRoute,
+                          arguments: ImportMealScannerArguments(
+                            widget.addMealType.getIntakeType(),
+                            widget.addMealType,
+                            widget.day,
+                          ),
+                        );
+                      }
+                  }
+                },
+                itemBuilder: (BuildContext context) =>
+                    <PopupMenuEntry<VerticalListPopupMenuSelections>>[
+                  if (widget.onCopyIntakeCallback != null && totalKcal > 0)
+                    PopupMenuItem<VerticalListPopupMenuSelections>(
+                      value: VerticalListPopupMenuSelections.onCopy,
+                      child: Text(S.of(context).dialogCopyLabel),
+                    ),
+                  if (totalKcal > 0)
                     PopupMenuItem<VerticalListPopupMenuSelections>(
                       value: VerticalListPopupMenuSelections.onDelete,
                       child: Text(S.of(context).deleteAllLabel),
                     ),
-                  ],
-                ),
-              ],
+                  if (totalKcal > 0)
+                    PopupMenuItem<VerticalListPopupMenuSelections>(
+                      value: VerticalListPopupMenuSelections.onShare,
+                      child: Text(S.of(context).shareMealLabel),
+                    ),
+                  PopupMenuItem<VerticalListPopupMenuSelections>(
+                    value: VerticalListPopupMenuSelections.onImport,
+                    child: Text(S.of(context).importMealLabel),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

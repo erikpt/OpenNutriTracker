@@ -29,7 +29,7 @@ class OFFProductDTO {
   final dynamic serving_quantity; // Can either be int or String
   final String? serving_size; // E.g. 2 Tbsp (32 g)
 
-  final OFFProductNutrimentsDTO nutriments;
+  final OFFProductNutrimentsDTO? nutriments;
 
   String? getLocaleName(SupportedLanguage supportedLanguage) {
     String? localeName;
@@ -39,6 +39,12 @@ class OFFProductDTO {
         break;
       case SupportedLanguage.de:
         localeName = product_name_de;
+        break;
+      case SupportedLanguage.pl:
+        localeName = product_name;
+        break;
+      case SupportedLanguage.zh:
+        localeName = product_name;
         break;
     }
 

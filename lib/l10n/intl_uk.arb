@@ -108,6 +108,39 @@
   "dialogCopyLabel": "Скопіювати на сьогодні",
   "dialogDeleteLabel": "ВИДАЛИТИ",
   "deleteAllLabel": "Видалити все",
+  "shareMealLabel": "Share meal",
+  "importMealLabel": "Import shared meal",
+  "importMealConfirmTitle": "Import {count} items?",
+  "@importMealConfirmTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importMealConfirmContent": "These items will be added to your {mealType}.",
+  "@importMealConfirmContent": {
+    "placeholders": {
+      "mealType": {
+        "type": "String"
+      }
+    }
+  },
+  "importMealSuccessLabel": "Meal imported",
+  "importMealErrorLabel": "Invalid QR code",
+  "importOffFetchFailedLabel": "{count} елемент(ів) не вдалося отримати з OpenFoodFacts.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "copyCodeLabel": "Копіювати код",
+  "shareCodeLabel": "Поділитися кодом",
+  "codeCopiedLabel": "Код скопійовано",
+  "pasteCodeLabel": "Вставити код",
+  "pasteCodeHint": "Вставте сюди код спільного прийому їжі",
   "suppliedLabel": "спожито",
   "burnedLabel": "спалено",
   "kcalLeftLabel": "залишилось ккал",
@@ -127,7 +160,7 @@
   "additionalInfoLabelFDC": "Більше інформації на\nFoodData Central",
   "additionalInfoLabelUnknown": "Невідомий елемент їжі",
   "additionalInfoLabelCustom": "Власний елемент їжі",
-  "additionalInfoLabelCompendium2011": "Інформація надана\n \"2011 Compendium\n of Physical Activities\"",
+  "additionalInfoLabelCompendium2011": "Інформація надана\n \"2024 Compendium\n of Physical Activities\"",
   "quantityLabel": "Кількість",
   "baseQuantityLabel": "Базова кількість (г/мл)",
   "unitLabel": "Одиниця",
@@ -409,5 +442,16 @@
   "paSkiingGeneral": "лижний спорт",
   "paSkiingGeneralDesc": "загальне",
   "paSnowShovingModerate": "розчищення снігу",
-  "paSnowShovingModerateDesc": "Розчишення снігу, помірні зусилля"
+  "paSnowShovingModerateDesc": "Розчишення снігу, помірні зусилля",
+  "settingsShowActivityTracking": "Показати відстеження активності",
+  "settingsNotificationsLabel": "Щоденне нагадування",
+  "settingsNotificationsTimeLabel": "Час нагадування: {time}",
+  "mealNutrientsPerQtyLabel": "На {qty} {unit}",
+  "mealNutrientsTotalLabel": "Загальна кількість",
+  "weeklyWeightGoalLabel": "Тижневий темп",
+  "weeklyWeightGoalNoneLabel": "Не встановлено",
+  "weeklyWeightGoalKgPerWeek": "{rate} кг/тиждень",
+  "weeklyWeightGoalLbsPerWeek": "{rate} фунт/тиждень",
+  "chooseWeeklyWeightGoalLabel": "Тижневий темп ваги",
+  "settingsLanguageLabel": "Мова"
 }

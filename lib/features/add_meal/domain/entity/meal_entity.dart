@@ -30,7 +30,7 @@ class MealEntity extends Equatable {
   final String? servingUnit;
   final String? servingSize;
 
-  get hasServingValues => servingQuantity != null && servingUnit != null;
+  bool get hasServingValues => servingQuantity != null && servingUnit != null;
 
   final MealSourceEntity source;
 

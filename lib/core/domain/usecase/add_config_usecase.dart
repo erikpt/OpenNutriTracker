@@ -43,7 +43,20 @@ class AddConfigUsecase {
     _configRepository.setUserMacroPct(carbGoalPct, proteinGoalPct, fatPctGoal);
   }
 
+
   Future<void> setConfigShowActivityTracking(bool show) async {
     _configRepository.setConfigShowActivityTracking(show);
+  }
+
+  Future<void> setNotificationsEnabled(bool enabled) async {
+    _configRepository.setNotificationsEnabled(enabled);
+  }
+
+  Future<void> setNotificationTime(int hour, int minute) async {
+    _configRepository.setNotificationTime(hour, minute);
+  }
+
+  Future<void> setSelectedLocale(String? locale) async {
+    _configRepository.setSelectedLocale(locale);
   }
 }

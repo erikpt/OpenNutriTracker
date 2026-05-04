@@ -9,7 +9,6 @@ class SecureAppStorageProvider {
   static const _hiveEncryptionTag = "HiveEncryptionTag";
 
   static const _androidOptions = AndroidOptions(
-    encryptedSharedPreferences: true,
     storageCipherAlgorithm: StorageCipherAlgorithm.AES_CBC_PKCS7Padding,
     sharedPreferencesName: _sharedPrefsName,
   );

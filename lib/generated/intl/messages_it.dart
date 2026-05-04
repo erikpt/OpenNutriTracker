@@ -29,6 +29,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(age) => "${age} anni";
 
+  static String m4(mealType) =>
+      "Questi elementi verranno aggiunti a ${mealType}.";
+
+  static String m5(count) => "Importare ${count} voci?";
+
+  static String m6(count) =>
+      "${count} elemento/i non è stato possibile recuperare da OpenFoodFacts.";
+
+  static String m8(rate) => "${rate} kg/settimana";
+
+  static String m9(rate) => "${rate} lbs/settimana";
+
+  static String m10(qty, unit) => "Per ${qty} ${unit}";
+
+  static String m11(time) => "Orario promemoria: ${time}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -38,7 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aggiungi nuovo alimento:"),
         "addLabel": MessageLookupByLibrary.simpleMessage("Aggiungi"),
         "additionalInfoLabelCompendium2011": MessageLookupByLibrary.simpleMessage(
-            "Informazioni fornite\ndal\n\'2011 Compendium\ndelle Attività Fisiche\'"),
+            "Informazioni fornite\ndal\n\'2024 Compendium\ndelle Attività Fisiche\'"),
         "additionalInfoLabelCustom":
             MessageLookupByLibrary.simpleMessage("Alimento personalizzato"),
         "additionalInfoLabelFDC": MessageLookupByLibrary.simpleMessage(
@@ -84,9 +100,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "carbohydrateLabel":
             MessageLookupByLibrary.simpleMessage("carboidrati"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("carboidrati"),
+        "chooseWeeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Ritmo peso settimanale"),
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Scegli obiettivo di peso"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("cm"),
+        "codeCopiedLabel":
+            MessageLookupByLibrary.simpleMessage("Codice copiato"),
+        "copyCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Copia codice"),
         "copyDialogTitle": MessageLookupByLibrary.simpleMessage(
             "Quale tipo di pasto vuoi copiare?"),
         "copyOrDeleteTimeDialogContent": MessageLookupByLibrary.simpleMessage(
@@ -163,6 +185,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "heightLabel": MessageLookupByLibrary.simpleMessage("Altezza"),
         "homeLabel": MessageLookupByLibrary.simpleMessage("Home"),
         "importAction": MessageLookupByLibrary.simpleMessage("Importa"),
+        "importMealConfirmContent": m4,
+        "importMealConfirmTitle": m5,
+        "importMealErrorLabel":
+            MessageLookupByLibrary.simpleMessage("Codice QR non valido"),
+        "importMealLabel":
+            MessageLookupByLibrary.simpleMessage("Importa pasto condiviso"),
+        "importMealSuccessLabel":
+            MessageLookupByLibrary.simpleMessage("Pasto importato"),
+        "importOffFetchFailedLabel": m6,
         "infoAddedActivityLabel":
             MessageLookupByLibrary.simpleMessage("Nuova attività aggiunta"),
         "infoAddedIntakeLabel":
@@ -186,6 +217,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "mealFatLabel": MessageLookupByLibrary.simpleMessage("grassi per"),
         "mealKcalLabel": MessageLookupByLibrary.simpleMessage("kcal per"),
         "mealNameLabel": MessageLookupByLibrary.simpleMessage("Nome pasto"),
+        "mealNutrientsPerQtyLabel": m10,
+        "mealNutrientsTotalLabel":
+            MessageLookupByLibrary.simpleMessage("Quantità totale"),
         "mealProteinLabel":
             MessageLookupByLibrary.simpleMessage("proteine per 100 g/ml"),
         "mealSizeLabel":
@@ -393,6 +427,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "paHeadingDancing": MessageLookupByLibrary.simpleMessage("danza"),
         "paHeadingRunning": MessageLookupByLibrary.simpleMessage("corsa"),
         "paHeadingSports": MessageLookupByLibrary.simpleMessage("sport"),
+        "pasteCodeHint": MessageLookupByLibrary.simpleMessage(
+            "Incolla qui il codice del pasto condiviso"),
+        "pasteCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Incolla codice"),
         "paHeadingWalking": MessageLookupByLibrary.simpleMessage("camminata"),
         "paHeadingWaterActivities":
             MessageLookupByLibrary.simpleMessage("attività acquatiche"),
@@ -655,15 +693,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsImperialLabel":
             MessageLookupByLibrary.simpleMessage("Imperiale (lbs, ft, oz)"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Impostazioni"),
+        "settingsLanguageLabel":
+            MessageLookupByLibrary.simpleMessage("Lingua"),
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Licenze"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Massa"),
         "settingsMetricLabel":
             MessageLookupByLibrary.simpleMessage("Metrico (kg, cm, ml)"),
+        "settingsNotificationsLabel":
+            MessageLookupByLibrary.simpleMessage("Promemoria giornaliero"),
+        "settingsNotificationsTimeLabel": m11,
         "settingsPrivacySettings":
             MessageLookupByLibrary.simpleMessage("Impostazioni privacy"),
         "settingsReportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Segnala errore"),
+        "settingsShowActivityTracking":
+            MessageLookupByLibrary.simpleMessage("Mostra tracciamento attività"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Codice sorgente"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("Sistema"),
@@ -675,12 +720,22 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Predefinito del sistema"),
         "settingsUnitsLabel": MessageLookupByLibrary.simpleMessage("Unità"),
         "settingsVolumeLabel": MessageLookupByLibrary.simpleMessage("Volume"),
+        "shareCodeLabel":
+            MessageLookupByLibrary.simpleMessage("Condividi codice"),
+        "shareMealLabel":
+            MessageLookupByLibrary.simpleMessage("Condividi pasto"),
         "snackExample": MessageLookupByLibrary.simpleMessage(
             "es. mela, gelato, cioccolato ..."),
         "snackLabel": MessageLookupByLibrary.simpleMessage("Spuntino"),
         "sugarLabel": MessageLookupByLibrary.simpleMessage("zuccheri"),
         "suppliedLabel": MessageLookupByLibrary.simpleMessage("assunte"),
         "unitLabel": MessageLookupByLibrary.simpleMessage("Unità"),
+        "weeklyWeightGoalKgPerWeek": m8,
+        "weeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Ritmo settimanale"),
+        "weeklyWeightGoalLbsPerWeek": m9,
+        "weeklyWeightGoalNoneLabel":
+            MessageLookupByLibrary.simpleMessage("Non impostato"),
         "weightLabel": MessageLookupByLibrary.simpleMessage("Peso"),
         "yearsLabel": m3
       };

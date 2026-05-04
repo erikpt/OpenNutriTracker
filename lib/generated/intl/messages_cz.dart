@@ -29,6 +29,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(age) => "${age} let";
 
+  static String m4(mealType) =>
+      "Tyto položky budou přidány do ${mealType}.";
+
+  static String m5(count) => "Importovat ${count} položek?";
+
+  static String m6(count) =>
+      "${count} položek nebylo možné načíst z OpenFoodFacts.";
+
+  static String m8(rate) => "${rate} kg/týden";
+
+  static String m9(rate) => "${rate} lbs/týden";
+
+  static String m10(qty, unit) => "Na ${qty} ${unit}";
+
+  static String m11(time) => "Čas připomínky: ${time}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -38,7 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Přidat nový záznam:"),
         "addLabel": MessageLookupByLibrary.simpleMessage("Vložit"),
         "additionalInfoLabelCompendium2011": MessageLookupByLibrary.simpleMessage(
-            "Informace poskytnutá\n během \n\'2011 Compendium\n of Physical Activities\'"),
+            "Informace poskytnutá\n během \n\'2024 Compendium\n of Physical Activities\'"),
         "additionalInfoLabelCustom":
             MessageLookupByLibrary.simpleMessage("Vlastní jídlo"),
         "additionalInfoLabelFDC": MessageLookupByLibrary.simpleMessage(
@@ -82,9 +98,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Výpočet TDEE"),
         "carbohydrateLabel": MessageLookupByLibrary.simpleMessage("sacharidy"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("sacharidy"),
+        "chooseWeeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Týdenní tempo hmotnosti"),
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Zvolte cílovou hmotnost"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("cm"),
+        "codeCopiedLabel":
+            MessageLookupByLibrary.simpleMessage("Kód zkopírován"),
+        "copyCodeLabel": MessageLookupByLibrary.simpleMessage("Kopírovat kód"),
         "copyDialogTitle": MessageLookupByLibrary.simpleMessage(
             "Který typ jídla si přejete zkopírovat?"),
         "copyOrDeleteTimeDialogContent": MessageLookupByLibrary.simpleMessage(
@@ -161,6 +182,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "heightLabel": MessageLookupByLibrary.simpleMessage("Výška"),
         "homeLabel": MessageLookupByLibrary.simpleMessage("Domů"),
         "importAction": MessageLookupByLibrary.simpleMessage("Import"),
+        "importMealConfirmContent": m4,
+        "importMealConfirmTitle": m5,
+        "importMealErrorLabel":
+            MessageLookupByLibrary.simpleMessage("Neplatný QR kód"),
+        "importMealLabel": MessageLookupByLibrary.simpleMessage(
+            "Importovat sdílené jídlo"),
+        "importMealSuccessLabel":
+            MessageLookupByLibrary.simpleMessage("Jídlo importováno"),
+        "importOffFetchFailedLabel": m6,
         "infoAddedActivityLabel":
             MessageLookupByLibrary.simpleMessage("Vložena nová aktivita"),
         "infoAddedIntakeLabel":
@@ -184,6 +214,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "mealFatLabel": MessageLookupByLibrary.simpleMessage("tuků na"),
         "mealKcalLabel": MessageLookupByLibrary.simpleMessage("kcal na"),
         "mealNameLabel": MessageLookupByLibrary.simpleMessage("Název jídla"),
+        "mealNutrientsPerQtyLabel": m10,
+        "mealNutrientsTotalLabel":
+            MessageLookupByLibrary.simpleMessage("Celkové množství"),
         "mealProteinLabel":
             MessageLookupByLibrary.simpleMessage("bílkovin na 100 g/ml"),
         "mealSizeLabel":
@@ -392,6 +425,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "paHeadingDancing": MessageLookupByLibrary.simpleMessage("tanec"),
         "paHeadingRunning": MessageLookupByLibrary.simpleMessage("běh"),
         "paHeadingSports": MessageLookupByLibrary.simpleMessage("sporty"),
+        "pasteCodeHint": MessageLookupByLibrary.simpleMessage(
+            "Vložte sem sdílený kód jídla"),
+        "pasteCodeLabel": MessageLookupByLibrary.simpleMessage("Vložit kód"),
         "paHeadingWalking": MessageLookupByLibrary.simpleMessage("chůze"),
         "paHeadingWaterActivities":
             MessageLookupByLibrary.simpleMessage("vodní sporty"),
@@ -650,15 +686,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsImperialLabel":
             MessageLookupByLibrary.simpleMessage("Imperiální (lbs, ft, oz)"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Nastavení"),
+        "settingsLanguageLabel":
+            MessageLookupByLibrary.simpleMessage("Jazyk"),
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Licence"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Hmota"),
         "settingsMetricLabel":
             MessageLookupByLibrary.simpleMessage("Metrické (kg, cm, ml)"),
+        "settingsNotificationsLabel":
+            MessageLookupByLibrary.simpleMessage("Denní připomínka"),
+        "settingsNotificationsTimeLabel": m11,
         "settingsPrivacySettings":
             MessageLookupByLibrary.simpleMessage("Nastavení soukromí"),
         "settingsReportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Nahlásit chybu"),
+        "settingsShowActivityTracking":
+            MessageLookupByLibrary.simpleMessage("Zobrazit sledování aktivity"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Zdrojový kód"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("Systém"),
@@ -670,12 +713,20 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Dle systémového nastavení"),
         "settingsUnitsLabel": MessageLookupByLibrary.simpleMessage("Jednotky"),
         "settingsVolumeLabel": MessageLookupByLibrary.simpleMessage("Objem"),
+        "shareCodeLabel": MessageLookupByLibrary.simpleMessage("Sdílet kód"),
+        "shareMealLabel": MessageLookupByLibrary.simpleMessage("Sdílet jídlo"),
         "snackExample": MessageLookupByLibrary.simpleMessage(
             "např. jablko, zmrzlina, čokoláda..."),
         "snackLabel": MessageLookupByLibrary.simpleMessage("Svačina"),
         "sugarLabel": MessageLookupByLibrary.simpleMessage("cukry"),
         "suppliedLabel": MessageLookupByLibrary.simpleMessage("přijato"),
         "unitLabel": MessageLookupByLibrary.simpleMessage("Jednotka"),
+        "weeklyWeightGoalKgPerWeek": m8,
+        "weeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Týdenní tempo"),
+        "weeklyWeightGoalLbsPerWeek": m9,
+        "weeklyWeightGoalNoneLabel":
+            MessageLookupByLibrary.simpleMessage("Nenastaveno"),
         "weightLabel": MessageLookupByLibrary.simpleMessage("Hmotnost"),
         "yearsLabel": m3
       };
