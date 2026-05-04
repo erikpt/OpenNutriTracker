@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:opennutritracker/core/utils/calc/unit_calc.dart';
+import 'package:opennutritracker/core/utils/bounds/validator.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
 class OnboardingSecondPageBody extends StatefulWidget {
@@ -66,7 +66,10 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
               focusNode: _heightFocusNode,
               onChanged: (text) {
                 if (_heightFormKey.currentState!.validate()) {
-                  _parsedHeight = double.tryParse(text.replaceAll(',', '.'));
+                  _parsedHeight = ValueValidator.parseHeightInCm(
+                    double.tryParse(text.replaceAll(',', '.')),
+                    isImperial: _isImperialSelected,
+                  );
                   checkCorrectInput();
                 } else {
                   _parsedHeight = null;
@@ -105,7 +108,6 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
               isSelected: _isUnitSelected,
               onPressed: (int index) {
                 setState(() {
-                  // Toggle height unit
                   for (int i = 0; i < _isUnitSelected.length; i++) {
                     _isUnitSelected[i] = i == index;
                   }
@@ -141,9 +143,13 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
               focusNode: _weightFocusNode,
               onChanged: (text) {
                 if (_weightFormKey.currentState!.validate()) {
-                  _parsedWeight = double.tryParse(text);
+                  _parsedWeight = ValueValidator.parseWeightInKg(
+                    double.tryParse(text),
+                    isImperial: _isImperialSelected,
+                  );
                   checkCorrectInput();
                 } else {
+                  _parsedWeight = null;
                   checkCorrectInput();
                 }
               },
@@ -175,7 +181,6 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
               isSelected: _isUnitSelected,
               onPressed: (int index) {
                 setState(() {
-                  // Toggle height unit
                   for (int i = 0; i < _isUnitSelected.length; i++) {
                     _isUnitSelected[i] = i == index;
                   }
@@ -201,52 +206,35 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
   }
 
   String? validateHeight(String? value) {
-    if (value == null) return S.of(context).onboardingWrongHeightLabel;
-
-    if (_isImperialSelected) {
-      // Regex for feet and inches
-      if (value.isEmpty || !RegExp(r'^[0-9]+([.,][0-9])?$').hasMatch(value)) {
-        return S.of(context).onboardingWrongHeightLabel;
-      } else {
-        return null;
-      }
-    } else {
-      // Regex for cm
-      if (value.isEmpty || !RegExp(r'^[0-9]+$').hasMatch(value)) {
-        return S.of(context).onboardingWrongHeightLabel;
-      } else {
-        return null;
-      }
+    final label = S.of(context).onboardingWrongHeightLabel;
+    if (ValueValidator.heightStringValidator(value, label, isImperial: _isImperialSelected) != null) {
+      return label;
     }
+    final parsed = double.tryParse(value!.replaceAll(',', '.'));
+    if (ValueValidator.parseHeightInCm(parsed, isImperial: _isImperialSelected) == null) {
+      return label;
+    }
+    return null;
   }
 
   String? validateWeight(String? value) {
-    if (value == null) return S.of(context).onboardingWrongWeightLabel;
-    if (value.isEmpty || !RegExp(r'^[0-9]').hasMatch(value)) {
-      return S.of(context).onboardingWrongWeightLabel;
-    } else {
-      return null;
+    final label = S.of(context).onboardingWrongWeightLabel;
+    if (ValueValidator.weightStringValidator(value, label, isImperial: _isImperialSelected) != null) {
+      return label;
     }
+    final parsed = double.tryParse(value!);
+    if (ValueValidator.parseWeightInKg(parsed, isImperial: _isImperialSelected) == null) {
+      return label;
+    }
+    return null;
   }
 
-  /// Check if the input is correct and update the button content
   void checkCorrectInput() {
     final isHeightValid = _heightFormKey.currentState?.validate() ?? false;
     final isWeightValid = _weightFormKey.currentState?.validate() ?? false;
 
-    if (isHeightValid && isWeightValid) {
-      if (_parsedHeight != null && _parsedWeight != null) {
-        final heightCm = _isImperialSelected
-            ? UnitCalc.feetToCm(_parsedHeight!)
-            : _parsedHeight!;
-        final weightKg = _isImperialSelected
-            ? UnitCalc.lbsToKg(_parsedWeight!)
-            : _parsedWeight!;
-
-        widget.setButtonContent(true, heightCm, weightKg, _isImperialSelected);
-      } else {
-        widget.setButtonContent(false, null, null, _isImperialSelected);
-      }
+    if (isHeightValid && isWeightValid && _parsedHeight != null && _parsedWeight != null) {
+      widget.setButtonContent(true, _parsedHeight, _parsedWeight, _isImperialSelected);
     } else {
       widget.setButtonContent(false, null, null, _isImperialSelected);
     }
