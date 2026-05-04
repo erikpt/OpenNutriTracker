@@ -98,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Розрахунок TDEE"),
         "carbohydrateLabel": MessageLookupByLibrary.simpleMessage("вуглеводи"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("вуглеводи"),
+        "carbsLabelShort": MessageLookupByLibrary.simpleMessage("в"),
         "chooseWeeklyWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Тижневий темп ваги"),
         "chooseWeightGoalLabel":
@@ -178,6 +179,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "exportImportSuccessLabel":
             MessageLookupByLibrary.simpleMessage("Експорт / Імпорт успішний"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("жири"),
+        "fatLabelShort": MessageLookupByLibrary.simpleMessage("ж"),
         "fiberLabel": MessageLookupByLibrary.simpleMessage("клітковина"),
         "flOzUnit": MessageLookupByLibrary.simpleMessage("рідка унція"),
         "ftLabel": MessageLookupByLibrary.simpleMessage("фут"),
@@ -658,6 +660,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Політика конфіденційності"),
         "profileLabel": MessageLookupByLibrary.simpleMessage("Профіль"),
         "proteinLabel": MessageLookupByLibrary.simpleMessage("білки"),
+        "proteinLabelShort": MessageLookupByLibrary.simpleMessage("б"),
         "quantityLabel": MessageLookupByLibrary.simpleMessage("Кількість"),
         "readLabel": MessageLookupByLibrary.simpleMessage(
             "Я прочитав і приймаю політику конфіденційності."),

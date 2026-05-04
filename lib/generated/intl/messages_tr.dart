@@ -100,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "carbohydrateLabel":
             MessageLookupByLibrary.simpleMessage("karbonhidrat"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("karbonhidrat"),
+        "carbsLabelShort": MessageLookupByLibrary.simpleMessage("k"),
         "chooseWeeklyWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Haftalık kilo oranı"),
         "chooseWeightGoalLabel":
@@ -180,6 +181,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "exportImportSuccessLabel": MessageLookupByLibrary.simpleMessage(
             "Dışa Aktarma / İçe Aktarma başarılı"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("yağ"),
+        "fatLabelShort": MessageLookupByLibrary.simpleMessage("y"),
         "fiberLabel": MessageLookupByLibrary.simpleMessage("lif"),
         "flOzUnit": MessageLookupByLibrary.simpleMessage("fl.oz"),
         "ftLabel": MessageLookupByLibrary.simpleMessage("ft"),
@@ -643,6 +645,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Gizlilik politikası"),
         "profileLabel": MessageLookupByLibrary.simpleMessage("Profil"),
         "proteinLabel": MessageLookupByLibrary.simpleMessage("protein"),
+        "proteinLabelShort": MessageLookupByLibrary.simpleMessage("p"),
         "quantityLabel": MessageLookupByLibrary.simpleMessage("Miktar"),
         "readLabel": MessageLookupByLibrary.simpleMessage(
             "Gizlilik politikasını okudum ve kabul ediyorum."),

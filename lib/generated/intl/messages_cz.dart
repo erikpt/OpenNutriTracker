@@ -98,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Výpočet TDEE"),
         "carbohydrateLabel": MessageLookupByLibrary.simpleMessage("sacharidy"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("sacharidy"),
+        "carbsLabelShort": MessageLookupByLibrary.simpleMessage("s"),
         "chooseWeeklyWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Týdenní tempo hmotnosti"),
         "chooseWeightGoalLabel":
@@ -176,6 +177,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "exportImportSuccessLabel":
             MessageLookupByLibrary.simpleMessage("Export / Import byl úspěšný"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("tuky"),
+        "fatLabelShort": MessageLookupByLibrary.simpleMessage("t"),
         "fiberLabel": MessageLookupByLibrary.simpleMessage("vláknina"),
         "flOzUnit": MessageLookupByLibrary.simpleMessage("fl.oz"),
         "ftLabel": MessageLookupByLibrary.simpleMessage("ft"),
@@ -651,6 +653,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Pravidla týkající se soukromí"),
         "profileLabel": MessageLookupByLibrary.simpleMessage("Profil"),
         "proteinLabel": MessageLookupByLibrary.simpleMessage("bílkoviny"),
+        "proteinLabelShort": MessageLookupByLibrary.simpleMessage("b"),
         "quantityLabel": MessageLookupByLibrary.simpleMessage("Množství"),
         "readLabel": MessageLookupByLibrary.simpleMessage(
             "Četl jsem pravidla ohledně soukromí a souhlasím s nimi."),

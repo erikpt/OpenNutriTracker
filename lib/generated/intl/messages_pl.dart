@@ -98,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "carbohydrateLabel":
             MessageLookupByLibrary.simpleMessage("węglowodany"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("węglowodany"),
+        "carbsLabelShort": MessageLookupByLibrary.simpleMessage("w"),
         "chooseWeeklyWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Tygodniowe tempo wagi"),
         "chooseWeightGoalLabel":
@@ -176,6 +177,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "exportImportSuccessLabel": MessageLookupByLibrary.simpleMessage(
             "Eksport / Import zakończony sukcesem"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("tłuszcze"),
+        "fatLabelShort": MessageLookupByLibrary.simpleMessage("t"),
         "fiberLabel": MessageLookupByLibrary.simpleMessage("błonnik"),
         "flOzUnit": MessageLookupByLibrary.simpleMessage("fl.oz"),
         "ftLabel": MessageLookupByLibrary.simpleMessage("ft"),
@@ -656,6 +658,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Polityka prywatności"),
         "profileLabel": MessageLookupByLibrary.simpleMessage("Profil"),
         "proteinLabel": MessageLookupByLibrary.simpleMessage("białko"),
+        "proteinLabelShort": MessageLookupByLibrary.simpleMessage("b"),
         "quantityLabel": MessageLookupByLibrary.simpleMessage("Ilość"),
         "readLabel": MessageLookupByLibrary.simpleMessage(
             "Przeczytałem i akceptuję politykę prywatności."),
