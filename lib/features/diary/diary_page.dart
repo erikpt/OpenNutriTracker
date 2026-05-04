@@ -5,6 +5,7 @@ import 'package:opennutritracker/core/domain/entity/intake_entity.dart';
 import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
 import 'package:opennutritracker/core/domain/entity/tracked_day_entity.dart';
 import 'package:opennutritracker/core/domain/entity/user_activity_entity.dart';
+import 'package:opennutritracker/core/presentation/widgets/edit_activity_dialog.dart';
 import 'package:opennutritracker/core/presentation/widgets/edit_dialog.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.dart';
@@ -119,6 +120,7 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
                 onCopyIntake: _onCopyIntakeItem,
                 onCopyActivity: _onCopyActivityItem,
                 onEditIntake: _onEditIntakeItem,
+                onEditActivity: _onEditActivityItem,
                 usesImperialUnits: usesImperialUnits,
               );
             }
@@ -212,6 +214,32 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
       await _calendarDayBloc.updateIntakeItem(
         intakeEntity.id,
         {'amount': changeIntakeAmount},
+        _selectedDate,
+      );
+      _diaryBloc.add(const LoadDiaryYearEvent());
+      _calendarDayBloc.add(LoadCalendarDayEvent(_selectedDate));
+      _diaryBloc.updateHomePage();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(S.of(context).itemUpdatedSnackbar)),
+        );
+      }
+    }
+  }
+
+  void _onEditActivityItem(
+    BuildContext context,
+    UserActivityEntity activityEntity,
+  ) async {
+    final newDuration = await showDialog<double>(
+      context: context,
+      builder: (context) =>
+          EditActivityDialog(activityEntity: activityEntity),
+    );
+    if (newDuration != null) {
+      await _calendarDayBloc.updateUserActivityItem(
+        activityEntity,
+        newDuration,
         _selectedDate,
       );
       _diaryBloc.add(const LoadDiaryYearEvent());

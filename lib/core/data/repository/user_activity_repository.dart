@@ -19,6 +19,19 @@ class UserActivityRepository {
     await _userActivityDataSource.addAllUserActivities(userActivityDBOs);
   }
 
+  Future<UserActivityEntity?> updateUserActivity(
+    String id,
+    double newDuration,
+    double newBurnedKcal,
+  ) async {
+    final dbo = await _userActivityDataSource.updateUserActivity(
+      id,
+      newDuration,
+      newBurnedKcal,
+    );
+    return dbo == null ? null : UserActivityEntity.fromUserActivityDBO(dbo);
+  }
+
   Future<void> deleteUserActivity(UserActivityEntity userActivityEntity) async {
     await _userActivityDataSource.deleteIntakeFromId(userActivityEntity.id);
   }

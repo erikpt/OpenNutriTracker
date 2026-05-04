@@ -10,6 +10,8 @@ class ActivityVerticalList extends StatelessWidget {
   final String title;
   final List<UserActivityEntity> userActivityList;
   final Function(BuildContext, UserActivityEntity) onItemLongPressedCallback;
+  final Function(BuildContext, UserActivityEntity)? onItemTappedCallback;
+  final Function(bool isDragging)? onItemDragCallback;
 
   const ActivityVerticalList({
     super.key,
@@ -17,6 +19,8 @@ class ActivityVerticalList extends StatelessWidget {
     required this.title,
     required this.userActivityList,
     required this.onItemLongPressedCallback,
+    this.onItemTappedCallback,
+    this.onItemDragCallback,
   });
 
   @override
@@ -62,6 +66,8 @@ class ActivityVerticalList extends StatelessWidget {
                 return ActivityCard(
                   activityEntity: userActivity,
                   onItemLongPressed: onItemLongPressedCallback,
+                  onItemTapped: onItemTappedCallback,
+                  onItemDragCallback: onItemDragCallback,
                   firstListElement: firstListElement,
                 );
               }

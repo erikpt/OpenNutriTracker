@@ -39,6 +39,8 @@ class DayInfoWidget extends StatelessWidget {
   ) onCopyActivity;
   final Function(BuildContext context, IntakeEntity intake, bool usesImperialUnits)?
       onEditIntake;
+  final Function(BuildContext context, UserActivityEntity activity)?
+      onEditActivity;
 
   const DayInfoWidget({
     super.key,
@@ -55,6 +57,7 @@ class DayInfoWidget extends StatelessWidget {
     required this.onCopyIntake,
     required this.onCopyActivity,
     this.onEditIntake,
+    this.onEditActivity,
   });
 
   @override
@@ -141,6 +144,7 @@ class DayInfoWidget extends StatelessWidget {
               title: S.of(context).activityLabel,
               userActivityList: userActivities,
               onItemLongPressedCallback: onActivityItemLongPressed,
+              onItemTappedCallback: onEditActivity,
             ),
             IntakeVerticalList(
               day: selectedDay,
