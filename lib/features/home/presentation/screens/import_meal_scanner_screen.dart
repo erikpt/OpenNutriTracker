@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
+import 'package:opennutritracker/core/utils/retry_util.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.dart';
 import 'package:opennutritracker/features/scanner/domain/usecase/search_product_by_barcode_usecase.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/calendar_day_bloc.dart';
@@ -12,17 +13,6 @@ import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart'
 import 'package:opennutritracker/features/meal_detail/presentation/bloc/meal_detail_bloc.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
-Future<T> _withRetry<T>(Future<T> Function() fn, {int attempts = 3}) async {
-  for (var i = 0; i < attempts; i++) {
-    try {
-      return await fn();
-    } catch (e) {
-      if (i == attempts - 1) rethrow;
-      await Future.delayed(Duration(seconds: 1 << i));
-    }
-  }
-  throw StateError('unreachable');
-}
 
 class ImportMealScannerArguments {
   final IntakeTypeEntity intakeTypeEntity;
@@ -194,7 +184,7 @@ class _ImportMealScannerScreenState extends State<ImportMealScannerScreen> {
 
     final offResults = await Future.wait(payload.offRefs.map((ref) async {
       try {
-        final meal = await _withRetry(
+        final meal = await withRetry(
           () => _searchProductByBarcodeUseCase.searchProductByBarcode(ref.barcode),
         );
         return (ref: ref, meal: meal);
