@@ -222,4 +222,80 @@ void main() {
     expect(isValid, isTrue);
     expect(find.text(S.current.onboardingWrongHeightLabel), findsNothing);
   });
+
+  // Regression coverage for #244 — the weight field used to be locked to
+  // FilteringTextInputFormatter.digitsOnly which silently dropped any '.' or
+  // ',' the user typed. Now it accepts a single decimal digit in either
+  // separator.
+  testWidgets('Weight field: metric accepts decimal input with dot (65.5 kg)',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: const [S.delegate],
+      home: Scaffold(
+        body: OnboardingSecondPageBody(
+          setButtonContent: (_, _, _, _) {},
+        ),
+      ),
+    ));
+
+    final weightField = find.byType(TextFormField).last;
+    await tester.enterText(weightField, '65.5');
+    await tester.pump();
+
+    final weightForm = find.byType(Form).last;
+    final isValid = tester.state<FormState>(weightForm).validate();
+    await tester.pump();
+
+    // The character must survive the input formatter (the previous
+    // digitsOnly formatter would have stripped the dot).
+    expect(find.text('65.5'), findsOneWidget);
+    expect(isValid, isTrue);
+    expect(find.text(S.current.onboardingWrongWeightLabel), findsNothing);
+  });
+
+  testWidgets('Weight field: metric accepts decimal input with comma (65,5 kg)',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: const [S.delegate],
+      home: Scaffold(
+        body: OnboardingSecondPageBody(
+          setButtonContent: (_, _, _, _) {},
+        ),
+      ),
+    ));
+
+    final weightField = find.byType(TextFormField).last;
+    await tester.enterText(weightField, '65,5');
+    await tester.pump();
+
+    final weightForm = find.byType(Form).last;
+    final isValid = tester.state<FormState>(weightForm).validate();
+    await tester.pump();
+
+    expect(find.text('65,5'), findsOneWidget);
+    expect(isValid, isTrue);
+    expect(find.text(S.current.onboardingWrongWeightLabel), findsNothing);
+  });
+
+  testWidgets('Weight field: zero is rejected (below minWeight=2)',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: const [S.delegate],
+      home: Scaffold(
+        body: OnboardingSecondPageBody(
+          setButtonContent: (_, _, _, _) {},
+        ),
+      ),
+    ));
+
+    final weightField = find.byType(TextFormField).last;
+    await tester.enterText(weightField, '0');
+    await tester.pump();
+
+    final weightForm = find.byType(Form).last;
+    tester.state<FormState>(weightForm).validate();
+    await tester.pump();
+
+    expect(find.text(S.current.onboardingWrongWeightLabel), findsOneWidget);
+  });
 }
