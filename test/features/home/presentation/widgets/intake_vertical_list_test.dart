@@ -5,6 +5,7 @@ import 'package:opennutritracker/core/domain/entity/intake_entity.dart';
 import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
 import 'package:opennutritracker/features/add_meal/domain/entity/meal_entity.dart';
 import 'package:opennutritracker/features/add_meal/domain/entity/meal_nutriments_entity.dart';
+import 'package:opennutritracker/core/utils/vertical_list_popup_menu_selections.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.dart';
 import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart';
 import 'package:opennutritracker/features/home/presentation/widgets/intake_vertical_list.dart';
@@ -163,6 +164,62 @@ void main() {
 
       expect(find.text(headerWithMacros()), findsNothing);
       expect(find.text(headerKcalOnly()), findsNothing);
+    },
+  );
+
+  // Regression: the QR-share/import options were dropped from the popup
+  // menu when the macros toggle PR landed on a stale base. Lock in the
+  // expected items so it can't happen again silently.
+  testWidgets(
+    'popup menu shows Copy/Delete/Share/Import for non-empty section',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(_wrapWithMaterial(IntakeVerticalList(
+        day: DateTime(2026, 1, 1),
+        title: 'Breakfast',
+        listIcon: Icons.bakery_dining_outlined,
+        addMealType: AddMealType.breakfastType,
+        intakeList: intakes,
+        usesImperialUnits: false,
+        showMealMacros: true,
+        onCopyIntakeCallback: (_, _, _) {},
+        onDeleteIntakeCallback: (_, _) {},
+      )));
+      await tester.pump();
+
+      await tester.tap(find.byType(PopupMenuButton<VerticalListPopupMenuSelections>));
+      await tester.pumpAndSettle();
+
+      expect(find.text(S.current.dialogCopyLabel), findsOneWidget);
+      expect(find.text(S.current.deleteAllLabel), findsOneWidget);
+      expect(find.text(S.current.shareMealLabel), findsOneWidget);
+      expect(find.text(S.current.importMealLabel), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'popup menu shows only Import when section is empty',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(_wrapWithMaterial(IntakeVerticalList(
+        day: DateTime(2026, 1, 1),
+        title: 'Breakfast',
+        listIcon: Icons.bakery_dining_outlined,
+        addMealType: AddMealType.breakfastType,
+        intakeList: const [],
+        usesImperialUnits: false,
+        showMealMacros: true,
+        onDeleteIntakeCallback: (_, _) {},
+      )));
+      await tester.pump();
+
+      await tester.tap(find.byType(PopupMenuButton<VerticalListPopupMenuSelections>));
+      await tester.pumpAndSettle();
+
+      // Empty section: no Copy/Delete/Share — nothing to act on. Import is
+      // always available so the user can scan a QR to populate the section.
+      expect(find.text(S.current.dialogCopyLabel), findsNothing);
+      expect(find.text(S.current.deleteAllLabel), findsNothing);
+      expect(find.text(S.current.shareMealLabel), findsNothing);
+      expect(find.text(S.current.importMealLabel), findsOneWidget);
     },
   );
 }
