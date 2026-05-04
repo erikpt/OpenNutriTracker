@@ -100,15 +100,14 @@ class _OnboardingFirstPageBodyState extends State<OnboardingFirstPageBody> {
       firstDate: ValueValidator.getFirstDate(),
       lastDate: ValueValidator.getLastDate(),
     );
-    if (pickedDate != null) {
-      final MaterialLocalizations localizations = MaterialLocalizations.of(context);
-      String formattedDate = localizations.formatCompactDate(pickedDate);
-      setState(() {
-        _selectedDate = pickedDate;
-        _dateInput.text = formattedDate;
-        checkCorrectInput();
-      });
-    }
+    if (pickedDate == null || !mounted) return;
+    final localizations = MaterialLocalizations.of(context);
+    final formattedDate = localizations.formatCompactDate(pickedDate);
+    setState(() {
+      _selectedDate = pickedDate;
+      _dateInput.text = formattedDate;
+      checkCorrectInput();
+    });
   }
 
   void checkCorrectInput() {
