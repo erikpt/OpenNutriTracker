@@ -701,6 +701,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Lizenzen"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Masse"),
+        "settingsImperialLabel":
+            MessageLookupByLibrary.simpleMessage("Imperial (lbs, ft, oz)"),
         "settingsMetricLabel":
             MessageLookupByLibrary.simpleMessage("Metrisch (kg, cm, ml)"),
         "settingsNotificationsLabel":
@@ -712,6 +714,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Fehler melden"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Quellcode"),
+        "settingsSystemLabel":
+            MessageLookupByLibrary.simpleMessage("System"),
         "settingsThemeDarkLabel":
             MessageLookupByLibrary.simpleMessage("Dunkel"),
         "settingsThemeLabel": MessageLookupByLibrary.simpleMessage("Thema"),

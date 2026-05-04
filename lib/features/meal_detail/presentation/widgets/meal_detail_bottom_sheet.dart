@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:opennutritracker/core/domain/entity/intake_entity.dart';
 import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
+import 'package:opennutritracker/core/domain/usecase/get_intake_usecase.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/core/utils/navigation_options.dart';
 import 'package:opennutritracker/features/add_meal/domain/entity/meal_entity.dart';
@@ -183,7 +185,35 @@ class _MealDetailBottomSheetState extends State<MealDetailBottomSheet> {
     }
   }
 
-  void onAddButtonPressed(BuildContext context) {
+  Future<void> onAddButtonPressed(BuildContext context) async {
+    // Validate quantity (#209, #210)
+    final quantityText = widget.quantityTextController.text.replaceAll(',', '.');
+    final quantity = double.tryParse(quantityText);
+
+    if (quantity == null || quantity <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${S.of(context).quantityLabel} must be greater than 0')),
+      );
+      return;
+    }
+
+    // Reasonable maximum limit per meal (#210)
+    if (quantity > 10000) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${S.of(context).quantityLabel} seems unrealistically high')),
+      );
+      return;
+    }
+
+    // Check for duplicate additions (#212)
+    final isDuplicate = await _checkForDuplicate(context);
+    if (!context.mounted) return;
+    if (isDuplicate) {
+      final shouldAdd = await _showDuplicateDialog(context);
+      if (!context.mounted) return;
+      if (shouldAdd != true) return;
+    }
+
     widget.mealDetailBloc.addIntake(
       context,
       widget.mealDetailBloc.state.selectedUnit,
@@ -196,9 +226,9 @@ class _MealDetailBottomSheetState extends State<MealDetailBottomSheet> {
     // Refresh Home Page
     locator<HomeBloc>().add(const LoadItemsEvent());
 
-    // Refresh Diary Page
+    // Refresh Diary Page - Pass the day to preserve selection (#154)
     locator<DiaryBloc>().add(const LoadDiaryYearEvent());
-    locator<CalendarDayBloc>().add(RefreshCalendarDayEvent());
+    locator<CalendarDayBloc>().add(const RefreshCalendarDayEvent());
 
     // Show snackbar and return to dashboard
     ScaffoldMessenger.of(
@@ -207,6 +237,55 @@ class _MealDetailBottomSheetState extends State<MealDetailBottomSheet> {
     Navigator.of(
       context,
     ).popUntil(ModalRoute.withName(NavigationOptions.mainRoute));
+  }
+
+  // #212: Check if this meal was already added today for the same meal type
+  Future<bool> _checkForDuplicate(BuildContext context) async {
+    final getIntakeUsecase = locator<GetIntakeUsecase>();
+    final List<IntakeEntity> todayIntakes;
+    
+    switch (widget.intakeTypeEntity) {
+      case IntakeTypeEntity.breakfast:
+        todayIntakes = await getIntakeUsecase.getBreakfastIntakeByDay(widget.day);
+        break;
+      case IntakeTypeEntity.lunch:
+        todayIntakes = await getIntakeUsecase.getLunchIntakeByDay(widget.day);
+        break;
+      case IntakeTypeEntity.dinner:
+        todayIntakes = await getIntakeUsecase.getDinnerIntakeByDay(widget.day);
+        break;
+      case IntakeTypeEntity.snack:
+        todayIntakes = await getIntakeUsecase.getSnackIntakeByDay(widget.day);
+        break;
+    }
+
+    // Check if meal with same code or name already exists
+    return todayIntakes.any((intake) =>
+        (widget.product.code != null && intake.meal.code == widget.product.code) ||
+        (widget.product.name != null && intake.meal.name == widget.product.name));
+  }
+
+  // #212: Show confirmation dialog for duplicate meals
+  Future<bool?> _showDuplicateDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(S.of(context).warningLabel),
+          content: Text(S.of(context).duplicateMealDialogContent),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(S.of(context).dialogCancelLabel),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(S.of(context).addLabel),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   DropdownMenuItem<String> _getServingDropdownItem(BuildContext context) {

@@ -5,6 +5,8 @@
   "alphaVersionName": "[Alpha]",
   "betaVersionName": "[Beta]",
   "addLabel": "Ekle",
+  "warningLabel": "Uyarı",
+  "duplicateMealDialogContent": "Bu yiyecek bugün bu öğüne zaten eklenmiş. Tekrar eklensin mi?",
   "createCustomDialogTitle": "Özel yemek öğesi oluştur?",
   "createCustomDialogContent": "Özel bir yemek öğesi oluşturmak istiyor musunuz?",
   "settingsLabel": "Ayarlar",

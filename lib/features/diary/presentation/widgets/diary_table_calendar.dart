@@ -36,7 +36,7 @@ class _DiaryTableCalendarState extends State<DiaryTableCalendar> {
       ),
       focusedDay: widget.focusedDate,
       firstDay: widget.currentDate.subtract(widget.calendarDurationDays),
-      lastDay: widget.currentDate.add(widget.calendarDurationDays),
+      lastDay: widget.currentDate, // Prevent future date selection (#207)
       startingDayOfWeek: StartingDayOfWeek.monday,
       onDaySelected: (selectedDay, focusedDay) {
         widget.onDateSelected(selectedDay, widget.trackedDaysMap);

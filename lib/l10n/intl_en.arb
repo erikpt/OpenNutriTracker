@@ -5,6 +5,8 @@
   "alphaVersionName": "[Alpha]",
   "betaVersionName": "[Beta]",
   "addLabel": "Add",
+  "warningLabel": "Warning",
+  "duplicateMealDialogContent": "This food has already been added to this meal today. Add it again?",
   "createCustomDialogTitle": "Create custom meal item?",
   "createCustomDialogContent": "Do you want create a custom meal item?",
   "settingsLabel": "Settings",

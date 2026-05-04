@@ -37,7 +37,7 @@ class TrackedDayDataSource {
     List<TrackedDayDBO> trackedDays = _trackedDayBox.values
         .where(
           (trackedDay) =>
-              (trackedDay.day.isAfter(start) && trackedDay.day.isBefore(end)),
+              !trackedDay.day.isBefore(start) && !trackedDay.day.isAfter(end),
         )
         .toList();
     return trackedDays;
@@ -213,6 +213,24 @@ class TrackedDayDataSource {
         updateDay.proteinTracked =
             (updateDay.proteinTracked ?? 0) - proteinAmount;
       }
+      updateDay.save();
+    }
+  }
+
+  Future<void> reconcileCaloriesAndMacrosTracked(
+    DateTime day,
+    double calories,
+    double carbs,
+    double fat,
+    double protein,
+  ) async {
+    log.fine('Reconciling tracked day calories and macros from actual intakes');
+    final updateDay = await getTrackedDay(day);
+    if (updateDay != null) {
+      updateDay.caloriesTracked = calories;
+      updateDay.carbsTracked = carbs;
+      updateDay.fatTracked = fat;
+      updateDay.proteinTracked = protein;
       updateDay.save();
     }
   }

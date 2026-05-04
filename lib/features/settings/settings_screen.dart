@@ -77,15 +77,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: Text(S.of(context).settingsThemeLabel),
                   onTap: () => _showThemeDialog(context, state.appTheme),
                 ),
-                ListTile(
-                  leading: const Icon(Icons.language_outlined),
-                  title: Text(S.of(context).settingsLanguageLabel),
-                  subtitle: Text(
-                      _localeDisplayName(state.selectedLocale) ??
-                          S.of(context).settingsThemeSystemDefaultLabel),
-                  onTap: () =>
-                      _showLanguageDialog(context, state.selectedLocale),
-                ),
                 SwitchListTile(
                   secondary: const Icon(Icons.directions_run_outlined),
                   title: Text(S.of(context).settingsShowActivityTracking),
@@ -95,6 +86,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _settingsBloc.add(LoadSettingsEvent());
                     _homeBloc.add(LoadItemsEvent());
                   },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.language_outlined),
+                  title: Text(S.of(context).settingsLanguageLabel),
+                  subtitle: Text(
+                      _localeDisplayName(state.selectedLocale) ??
+                          S.of(context).settingsThemeSystemDefaultLabel),
+                  onTap: () =>
+                      _showLanguageDialog(context, state.selectedLocale),
                 ),
                 SwitchListTile(
                   secondary: const Icon(Icons.notifications_outlined),

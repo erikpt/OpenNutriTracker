@@ -327,8 +327,63 @@ class _EditMealScreenState extends State<EditMealScreen> {
     return text.isEmpty ? baseQuantity : text;
   }
 
-  void _onSavePressed(bool usesImperialUnits) {
+  Future<void> _onSavePressed(bool usesImperialUnits) async {
     try {
+      // Validate that custom meals have a name
+      if (_nameTextController.text.trim().isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('${S.of(context).mealNameLabel} is required')));
+        return;
+      }
+      
+      // Validate name contains at least one letter (#211)
+      final name = _nameTextController.text.trim();
+      if (!RegExp(r'[a-zA-Z]').hasMatch(name)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('${S.of(context).mealNameLabel} must contain at least one letter')));
+        return;
+      }
+
+      // Validate nutritional consistency (#213)
+      final baseQty =
+          double.tryParse(_baseQuantityTextController.text) ?? 100.0;
+      final enteredKcal = double.tryParse(_kcalTextController.text);
+      final enteredCarbs = double.tryParse(_carbsTextController.text);
+      final enteredFat = double.tryParse(_fatTextController.text);
+      final enteredProtein = double.tryParse(_proteinTextController.text);
+
+      for (final entry in {
+        'Carbs': enteredCarbs,
+        'Fat': enteredFat,
+        'Protein': enteredProtein,
+      }.entries) {
+        if (entry.value != null && entry.value! > baseQty) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                  '${entry.key} cannot exceed base quantity (${baseQty}g/ml)')));
+          return;
+        }
+      }
+
+      if (enteredCarbs != null &&
+          enteredFat != null &&
+          enteredProtein != null) {
+        final totalMacros = enteredCarbs + enteredFat + enteredProtein;
+        if (totalMacros > baseQty * 1.05) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                  'Total macros (${totalMacros.toStringAsFixed(1)}g) exceed base quantity (${baseQty.toStringAsFixed(0)}g)')));
+          return;
+        }
+      }
+
+      if (enteredKcal != null && enteredKcal > baseQty * 9) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text('Kcal value seems too high for ${baseQty.toStringAsFixed(0)}g/ml')));
+        return;
+      }
+
       // Convert meal size back to metric units if necessary
       final mealUnitForConversion = selectedUnit ?? _mealEntity.mealUnit ?? '0';
       final mealQuantity = usesImperialUnits
@@ -373,6 +428,12 @@ class _EditMealScreenState extends State<EditMealScreen> {
         proteinText,
       );
 
+      // Persist custom meal template (#267)
+      if (newMealEntity.source == MealSourceEntity.custom) {
+        await _editMealBloc.saveCustomMeal(newMealEntity);
+      }
+
+      if (!mounted) return;
       Navigator.of(context).pushNamedAndRemoveUntil(
         NavigationOptions.mealDetailRoute,
         ModalRoute.withName(NavigationOptions.addMealRoute),
@@ -387,9 +448,9 @@ class _EditMealScreenState extends State<EditMealScreen> {
       log.warning("Error while creating new meal entity");
       Sentry.captureException(exception, stackTrace: stacktrace);
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(S.of(context).errorMealSave)));
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(S.of(context).errorMealSave)));
     }
   }
 

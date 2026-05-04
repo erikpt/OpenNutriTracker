@@ -170,13 +170,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final dateTime = DateTime.now();
     // Get old intake values
     final oldIntakeObject = await _getIntakeUsecase.getIntakeById(intakeId);
-    assert(oldIntakeObject != null);
-    final newIntakeObject = await _updateIntakeUsecase.updateIntake(
-      intakeId,
-      fields,
-    );
-    assert(newIntakeObject != null);
-    if (oldIntakeObject!.amount > newIntakeObject!.amount) {
+    if (oldIntakeObject == null) return;
+    final newIntakeObject =
+        await _updateIntakeUsecase.updateIntake(intakeId, fields);
+    if (newIntakeObject == null) return;
+    if (oldIntakeObject.amount > newIntakeObject.amount) {
       // Amounts shrunk
       await _addTrackedDayUseCase.removeDayCaloriesTracked(
         dateTime,
@@ -248,6 +246,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       proteinAmount: proteinAmount,
     );
     _updateDiaryPage(dateTime);
+    add(const LoadItemsEvent()); // #208: Reload home page to remove activity indicator
   }
 
   Future<void> updateUserActivityItem(
