@@ -5,11 +5,14 @@
   "alphaVersionName": "[Alpha]",
   "betaVersionName": "[Beta]",
   "addLabel": "Hinzufügen",
+  "warningLabel": "Warnung",
+  "duplicateMealDialogContent": "Dieses Lebensmittel wurde heute bereits zu dieser Mahlzeit hinzugefügt. Erneut hinzufügen?",
   "createCustomDialogTitle": "Benutzerdefinierte Mahlzeit erstellen?",
   "createCustomDialogContent": "Möchten Sie einen benutzerdefinierte Mahlzeit erstellen?",
   "settingsLabel": "Einstellungen",
   "homeLabel": "Startseite",
   "diaryLabel": "Tagebuch",
+  "diaryFutureDateWarning": "Du bearbeitest ein zukünftiges Datum",
   "profileLabel": "Profil",
   "searchLabel": "Suchen",
   "searchProductsPage": "Produkte",
@@ -56,10 +59,22 @@
   "settingsDisclaimerLabel": "Hinweis",
   "settingsReportErrorLabel": "Fehler melden",
   "settingsPrivacySettings": "Datenschutzeinstellungen",
+  "settingsNotificationsLabel": "Tägliche Erinnerung",
+  "settingsNotificationsTimeLabel": "Erinnerungszeit: {time}",
+  "@settingsNotificationsTimeLabel": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "settingsSourceCodeLabel": "Quellcode",
   "settingFeedbackLabel": "Feedback",
   "settingAboutLabel": "Über",
   "settingsMassLabel": "Masse",
+  "settingsSystemLabel": "System",
+  "settingsMetricLabel": "Metrisch (kg, cm, ml)",
+  "settingsImperialLabel": "Imperial (lbs, ft, oz)",
   "settingsDistanceLabel": "Entfernung",
   "settingsVolumeLabel": "Volumen",
   "disclaimerText": "OpenNutriTracker ist keine medizinische Anwendung. Alle bereitgestellten Daten sind nicht validiert und sollten mit Vorsicht verwendet werden. Bitte pflegen Sie einen gesunden Lebensstil und konsultieren Sie einen Fachmann, wenn Sie Probleme haben. Die Verwendung während einer Krankheit, Schwangerschaft oder Stillzeit wird nicht empfohlen.\n\n\nDie Anwendung befindet sich noch in der Entwicklung. Fehler, Bugs und Abstürze können auftreten.",
@@ -73,6 +88,10 @@
   "calculationsMacrosDistribution": "{pctCarbs}% Kohlenhydrate, {pctFats}% Fette, {pctProteins}% Proteine",
   "dailyKcalAdjustmentLabel": "Tägliche kcal-Anpassung:",
   "macroDistributionLabel": "Makronährstoff-Verteilung:",
+  "settingsCustomMealsLabel": "Eigene Mahlzeiten",
+  "customMealsEmptyLabel": "Noch keine eigenen Mahlzeiten gespeichert.",
+  "customMealsDeleteConfirmTitle": "Eigene Mahlzeit löschen?",
+  "customMealsDeleteConfirmContent": "Alle Tagebucheinträge, die diese Mahlzeit verwenden, werden ebenfalls entfernt.",
   "exportImportLabel": "Daten Exportieren / Importieren",
   "exportImportDescription": "Sie können die App-Daten in eine Zip-Datei exportieren und später importieren. Dies ist nützlich, wenn Sie Ihre Daten sichern oder auf ein anderes Gerät übertragen möchten.\n\nDie App nutzt keinen Cloud-Dienst, um Ihre Daten zu speichern.",
   "exportImportSuccessLabel": "Export / Import erfolgreich",
@@ -94,15 +113,52 @@
   "itemUpdatedSnackbar": "Eintrag aktualisiert",
   "deleteTimeDialogTitle": "Eintrag löschen?",
   "deleteTimeDialogContent": "Möchten Sie den ausgewählten Eintrag löschen?",
+  "deleteTimeDialogPluralTitle": "Einträge löschen?",
+  "deleteTimeDialogPluralContent": "Möchten Sie alle Einträge dieser Mahlzeit löschen?",
   "itemDeletedSnackbar": "Eintrag gelöscht",
   "copyDialogTitle": "Zu welcher Mahlzeit hinzufügen?",
   "copyOrDeleteTimeDialogTitle": "Was soll getan werden?",
   "copyOrDeleteTimeDialogContent": "Auf \"Nach heute kopieren\" klicken, um die Mahlzeit nach heute zu kopieren. Mit \"Löschen\" kann die Mahlzeit entfernt werden",
-  "dialogCopyLabel": "NACH HEUTE KOPIEREN",
+  "dialogCopyLabel": "Nach heute kopieren",
   "dialogDeleteLabel": "LÖSCHEN",
+  "deleteAllLabel": "Alle löschen",
+  "shareMealLabel": "Mahlzeit teilen",
+  "importMealLabel": "Geteilte Mahlzeit importieren",
+  "importMealConfirmTitle": "{count} Einträge importieren?",
+  "@importMealConfirmTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importMealConfirmContent": "Diese Einträge werden zu {mealType} hinzugefügt.",
+  "@importMealConfirmContent": {
+    "placeholders": {
+      "mealType": {
+        "type": "String"
+      }
+    }
+  },
+  "importMealSuccessLabel": "Mahlzeit importiert",
+  "importMealErrorLabel": "Ungültiger QR-Code",
+  "importOffFetchFailedLabel": "{count} Einträge konnten nicht von OpenFoodFacts abgerufen werden.",
+  "@importOffFetchFailedLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "copyCodeLabel": "Code kopieren",
+  "shareCodeLabel": "Code teilen",
+  "codeCopiedLabel": "Code kopiert",
+  "pasteCodeLabel": "Code einfügen",
+  "pasteCodeHint": "Füge hier den geteilten Mahlzeitencode ein",
   "suppliedLabel": "zugeführt",
   "burnedLabel": "verbrannt",
   "kcalLeftLabel": "kcal übrig",
+  "kcalTooMuchLabel": "kcal zu viel",
   "nutritionInfoLabel": "Nährwertangaben",
   "kcalLabel": "kcal",
   "carbsLabel": "Kohlenhydrate",
@@ -117,7 +173,7 @@
   "additionalInfoLabelOFF": "Weitere Informationen unter\nOpenFoodFacts",
   "offDisclaimer": "Die Daten, die Ihnen mit dieser App zur Verfügung gestellt werden, stammen aus der Open Food Facts-Datenbank. Es kann keine Garantie für die Richtigkeit, Vollständigkeit oder Zuverlässigkeit der bereitgestellten Informationen übernommen werden. Die Daten werden ohne Mängelgewähr zur Verfügung gestellt, und die Ursprungsquelle der Daten (Open Food Facts) haftet nicht für Schäden, die aus der Verwendung der Daten entstehen.",
   "additionalInfoLabelFDC": "Weitere Informationen unter\nFoodData Central",
-  "additionalInfoLabelCompendium2011": "Informationen bereitgestellt von\n'2011 Compendium\n of Physical Activities'",
+  "additionalInfoLabelCompendium2011": "Informationen bereitgestellt von\n'2024 Compendium\n of Physical Activities'",
   "additionalInfoLabelUnknown": "Unbekannte Mahlzeit",
   "additionalInfoLabelCustom": "Benutzerdefinierte Mahlzeit",
   "quantityLabel": "Menge",
@@ -142,10 +198,22 @@
   "servingSizeLabelMetric": "Portionsgröße (g/ml)",
   "servingSizeLabelImperial": "Portionsgröße (oz/fl oz)",
   "mealUnitLabel": "Mahlzeiteinheit",
-  "mealKcalLabel": "kcal pro 100 g/ml",
-  "mealCarbsLabel": "Kohlenhydrate pro 100 g/ml",
-  "mealFatLabel": "Fett pro 100 g/ml",
-  "mealProteinLabel": "Protein pro 100 g/ml",
+  "mealKcalLabel": "kcal",
+  "mealCarbsLabel": "Kohlenhydrate (g)",
+  "mealFatLabel": "Fett (g)",
+  "mealProteinLabel": "Protein (g)",
+  "mealNutrientsPerQtyLabel": "Pro {qty} {unit}",
+  "@mealNutrientsPerQtyLabel": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "mealNutrientsTotalLabel": "Gesamtmenge",
   "errorMealSave": "Fehler beim Speichern der Mahlzeit. Haben Sie die korrekten Mahlzeiteninformationen eingegeben?",
   "bmiLabel": "BMI",
   "bmiInfo": "Der Body-Mass-Index (BMI) ist ein Index zur Klassifizierung von Übergewicht und Fettleibigkeit bei Erwachsenen. Er wird berechnet, indem das Gewicht in Kilogramm durch das Quadrat der Körpergröße in Metern (kg/m²) geteilt wird.\n\nDer BMI unterscheidet nicht zwischen Fett- und Muskelmasse und kann für einige Personen irreführend sein.",
@@ -166,6 +234,25 @@
   "goalMaintainWeight": "Gewicht halten",
   "goalGainWeight": "Gewicht zunehmen",
   "goalLabel": "Ziel",
+  "weeklyWeightGoalLabel": "Wöchentliche Rate",
+  "weeklyWeightGoalNoneLabel": "Nicht festgelegt",
+  "weeklyWeightGoalKgPerWeek": "{rate} kg/Woche",
+  "@weeklyWeightGoalKgPerWeek": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "weeklyWeightGoalLbsPerWeek": "{rate} lbs/Woche",
+  "@weeklyWeightGoalLbsPerWeek": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "chooseWeeklyWeightGoalLabel": "Wöchentliche Gewichtsrate",
   "selectHeightDialogLabel": "Größe auswählen",
   "heightLabel": "Größe",
   "cmLabel": "cm",
@@ -397,5 +484,6 @@
   "paSkiingGeneral": "Skifahren",
   "paSkiingGeneralDesc": "allgemein",
   "paSnowShovingModerate": "Schnee schaufeln",
-  "paSnowShovingModerateDesc": "manuell, mäßige Anstrengung"
+  "paSnowShovingModerateDesc": "manuell, mäßige Anstrengung",
+  "settingsLanguageLabel": "Sprache"
 }

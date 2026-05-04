@@ -16,9 +16,11 @@ class AddConfigUsecase {
   }
 
   Future<void> setConfigHasAcceptedAnonymousData(
-      bool hasAcceptedAnonymousData) async {
-    _configRepository
-        .setConfigHasAcceptedAnonymousData(hasAcceptedAnonymousData);
+    bool hasAcceptedAnonymousData,
+  ) async {
+    _configRepository.setConfigHasAcceptedAnonymousData(
+      hasAcceptedAnonymousData,
+    );
   }
 
   Future<void> setConfigAppTheme(AppThemeEntity appTheme) async {
@@ -34,7 +36,27 @@ class AddConfigUsecase {
   }
 
   Future<void> setConfigMacroGoalPct(
-      double carbGoalPct, double proteinGoalPct, double fatPctGoal) async {
+    double carbGoalPct,
+    double proteinGoalPct,
+    double fatPctGoal,
+  ) async {
     _configRepository.setUserMacroPct(carbGoalPct, proteinGoalPct, fatPctGoal);
+  }
+
+
+  Future<void> setConfigShowActivityTracking(bool show) async {
+    _configRepository.setConfigShowActivityTracking(show);
+  }
+
+  Future<void> setNotificationsEnabled(bool enabled) async {
+    _configRepository.setNotificationsEnabled(enabled);
+  }
+
+  Future<void> setNotificationTime(int hour, int minute) async {
+    _configRepository.setNotificationTime(hour, minute);
+  }
+
+  Future<void> setSelectedLocale(String? locale) async {
+    _configRepository.setSelectedLocale(locale);
   }
 }

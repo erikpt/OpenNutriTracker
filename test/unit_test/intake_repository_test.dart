@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:opennutritracker/core/data/data_source/intake_data_source.dart';
 import 'package:opennutritracker/core/data/dbo/intake_dbo.dart';
 import 'package:opennutritracker/core/data/dbo/intake_type_dbo.dart';
@@ -12,7 +12,6 @@ import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
 import '../fixture/meal_entity_fixtures.dart';
 
 void main() {
-
   group('IntakeRepository test', () {
     setUp(() {
       TestWidgetsFlutterBinding.ensureInitialized();
@@ -34,28 +33,36 @@ void main() {
 
       final repo = IntakeRepository(IntakeDataSource(box));
 
-
-      await repo.addIntake(IntakeEntity(
+      await repo.addIntake(
+        IntakeEntity(
           id: "1",
           unit: "g",
           amount: 1,
           type: IntakeTypeEntity.breakfast,
           meal: MealEntityFixtures.mealOne,
-          dateTime: DateTime.utc(2024, 1, 1, 0, 0, 0)));
-      await repo.addIntake(IntakeEntity(
+          dateTime: DateTime.utc(2024, 1, 1, 0, 0, 0),
+        ),
+      );
+      await repo.addIntake(
+        IntakeEntity(
           id: "2",
           unit: "g",
           amount: 1,
           type: IntakeTypeEntity.breakfast,
           meal: MealEntityFixtures.mealTwo,
-          dateTime: DateTime.utc(2024, 1, 2, 0, 0, 0)));
-      await repo.addIntake(IntakeEntity(
+          dateTime: DateTime.utc(2024, 1, 2, 0, 0, 0),
+        ),
+      );
+      await repo.addIntake(
+        IntakeEntity(
           id: "3",
           unit: "g",
           amount: 1,
           type: IntakeTypeEntity.breakfast,
           meal: MealEntityFixtures.mealThree,
-          dateTime: DateTime.utc(2024, 1, 3, 0, 0, 0)));
+          dateTime: DateTime.utc(2024, 1, 3, 0, 0, 0),
+        ),
+      );
 
       final recents = (await repo.getRecentIntake()).map((e) => e.id).toList();
       expect(recents, List.from(["3", "2", "1"]));

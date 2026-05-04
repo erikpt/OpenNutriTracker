@@ -8,7 +8,7 @@ part of 'user_dbo.dart';
 
 class UserDBOAdapter extends TypeAdapter<UserDBO> {
   @override
-  final int typeId = 5;
+  final typeId = 5;
 
   @override
   UserDBO read(BinaryReader reader) {
@@ -18,18 +18,19 @@ class UserDBOAdapter extends TypeAdapter<UserDBO> {
     };
     return UserDBO(
       birthday: fields[0] as DateTime,
-      heightCM: fields[1] as double,
-      weightKG: fields[2] as double,
+      heightCM: (fields[1] as num).toDouble(),
+      weightKG: (fields[2] as num).toDouble(),
       gender: fields[3] as UserGenderDBO,
       goal: fields[4] as UserWeightGoalDBO,
       pal: fields[5] as UserPALDBO,
+      weeklyWeightGoalKg: (fields[6] as num?)?.toDouble(),
     );
   }
 
   @override
   void write(BinaryWriter writer, UserDBO obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.birthday)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class UserDBOAdapter extends TypeAdapter<UserDBO> {
       ..writeByte(4)
       ..write(obj.goal)
       ..writeByte(5)
-      ..write(obj.pal);
+      ..write(obj.pal)
+      ..writeByte(6)
+      ..write(obj.weeklyWeightGoalKg);
   }
 
   @override

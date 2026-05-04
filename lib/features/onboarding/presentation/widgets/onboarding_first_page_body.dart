@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:opennutritracker/core/utils/bounds/validator.dart';
 import 'package:opennutritracker/features/onboarding/domain/entity/user_gender_selection_entity.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
 class OnboardingFirstPageBody extends StatefulWidget {
   final Function(
-          bool active, UserGenderSelectionEntity? gender, DateTime? birthday)
-      setPageContent;
+    bool active,
+    UserGenderSelectionEntity? gender,
+    DateTime? birthday,
+  ) setPageContent;
 
   const OnboardingFirstPageBody({super.key, required this.setPageContent});
 
@@ -30,10 +32,14 @@ class _OnboardingFirstPageBodyState extends State<OnboardingFirstPageBody> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(S.of(context).genderLabel,
-              style: Theme.of(context).textTheme.headlineSmall),
-          Text(S.of(context).onboardingGenderQuestionSubtitle,
-              style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            S.of(context).genderLabel,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          Text(
+            S.of(context).onboardingGenderQuestionSubtitle,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const SizedBox(height: 16.0),
           ChoiceChip(
             label: Text(S.of(context).genderMaleLabel),
@@ -58,10 +64,14 @@ class _OnboardingFirstPageBodyState extends State<OnboardingFirstPageBody> {
             },
           ),
           const SizedBox(height: 32.0),
-          Text(S.of(context).ageLabel,
-              style: Theme.of(context).textTheme.headlineSmall),
-          Text(S.of(context).onboardingBirthdayQuestionSubtitle,
-              style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            S.of(context).ageLabel,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          Text(
+            S.of(context).onboardingBirthdayQuestionSubtitle,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const SizedBox(height: 16.0),
           TextFormField(
             controller: _dateInput,
@@ -85,18 +95,19 @@ class _OnboardingFirstPageBodyState extends State<OnboardingFirstPageBody> {
 
   void onDateInputClicked() async {
     final pickedDate = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2100));
-    if (pickedDate != null) {
-      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-      setState(() {
-        _selectedDate = pickedDate;
-        _dateInput.text = formattedDate;
-        checkCorrectInput();
-      });
-    }
+      context: context,
+      initialDate: ValueValidator.getLastDate(),
+      firstDate: ValueValidator.getFirstDate(),
+      lastDate: ValueValidator.getLastDate(),
+    );
+    if (pickedDate == null || !mounted) return;
+    final localizations = MaterialLocalizations.of(context);
+    final formattedDate = localizations.formatCompactDate(pickedDate);
+    setState(() {
+      _selectedDate = pickedDate;
+      _dateInput.text = formattedDate;
+      checkCorrectInput();
+    });
   }
 
   void checkCorrectInput() {
@@ -106,11 +117,8 @@ class _OnboardingFirstPageBodyState extends State<OnboardingFirstPageBody> {
     } else if (_femaleSelected) {
       selectedGender = UserGenderSelectionEntity.genderFemale;
     }
-
-    if (selectedGender != null && _selectedDate != null) {
-      widget.setPageContent(true, selectedGender, _selectedDate);
-    } else {
-      widget.setPageContent(false, null, null);
-    }
+    selectedGender != null && _selectedDate != null
+        ? widget.setPageContent(true, selectedGender, _selectedDate)
+        : widget.setPageContent(false, null, null);
   }
 }

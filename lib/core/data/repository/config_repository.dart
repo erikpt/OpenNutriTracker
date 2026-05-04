@@ -19,7 +19,8 @@ class ConfigRepository {
   }
 
   Future<void> setConfigHasAcceptedAnonymousData(
-      bool hasAcceptedAnonymousData) async {
+    bool hasAcceptedAnonymousData,
+  ) async {
     _configDataSource.setConfigAcceptedAnonymousData(hasAcceptedAnonymousData);
   }
 
@@ -33,8 +34,9 @@ class ConfigRepository {
   }
 
   Future<void> setConfigAppTheme(AppThemeEntity appTheme) async {
-    await _configDataSource
-        .setConfigAppTheme(AppThemeDBO.fromAppThemeEntity(appTheme));
+    await _configDataSource.setConfigAppTheme(
+      AppThemeDBO.fromAppThemeEntity(appTheme),
+    );
   }
 
   Future<ConfigEntity> getConfig() async {
@@ -46,6 +48,7 @@ class ConfigRepository {
     final configDBO = await _configDataSource.getConfig();
     return configDBO;
   }
+
   Future<void> setConfigUsesImperialUnits(bool usesImperialUnits) async {
     _configDataSource.setConfigUsesImperialUnits(usesImperialUnits);
   }
@@ -58,9 +61,29 @@ class ConfigRepository {
     _configDataSource.setConfigKcalAdjustment(kcalAdjustment);
   }
 
+  Future<void> setConfigShowActivityTracking(bool show) async {
+    _configDataSource.setConfigShowActivityTracking(show);
+  }
+
   Future<void> setUserMacroPct(double carbs, double protein, double fat) async {
     _configDataSource.setConfigCarbGoalPct(carbs);
     _configDataSource.setConfigProteinGoalPct(protein);
     _configDataSource.setConfigFatGoalPct(fat);
+  }
+
+  Future<void> setNotificationsEnabled(bool enabled) async {
+    _configDataSource.setNotificationsEnabled(enabled);
+  }
+
+  Future<void> setNotificationTime(int hour, int minute) async {
+    _configDataSource.setNotificationTime(hour, minute);
+  }
+
+  Future<String?> getSelectedLocale() async {
+    return await _configDataSource.getSelectedLocale();
+  }
+
+  Future<void> setSelectedLocale(String? locale) async {
+    _configDataSource.setSelectedLocale(locale);
   }
 }

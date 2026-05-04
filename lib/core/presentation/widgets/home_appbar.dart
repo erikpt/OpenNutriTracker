@@ -17,14 +17,8 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
               text: TextSpan(
                 text: S.of(context).appTitle,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: ' ${S.of(context).betaVersionName}',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Theme.of(context).colorScheme.onSurface)),
-                ],
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -34,13 +28,15 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: Icon(Icons.settings_outlined,
-              color: Theme.of(context).colorScheme.onSurface),
+          icon: Icon(
+            Icons.settings_outlined,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
           tooltip: S.of(context).settingsLabel,
           onPressed: () {
             Navigator.of(context).pushNamed(NavigationOptions.settingsRoute);
           },
-        )
+        ),
       ],
     );
   }

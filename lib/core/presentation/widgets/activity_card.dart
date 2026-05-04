@@ -4,20 +4,25 @@ import 'package:opennutritracker/core/domain/entity/user_activity_entity.dart';
 class ActivityCard extends StatelessWidget {
   final UserActivityEntity activityEntity;
   final Function(BuildContext, UserActivityEntity) onItemLongPressed;
+  final Function(BuildContext, UserActivityEntity)? onItemTapped;
+  final Function(bool isDragging)? onItemDragCallback;
   final bool firstListElement;
 
-  const ActivityCard(
-      {super.key,
-      required this.activityEntity,
-      required this.onItemLongPressed,
-      required this.firstListElement});
+  const ActivityCard({
+    super.key,
+    required this.activityEntity,
+    required this.onItemLongPressed,
+    required this.firstListElement,
+    this.onItemTapped,
+    this.onItemDragCallback,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    final card = Row(
       children: [
         SizedBox(
-          width: firstListElement ? 16 : 0, // Add leading padding
+          width: firstListElement ? 16 : 0,
         ),
         SizedBox(
           width: 120,
@@ -31,30 +36,31 @@ class ActivityCard extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(12.0)),
                   ),
                   child: InkWell(
-                    onLongPress: () {
-                      onLongPressedItem(context);
-                    },
+                    onTap: onItemTapped != null
+                        ? () => onItemTapped!(context, activityEntity)
+                        : null,
+                    onLongPress: onItemDragCallback == null
+                        ? () => onItemLongPressed(context, activityEntity)
+                        : null,
                     child: Stack(
                       children: [
                         Container(
                           margin: const EdgeInsets.all(8.0),
-                          padding:
-                              const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+                          padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
                           decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .tertiaryContainer
-                                  .withValues(alpha: 0.8),
-                              borderRadius: BorderRadius.circular(12)),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .tertiaryContainer
+                                .withValues(alpha: 0.8),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           child: Text(
                             "🔥${activityEntity.burnedKcal.toInt()} kcal",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onTertiaryContainer),
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onTertiaryContainer,
+                                ),
                           ),
                         ),
                         Center(
@@ -75,29 +81,52 @@ class ActivityCard extends StatelessWidget {
                 child: Text(
                   activityEntity.physicalActivityEntity.getName(context),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface),
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Text(
-                    '${activityEntity.duration.toInt()} min',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                padding: const EdgeInsets.only(left: 8),
+                child: Text(
+                  '${activityEntity.duration.toInt()} min',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context)
                             .colorScheme
-                            .onSurface.withValues(alpha: 0.8)),
-                    maxLines: 1,
-                  ))
+                            .onSurface
+                            .withValues(alpha: 0.8),
+                      ),
+                  maxLines: 1,
+                ),
+              ),
             ],
           ),
         ),
       ],
     );
-  }
 
-  void onLongPressedItem(BuildContext context) {
-    onItemLongPressed(context, activityEntity);
+    if (onItemDragCallback == null) return card;
+
+    return LongPressDraggable<UserActivityEntity>(
+      data: activityEntity,
+      onDragStarted: () => onItemDragCallback!.call(true),
+      onDragEnd: (_) => onItemDragCallback!.call(false),
+      onDraggableCanceled: (velocity, offset) => onItemDragCallback!.call(false),
+      feedback: Material(
+        elevation: 4,
+        borderRadius: BorderRadius.circular(12),
+        child: SizedBox(
+          width: 80,
+          height: 80,
+          child: Icon(
+            activityEntity.physicalActivityEntity.displayIcon,
+            size: 36,
+          ),
+        ),
+      ),
+      childWhenDragging: Opacity(opacity: 0.4, child: card),
+      child: card,
+    );
   }
 }

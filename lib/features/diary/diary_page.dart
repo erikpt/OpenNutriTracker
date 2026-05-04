@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:opennutritracker/core/domain/entity/intake_entity.dart';
+import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
 import 'package:opennutritracker/core/domain/entity/tracked_day_entity.dart';
 import 'package:opennutritracker/core/domain/entity/user_activity_entity.dart';
+import 'package:opennutritracker/core/presentation/widgets/edit_activity_dialog.dart';
+import 'package:opennutritracker/core/presentation/widgets/edit_dialog.dart';
+import 'package:opennutritracker/core/utils/calc/met_calc.dart';
+import 'package:opennutritracker/core/domain/usecase/get_user_usecase.dart';
+import 'package:opennutritracker/features/activity_detail/presentation/bloc/activity_detail_bloc.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/calendar_day_bloc.dart';
@@ -12,8 +18,6 @@ import 'package:opennutritracker/features/diary/presentation/widgets/diary_table
 import 'package:opennutritracker/features/diary/presentation/widgets/day_info_widget.dart';
 import 'package:opennutritracker/features/meal_detail/presentation/bloc/meal_detail_bloc.dart';
 import 'package:opennutritracker/generated/l10n.dart';
-
-import '../../core/domain/entity/intake_type_entity.dart';
 
 class DiaryPage extends StatefulWidget {
   const DiaryPage({super.key});
@@ -28,8 +32,10 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
   late DiaryBloc _diaryBloc;
   late CalendarDayBloc _calendarDayBloc;
   late MealDetailBloc _mealDetailBloc;
+  late ActivityDetailBloc _activityDetailBloc;
 
-  static const _calendarDurationDays = Duration(days: 356);
+  // #292: Extended from 356 days (~1 year) to 5 years so old entries are never truncated
+  static const _calendarDurationDays = Duration(days: 365 * 5);
   final _currentDate = DateTime.now();
   var _selectedDate = DateTime.now();
   var _focusedDate = DateTime.now();
@@ -40,6 +46,7 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
     _diaryBloc = locator<DiaryBloc>();
     _calendarDayBloc = locator<CalendarDayBloc>();
     _mealDetailBloc = locator<MealDetailBloc>();
+    _activityDetailBloc = locator<ActivityDetailBloc>();
     super.initState();
   }
 
@@ -60,7 +67,10 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
           return _getLoadingContent();
         } else if (state is DiaryLoadedState) {
           return _getLoadedContent(
-              context, state.trackedDayMap, state.usesImperialUnits);
+            context,
+            state.trackedDayMap,
+            state.usesImperialUnits,
+          );
         }
         return const SizedBox();
       },
@@ -79,8 +89,11 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
   Widget _getLoadingContent() =>
       const Center(child: CircularProgressIndicator());
 
-  Widget _getLoadedContent(BuildContext context,
-      Map<String, TrackedDayEntity> trackedDaysMap, bool usesImperialUnits) {
+  Widget _getLoadedContent(
+    BuildContext context,
+    Map<String, TrackedDayEntity> trackedDaysMap,
+    bool usesImperialUnits,
+  ) {
     return ListView(
       children: [
         DiaryTableCalendar(
@@ -112,44 +125,61 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
                 onDeleteActivity: _onDeleteActivityItem,
                 onCopyIntake: _onCopyIntakeItem,
                 onCopyActivity: _onCopyActivityItem,
+                onEditIntake: _onEditIntakeItem,
+                onEditActivity: _onEditActivityItem,
                 usesImperialUnits: usesImperialUnits,
               );
             }
             return const SizedBox();
           },
-        )
+        ),
       ],
     );
   }
 
   void _onDeleteIntakeItem(
-      IntakeEntity intakeEntity, TrackedDayEntity? trackedDayEntity) async {
+    IntakeEntity intakeEntity,
+    TrackedDayEntity? trackedDayEntity,
+  ) async {
     await _calendarDayBloc.deleteIntakeItem(
-        context, intakeEntity, trackedDayEntity?.day ?? DateTime.now());
+      context,
+      intakeEntity,
+      trackedDayEntity?.day ?? DateTime.now(),
+    );
     _diaryBloc.add(const LoadDiaryYearEvent());
     _calendarDayBloc.add(LoadCalendarDayEvent(_selectedDate));
     _diaryBloc.updateHomePage();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(S.of(context).itemDeletedSnackbar)));
+        SnackBar(content: Text(S.of(context).itemDeletedSnackbar)),
+      );
     }
   }
 
-  void _onDeleteActivityItem(UserActivityEntity userActivityEntity,
-      TrackedDayEntity? trackedDayEntity) async {
+  void _onDeleteActivityItem(
+    UserActivityEntity userActivityEntity,
+    TrackedDayEntity? trackedDayEntity,
+  ) async {
     await _calendarDayBloc.deleteUserActivityItem(
-        context, userActivityEntity, trackedDayEntity?.day ?? DateTime.now());
+      context,
+      userActivityEntity,
+      trackedDayEntity?.day ?? DateTime.now(),
+    );
     _diaryBloc.add(const LoadDiaryYearEvent());
     _calendarDayBloc.add(LoadCalendarDayEvent(_selectedDate));
     _diaryBloc.updateHomePage();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(S.of(context).itemDeletedSnackbar)));
+        SnackBar(content: Text(S.of(context).itemDeletedSnackbar)),
+      );
     }
   }
 
-  void _onCopyIntakeItem(IntakeEntity intakeEntity,
-      TrackedDayEntity? trackedDayEntity, AddMealType? type) async {
+  void _onCopyIntakeItem(
+    IntakeEntity intakeEntity,
+    TrackedDayEntity? trackedDayEntity,
+    AddMealType? type,
+  ) async {
     IntakeTypeEntity finalType;
     if (type == null) {
       finalType = intakeEntity.type;
@@ -157,27 +187,104 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
       finalType = type.getIntakeType();
     }
     _mealDetailBloc.addIntake(
-        context,
-        intakeEntity.unit,
-        intakeEntity.amount.toString(),
-        finalType,
-        intakeEntity.meal,
-        DateTime.now());
+      context,
+      intakeEntity.unit,
+      intakeEntity.amount.toString(),
+      finalType,
+      intakeEntity.meal,
+      DateTime.now(),
+    );
     _diaryBloc.updateHomePage();
   }
 
-  void _onCopyActivityItem(UserActivityEntity userActivityEntity,
-      TrackedDayEntity? trackedDayEntity) async {
-    log.info("Should copy activity");
+  void _onCopyActivityItem(
+    UserActivityEntity userActivityEntity,
+    TrackedDayEntity? trackedDayEntity,
+  ) async {
+    final user = await locator<GetUserUsecase>().getUserData();
+    final burnedKcal = METCalc.getTotalBurnedKcal(
+      user,
+      userActivityEntity.physicalActivityEntity,
+      userActivityEntity.duration,
+    );
+    _activityDetailBloc.persistActivity(
+      userActivityEntity.duration.toString(),
+      burnedKcal,
+      userActivityEntity.physicalActivityEntity,
+      DateTime.now(),
+    );
+    _diaryBloc.updateHomePage();
+  }
+
+  void _onEditIntakeItem(
+    BuildContext context,
+    IntakeEntity intakeEntity,
+    bool usesImperialUnits,
+  ) async {
+    final changeIntakeAmount = await showDialog<double>(
+      context: context,
+      builder: (context) => EditDialog(
+        intakeEntity: intakeEntity,
+        usesImperialUnits: usesImperialUnits,
+      ),
+    );
+    if (changeIntakeAmount != null) {
+      await _calendarDayBloc.updateIntakeItem(
+        intakeEntity.id,
+        {'amount': changeIntakeAmount},
+        _selectedDate,
+      );
+      _diaryBloc.add(const LoadDiaryYearEvent());
+      _calendarDayBloc.add(LoadCalendarDayEvent(_selectedDate));
+      _diaryBloc.updateHomePage();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(S.of(context).itemUpdatedSnackbar)),
+        );
+      }
+    }
+  }
+
+  void _onEditActivityItem(
+    BuildContext context,
+    UserActivityEntity activityEntity,
+  ) async {
+    final newDuration = await showDialog<double>(
+      context: context,
+      builder: (context) =>
+          EditActivityDialog(activityEntity: activityEntity),
+    );
+    if (newDuration != null) {
+      await _calendarDayBloc.updateUserActivityItem(
+        activityEntity,
+        newDuration,
+        _selectedDate,
+      );
+      _diaryBloc.add(const LoadDiaryYearEvent());
+      _calendarDayBloc.add(LoadCalendarDayEvent(_selectedDate));
+      _diaryBloc.updateHomePage();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(S.of(context).itemUpdatedSnackbar)),
+        );
+      }
+    }
   }
 
   void _onDateSelected(
-      DateTime newDate, Map<String, TrackedDayEntity> trackedDaysMap) {
+    DateTime newDate,
+    Map<String, TrackedDayEntity> trackedDaysMap,
+  ) {
     setState(() {
       _selectedDate = newDate;
       _focusedDate = newDate;
       _calendarDayBloc.add(LoadCalendarDayEvent(newDate));
     });
+    if (newDate.isAfter(_currentDate) && !DateUtils.isSameDay(newDate, _currentDate)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(S.of(context).diaryFutureDateWarning)),
+      );
+    }
   }
 
   void _refreshPageOnDayChange() {

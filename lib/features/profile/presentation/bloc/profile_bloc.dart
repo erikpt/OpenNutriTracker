@@ -13,6 +13,7 @@ import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/calendar_day_bloc.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/diary_bloc.dart';
 import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart';
+import 'package:opennutritracker/features/profile/presentation/utils/profile_display_format.dart';
 
 part 'profile_event.dart';
 
@@ -26,26 +27,30 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final GetKcalGoalUsecase _getKcalGoalUsecase;
 
   ProfileBloc(
-      this._getUserUsecase,
-      this._addUserUsecase,
-      this._addTrackedDayUsecase,
-      this._getConfigUsecase,
-      this._getKcalGoalUsecase)
-      : super(ProfileInitial()) {
+    this._getUserUsecase,
+    this._addUserUsecase,
+    this._addTrackedDayUsecase,
+    this._getConfigUsecase,
+    this._getKcalGoalUsecase,
+  ) : super(ProfileInitial()) {
     on<LoadProfileEvent>((event, emit) async {
       emit(ProfileLoadingState());
 
       final user = await _getUserUsecase.getUserData();
       final userBMIValue = BMICalc.getBMI(user);
       final userBMIEntity = UserBMIEntity(
-          bmiValue: userBMIValue,
-          nutritionalStatus: BMICalc.getNutritionalStatus(userBMIValue));
+        bmiValue: userBMIValue,
+        nutritionalStatus: BMICalc.getNutritionalStatus(userBMIValue),
+      );
       final userConfig = await _getConfigUsecase.getConfig();
 
-      emit(ProfileLoadedState(
+      emit(
+        ProfileLoadedState(
           userBMI: userBMIEntity,
           userEntity: user,
-          usesImperialUnits: userConfig.usesImperialUnits));
+          usesImperialUnits: userConfig.usesImperialUnits,
+        ),
+      );
     });
   }
 
@@ -66,11 +71,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   Future<void> _updateTrackedDayCalorieGoal(
-      UserEntity user, DateTime day) async {
+    UserEntity user,
+    DateTime day,
+  ) async {
     final hasTrackedDay = await _addTrackedDayUsecase.hasTrackedDay(day);
     if (hasTrackedDay) {
-      final totalKcalGoal =
-          await _getKcalGoalUsecase.getKcalGoal(userEntity: user);
+      final totalKcalGoal = await _getKcalGoalUsecase.getKcalGoal(
+        userEntity: user,
+      );
 
       await _addTrackedDayUsecase.updateDayCalorieGoal(day, totalKcalGoal);
     }
@@ -88,10 +96,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   /// Returns the user's weight in kg or lbs based on the user's config
   String getDisplayWeight(UserEntity user, bool usesImperialUnits) {
-    if (usesImperialUnits) {
-      return UnitCalc.kgToLbs(user.weightKG).toStringAsFixed(0);
-    } else {
-      return user.weightKG.roundToDouble().toStringAsFixed(0);
-    }
+    final displayWeight =
+        usesImperialUnits ? UnitCalc.kgToLbs(user.weightKG) : user.weightKG;
+
+    return formatProfileWeight(displayWeight);
   }
 }

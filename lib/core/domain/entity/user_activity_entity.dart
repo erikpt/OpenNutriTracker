@@ -11,21 +11,28 @@ class UserActivityEntity extends Equatable {
 
   final PhysicalActivityEntity physicalActivityEntity;
 
-  const UserActivityEntity(this.id, this.duration, this.burnedKcal, this.date,
-      this.physicalActivityEntity);
+  const UserActivityEntity(
+    this.id,
+    this.duration,
+    this.burnedKcal,
+    this.date,
+    this.physicalActivityEntity,
+  );
 
   factory UserActivityEntity.fromUserActivityDBO(UserActivityDBO activityDBO) {
     return UserActivityEntity(
-        activityDBO.id,
-        activityDBO.duration,
-        activityDBO.burnedKcal,
-        activityDBO.date,
-        PhysicalActivityEntity.fromPhysicalActivityDBO(
-            activityDBO.physicalActivityDBO));
+      activityDBO.id,
+      activityDBO.duration,
+      activityDBO.burnedKcal,
+      activityDBO.date,
+      PhysicalActivityEntity.fromPhysicalActivityDBO(
+        activityDBO.physicalActivityDBO,
+      ),
+    );
   }
 
   @override
   List<Object?> get props => [id, duration, burnedKcal, date];
 
-  static getIconData() => Icons.directions_run_outlined;
+  static IconData getIconData() => Icons.directions_run_outlined;
 }

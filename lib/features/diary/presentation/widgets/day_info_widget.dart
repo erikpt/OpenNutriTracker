@@ -4,14 +4,13 @@ import 'package:opennutritracker/core/domain/entity/intake_entity.dart';
 import 'package:opennutritracker/core/domain/entity/tracked_day_entity.dart';
 import 'package:opennutritracker/core/domain/entity/user_activity_entity.dart';
 import 'package:opennutritracker/core/presentation/widgets/activity_vertial_list.dart';
+import 'package:opennutritracker/core/presentation/widgets/copy_or_delete_dialog.dart';
 import 'package:opennutritracker/core/presentation/widgets/copy_dialog.dart';
 import 'package:opennutritracker/core/presentation/widgets/delete_dialog.dart';
 import 'package:opennutritracker/core/utils/custom_icons.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.dart';
 import 'package:opennutritracker/features/home/presentation/widgets/intake_vertical_list.dart';
 import 'package:opennutritracker/generated/l10n.dart';
-
-import '../../../../core/presentation/widgets/copy_or_delete_dialog.dart';
 
 class DayInfoWidget extends StatelessWidget {
   final DateTime selectedDay;
@@ -25,12 +24,23 @@ class DayInfoWidget extends StatelessWidget {
   final bool usesImperialUnits;
   final Function(IntakeEntity intake, TrackedDayEntity? trackedDayEntity)
       onDeleteIntake;
-  final Function(UserActivityEntity userActivityEntity,
-      TrackedDayEntity? trackedDayEntity) onDeleteActivity;
-  final Function(IntakeEntity intake, TrackedDayEntity? trackedDayEntity,
-      AddMealType? type) onCopyIntake;
-  final Function(UserActivityEntity userActivityEntity,
-      TrackedDayEntity? trackedDayEntity) onCopyActivity;
+  final Function(
+    UserActivityEntity userActivityEntity,
+    TrackedDayEntity? trackedDayEntity,
+  ) onDeleteActivity;
+  final Function(
+    IntakeEntity intake,
+    TrackedDayEntity? trackedDayEntity,
+    AddMealType? type,
+  ) onCopyIntake;
+  final Function(
+    UserActivityEntity userActivityEntity,
+    TrackedDayEntity? trackedDayEntity,
+  ) onCopyActivity;
+  final Function(BuildContext context, IntakeEntity intake, bool usesImperialUnits)?
+      onEditIntake;
+  final Function(BuildContext context, UserActivityEntity activity)?
+      onEditActivity;
 
   const DayInfoWidget({
     super.key,
@@ -46,6 +56,8 @@ class DayInfoWidget extends StatelessWidget {
     required this.onDeleteActivity,
     required this.onCopyIntake,
     required this.onCopyActivity,
+    this.onEditIntake,
+    this.onEditActivity,
   });
 
   @override
@@ -56,8 +68,10 @@ class DayInfoWidget extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(DateFormat.yMMMMEEEEd().format(selectedDay),
-              style: Theme.of(context).textTheme.headlineSmall),
+          child: Text(
+            DateFormat.yMMMMEEEEd().format(selectedDay),
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
         ),
         const SizedBox(height: 8.0),
         Column(
@@ -66,11 +80,14 @@ class DayInfoWidget extends StatelessWidget {
             trackedDay == null
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(S.of(context).nothingAddedLabel,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface.withValues(alpha: 0.7))),
+                    child: Text(
+                      S.of(context).nothingAddedLabel,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withValues(alpha: 0.7),
+                          ),
+                    ),
                   )
                 : const SizedBox(),
             trackedDay != null
@@ -86,48 +103,69 @@ class DayInfoWidget extends StatelessWidget {
                               ?.getRatingDayTextBackgroundColor(context),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0, vertical: 8.0),
+                              horizontal: 8.0,
+                              vertical: 8.0,
+                            ),
                             child: Text(
                               _getCaloriesTrackedDisplayString(trackedDay),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(
-                                      color: trackedDayEntity
-                                          ?.getRatingDayTextColor(context),
-                                      fontWeight: FontWeight.bold),
+                              style: Theme.of(
+                                context,
+                              ).textTheme.titleLarge?.copyWith(
+                                    color:
+                                        trackedDayEntity?.getRatingDayTextColor(
+                                      context,
+                                    ),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ),
                           ),
                         ),
                         const SizedBox(height: 4.0),
-                        Text(_getMacroTrackedDisplayString(trackedDay),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurface.withValues(alpha: 0.7))),
+                        Text(
+                          _getMacroTrackedDisplayString(trackedDay),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withValues(alpha: 0.7),
+                              ),
+                        ),
                       ],
                     ),
                   )
                 : const SizedBox(),
             const SizedBox(height: 8.0),
             ActivityVerticalList(
-                day: selectedDay,
-                title: S.of(context).activityLabel,
-                userActivityList: userActivities,
-                onItemLongPressedCallback: onActivityItemLongPressed),
+              day: selectedDay,
+              title: S.of(context).activityLabel,
+              userActivityList: userActivities,
+              onItemLongPressedCallback: onActivityItemLongPressed,
+              onItemTappedCallback: onEditActivity,
+              onCopyActivityCallback:
+                  DateUtils.isSameDay(selectedDay, DateTime.now())
+                      ? null
+                      : (activity) =>
+                          onCopyActivity(activity, trackedDayEntity),
+            ),
             IntakeVerticalList(
               day: selectedDay,
               title: S.of(context).breakfastLabel,
               listIcon: Icons.bakery_dining_outlined,
               addMealType: AddMealType.breakfastType,
               intakeList: breakfastIntake,
+              onDeleteIntakeCallback: onDeleteIntake,
               onItemLongPressedCallback: onIntakeItemLongPressed,
+              onItemTappedCallback: onEditIntake,
+              onCopyIntakeCallback:
+                  DateUtils.isSameDay(selectedDay, DateTime.now())
+                      ? null
+                      : onCopyIntake,
               usesImperialUnits: usesImperialUnits,
+              trackedDayEntity: trackedDay,
             ),
             IntakeVerticalList(
               day: selectedDay,
@@ -135,8 +173,15 @@ class DayInfoWidget extends StatelessWidget {
               listIcon: Icons.lunch_dining_outlined,
               addMealType: AddMealType.lunchType,
               intakeList: lunchIntake,
+              onDeleteIntakeCallback: onDeleteIntake,
               onItemLongPressedCallback: onIntakeItemLongPressed,
+              onItemTappedCallback: onEditIntake,
               usesImperialUnits: usesImperialUnits,
+              onCopyIntakeCallback:
+                  DateUtils.isSameDay(selectedDay, DateTime.now())
+                      ? null
+                      : onCopyIntake,
+              trackedDayEntity: trackedDay,
             ),
             IntakeVerticalList(
               day: selectedDay,
@@ -144,7 +189,13 @@ class DayInfoWidget extends StatelessWidget {
               listIcon: Icons.dinner_dining_outlined,
               addMealType: AddMealType.dinnerType,
               intakeList: dinnerIntake,
+              onDeleteIntakeCallback: onDeleteIntake,
               onItemLongPressedCallback: onIntakeItemLongPressed,
+              onItemTappedCallback: onEditIntake,
+              onCopyIntakeCallback:
+                  DateUtils.isSameDay(selectedDay, DateTime.now())
+                      ? null
+                      : onCopyIntake,
               usesImperialUnits: usesImperialUnits,
             ),
             IntakeVerticalList(
@@ -153,31 +204,40 @@ class DayInfoWidget extends StatelessWidget {
               listIcon: CustomIcons.food_apple_outline,
               addMealType: AddMealType.snackType,
               intakeList: snackIntake,
+              onDeleteIntakeCallback: onDeleteIntake,
               onItemLongPressedCallback: onIntakeItemLongPressed,
+              onItemTappedCallback: onEditIntake,
               usesImperialUnits: usesImperialUnits,
+              onCopyIntakeCallback:
+                  DateUtils.isSameDay(selectedDay, DateTime.now())
+                      ? null
+                      : onCopyIntake,
+              trackedDayEntity: trackedDay,
             ),
-            const SizedBox(height: 16.0)
+            const SizedBox(height: 16.0),
           ],
-        )
+        ),
       ],
     );
   }
 
-  String _getCaloriesTrackedDisplayString(TrackedDayEntity trackedDay) {
-    int caloriesTracked;
-    if (trackedDay.caloriesTracked.isNegative) {
-      caloriesTracked = 0;
-    } else {
-      caloriesTracked = trackedDay.caloriesTracked.toInt();
-    }
+  // #182: Compute from actual intakes instead of stale cached values
+  List<IntakeEntity> get _allIntakes =>
+      [...breakfastIntake, ...lunchIntake, ...dinnerIntake, ...snackIntake];
 
+  String _getCaloriesTrackedDisplayString(TrackedDayEntity trackedDay) {
+    final actualKcal = _allIntakes.fold(0.0, (sum, i) => sum + i.totalKcal);
+    final caloriesTracked = actualKcal < 0 ? 0 : actualKcal.toInt();
     return '$caloriesTracked/${trackedDay.calorieGoal.toInt()} kcal';
   }
 
   String _getMacroTrackedDisplayString(TrackedDayEntity trackedDay) {
-    final carbsTracked = trackedDay.carbsTracked?.floor().toString() ?? '?';
-    final fatTracked = trackedDay.fatTracked?.floor().toString() ?? '?';
-    final proteinTracked = trackedDay.proteinTracked?.floor().toString() ?? '?';
+    final carbsTracked =
+        _allIntakes.fold(0.0, (sum, i) => sum + i.totalCarbsGram).floor();
+    final fatTracked =
+        _allIntakes.fold(0.0, (sum, i) => sum + i.totalFatsGram).floor();
+    final proteinTracked =
+        _allIntakes.fold(0.0, (sum, i) => sum + i.totalProteinsGram).floor();
 
     final carbsGoal = trackedDay.carbsGoal?.floor().toString() ?? '?';
     final fatGoal = trackedDay.fatGoal?.floor().toString() ?? '?';
@@ -187,9 +247,13 @@ class DayInfoWidget extends StatelessWidget {
   }
 
   void showCopyOrDeleteIntakeDialog(
-      BuildContext context, IntakeEntity intakeEntity) async {
+    BuildContext context,
+    IntakeEntity intakeEntity,
+  ) async {
     final copyOrDelete = await showDialog<bool>(
-        context: context, builder: (context) => const CopyOrDeleteDialog());
+      context: context,
+      builder: (context) => const CopyOrDeleteDialog(),
+    );
     if (context.mounted) {
       if (copyOrDelete != null && !copyOrDelete) {
         showDeleteIntakeDialog(context, intakeEntity);
@@ -202,23 +266,31 @@ class DayInfoWidget extends StatelessWidget {
   void showCopyDialog(BuildContext context, IntakeEntity intakeEntity) async {
     const copyDialog = CopyDialog();
     final selectedMealType = await showDialog<AddMealType>(
-        context: context, builder: (context) => copyDialog);
+      context: context,
+      builder: (context) => copyDialog,
+    );
     if (selectedMealType != null) {
       onCopyIntake(intakeEntity, null, selectedMealType);
     }
   }
 
   void showDeleteIntakeDialog(
-      BuildContext context, IntakeEntity intakeEntity) async {
+    BuildContext context,
+    IntakeEntity intakeEntity,
+  ) async {
     final shouldDeleteIntake = await showDialog<bool>(
-        context: context, builder: (context) => const DeleteDialog());
+      context: context,
+      builder: (context) => const DeleteDialog(),
+    );
     if (shouldDeleteIntake != null) {
       onDeleteIntake(intakeEntity, trackedDayEntity);
     }
   }
 
   void onIntakeItemLongPressed(
-      BuildContext context, IntakeEntity intakeEntity) async {
+    BuildContext context,
+    IntakeEntity intakeEntity,
+  ) async {
     if (DateUtils.isSameDay(selectedDay, DateTime.now())) {
       showDeleteIntakeDialog(context, intakeEntity);
     } else {
@@ -227,12 +299,29 @@ class DayInfoWidget extends StatelessWidget {
   }
 
   void onActivityItemLongPressed(
-      BuildContext context, UserActivityEntity activityEntity) async {
-    final shouldDeleteActivity = await showDialog<bool>(
-        context: context, builder: (context) => const DeleteDialog());
-
-    if (shouldDeleteActivity != null) {
-      onDeleteActivity(activityEntity, trackedDayEntity);
+    BuildContext context,
+    UserActivityEntity activityEntity,
+  ) async {
+    if (DateUtils.isSameDay(selectedDay, DateTime.now())) {
+      final shouldDelete = await showDialog<bool>(
+        context: context,
+        builder: (context) => const DeleteDialog(),
+      );
+      if (shouldDelete != null) {
+        onDeleteActivity(activityEntity, trackedDayEntity);
+      }
+    } else {
+      final copyOrDelete = await showDialog<bool>(
+        context: context,
+        builder: (context) => const CopyOrDeleteDialog(),
+      );
+      if (context.mounted) {
+        if (copyOrDelete == false) {
+          onDeleteActivity(activityEntity, trackedDayEntity);
+        } else if (copyOrDelete == true) {
+          onCopyActivity(activityEntity, trackedDayEntity);
+        }
+      }
     }
   }
 }

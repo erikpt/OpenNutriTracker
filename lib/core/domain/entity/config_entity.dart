@@ -12,14 +12,28 @@ class ConfigEntity extends Equatable {
   final double? userCarbGoalPct;
   final double? userProteinGoalPct;
   final double? userFatGoalPct;
+  final bool showActivityTracking;
+  final bool notificationsEnabled;
+  final int notificationHour;
+  final int notificationMinute;
+  final String? selectedLocale;
 
-  const ConfigEntity(this.hasAcceptedDisclaimer, this.hasAcceptedPolicy,
-      this.hasAcceptedSendAnonymousData, this.appTheme,
-      {this.usesImperialUnits = false,
-      this.userKcalAdjustment,
-      this.userCarbGoalPct,
-      this.userProteinGoalPct,
-      this.userFatGoalPct});
+  const ConfigEntity(
+    this.hasAcceptedDisclaimer,
+    this.hasAcceptedPolicy,
+    this.hasAcceptedSendAnonymousData,
+    this.appTheme, {
+    this.usesImperialUnits = false,
+    this.userKcalAdjustment,
+    this.userCarbGoalPct,
+    this.userProteinGoalPct,
+    this.userFatGoalPct,
+    this.showActivityTracking = true,
+    this.notificationsEnabled = false,
+    this.notificationHour = 8,
+    this.notificationMinute = 0,
+    this.selectedLocale,
+  });
 
   factory ConfigEntity.fromConfigDBO(ConfigDBO dbo) => ConfigEntity(
         dbo.hasAcceptedDisclaimer,
@@ -31,6 +45,11 @@ class ConfigEntity extends Equatable {
         userCarbGoalPct: dbo.userCarbGoalPct,
         userProteinGoalPct: dbo.userProteinGoalPct,
         userFatGoalPct: dbo.userFatGoalPct,
+        showActivityTracking: dbo.showActivityTracking ?? true,
+        notificationsEnabled: dbo.notificationsEnabled ?? false,
+        notificationHour: dbo.notificationHour ?? 8,
+        notificationMinute: dbo.notificationMinute ?? 0,
+        selectedLocale: dbo.selectedLocale,
       );
 
   @override
@@ -43,5 +62,10 @@ class ConfigEntity extends Equatable {
         userCarbGoalPct,
         userProteinGoalPct,
         userFatGoalPct,
+        showActivityTracking,
+        notificationsEnabled,
+        notificationHour,
+        notificationMinute,
+        selectedLocale,
       ];
 }

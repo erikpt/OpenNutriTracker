@@ -12,13 +12,17 @@ import 'package:opennutritracker/core/styles/fonts.dart';
 import 'package:opennutritracker/core/utils/env.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/core/utils/logger_config.dart';
+import 'package:opennutritracker/core/utils/notification_service.dart';
 import 'package:opennutritracker/core/utils/navigation_options.dart';
+import 'package:opennutritracker/core/utils/locale_provider.dart';
 import 'package:opennutritracker/core/utils/theme_mode_provider.dart';
 import 'package:opennutritracker/features/activity_detail/activity_detail_screen.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_screen.dart';
 import 'package:opennutritracker/features/add_activity/presentation/add_activity_screen.dart';
 import 'package:opennutritracker/features/edit_meal/presentation/edit_meal_screen.dart';
 import 'package:opennutritracker/features/onboarding/onboarding_screen.dart';
+import 'package:opennutritracker/features/home/presentation/screens/import_activity_scanner_screen.dart';
+import 'package:opennutritracker/features/home/presentation/screens/import_meal_scanner_screen.dart';
 import 'package:opennutritracker/features/scanner/scanner_screen.dart';
 import 'package:opennutritracker/features/meal_detail/meal_detail_screen.dart';
 import 'package:opennutritracker/features/settings/settings_screen.dart';
@@ -32,37 +36,71 @@ Future<void> main() async {
   await initLocator();
   final isUserInitialized = await locator<UserDataSource>().hasUserData();
   final configRepo = locator<ConfigRepository>();
+
+  // #312: Restore scheduled notifications after app start / device reboot
+  final config = await configRepo.getConfig();
+  if (config.notificationsEnabled) {
+    final notificationService = locator<NotificationService>();
+    await notificationService.initialize();
+    await notificationService.scheduleDailyReminder(
+      hour: config.notificationHour,
+      minute: config.notificationMinute,
+      title: 'OpenNutriTracker',
+      body: 'Don\'t forget to log your meals today!',
+    );
+  }
   final hasAcceptedAnonymousData =
       await configRepo.getConfigHasAcceptedAnonymousData();
   final savedAppTheme = await configRepo.getConfigAppTheme();
+  final savedLocaleCode = await configRepo.getSelectedLocale();
+  final savedLocale =
+      savedLocaleCode != null ? Locale(savedLocaleCode) : null;
   final log = Logger('main');
 
   // If the user has accepted anonymous data collection, run the app with
   // sentry enabled, else run without it
   if (kReleaseMode && hasAcceptedAnonymousData) {
     log.info('Starting App with Sentry enabled ...');
-    _runAppWithSentryReporting(isUserInitialized, savedAppTheme);
+    _runAppWithSentryReporting(isUserInitialized, savedAppTheme, savedLocale);
   } else {
     log.info('Starting App ...');
-    runAppWithChangeNotifiers(isUserInitialized, savedAppTheme);
+    runAppWithChangeNotifiers(isUserInitialized, savedAppTheme, savedLocale);
   }
 }
 
 void _runAppWithSentryReporting(
-    bool isUserInitialized, AppThemeEntity savedAppTheme) async {
-  await SentryFlutter.init((options) {
-    options.dsn = Env.sentryDns;
-    options.tracesSampleRate = 1.0;
-  },
-      appRunner: () =>
-          runAppWithChangeNotifiers(isUserInitialized, savedAppTheme));
+  bool isUserInitialized,
+  AppThemeEntity savedAppTheme,
+  Locale? savedLocale,
+) async {
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = Env.sentryDns;
+      options.tracesSampleRate = 1.0;
+    },
+    appRunner: () =>
+        runAppWithChangeNotifiers(isUserInitialized, savedAppTheme, savedLocale),
+  );
 }
 
 void runAppWithChangeNotifiers(
-        bool userInitialized, AppThemeEntity savedAppTheme) =>
-    runApp(ChangeNotifierProvider(
-        create: (_) => ThemeModeProvider(appTheme: savedAppTheme),
-        child: OpenNutriTrackerApp(userInitialized: userInitialized)));
+  bool userInitialized,
+  AppThemeEntity savedAppTheme,
+  Locale? savedLocale,
+) =>
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => ThemeModeProvider(appTheme: savedAppTheme),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => LocaleProvider(locale: savedLocale),
+          ),
+        ],
+        child: OpenNutriTrackerApp(userInitialized: userInitialized),
+      ),
+    );
 
 class OpenNutriTrackerApp extends StatelessWidget {
   final bool userInitialized;
@@ -75,14 +113,17 @@ class OpenNutriTrackerApp extends StatelessWidget {
       onGenerateTitle: (context) => S.of(context).appTitle,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: lightColorScheme,
-          textTheme: appTextTheme),
+        useMaterial3: true,
+        colorScheme: lightColorScheme,
+        textTheme: appTextTheme,
+      ),
       darkTheme: ThemeData(
-          useMaterial3: true,
-          colorScheme: darkColorScheme,
-          textTheme: appTextTheme),
+        useMaterial3: true,
+        colorScheme: darkColorScheme,
+        textTheme: appTextTheme,
+      ),
       themeMode: Provider.of<ThemeModeProvider>(context).themeMode,
+      locale: Provider.of<LocaleProvider>(context).locale,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -109,6 +150,10 @@ class OpenNutriTrackerApp extends StatelessWidget {
             const ActivityDetailScreen(),
         NavigationOptions.imageFullScreenRoute: (context) =>
             const ImageFullScreen(),
+        NavigationOptions.importMealScannerRoute: (context) =>
+            const ImportMealScannerScreen(),
+        NavigationOptions.importActivityScannerRoute: (context) =>
+            const ImportActivityScannerScreen(),
       },
     );
   }

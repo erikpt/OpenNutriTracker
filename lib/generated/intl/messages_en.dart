@@ -29,6 +29,24 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(age) => "${age} years";
 
+  static String m4(mealType) =>
+      "These items will be added to your ${mealType}.";
+
+  static String m5(count) => "Import ${count} items?";
+
+  static String m6(count) =>
+      "${count} item(s) could not be fetched from OpenFoodFacts.";
+
+  static String m7(count) => "Import ${count} activities?";
+
+  static String m8(rate) => "${rate} kg/week";
+
+  static String m9(rate) => "${rate} lbs/week";
+
+  static String m10(qty, unit) => "Per ${qty} ${unit}";
+
+  static String m11(time) => "Reminder time: ${time}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -37,7 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addItemLabel": MessageLookupByLibrary.simpleMessage("Add new Item:"),
         "addLabel": MessageLookupByLibrary.simpleMessage("Add"),
         "additionalInfoLabelCompendium2011": MessageLookupByLibrary.simpleMessage(
-            "Information provided\n by the \n\'2011 Compendium\n of Physical Activities\'"),
+            "Information provided\n by the \n\'2024 Compendium\n of Physical Activities\'"),
         "additionalInfoLabelCustom":
             MessageLookupByLibrary.simpleMessage("Custom Meal Item"),
         "additionalInfoLabelFDC": MessageLookupByLibrary.simpleMessage(
@@ -82,9 +100,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "carbohydrateLabel":
             MessageLookupByLibrary.simpleMessage("carbohydrate"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("carbs"),
+        "chooseWeeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Weekly weight rate"),
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Choose Weight Goal"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("cm"),
+        "codeCopiedLabel": MessageLookupByLibrary.simpleMessage("Code copied"),
+        "copyCodeLabel": MessageLookupByLibrary.simpleMessage("Copy code"),
         "copyDialogTitle": MessageLookupByLibrary.simpleMessage(
             "Which meal type do you want to copy to?"),
         "copyOrDeleteTimeDialogContent": MessageLookupByLibrary.simpleMessage(
@@ -99,21 +121,30 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Daily Kcal adjustment:"),
         "dataCollectionLabel": MessageLookupByLibrary.simpleMessage(
             "Support development by providing anonymous usage data"),
+        "deleteAllLabel": MessageLookupByLibrary.simpleMessage("Delete all"),
         "deleteTimeDialogContent": MessageLookupByLibrary.simpleMessage(
             "Do want to delete the selected item?"),
+        "deleteTimeDialogPluralContent": MessageLookupByLibrary.simpleMessage(
+            "Do want to delete all items of this meal?"),
+        "deleteTimeDialogPluralTitle":
+            MessageLookupByLibrary.simpleMessage("Delete Items?"),
         "deleteTimeDialogTitle":
             MessageLookupByLibrary.simpleMessage("Delete Item?"),
         "dialogCancelLabel": MessageLookupByLibrary.simpleMessage("CANCEL"),
         "dialogCopyLabel":
-            MessageLookupByLibrary.simpleMessage("COPY TO TODAY"),
+            MessageLookupByLibrary.simpleMessage("Copy to today"),
         "dialogDeleteLabel": MessageLookupByLibrary.simpleMessage("DELETE"),
         "dialogOKLabel": MessageLookupByLibrary.simpleMessage("OK"),
         "diaryLabel": MessageLookupByLibrary.simpleMessage("Diary"),
+        "diaryFutureDateWarning":
+            MessageLookupByLibrary.simpleMessage("You are editing a future date"),
         "dinnerExample": MessageLookupByLibrary.simpleMessage(
             "e.g. soup, chicken, wine ..."),
         "dinnerLabel": MessageLookupByLibrary.simpleMessage("Dinner"),
         "disclaimerText": MessageLookupByLibrary.simpleMessage(
-            "OpenNutriTracker is not a medical application. All data provided is not validated and should be used with caution. Please maintain a healthy lifestyle and consult a professional if you have any problems. Use during illness, pregnancy or lactation is not recommended.\n\n\nThe application is still under development. Errors, bugs and crashes may occur."),
+            "OpenNutriTracker is not a medical application. All data provided is not validated and should be used with caution. Please maintain a healthy lifestyle and consult a professional if you have any problems. Use during illness, pregnancy or lactation is not recommended."),
+        "duplicateMealDialogContent": MessageLookupByLibrary.simpleMessage(
+            "This food has already been added to this meal today. Add it again?"),
         "editItemDialogTitle":
             MessageLookupByLibrary.simpleMessage("Edit item"),
         "editMealLabel": MessageLookupByLibrary.simpleMessage("Edit meal"),
@@ -131,6 +162,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "errorProductNotFound":
             MessageLookupByLibrary.simpleMessage("Product not found"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Export"),
+        "customMealsDeleteConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "All diary entries using this meal will also be removed."),
+        "customMealsDeleteConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("Delete custom meal?"),
+        "customMealsEmptyLabel":
+            MessageLookupByLibrary.simpleMessage("No custom meals saved yet."),
+        "settingsCustomMealsLabel":
+            MessageLookupByLibrary.simpleMessage("Custom Meals"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "You can export the app data to a zip file and import it later. This is useful if you want to backup your data or transfer it to another device.\n\nThe app does not use any cloud service to store your data."),
         "exportImportErrorLabel":
@@ -156,6 +195,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "heightLabel": MessageLookupByLibrary.simpleMessage("Height"),
         "homeLabel": MessageLookupByLibrary.simpleMessage("Home"),
         "importAction": MessageLookupByLibrary.simpleMessage("Import"),
+        "importActivityConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "These activities will be added to today."),
+        "importActivityConfirmTitle": m7,
+        "importActivityLabel":
+            MessageLookupByLibrary.simpleMessage("Import shared workout"),
+        "importActivitySuccessLabel":
+            MessageLookupByLibrary.simpleMessage("Workout imported"),
+        "importMealConfirmContent": m4,
+        "importMealConfirmTitle": m5,
+        "importMealErrorLabel":
+            MessageLookupByLibrary.simpleMessage("Invalid QR code"),
+        "importMealLabel":
+            MessageLookupByLibrary.simpleMessage("Import shared meal"),
+        "importMealSuccessLabel":
+            MessageLookupByLibrary.simpleMessage("Meal imported"),
+        "importOffFetchFailedLabel": m6,
         "infoAddedActivityLabel":
             MessageLookupByLibrary.simpleMessage("Added new activity"),
         "infoAddedIntakeLabel":
@@ -164,8 +219,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Item deleted"),
         "itemUpdatedSnackbar":
             MessageLookupByLibrary.simpleMessage("Item updated"),
+        "kcalExceededLabel":
+            MessageLookupByLibrary.simpleMessage("kcal exceeded"),
         "kcalLabel": MessageLookupByLibrary.simpleMessage("kcal"),
         "kcalLeftLabel": MessageLookupByLibrary.simpleMessage("kcal left"),
+        "kcalTooMuchLabel":
+            MessageLookupByLibrary.simpleMessage("kcal too much"),
         "kgLabel": MessageLookupByLibrary.simpleMessage("kg"),
         "lbsLabel": MessageLookupByLibrary.simpleMessage("lbs"),
         "lunchExample":
@@ -178,6 +237,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "mealFatLabel": MessageLookupByLibrary.simpleMessage("fat per"),
         "mealKcalLabel": MessageLookupByLibrary.simpleMessage("kcal per"),
         "mealNameLabel": MessageLookupByLibrary.simpleMessage("Meal name"),
+        "mealNutrientsPerQtyLabel": m10,
+        "mealNutrientsTotalLabel":
+            MessageLookupByLibrary.simpleMessage("Total amount"),
         "mealProteinLabel":
             MessageLookupByLibrary.simpleMessage("protein per 100 g/ml"),
         "mealSizeLabel":
@@ -225,7 +287,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nutritionalStatusUnderweight":
             MessageLookupByLibrary.simpleMessage("Underweight"),
         "offDisclaimer": MessageLookupByLibrary.simpleMessage(
-            "The data provided to you by this app are retrieved from the Open Food Facts database. No guarantees can be made for the accuracy, completeness, or reliability of the information provided. The data are provided “as is” and the originating source for the data (Open Food Facts) is not liable for any damages arising out of the use of the data."),
+            'The data provided to you by this app are retrieved from the Open Food Facts database. No guarantees can be made for the accuracy, completeness, or reliability of the information provided. The data are provided "as is" and the originating source for the data (Open Food Facts) is not liable for any damages arising out of the use of the data.'),
         "onboardingActivityQuestionSubtitle":
             MessageLookupByLibrary.simpleMessage(
                 "How active are you? (without workouts)"),
@@ -270,6 +332,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "onboardingYourMacrosGoalLabel":
             MessageLookupByLibrary.simpleMessage("Your macronutrient goals:"),
         "ozUnit": MessageLookupByLibrary.simpleMessage("oz"),
+        "paActiveVideoGames":
+            MessageLookupByLibrary.simpleMessage("active video games"),
+        "paActiveVideoGamesDesc": MessageLookupByLibrary.simpleMessage(
+            "Wii Sports, Dance Dance Revolution, general"),
         "paAmericanFootballGeneral":
             MessageLookupByLibrary.simpleMessage("football"),
         "paAmericanFootballGeneralDesc":
@@ -326,7 +392,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paCheerleadingDesc": MessageLookupByLibrary.simpleMessage(
             "gymnastic moves, competitive"),
         "paChildrenGame":
-            MessageLookupByLibrary.simpleMessage("children’s games"),
+            MessageLookupByLibrary.simpleMessage("children's games"),
         "paChildrenGameDesc": MessageLookupByLibrary.simpleMessage(
             "(e.g., hopscotch, 4-square, dodgeball, playground apparatus, t-ball, tetherball, marbles, arcade games), moderate effort"),
         "paClimbingHillsNoLoadGeneral":
@@ -338,6 +404,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("batting, bowling, fielding"),
         "paCroquet": MessageLookupByLibrary.simpleMessage("croquet"),
         "paCroquetDesc": MessageLookupByLibrary.simpleMessage("general"),
+        "paCrossCountrySkiing":
+            MessageLookupByLibrary.simpleMessage("cross-country skiing"),
+        "paCrossCountrySkiingDesc":
+            MessageLookupByLibrary.simpleMessage("cross-country, general"),
         "paCurling": MessageLookupByLibrary.simpleMessage("curling"),
         "paCurlingDesc": MessageLookupByLibrary.simpleMessage("general"),
         "paDancingAerobicGeneral":
@@ -381,6 +451,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "paHeadingDancing": MessageLookupByLibrary.simpleMessage("dancing"),
         "paHeadingRunning": MessageLookupByLibrary.simpleMessage("running"),
         "paHeadingSports": MessageLookupByLibrary.simpleMessage("sports"),
+        "pasteCodeHint": MessageLookupByLibrary.simpleMessage(
+            "Paste the shared meal code here"),
+        "pasteCodeLabel": MessageLookupByLibrary.simpleMessage("Paste code"),
         "paHeadingWalking": MessageLookupByLibrary.simpleMessage("walking"),
         "paHeadingWaterActivities":
             MessageLookupByLibrary.simpleMessage("water activities"),
@@ -444,6 +517,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paPaddleball": MessageLookupByLibrary.simpleMessage("paddleball"),
         "paPaddleballDesc":
             MessageLookupByLibrary.simpleMessage("casual, general"),
+        "paPickleball": MessageLookupByLibrary.simpleMessage("pickleball"),
+        "paPilates": MessageLookupByLibrary.simpleMessage("pilates"),
         "paPoloHorse": MessageLookupByLibrary.simpleMessage("polo"),
         "paPoloHorseDesc": MessageLookupByLibrary.simpleMessage("on horseback"),
         "paRacquetball": MessageLookupByLibrary.simpleMessage("racquetball"),
@@ -452,6 +527,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("resistance training"),
         "paResistanceTrainingDesc": MessageLookupByLibrary.simpleMessage(
             "weight lifting, free weight, nautilus or universal"),
+        "paResistanceTrainingVigorous": MessageLookupByLibrary.simpleMessage(
+            "resistance training (vigorous)"),
+        "paResistanceTrainingVigorousDesc": MessageLookupByLibrary.simpleMessage(
+            "vigorous effort, powerlifting or bodybuilding"),
         "paRodeoSportGeneralModerate":
             MessageLookupByLibrary.simpleMessage("rodeo sports"),
         "paRodeoSportGeneralModerateDesc":
@@ -476,6 +555,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("touch, non-competitive"),
         "paRunningGeneral": MessageLookupByLibrary.simpleMessage("running"),
         "paRunningGeneralDesc": MessageLookupByLibrary.simpleMessage("general"),
+        "paTreadmillRunning":
+            MessageLookupByLibrary.simpleMessage("running on treadmill"),
+        "paTreadmillRunningDesc":
+            MessageLookupByLibrary.simpleMessage("on treadmill, general"),
         "paSailingGeneral": MessageLookupByLibrary.simpleMessage("sailing"),
         "paSailingGeneralDesc": MessageLookupByLibrary.simpleMessage(
             "boat and board sailing, windsurfing, ice sailing, general"),
@@ -503,6 +586,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("snow shoveling"),
         "paSnowShovingModerateDesc":
             MessageLookupByLibrary.simpleMessage("by hand, moderate effort"),
+        "paSnowshoeing": MessageLookupByLibrary.simpleMessage("snowshoeing"),
         "paSoccerGeneral": MessageLookupByLibrary.simpleMessage("soccer"),
         "paSoccerGeneralDesc":
             MessageLookupByLibrary.simpleMessage("casual, general"),
@@ -512,6 +596,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("fast or slow pitch, general"),
         "paSquashGeneral": MessageLookupByLibrary.simpleMessage("squash"),
         "paSquashGeneralDesc": MessageLookupByLibrary.simpleMessage("general"),
+        "paStretching": MessageLookupByLibrary.simpleMessage("stretching"),
+        "paStretchingDesc": MessageLookupByLibrary.simpleMessage("mild, general"),
         "paSurfing": MessageLookupByLibrary.simpleMessage("surfing"),
         "paSurfingDesc":
             MessageLookupByLibrary.simpleMessage("body or board, general"),
@@ -552,6 +638,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paWalkingTheDog":
             MessageLookupByLibrary.simpleMessage("walking the dog"),
         "paWalkingTheDogDesc": MessageLookupByLibrary.simpleMessage("general"),
+        "paNordicWalking":
+            MessageLookupByLibrary.simpleMessage("nordic walking"),
         "paWallyball": MessageLookupByLibrary.simpleMessage("wallyball"),
         "paWallyballDesc": MessageLookupByLibrary.simpleMessage("general"),
         "paWaterAerobics":
@@ -635,6 +723,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsImperialLabel":
             MessageLookupByLibrary.simpleMessage("Imperial (lbs, ft, oz)"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Settings"),
+        "settingsLanguageLabel":
+            MessageLookupByLibrary.simpleMessage("Language"),
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Licenses"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Mass"),
@@ -642,8 +732,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Metric (kg, cm, ml)"),
         "settingsPrivacySettings":
             MessageLookupByLibrary.simpleMessage("Privacy Settings"),
+        "settingsNotificationsLabel":
+            MessageLookupByLibrary.simpleMessage("Daily Reminder"),
+        "settingsNotificationsTimeLabel": m11,
         "settingsReportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Report Error"),
+        "settingsShowActivityTracking":
+            MessageLookupByLibrary.simpleMessage("Show Activity Tracking"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Source Code"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("System"),
@@ -655,12 +750,21 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("System default"),
         "settingsUnitsLabel": MessageLookupByLibrary.simpleMessage("Units"),
         "settingsVolumeLabel": MessageLookupByLibrary.simpleMessage("Volume"),
+        "shareCodeLabel": MessageLookupByLibrary.simpleMessage("Share code"),
+        "shareMealLabel": MessageLookupByLibrary.simpleMessage("Share meal"),
         "snackExample": MessageLookupByLibrary.simpleMessage(
             "e.g. apple, ice cream, chocolate ..."),
         "snackLabel": MessageLookupByLibrary.simpleMessage("Snack"),
         "sugarLabel": MessageLookupByLibrary.simpleMessage("sugar"),
         "suppliedLabel": MessageLookupByLibrary.simpleMessage("supplied"),
         "unitLabel": MessageLookupByLibrary.simpleMessage("Unit"),
+        "warningLabel": MessageLookupByLibrary.simpleMessage("Warning"),
+        "weeklyWeightGoalKgPerWeek": m8,
+        "weeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Weekly rate"),
+        "weeklyWeightGoalLbsPerWeek": m9,
+        "weeklyWeightGoalNoneLabel":
+            MessageLookupByLibrary.simpleMessage("Not set"),
         "weightLabel": MessageLookupByLibrary.simpleMessage("Weight"),
         "yearsLabel": m3
       };

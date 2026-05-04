@@ -1,4 +1,4 @@
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:logging/logging.dart';
 import 'package:opennutritracker/core/data/dbo/app_theme_dbo.dart';
 import 'package:opennutritracker/core/data/dbo/config_dbo.dart';
@@ -23,16 +23,19 @@ class ConfigDataSource {
 
   Future<void> setConfigDisclaimer(bool hasAcceptedDisclaimer) async {
     _log.fine(
-        'Updating config hasAcceptedDisclaimer to $hasAcceptedDisclaimer');
+      'Updating config hasAcceptedDisclaimer to $hasAcceptedDisclaimer',
+    );
     final config = _configBox.get(_configKey);
     config?.hasAcceptedDisclaimer = hasAcceptedDisclaimer;
     config?.save();
   }
 
   Future<void> setConfigAcceptedAnonymousData(
-      bool hasAcceptedAnonymousData) async {
+    bool hasAcceptedAnonymousData,
+  ) async {
     _log.fine(
-        'Updating config hasAcceptedAnonymousData to $hasAcceptedAnonymousData');
+      'Updating config hasAcceptedAnonymousData to $hasAcceptedAnonymousData',
+    );
     final config = _configBox.get(_configKey);
     config?.hasAcceptedSendAnonymousData = hasAcceptedAnonymousData;
     config?.save();
@@ -89,6 +92,41 @@ class ConfigDataSource {
     config?.userFatGoalPct = fatGoalPct;
     config?.save();
   }
+
+  Future<void> setConfigShowActivityTracking(bool show) async {
+    _log.fine('Updating config showActivityTracking to $show');
+    final config = _configBox.get(_configKey);
+    config?.showActivityTracking = show;
+    config?.save();
+  }
+
+  Future<void> setNotificationsEnabled(bool enabled) async {
+    _log.fine('Updating config notificationsEnabled to $enabled');
+    final config = _configBox.get(_configKey);
+    config?.notificationsEnabled = enabled;
+    config?.save();
+  }
+
+  Future<void> setNotificationTime(int hour, int minute) async {
+    _log.fine('Updating config notification time to $hour:$minute');
+    final config = _configBox.get(_configKey);
+    config?.notificationHour = hour;
+    config?.notificationMinute = minute;
+    config?.save();
+  }
+
+  Future<String?> getSelectedLocale() async {
+    final config = _configBox.get(_configKey);
+    return config?.selectedLocale;
+  }
+
+  Future<void> setSelectedLocale(String? locale) async {
+    _log.fine('Updating config selectedLocale to $locale');
+    final config = _configBox.get(_configKey);
+    config?.selectedLocale = locale;
+    config?.save();
+  }
+
 
   Future<ConfigDBO> getConfig() async {
     return _configBox.get(_configKey) ?? ConfigDBO.empty();

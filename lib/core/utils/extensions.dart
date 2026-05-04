@@ -58,7 +58,7 @@ extension DisplayDouble on double? {
 }
 
 extension FormatString on DateTime {
-  String toParsedDay() => DateFormat.yMd().format(this);
+  String toParsedDay() => DateFormat('yyyy-MM-dd').format(this);
 }
 
 extension ColorExtension on Color {
@@ -68,6 +68,8 @@ extension ColorExtension on Color {
     final green = (g * 255).toInt().toRadixString(16).padLeft(2, '0');
     final blue = (b * 255).toInt().toRadixString(16).padLeft(2, '0');
 
-    return '#' '$red$green$blue'.toUpperCase();
+    return '#'
+            '$red$green$blue'
+        .toUpperCase();
   }
 }

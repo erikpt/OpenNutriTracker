@@ -14,8 +14,22 @@ class UserActivityRepository {
   }
 
   Future<void> addAllUserActivityDBOs(
-      List<UserActivityDBO> userActivityDBOs) async {
+    List<UserActivityDBO> userActivityDBOs,
+  ) async {
     await _userActivityDataSource.addAllUserActivities(userActivityDBOs);
+  }
+
+  Future<UserActivityEntity?> updateUserActivity(
+    String id,
+    double newDuration,
+    double newBurnedKcal,
+  ) async {
+    final dbo = await _userActivityDataSource.updateUserActivity(
+      id,
+      newDuration,
+      newBurnedKcal,
+    );
+    return dbo == null ? null : UserActivityEntity.fromUserActivityDBO(dbo);
   }
 
   Future<void> deleteUserActivity(UserActivityEntity userActivityEntity) async {
@@ -27,13 +41,16 @@ class UserActivityRepository {
   }
 
   Future<List<UserActivityEntity>> getAllUserActivityByDate(
-      DateTime dateTime) async {
+    DateTime dateTime,
+  ) async {
     final userActivityDBOList =
         await _userActivityDataSource.getAllUserActivitiesByDate(dateTime);
 
     return userActivityDBOList
-        .map((userActivityDBO) =>
-            UserActivityEntity.fromUserActivityDBO(userActivityDBO))
+        .map(
+          (userActivityDBO) =>
+              UserActivityEntity.fromUserActivityDBO(userActivityDBO),
+        )
         .toList();
   }
 
@@ -41,8 +58,10 @@ class UserActivityRepository {
     final userActivityDBOList =
         await _userActivityDataSource.getRecentlyAddedUserActivity();
     return userActivityDBOList
-        .map((userActivityDBO) =>
-            UserActivityEntity.fromUserActivityDBO(userActivityDBO))
+        .map(
+          (userActivityDBO) =>
+              UserActivityEntity.fromUserActivityDBO(userActivityDBO),
+        )
         .toList();
   }
 }
