@@ -37,6 +37,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(count) =>
       "${count} item(s) could not be fetched from OpenFoodFacts.";
 
+  static String m7(count) => "Import ${count} activities?";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -173,8 +175,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "importAction": MessageLookupByLibrary.simpleMessage("Import"),
         "importMealConfirmContent": m4,
         "importMealConfirmTitle": m5,
+        "importActivityConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "These activities will be added to today."),
+        "importActivityConfirmTitle": m7,
+        "importActivityLabel":
+            MessageLookupByLibrary.simpleMessage("Import shared workout"),
+        "importActivitySuccessLabel":
+            MessageLookupByLibrary.simpleMessage("Workout imported"),
         "importMealErrorLabel":
             MessageLookupByLibrary.simpleMessage("Invalid QR code"),
+        "shareActivityLabel":
+            MessageLookupByLibrary.simpleMessage("Share workout"),
         "importMealLabel":
             MessageLookupByLibrary.simpleMessage("Import shared meal"),
         "importMealSuccessLabel":

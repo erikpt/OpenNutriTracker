@@ -64,7 +64,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
         builder: (context, state) {
           if (state is ActivityDetailInitial) {
             _activityDetailBloc.add(
-              LoadActivityDetailEvent(context, activityEntity),
+              LoadActivityDetailEvent(activityEntity),
             );
             return getLoadingContent();
           } else if (state is ActivityDetailLoadingState) {
@@ -201,7 +201,6 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
 
   void onAddButtonPressed(BuildContext context) {
     _activityDetailBloc.persistActivity(
-      context,
       quantityTextController.text,
       totalKcal,
       activityEntity,

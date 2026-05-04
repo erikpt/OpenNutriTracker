@@ -200,8 +200,9 @@ class SharedMealPayload {
       }
 
       final decoded = jsonDecode(jsonString);
-      if (decoded is! List)
+      if (decoded is! List) {
         throw SharedMealParseException('Invalid payload format');
+      }
 
       final version = decoded[0] as int;
       if (version != _currentVersion) {

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:logging/logging.dart';
@@ -19,6 +20,27 @@ class UserActivityDataSource {
   ) async {
     log.fine('Adding new user activities to db');
     _userActivityBox.addAll(userActivityDBOList);
+  }
+
+  Future<UserActivityDBO?> updateUserActivity(
+    String id,
+    double newDuration,
+    double newBurnedKcal,
+  ) async {
+    log.fine('Updating user activity in db');
+    final existing =
+        _userActivityBox.values.firstWhereOrNull((dbo) => dbo.id == id);
+    if (existing == null) return null;
+    final updated = UserActivityDBO(
+      existing.id,
+      newDuration,
+      newBurnedKcal,
+      existing.date,
+      existing.physicalActivityDBO,
+    );
+    await existing.delete();
+    await _userActivityBox.add(updated);
+    return updated;
   }
 
   Future<void> deleteIntakeFromId(String activityId) async {

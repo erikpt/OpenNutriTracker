@@ -13,6 +13,7 @@ import 'package:opennutritracker/core/domain/usecase/get_kcal_goal_usecase.dart'
 import 'package:opennutritracker/core/domain/usecase/get_macro_goal_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/get_user_activity_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/update_intake_usecase.dart';
+import 'package:opennutritracker/core/domain/usecase/update_user_activity_usecase.dart';
 import 'package:opennutritracker/core/utils/calc/calorie_goal_calc.dart';
 import 'package:opennutritracker/core/utils/calc/macro_calc.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
@@ -34,6 +35,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final AddTrackedDayUsecase _addTrackedDayUseCase;
   final GetKcalGoalUsecase _getKcalGoalUsecase;
   final GetMacroGoalUsecase _getMacroGoalUsecase;
+  final UpdateUserActivityUsecase _updateUserActivityUsecase;
 
   DateTime currentDay = DateTime.now();
 
@@ -48,6 +50,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     this._addTrackedDayUseCase,
     this._getKcalGoalUsecase,
     this._getMacroGoalUsecase,
+    this._updateUserActivityUsecase,
   ) : super(HomeInitial()) {
     on<LoadItemsEvent>((event, emit) async {
       emit(HomeLoadingState());
@@ -244,6 +247,37 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       fatAmount: fatAmount,
       proteinAmount: proteinAmount,
     );
+    _updateDiaryPage(dateTime);
+  }
+
+  Future<void> updateUserActivityItem(
+    UserActivityEntity activityEntity,
+    double newDuration,
+  ) async {
+    final dateTime = DateTime.now();
+    final newActivity = await _updateUserActivityUsecase.updateUserActivity(
+      activityEntity,
+      newDuration,
+    );
+    assert(newActivity != null);
+    final kcalDiff = newActivity!.burnedKcal - activityEntity.burnedKcal;
+    if (kcalDiff > 0) {
+      _addTrackedDayUseCase.increaseDayCalorieGoal(dateTime, kcalDiff);
+      _addTrackedDayUseCase.increaseDayMacroGoals(
+        dateTime,
+        carbsAmount: MacroCalc.getTotalCarbsGoal(kcalDiff),
+        fatAmount: MacroCalc.getTotalFatsGoal(kcalDiff),
+        proteinAmount: MacroCalc.getTotalProteinsGoal(kcalDiff),
+      );
+    } else if (kcalDiff < 0) {
+      _addTrackedDayUseCase.reduceDayCalorieGoal(dateTime, kcalDiff.abs());
+      _addTrackedDayUseCase.reduceDayMacroGoals(
+        dateTime,
+        carbsAmount: MacroCalc.getTotalCarbsGoal(kcalDiff.abs()),
+        fatAmount: MacroCalc.getTotalFatsGoal(kcalDiff.abs()),
+        proteinAmount: MacroCalc.getTotalProteinsGoal(kcalDiff.abs()),
+      );
+    }
     _updateDiaryPage(dateTime);
   }
 

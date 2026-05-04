@@ -951,6 +951,56 @@ class S {
     );
   }
 
+  /// `Share workout`
+  String get shareActivityLabel {
+    return Intl.message(
+      'Share workout',
+      name: 'shareActivityLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import shared workout`
+  String get importActivityLabel {
+    return Intl.message(
+      'Import shared workout',
+      name: 'importActivityLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import {count} activities?`
+  String importActivityConfirmTitle(int count) {
+    return Intl.message(
+      'Import $count activities?',
+      name: 'importActivityConfirmTitle',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `These activities will be added to today.`
+  String get importActivityConfirmContent {
+    return Intl.message(
+      'These activities will be added to today.',
+      name: 'importActivityConfirmContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Workout imported`
+  String get importActivitySuccessLabel {
+    return Intl.message(
+      'Workout imported',
+      name: 'importActivitySuccessLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{count} item(s) could not be fetched from OpenFoodFacts.`
   String importOffFetchFailedLabel(int count) {
     return Intl.message(
