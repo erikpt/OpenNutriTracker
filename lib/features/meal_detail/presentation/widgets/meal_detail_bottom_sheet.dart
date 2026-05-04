@@ -10,7 +10,7 @@ import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart'
 import 'package:opennutritracker/features/meal_detail/presentation/bloc/meal_detail_bloc.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
-class MealDetailBottomSheet extends StatelessWidget {
+class MealDetailBottomSheet extends StatefulWidget {
   final MealEntity product;
   final DateTime day;
   final IntakeTypeEntity intakeTypeEntity;
@@ -31,6 +31,30 @@ class MealDetailBottomSheet extends StatelessWidget {
     required this.mealDetailBloc,
     required this.selectedUnit,
   });
+
+  @override
+  State<MealDetailBottomSheet> createState() => _MealDetailBottomSheetState();
+}
+
+class _MealDetailBottomSheetState extends State<MealDetailBottomSheet> {
+  @override
+  void initState() {
+    super.initState();
+    widget.quantityTextController.addListener(_onQuantityChanged);
+  }
+
+  @override
+  void dispose() {
+    widget.quantityTextController.removeListener(_onQuantityChanged);
+    super.dispose();
+  }
+
+  void _onQuantityChanged() {
+    widget.onQuantityOrUnitChanged(
+      widget.quantityTextController.text,
+      widget.selectedUnit,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +87,7 @@ class MealDetailBottomSheet extends StatelessWidget {
                         Expanded(
                           child: TextFormField(
                             enabled: !productMissingRequiredInfo,
-                            controller: quantityTextController
-                              ..addListener(() {
-                                onQuantityOrUnitChanged(
-                                  quantityTextController.text,
-                                  selectedUnit,
-                                );
-                              }),
+                            controller: widget.quantityTextController,
                             keyboardType: TextInputType.numberWithOptions(
                               decimal: true,
                             ),
@@ -88,26 +106,26 @@ class MealDetailBottomSheet extends StatelessWidget {
                         Expanded(
                           child: DropdownButtonFormField(
                             isExpanded: true,
-                            initialValue: selectedUnit,
-                            key: ValueKey(selectedUnit),
+                            initialValue: widget.selectedUnit,
+                            key: ValueKey(widget.selectedUnit),
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
                               labelText: S.of(context).unitLabel,
                             ),
                             items: <DropdownMenuItem<String>>[
-                              if (product.hasServingValues)
+                              if (widget.product.hasServingValues)
                                 _getServingDropdownItem(context),
-                              if (product.isSolid ||
-                                  !product.isLiquid && !product.isSolid)
+                              if (widget.product.isSolid ||
+                                  !widget.product.isLiquid && !widget.product.isSolid)
                                 ..._getSolidUnitDropdownItems(context),
-                              if (product.isLiquid ||
-                                  !product.isLiquid && !product.isSolid)
+                              if (widget.product.isLiquid ||
+                                  !widget.product.isLiquid && !widget.product.isSolid)
                                 ..._getLiquidUnitDropdownItems(context),
                               ..._getOtherDropdownItems(context),
                             ],
                             onChanged: (value) {
-                              onQuantityOrUnitChanged(
-                                quantityTextController.text,
+                              widget.onQuantityOrUnitChanged(
+                                widget.quantityTextController.text,
                                 value,
                               );
                             },
@@ -154,7 +172,7 @@ class MealDetailBottomSheet extends StatelessWidget {
   }
 
   bool _hasRequiredProductInfoMissing() {
-    final productNutriments = product.nutriments;
+    final productNutriments = widget.product.nutriments;
     if (productNutriments.energyKcal100 == null ||
         productNutriments.carbohydrates100 == null ||
         productNutriments.fat100 == null ||
@@ -166,13 +184,13 @@ class MealDetailBottomSheet extends StatelessWidget {
   }
 
   void onAddButtonPressed(BuildContext context) {
-    mealDetailBloc.addIntake(
+    widget.mealDetailBloc.addIntake(
       context,
-      mealDetailBloc.state.selectedUnit,
-      mealDetailBloc.state.totalQuantityConverted,
-      intakeTypeEntity,
-      product,
-      day,
+      widget.mealDetailBloc.state.selectedUnit,
+      widget.mealDetailBloc.state.totalQuantityConverted,
+      widget.intakeTypeEntity,
+      widget.product,
+      widget.day,
     );
 
     // Refresh Home Page
@@ -195,8 +213,8 @@ class MealDetailBottomSheet extends StatelessWidget {
     return DropdownMenuItem(
       value: UnitDropdownItem.serving.toString(),
       child: Text(
-        product.servingSize ??
-            '${S.of(context).servingLabel} (${product.servingQuantity} ${product.servingUnit})',
+        widget.product.servingSize ??
+            '${S.of(context).servingLabel} (${widget.product.servingQuantity} ${widget.product.servingUnit})',
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
       ),
