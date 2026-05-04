@@ -137,6 +137,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dialogDeleteLabel": MessageLookupByLibrary.simpleMessage("SİL"),
         "dialogOKLabel": MessageLookupByLibrary.simpleMessage("TAMAM"),
         "diaryLabel": MessageLookupByLibrary.simpleMessage("Günlük"),
+        "diaryFutureDateWarning": MessageLookupByLibrary.simpleMessage(
+            "Gelecekteki bir tarihi düzenliyorsunuz"),
         "duplicateMealDialogContent": MessageLookupByLibrary.simpleMessage(
             "Bu yiyecek bugün bu öğüne zaten eklenmiş. Tekrar eklensin mi?"),
         "dinnerExample":
@@ -160,6 +162,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "E-posta uygulaması açılırken hata oluştu"),
         "errorProductNotFound":
             MessageLookupByLibrary.simpleMessage("Ürün bulunamadı"),
+        "customMealsDeleteConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "Bu yemeği kullanan tüm günlük girişleri de kaldırılacak."),
+        "customMealsDeleteConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("Özel yemek silinsin mi?"),
+        "customMealsEmptyLabel": MessageLookupByLibrary.simpleMessage(
+            "Henüz özel yemek kaydedilmedi."),
+        "settingsCustomMealsLabel":
+            MessageLookupByLibrary.simpleMessage("Özel Yemekler"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Dışa Aktar"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "Uygulama verilerini bir zip dosyasına dışa aktarabilir ve daha sonra içe aktarabilirsiniz. Bu, verilerinizi yedeklemek veya başka bir cihaza aktarmak istiyorsanız kullanışlıdır.\n\nUygulama, verilerinizi saklamak için herhangi bir bulut hizmeti kullanmaz."),

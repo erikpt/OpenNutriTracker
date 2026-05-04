@@ -138,6 +138,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dialogDeleteLabel": MessageLookupByLibrary.simpleMessage("LÖSCHEN"),
         "dialogOKLabel": MessageLookupByLibrary.simpleMessage("OK"),
         "diaryLabel": MessageLookupByLibrary.simpleMessage("Tagebuch"),
+        "diaryFutureDateWarning": MessageLookupByLibrary.simpleMessage(
+            "Du bearbeitest ein zukünftiges Datum"),
         "duplicateMealDialogContent": MessageLookupByLibrary.simpleMessage(
             "Dieses Lebensmittel wurde heute bereits zu dieser Mahlzeit hinzugefügt. Erneut hinzufügen?"),
         "dinnerExample": MessageLookupByLibrary.simpleMessage(
@@ -162,6 +164,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Fehler beim Öffnen der E-Mail-Anwendung"),
         "errorProductNotFound":
             MessageLookupByLibrary.simpleMessage("Produkt nicht gefunden"),
+        "customMealsDeleteConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "Alle Tagebucheinträge, die diese Mahlzeit verwenden, werden ebenfalls entfernt."),
+        "customMealsDeleteConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("Eigene Mahlzeit löschen?"),
+        "customMealsEmptyLabel": MessageLookupByLibrary.simpleMessage(
+            "Noch keine eigenen Mahlzeiten gespeichert."),
+        "settingsCustomMealsLabel":
+            MessageLookupByLibrary.simpleMessage("Eigene Mahlzeiten"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Exportieren"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "Sie können die App-Daten in eine Zip-Datei exportieren und später importieren. Dies ist nützlich, wenn Sie Ihre Daten sichern oder auf ein anderes Gerät übertragen möchten.\n\nDie App nutzt keinen Cloud-Dienst, um Ihre Daten zu speichern."),

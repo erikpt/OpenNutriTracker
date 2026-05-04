@@ -126,6 +126,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dialogDeleteLabel": MessageLookupByLibrary.simpleMessage("删除"),
         "dialogOKLabel": MessageLookupByLibrary.simpleMessage("确定"),
         "diaryLabel": MessageLookupByLibrary.simpleMessage("日记"),
+        "diaryFutureDateWarning":
+            MessageLookupByLibrary.simpleMessage("您正在编辑未来的日期"),
         "dinnerExample": MessageLookupByLibrary.simpleMessage("例如：汤、鸡肉、葡萄酒..."),
         "dinnerLabel": MessageLookupByLibrary.simpleMessage("晚餐"),
         "disclaimerText": MessageLookupByLibrary.simpleMessage(
@@ -143,6 +145,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("打开浏览器应用时出错"),
         "errorOpeningEmail": MessageLookupByLibrary.simpleMessage("打开邮件应用时出错"),
         "errorProductNotFound": MessageLookupByLibrary.simpleMessage("未找到产品"),
+        "customMealsDeleteConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "所有使用此餐食的日记条目也将被删除。"),
+        "customMealsDeleteConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("删除自定义餐食？"),
+        "customMealsEmptyLabel":
+            MessageLookupByLibrary.simpleMessage("尚未保存自定义餐食。"),
+        "settingsCustomMealsLabel":
+            MessageLookupByLibrary.simpleMessage("自定义餐食"),
         "exportAction": MessageLookupByLibrary.simpleMessage("导出"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "您可以将应用数据导出到zip文件并稍后导入。这在您想要备份数据或传输到另一台设备时很有用。\n\n应用不会使用任何云服务存储您的数据。"),

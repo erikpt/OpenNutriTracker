@@ -136,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dialogDeleteLabel": MessageLookupByLibrary.simpleMessage("ВИДАЛИТИ"),
         "dialogOKLabel": MessageLookupByLibrary.simpleMessage("ОК"),
         "diaryLabel": MessageLookupByLibrary.simpleMessage("Щоденник"),
+        "diaryFutureDateWarning": MessageLookupByLibrary.simpleMessage(
+            "Ви редагуєте майбутню дату"),
         "dinnerExample": MessageLookupByLibrary.simpleMessage(
             "наприклад, суп, курка, вино ..."),
         "dinnerLabel": MessageLookupByLibrary.simpleMessage("Вечеря"),
@@ -158,6 +160,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Помилка при відкритті поштової програми"),
         "errorProductNotFound":
             MessageLookupByLibrary.simpleMessage("Продукт не знайдено"),
+        "customMealsDeleteConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "Усі записи в щоденнику, що використовують цю страву, також буде видалено."),
+        "customMealsDeleteConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("Видалити власну страву?"),
+        "customMealsEmptyLabel": MessageLookupByLibrary.simpleMessage(
+            "Ще немає збережених власних страв."),
+        "settingsCustomMealsLabel":
+            MessageLookupByLibrary.simpleMessage("Власні страви"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Експортувати"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "Ви можете експортувати дані додатка у zip-файл і імпортувати їх пізніше. Це корисно, якщо ви хочете зробити резервну копію або перенести дані на інший пристрій. Додаток не використовує жодних хмарних сервісів для зберігання ваших даних."),

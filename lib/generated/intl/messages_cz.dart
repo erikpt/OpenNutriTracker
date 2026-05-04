@@ -135,6 +135,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dialogDeleteLabel": MessageLookupByLibrary.simpleMessage("SMAZAT"),
         "dialogOKLabel": MessageLookupByLibrary.simpleMessage("OK"),
         "diaryLabel": MessageLookupByLibrary.simpleMessage("Diář"),
+        "diaryFutureDateWarning": MessageLookupByLibrary.simpleMessage(
+            "Upravujete datum v budoucnosti"),
         "dinnerExample": MessageLookupByLibrary.simpleMessage(
             "např. polévka, kuřecí maso, víno..."),
         "dinnerLabel": MessageLookupByLibrary.simpleMessage("Večeře"),
@@ -156,6 +158,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Chyba spouštění mailové aplikace"),
         "errorProductNotFound":
             MessageLookupByLibrary.simpleMessage("Produkt nenalezen"),
+        "customMealsDeleteConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "Všechny záznamy v deníku používající toto jídlo budou také odstraněny."),
+        "customMealsDeleteConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("Smazat vlastní jídlo?"),
+        "customMealsEmptyLabel": MessageLookupByLibrary.simpleMessage(
+            "Zatím žádná vlastní jídla uložena."),
+        "settingsCustomMealsLabel":
+            MessageLookupByLibrary.simpleMessage("Vlastní jídla"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Export"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "Můžete uložit data z aplikace do .zip archívu a později je znovu importovat. To je užitečné, pokud potřebujete data zálohovat, nebo přenést na jiné zařízení.\n\nAplikace pro ukládání dat nepoužívá žádné cloudové služby."),

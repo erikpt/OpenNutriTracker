@@ -4,6 +4,7 @@ import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:logging/logging.dart';
 import 'package:opennutritracker/core/data/dbo/intake_dbo.dart';
 import 'package:opennutritracker/core/data/dbo/intake_type_dbo.dart';
+import 'package:opennutritracker/core/data/dbo/meal_dbo.dart';
 
 class IntakeDataSource {
   final log = Logger('IntakeDataSource');
@@ -86,6 +87,13 @@ class IntakeDataSource {
         )
         .toList();
 
-    return uniqueIntake.take(number).toList();
+    // Surface custom meals before remote-sourced results.
+    final custom = uniqueIntake.where((i) => i.meal.source == MealSourceDBO.custom).toList();
+    final others = uniqueIntake.where((i) => i.meal.source != MealSourceDBO.custom).toList();
+    return [...custom, ...others].take(number).toList();
+  }
+
+  Future<List<IntakeDBO>> getCustomMealIntakes() async {
+    return _intakeBox.values.where((dbo) => dbo.meal.source == MealSourceDBO.custom).toList();
   }
 }

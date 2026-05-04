@@ -20,4 +20,13 @@ class CustomMealDataSource {
   }
 
   List<MealDBO> getAllCustomMeals() => _customMealBox.values.toList();
+
+  Future<void> deleteCustomMeal(String mealKey) async {
+    final toDelete = _customMealBox.values
+        .where((m) => (m.code ?? m.name) == mealKey)
+        .toList();
+    for (final meal in toDelete) {
+      await meal.delete();
+    }
+  }
 }

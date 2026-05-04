@@ -30,6 +30,8 @@ class _EditMealScreenState extends State<EditMealScreen> {
   late IntakeTypeEntity _intakeTypeEntity;
   late bool _usesImperialUnits;
 
+  late bool _editOnly;
+
   late EditMealBloc _editMealBloc;
 
   final _nameTextController = TextEditingController();
@@ -67,6 +69,7 @@ class _EditMealScreenState extends State<EditMealScreen> {
     _day = args.day;
     _intakeTypeEntity = args.intakeTypeEntity;
     _usesImperialUnits = args.usesImperialUnits;
+    _editOnly = args.editOnly;
 
     _nameTextController.text = _mealEntity.name ?? "";
     _brandsTextController.text = _mealEntity.brands ?? "";
@@ -434,16 +437,20 @@ class _EditMealScreenState extends State<EditMealScreen> {
       }
 
       if (!mounted) return;
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        NavigationOptions.mealDetailRoute,
-        ModalRoute.withName(NavigationOptions.addMealRoute),
-        arguments: MealDetailScreenArguments(
-          newMealEntity,
-          _intakeTypeEntity,
-          _day,
-          usesImperialUnits,
-        ),
-      );
+      if (_editOnly) {
+        Navigator.of(context).pop();
+      } else {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          NavigationOptions.mealDetailRoute,
+          ModalRoute.withName(NavigationOptions.addMealRoute),
+          arguments: MealDetailScreenArguments(
+            newMealEntity,
+            _intakeTypeEntity,
+            _day,
+            usesImperialUnits,
+          ),
+        );
+      }
     } catch (exception, stacktrace) {
       log.warning("Error while creating new meal entity");
       Sentry.captureException(exception, stackTrace: stacktrace);
@@ -491,11 +498,13 @@ class EditMealScreenArguments {
   final MealEntity mealEntity;
   final IntakeTypeEntity intakeTypeEntity;
   final bool usesImperialUnits;
+  final bool editOnly;
 
   EditMealScreenArguments(
     this.day,
     this.mealEntity,
     this.intakeTypeEntity,
-    this.usesImperialUnits,
-  );
+    this.usesImperialUnits, {
+    this.editOnly = false,
+  });
 }
