@@ -452,5 +452,6 @@
   "weeklyWeightGoalNoneLabel": "Nenastaveno",
   "weeklyWeightGoalKgPerWeek": "{rate} kg/týden",
   "weeklyWeightGoalLbsPerWeek": "{rate} lbs/týden",
-  "chooseWeeklyWeightGoalLabel": "Týdenní tempo hmotnosti"
+  "chooseWeeklyWeightGoalLabel": "Týdenní tempo hmotnosti",
+  "settingsLanguageLabel": "Jazyk"
 }

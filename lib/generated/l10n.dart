@@ -601,6 +601,15 @@ class S {
   }
 
   /// `Licenses`
+  String get settingsLanguageLabel {
+    return Intl.message(
+      'Language',
+      name: 'settingsLanguageLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get settingsLicensesLabel {
     return Intl.message(
       'Licenses',

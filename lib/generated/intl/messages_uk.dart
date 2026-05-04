@@ -693,6 +693,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsImperialLabel": MessageLookupByLibrary.simpleMessage(
             "Імперська (фунти, фут, унції)"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Налаштування"),
+        "settingsLanguageLabel":
+            MessageLookupByLibrary.simpleMessage("Мова"),
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Ліцензії"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Маса"),

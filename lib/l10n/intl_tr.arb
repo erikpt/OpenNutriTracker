@@ -62,7 +62,9 @@
   "settingsNotificationsTimeLabel": "Hatırlatma zamanı: {time}",
   "@settingsNotificationsTimeLabel": {
     "placeholders": {
-      "time": { "type": "String" }
+      "time": {
+        "type": "String"
+      }
     }
   },
   "settingsSourceCodeLabel": "Kaynak Kodu",
@@ -114,19 +116,22 @@
   "copyOrDeleteTimeDialogContent": "\"Bugüne Kopyala\" ile yemeği bugüne kopyalayabilirsiniz. \"Sil\" ile yemeği silebilirsiniz.",
   "dialogCopyLabel": "BUGÜNE KOPYALA",
   "dialogDeleteLabel": "SİL",
-
   "shareMealLabel": "Share meal",
   "importMealLabel": "Import shared meal",
   "importMealConfirmTitle": "Import {count} items?",
   "@importMealConfirmTitle": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "importMealConfirmContent": "These items will be added to your {mealType}.",
   "@importMealConfirmContent": {
     "placeholders": {
-      "mealType": { "type": "String" }
+      "mealType": {
+        "type": "String"
+      }
     }
   },
   "importMealSuccessLabel": "Meal imported",
@@ -134,7 +139,9 @@
   "importOffFetchFailedLabel": "{count} öğe OpenFoodFacts'ten alınamadı.",
   "@importOffFetchFailedLabel": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "copyCodeLabel": "Kodu kopyala",
@@ -142,7 +149,6 @@
   "codeCopiedLabel": "Kod kopyalandı",
   "pasteCodeLabel": "Kodu yapıştır",
   "pasteCodeHint": "Paylaşılan yemek kodunu buraya yapıştırın",
-
   "suppliedLabel": "tüketilen",
   "burnedLabel": "yakılan",
   "kcalLeftLabel": "kalan kcal",
@@ -193,8 +199,12 @@
   "mealNutrientsPerQtyLabel": "{qty} {unit} başına",
   "@mealNutrientsPerQtyLabel": {
     "placeholders": {
-      "qty": { "type": "String" },
-      "unit": { "type": "String" }
+      "qty": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
     }
   },
   "mealNutrientsTotalLabel": "Toplam miktar",
@@ -223,13 +233,17 @@
   "weeklyWeightGoalKgPerWeek": "{rate} kg/hafta",
   "@weeklyWeightGoalKgPerWeek": {
     "placeholders": {
-      "rate": { "type": "String" }
+      "rate": {
+        "type": "String"
+      }
     }
   },
   "weeklyWeightGoalLbsPerWeek": "{rate} lbs/hafta",
   "@weeklyWeightGoalLbsPerWeek": {
     "placeholders": {
-      "rate": { "type": "String" }
+      "rate": {
+        "type": "String"
+      }
     }
   },
   "chooseWeeklyWeightGoalLabel": "Haftalık kilo oranı",
@@ -467,5 +481,6 @@
   "paSkiingGeneral": "kayak",
   "paSkiingGeneralDesc": "genel",
   "paSnowShovingModerate": "kar küreme",
-  "paSnowShovingModerateDesc": "elle, orta derecede çaba"
+  "paSnowShovingModerateDesc": "elle, orta derecede çaba",
+  "settingsLanguageLabel": "Dil"
 }

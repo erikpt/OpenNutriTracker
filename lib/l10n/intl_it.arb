@@ -452,5 +452,6 @@
   "weeklyWeightGoalNoneLabel": "Non impostato",
   "weeklyWeightGoalKgPerWeek": "{rate} kg/settimana",
   "weeklyWeightGoalLbsPerWeek": "{rate} lbs/settimana",
-  "chooseWeeklyWeightGoalLabel": "Ritmo peso settimanale"
+  "chooseWeeklyWeightGoalLabel": "Ritmo peso settimanale",
+  "settingsLanguageLabel": "Lingua"
 }

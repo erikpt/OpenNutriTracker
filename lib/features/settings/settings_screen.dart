@@ -6,6 +6,7 @@ import 'package:opennutritracker/core/presentation/widgets/disclaimer_dialog.dar
 import 'package:opennutritracker/core/utils/app_const.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/core/utils/notification_service.dart';
+import 'package:opennutritracker/core/utils/locale_provider.dart';
 import 'package:opennutritracker/core/utils/theme_mode_provider.dart';
 import 'package:opennutritracker/core/utils/url_const.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/calendar_day_bloc.dart';
@@ -75,6 +76,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   leading: const Icon(Icons.brightness_medium_outlined),
                   title: Text(S.of(context).settingsThemeLabel),
                   onTap: () => _showThemeDialog(context, state.appTheme),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.language_outlined),
+                  title: Text(S.of(context).settingsLanguageLabel),
+                  subtitle: Text(
+                      _localeDisplayName(state.selectedLocale) ??
+                          S.of(context).settingsThemeSystemDefaultLabel),
+                  onTap: () =>
+                      _showLanguageDialog(context, state.selectedLocale),
                 ),
                 SwitchListTile(
                   secondary: const Icon(Icons.directions_run_outlined),
@@ -337,6 +347,80 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     listen: false,
                   ).updateTheme(selectedTheme);
                 });
+                Navigator.of(context).pop();
+              },
+              child: Text(S.of(context).dialogOKLabel),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  static const _supportedLocales = <String, String>{
+    'en': 'English',
+    'de': 'Deutsch',
+    'tr': 'Türkçe',
+    'cz': 'Čeština',
+    'it': 'Italiano',
+    'uk': 'Українська',
+    'zh': '中文',
+    'pl': 'Polski',
+  };
+
+  String? _localeDisplayName(String? code) => _supportedLocales[code];
+
+  // Sentinel value meaning "follow system locale"
+  static const _systemLocale = '';
+
+  void _showLanguageDialog(BuildContext context, String? currentLocale) {
+    String selectedCode = currentLocale ?? _systemLocale;
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          title: Text(S.of(context).settingsLanguageLabel),
+          content: StatefulBuilder(
+            builder: (BuildContext context,
+                void Function(void Function()) setState) {
+              return RadioGroup<String>(
+                groupValue: selectedCode,
+                onChanged: (v) => setState(() => selectedCode = v as String),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RadioListTile<String>(
+                      title:
+                          Text(S.of(context).settingsThemeSystemDefaultLabel),
+                      value: _systemLocale,
+                    ),
+                    ..._supportedLocales.entries.map(
+                      (e) => RadioListTile<String>(
+                        title: Text(e.value),
+                        value: e.key,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(S.of(context).dialogCancelLabel),
+            ),
+            TextButton(
+              onPressed: () {
+                final locale =
+                    selectedCode.isEmpty ? null : selectedCode;
+                _settingsBloc.setSelectedLocale(locale);
+                _settingsBloc.add(LoadSettingsEvent());
+                Provider.of<LocaleProvider>(context, listen: false)
+                    .updateLocale(
+                  locale != null ? Locale(locale) : null,
+                );
                 Navigator.of(context).pop();
               },
               child: Text(S.of(context).dialogOKLabel),

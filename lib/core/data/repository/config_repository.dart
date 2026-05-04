@@ -78,4 +78,12 @@ class ConfigRepository {
   Future<void> setNotificationTime(int hour, int minute) async {
     _configDataSource.setNotificationTime(hour, minute);
   }
+
+  Future<String?> getSelectedLocale() async {
+    return await _configDataSource.getSelectedLocale();
+  }
+
+  Future<void> setSelectedLocale(String? locale) async {
+    _configDataSource.setSelectedLocale(locale);
+  }
 }

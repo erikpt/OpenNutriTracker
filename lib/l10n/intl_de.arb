@@ -60,7 +60,9 @@
   "settingsNotificationsTimeLabel": "Erinnerungszeit: {time}",
   "@settingsNotificationsTimeLabel": {
     "placeholders": {
-      "time": { "type": "String" }
+      "time": {
+        "type": "String"
+      }
     }
   },
   "settingsSourceCodeLabel": "Quellcode",
@@ -111,19 +113,22 @@
   "dialogCopyLabel": "Nach heute kopieren",
   "dialogDeleteLabel": "LÖSCHEN",
   "deleteAllLabel": "Alle löschen",
-
   "shareMealLabel": "Mahlzeit teilen",
   "importMealLabel": "Geteilte Mahlzeit importieren",
   "importMealConfirmTitle": "{count} Einträge importieren?",
   "@importMealConfirmTitle": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "importMealConfirmContent": "Diese Einträge werden zu {mealType} hinzugefügt.",
   "@importMealConfirmContent": {
     "placeholders": {
-      "mealType": { "type": "String" }
+      "mealType": {
+        "type": "String"
+      }
     }
   },
   "importMealSuccessLabel": "Mahlzeit importiert",
@@ -131,7 +136,9 @@
   "importOffFetchFailedLabel": "{count} Einträge konnten nicht von OpenFoodFacts abgerufen werden.",
   "@importOffFetchFailedLabel": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "copyCodeLabel": "Code kopieren",
@@ -139,7 +146,6 @@
   "codeCopiedLabel": "Code kopiert",
   "pasteCodeLabel": "Code einfügen",
   "pasteCodeHint": "Füge hier den geteilten Mahlzeitencode ein",
-
   "suppliedLabel": "zugeführt",
   "burnedLabel": "verbrannt",
   "kcalLeftLabel": "kcal übrig",
@@ -190,8 +196,12 @@
   "mealNutrientsPerQtyLabel": "Pro {qty} {unit}",
   "@mealNutrientsPerQtyLabel": {
     "placeholders": {
-      "qty": { "type": "String" },
-      "unit": { "type": "String" }
+      "qty": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
     }
   },
   "mealNutrientsTotalLabel": "Gesamtmenge",
@@ -220,13 +230,17 @@
   "weeklyWeightGoalKgPerWeek": "{rate} kg/Woche",
   "@weeklyWeightGoalKgPerWeek": {
     "placeholders": {
-      "rate": { "type": "String" }
+      "rate": {
+        "type": "String"
+      }
     }
   },
   "weeklyWeightGoalLbsPerWeek": "{rate} lbs/Woche",
   "@weeklyWeightGoalLbsPerWeek": {
     "placeholders": {
-      "rate": { "type": "String" }
+      "rate": {
+        "type": "String"
+      }
     }
   },
   "chooseWeeklyWeightGoalLabel": "Wöchentliche Gewichtsrate",
@@ -461,5 +475,6 @@
   "paSkiingGeneral": "Skifahren",
   "paSkiingGeneralDesc": "allgemein",
   "paSnowShovingModerate": "Schnee schaufeln",
-  "paSnowShovingModerateDesc": "manuell, mäßige Anstrengung"
+  "paSnowShovingModerateDesc": "manuell, mäßige Anstrengung",
+  "settingsLanguageLabel": "Sprache"
 }

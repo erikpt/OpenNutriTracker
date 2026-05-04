@@ -453,5 +453,6 @@
   "weeklyWeightGoalNoneLabel": "未设置",
   "weeklyWeightGoalKgPerWeek": "{rate} 千克/周",
   "weeklyWeightGoalLbsPerWeek": "{rate} 磅/周",
-  "chooseWeeklyWeightGoalLabel": "每周体重速率"
+  "chooseWeeklyWeightGoalLabel": "每周体重速率",
+  "settingsLanguageLabel": "语言"
 }

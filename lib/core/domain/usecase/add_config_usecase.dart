@@ -55,4 +55,8 @@ class AddConfigUsecase {
   Future<void> setNotificationTime(int hour, int minute) async {
     _configRepository.setNotificationTime(hour, minute);
   }
+
+  Future<void> setSelectedLocale(String? locale) async {
+    _configRepository.setSelectedLocale(locale);
+  }
 }

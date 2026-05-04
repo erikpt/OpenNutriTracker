@@ -23,6 +23,7 @@ class SettingsLoadedState extends SettingsState {
   final bool notificationsEnabled;
   final int notificationHour;
   final int notificationMinute;
+  final String? selectedLocale;
 
   const SettingsLoadedState(
     this.versionNumber,
@@ -33,6 +34,7 @@ class SettingsLoadedState extends SettingsState {
     this.notificationsEnabled = false,
     this.notificationHour = 8,
     this.notificationMinute = 0,
+    this.selectedLocale,
   });
 
   @override
@@ -45,5 +47,6 @@ class SettingsLoadedState extends SettingsState {
         notificationsEnabled,
         notificationHour,
         notificationMinute,
+        selectedLocale,
       ];
 }

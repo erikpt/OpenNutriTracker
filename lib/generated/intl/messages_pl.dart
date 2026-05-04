@@ -691,6 +691,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsImperialLabel":
             MessageLookupByLibrary.simpleMessage("Imperialny (lbs, ft, oz)"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Ustawienia"),
+        "settingsLanguageLabel":
+            MessageLookupByLibrary.simpleMessage("Język"),
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Licencje"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Masa"),

@@ -34,6 +34,8 @@ class ConfigDBO extends HiveObject {
   int? notificationHour;
   @HiveField(12)
   int? notificationMinute;
+  @HiveField(13)
+  String? selectedLocale;
 
   ConfigDBO(
     this.hasAcceptedDisclaimer,
@@ -46,6 +48,7 @@ class ConfigDBO extends HiveObject {
     this.notificationsEnabled,
     this.notificationHour,
     this.notificationMinute,
+    this.selectedLocale,
   });
 
   factory ConfigDBO.empty() =>

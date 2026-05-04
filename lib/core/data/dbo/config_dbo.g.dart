@@ -27,6 +27,7 @@ class ConfigDBOAdapter extends TypeAdapter<ConfigDBO> {
         notificationsEnabled: fields[10] as bool?,
         notificationHour: (fields[11] as num?)?.toInt(),
         notificationMinute: (fields[12] as num?)?.toInt(),
+        selectedLocale: fields[13] as String?,
       )
       ..userCarbGoalPct = (fields[6] as num?)?.toDouble()
       ..userProteinGoalPct = (fields[7] as num?)?.toDouble()
@@ -36,7 +37,7 @@ class ConfigDBOAdapter extends TypeAdapter<ConfigDBO> {
   @override
   void write(BinaryWriter writer, ConfigDBO obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.hasAcceptedDisclaimer)
       ..writeByte(1)
@@ -62,7 +63,9 @@ class ConfigDBOAdapter extends TypeAdapter<ConfigDBO> {
       ..writeByte(11)
       ..write(obj.notificationHour)
       ..writeByte(12)
-      ..write(obj.notificationMinute);
+      ..write(obj.notificationMinute)
+      ..writeByte(13)
+      ..write(obj.selectedLocale);
   }
 
   @override
@@ -92,6 +95,7 @@ ConfigDBO _$ConfigDBOFromJson(Map<String, dynamic> json) =>
         notificationsEnabled: json['notificationsEnabled'] as bool?,
         notificationHour: (json['notificationHour'] as num?)?.toInt(),
         notificationMinute: (json['notificationMinute'] as num?)?.toInt(),
+        selectedLocale: json['selectedLocale'] as String?,
       )
       ..userCarbGoalPct = (json['userCarbGoalPct'] as num?)?.toDouble()
       ..userProteinGoalPct = (json['userProteinGoalPct'] as num?)?.toDouble()
@@ -111,6 +115,7 @@ Map<String, dynamic> _$ConfigDBOToJson(ConfigDBO instance) => <String, dynamic>{
   'notificationsEnabled': instance.notificationsEnabled,
   'notificationHour': instance.notificationHour,
   'notificationMinute': instance.notificationMinute,
+  'selectedLocale': instance.selectedLocale,
 };
 
 const _$AppThemeDBOEnumMap = {

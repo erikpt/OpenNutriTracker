@@ -63,7 +63,9 @@
   "settingsNotificationsTimeLabel": "Reminder time: {time}",
   "@settingsNotificationsTimeLabel": {
     "placeholders": {
-      "time": { "type": "String" }
+      "time": {
+        "type": "String"
+      }
     }
   },
   "settingsSourceCodeLabel": "Source Code",
@@ -115,21 +117,23 @@
   "copyOrDeleteTimeDialogContent": "With \"Copy to today\" you can copy the meal to today. With \"Delete\" you can delete the meal.",
   "dialogCopyLabel": "Copy to today",
   "dialogDeleteLabel": "DELETE",
-
   "deleteAllLabel": "Delete all",
-
   "shareMealLabel": "Share meal",
   "importMealLabel": "Import shared meal",
   "importMealConfirmTitle": "Import {count} items?",
   "@importMealConfirmTitle": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "importMealConfirmContent": "These items will be added to your {mealType}.",
   "@importMealConfirmContent": {
     "placeholders": {
-      "mealType": { "type": "String" }
+      "mealType": {
+        "type": "String"
+      }
     }
   },
   "importMealSuccessLabel": "Meal imported",
@@ -139,7 +143,9 @@
   "importActivityConfirmTitle": "Import {count} activities?",
   "@importActivityConfirmTitle": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "importActivityConfirmContent": "These activities will be added to today.",
@@ -147,7 +153,9 @@
   "importOffFetchFailedLabel": "{count} item(s) could not be fetched from OpenFoodFacts.",
   "@importOffFetchFailedLabel": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "copyCodeLabel": "Copy code",
@@ -155,7 +163,6 @@
   "codeCopiedLabel": "Code copied",
   "pasteCodeLabel": "Paste code",
   "pasteCodeHint": "Paste the shared meal code here",
-
   "suppliedLabel": "supplied",
   "burnedLabel": "burned",
   "kcalLeftLabel": "kcal left",
@@ -172,7 +179,7 @@
   "fiberLabel": "fiber",
   "per100gmlLabel": "Per 100g/ml",
   "additionalInfoLabelOFF": "More Information at\nOpenFoodFacts",
-  "offDisclaimer": "The data provided to you by this app are retrieved from the Open Food Facts database. No guarantees can be made for the accuracy, completeness, or reliability of the information provided. The data are provided "as is" and the originating source for the data (Open Food Facts) is not liable for any damages arising out of the use of the data.",
+  "offDisclaimer": "The data provided to you by this app are retrieved from the Open Food Facts database. No guarantees can be made for the accuracy, completeness, or reliability of the information provided. The data are provided \"as is\" and the originating source for the data (Open Food Facts) is not liable for any damages arising out of the use of the data.",
   "additionalInfoLabelFDC": "More Information at\nFoodData Central",
   "additionalInfoLabelUnknown": "Unknown Meal Item",
   "additionalInfoLabelCustom": "Custom Meal Item",
@@ -207,8 +214,12 @@
   "mealNutrientsPerQtyLabel": "Per {qty} {unit}",
   "@mealNutrientsPerQtyLabel": {
     "placeholders": {
-      "qty": { "type": "String" },
-      "unit": { "type": "String" }
+      "qty": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
     }
   },
   "mealNutrientsTotalLabel": "Total amount",
@@ -237,13 +248,17 @@
   "weeklyWeightGoalKgPerWeek": "{rate} kg/week",
   "@weeklyWeightGoalKgPerWeek": {
     "placeholders": {
-      "rate": { "type": "String" }
+      "rate": {
+        "type": "String"
+      }
     }
   },
   "weeklyWeightGoalLbsPerWeek": "{rate} lbs/week",
   "@weeklyWeightGoalLbsPerWeek": {
     "placeholders": {
-      "rate": { "type": "String" }
+      "rate": {
+        "type": "String"
+      }
     }
   },
   "chooseWeeklyWeightGoalLabel": "Weekly weight rate",
@@ -481,5 +496,6 @@
   "paSkiingGeneral": "skiing",
   "paSkiingGeneralDesc": "general",
   "paSnowShovingModerate": "snow shoveling",
-  "paSnowShovingModerateDesc": "by hand, moderate effort"
+  "paSnowShovingModerateDesc": "by hand, moderate effort",
+  "settingsLanguageLabel": "Language"
 }

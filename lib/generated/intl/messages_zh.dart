@@ -573,6 +573,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsImperialLabel":
             MessageLookupByLibrary.simpleMessage("英制（磅、英尺、盎司）"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("设置"),
+        "settingsLanguageLabel": MessageLookupByLibrary.simpleMessage("语言"),
         "settingsLicensesLabel": MessageLookupByLibrary.simpleMessage("许可证"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("质量"),
         "settingsMetricLabel":

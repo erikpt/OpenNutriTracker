@@ -452,5 +452,6 @@
   "weeklyWeightGoalNoneLabel": "Не встановлено",
   "weeklyWeightGoalKgPerWeek": "{rate} кг/тиждень",
   "weeklyWeightGoalLbsPerWeek": "{rate} фунт/тиждень",
-  "chooseWeeklyWeightGoalLabel": "Тижневий темп ваги"
+  "chooseWeeklyWeightGoalLabel": "Тижневий темп ваги",
+  "settingsLanguageLabel": "Мова"
 }

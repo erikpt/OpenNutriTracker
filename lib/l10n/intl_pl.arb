@@ -453,5 +453,6 @@
   "weeklyWeightGoalNoneLabel": "Nie ustawiono",
   "weeklyWeightGoalKgPerWeek": "{rate} kg/tydzień",
   "weeklyWeightGoalLbsPerWeek": "{rate} lbs/tydzień",
-  "chooseWeeklyWeightGoalLabel": "Tygodniowe tempo wagi"
+  "chooseWeeklyWeightGoalLabel": "Tygodniowe tempo wagi",
+  "settingsLanguageLabel": "Język"
 }

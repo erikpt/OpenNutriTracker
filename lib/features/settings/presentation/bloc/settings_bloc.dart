@@ -46,6 +46,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           notificationsEnabled: userConfig.notificationsEnabled,
           notificationHour: userConfig.notificationHour,
           notificationMinute: userConfig.notificationMinute,
+          selectedLocale: userConfig.selectedLocale,
         ),
       );
     });
@@ -75,6 +76,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   void setNotificationTime(int hour, int minute) {
     _addConfigUsecase.setNotificationTime(hour, minute);
+  }
+
+  void setSelectedLocale(String? locale) {
+    _addConfigUsecase.setSelectedLocale(locale);
   }
 
 

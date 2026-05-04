@@ -686,6 +686,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsImperialLabel":
             MessageLookupByLibrary.simpleMessage("Imperiální (lbs, ft, oz)"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Nastavení"),
+        "settingsLanguageLabel":
+            MessageLookupByLibrary.simpleMessage("Jazyk"),
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Licence"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Hmota"),

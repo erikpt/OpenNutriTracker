@@ -116,6 +116,18 @@ class ConfigDataSource {
   }
 
 
+  Future<String?> getSelectedLocale() async {
+    final config = _configBox.get(_configKey);
+    return config?.selectedLocale;
+  }
+
+  Future<void> setSelectedLocale(String? locale) async {
+    _log.fine('Updating config selectedLocale to $locale');
+    final config = _configBox.get(_configKey);
+    config?.selectedLocale = locale;
+    config?.save();
+  }
+
   Future<ConfigDBO> getConfig() async {
     return _configBox.get(_configKey) ?? ConfigDBO.empty();
   }
