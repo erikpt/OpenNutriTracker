@@ -125,7 +125,8 @@ class _IntakeVerticalListState extends State<IntakeVerticalList> {
                         (VerticalListPopupMenuSelections selection) async {
                       switch (selection) {
                         case VerticalListPopupMenuSelections.onCopy:
-                          const copyDialog = CopyDialog();
+                          final copyDialog =
+                              CopyDialog(initialValue: widget.addMealType);
                           final selectedMealType =
                               await showDialog<AddMealType>(
                                   context: context,
