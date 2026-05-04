@@ -192,8 +192,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Możesz wyeksportować dane aplikacji do pliku zip i zaimportować je później. Jest to przydatne, jeśli chcesz wykonać kopię zapasową danych lub przenieść je na inne urządzenie.\n\nAplikacja nie korzysta z żadnej usługi chmurowej do przechowywania danych."),
         "exportImportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Błąd eksportu / importu"),
-        "exportImportLabel":
-            MessageLookupByLibrary.simpleMessage("Eksport / Import danych"),
+        "exportImportAppDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Eksportuj / Importuj dane aplikacji"),
+        "importCustomFoodDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Importuj własne dane żywności"),
+        "importCustomFoodDataDescription": MessageLookupByLibrary.simpleMessage(
+            "Importuj własne posiłki z pliku CSV. Pobierz przykład, aby zobaczyć oczekiwany format kolumn i wymagane pola."),
         "exportImportSuccessLabel": MessageLookupByLibrary.simpleMessage(
             "Eksport / Import zakończony sukcesem"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("tłuszcze"),

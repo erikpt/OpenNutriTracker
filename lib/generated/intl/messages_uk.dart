@@ -193,8 +193,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ви можете експортувати дані додатка у zip-файл і імпортувати їх пізніше. Це корисно, якщо ви хочете зробити резервну копію або перенести дані на інший пристрій. Додаток не використовує жодних хмарних сервісів для зберігання ваших даних."),
         "exportImportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Помилка експорту / імпорту"),
-        "exportImportLabel":
-            MessageLookupByLibrary.simpleMessage("Експорт / Імпорт даних"),
+        "exportImportAppDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Експортувати / Імпортувати дані застосунку"),
+        "importCustomFoodDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Імпортувати власні дані про їжу"),
+        "importCustomFoodDataDescription": MessageLookupByLibrary.simpleMessage(
+            "Імпортуйте власні страви з CSV файлу. Завантажте зразок, щоб побачити очікуваний формат стовпців та обов'язкові поля."),
         "exportImportSuccessLabel":
             MessageLookupByLibrary.simpleMessage("Експорт / Імпорт успішний"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("жири"),

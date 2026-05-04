@@ -191,8 +191,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Můžete uložit data z aplikace do .zip archívu a později je znovu importovat. To je užitečné, pokud potřebujete data zálohovat, nebo přenést na jiné zařízení.\n\nAplikace pro ukládání dat nepoužívá žádné cloudové služby."),
         "exportImportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Export / Import selhal"),
-        "exportImportLabel":
-            MessageLookupByLibrary.simpleMessage("Export / Import dat"),
+        "exportImportAppDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Export / Import dat aplikace"),
+        "importCustomFoodDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Importovat vlastní data potravin"),
+        "importCustomFoodDataDescription": MessageLookupByLibrary.simpleMessage(
+            "Importujte vlastní jídla ze souboru CSV. Stáhněte si vzor, abyste viděli očekávaný formát sloupců a povinná pole."),
         "exportImportSuccessLabel":
             MessageLookupByLibrary.simpleMessage("Export / Import byl úspěšný"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("tuky"),

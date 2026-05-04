@@ -195,8 +195,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Uygulama verilerini bir zip dosyasına dışa aktarabilir ve daha sonra içe aktarabilirsiniz. Bu, verilerinizi yedeklemek veya başka bir cihaza aktarmak istiyorsanız kullanışlıdır.\n\nUygulama, verilerinizi saklamak için herhangi bir bulut hizmeti kullanmaz."),
         "exportImportErrorLabel": MessageLookupByLibrary.simpleMessage(
             "Dışa Aktarma / İçe Aktarma hatası"),
-        "exportImportLabel": MessageLookupByLibrary.simpleMessage(
-            "Verileri Dışa Aktar / İçe Aktar"),
+        "exportImportAppDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Uygulama Verilerini Dışa / İçe Aktar"),
+        "importCustomFoodDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Özel Gıda Verilerini İçe Aktar"),
+        "importCustomFoodDataDescription": MessageLookupByLibrary.simpleMessage(
+            "Kendi öğünlerinizi bir CSV dosyasından içe aktarın. Beklenen sütun yapısını ve zorunlu alanları görmek için örneği indirin."),
         "exportImportSuccessLabel": MessageLookupByLibrary.simpleMessage(
             "Dışa Aktarma / İçe Aktarma başarılı"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("yağ"),

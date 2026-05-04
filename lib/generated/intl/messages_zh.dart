@@ -178,7 +178,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "您可以将应用数据导出到zip文件并稍后导入。这在您想要备份数据或传输到另一台设备时很有用。\n\n应用不会使用任何云服务存储您的数据。"),
         "exportImportErrorLabel":
             MessageLookupByLibrary.simpleMessage("导出/导入错误"),
-        "exportImportLabel": MessageLookupByLibrary.simpleMessage("导出/导入数据"),
+        "exportImportAppDataLabel":
+            MessageLookupByLibrary.simpleMessage("导出 / 导入应用数据"),
+        "importCustomFoodDataLabel":
+            MessageLookupByLibrary.simpleMessage("导入自定义食品数据"),
+        "importCustomFoodDataDescription": MessageLookupByLibrary.simpleMessage(
+            "从 CSV 文件导入您自己的餐食。下载示例查看所需的列格式和必填字段。"),
         "exportImportSuccessLabel":
             MessageLookupByLibrary.simpleMessage("导出/导入成功"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("脂肪"),

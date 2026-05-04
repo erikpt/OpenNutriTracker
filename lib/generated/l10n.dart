@@ -949,11 +949,28 @@ class S {
     );
   }
 
-  /// `Export / Import data`
-  String get exportImportLabel {
+  String get exportImportAppDataLabel {
     return Intl.message(
-      'Export / Import data',
-      name: 'exportImportLabel',
+      'Export / Import App Data',
+      name: 'exportImportAppDataLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get importCustomFoodDataLabel {
+    return Intl.message(
+      'Import Custom Food Data',
+      name: 'importCustomFoodDataLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get importCustomFoodDataDescription {
+    return Intl.message(
+      'Import your own meals from a CSV file. Download a sample to see the expected column shape and required fields.',
+      name: 'importCustomFoodDataDescription',
       desc: '',
       args: [],
     );
