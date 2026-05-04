@@ -1552,10 +1552,10 @@ class S {
     );
   }
 
-  /// `Information provided\n by the \n'2011 Compendium\n of Physical Activities'`
+  /// `Information provided\n by the \n'2024 Compendium\n of Physical Activities'`
   String get additionalInfoLabelCompendium2011 {
     return Intl.message(
-      'Information provided\n by the \n\'2011 Compendium\n of Physical Activities\'',
+      'Information provided\n by the \n\'2024 Compendium\n of Physical Activities\'',
       name: 'additionalInfoLabelCompendium2011',
       desc: '',
       args: [],
@@ -2662,6 +2662,36 @@ class S {
     );
   }
 
+  /// `resistance training (vigorous)`
+  String get paResistanceTrainingVigorous {
+    return Intl.message(
+      'resistance training (vigorous)',
+      name: 'paResistanceTrainingVigorous',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pilates`
+  String get paPilates {
+    return Intl.message(
+      'pilates',
+      name: 'paPilates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `stretching`
+  String get paStretching {
+    return Intl.message(
+      'stretching',
+      name: 'paStretching',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `rope skipping`
   String get paRopeSkippingGeneral {
     return Intl.message(
@@ -2777,6 +2807,16 @@ class S {
     return Intl.message(
       'general',
       name: 'paRunningGeneralDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `running on treadmill`
+  String get paTreadmillRunning {
+    return Intl.message(
+      'running on treadmill',
+      name: 'paTreadmillRunning',
       desc: '',
       args: [],
     );
@@ -3542,6 +3582,26 @@ class S {
     );
   }
 
+  /// `pickleball`
+  String get paPickleball {
+    return Intl.message(
+      'pickleball',
+      name: 'paPickleball',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `active video games`
+  String get paActiveVideoGames {
+    return Intl.message(
+      'active video games',
+      name: 'paActiveVideoGames',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `racquetball`
   String get paRacquetball {
     return Intl.message(
@@ -4102,6 +4162,16 @@ class S {
     );
   }
 
+  /// `nordic walking`
+  String get paNordicWalking {
+    return Intl.message(
+      'nordic walking',
+      name: 'paNordicWalking',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `canoeing`
   String get paCanoeingGeneral {
     return Intl.message(
@@ -4437,6 +4507,26 @@ class S {
     return Intl.message(
       'by hand, moderate effort',
       name: 'paSnowShovingModerateDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `cross-country skiing`
+  String get paCrossCountrySkiing {
+    return Intl.message(
+      'cross-country skiing',
+      name: 'paCrossCountrySkiing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `snowshoeing`
+  String get paSnowshoeing {
+    return Intl.message(
+      'snowshoeing',
+      name: 'paSnowshoeing',
       desc: '',
       args: [],
     );

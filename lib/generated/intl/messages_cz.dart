@@ -54,7 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Přidat nový záznam:"),
         "addLabel": MessageLookupByLibrary.simpleMessage("Vložit"),
         "additionalInfoLabelCompendium2011": MessageLookupByLibrary.simpleMessage(
-            "Informace poskytnutá\n během \n\'2011 Compendium\n of Physical Activities\'"),
+            "Informace poskytnutá\n během \n\'2024 Compendium\n of Physical Activities\'"),
         "additionalInfoLabelCustom":
             MessageLookupByLibrary.simpleMessage("Vlastní jídlo"),
         "additionalInfoLabelFDC": MessageLookupByLibrary.simpleMessage(

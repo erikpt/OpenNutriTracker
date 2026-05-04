@@ -55,7 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addItemLabel": MessageLookupByLibrary.simpleMessage("Yeni Öğe Ekle:"),
         "addLabel": MessageLookupByLibrary.simpleMessage("Ekle"),
         "additionalInfoLabelCompendium2011": MessageLookupByLibrary.simpleMessage(
-            "Bilgi\n\'2011 Compendium\n of Physical Activities\'\nden sağlanmıştır"),
+            "Bilgi\n\'2024 Compendium\n of Physical Activities\'\nden sağlanmıştır"),
         "additionalInfoLabelCustom":
             MessageLookupByLibrary.simpleMessage("Özel Yemek Öğesi"),
         "additionalInfoLabelFDC": MessageLookupByLibrary.simpleMessage(
