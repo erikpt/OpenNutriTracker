@@ -2672,6 +2672,16 @@ class S {
     );
   }
 
+  /// `vigorous effort, powerlifting or bodybuilding`
+  String get paResistanceTrainingVigorousDesc {
+    return Intl.message(
+      'vigorous effort, powerlifting or bodybuilding',
+      name: 'paResistanceTrainingVigorousDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `pilates`
   String get paPilates {
     return Intl.message(
@@ -2687,6 +2697,16 @@ class S {
     return Intl.message(
       'stretching',
       name: 'paStretching',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `mild, general`
+  String get paStretchingDesc {
+    return Intl.message(
+      'mild, general',
+      name: 'paStretchingDesc',
       desc: '',
       args: [],
     );
@@ -2817,6 +2837,16 @@ class S {
     return Intl.message(
       'running on treadmill',
       name: 'paTreadmillRunning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `on treadmill, general`
+  String get paTreadmillRunningDesc {
+    return Intl.message(
+      'on treadmill, general',
+      name: 'paTreadmillRunningDesc',
       desc: '',
       args: [],
     );
@@ -3597,6 +3627,16 @@ class S {
     return Intl.message(
       'active video games',
       name: 'paActiveVideoGames',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wii Sports, Dance Dance Revolution, general`
+  String get paActiveVideoGamesDesc {
+    return Intl.message(
+      'Wii Sports, Dance Dance Revolution, general',
+      name: 'paActiveVideoGamesDesc',
       desc: '',
       args: [],
     );
@@ -4517,6 +4557,16 @@ class S {
     return Intl.message(
       'cross-country skiing',
       name: 'paCrossCountrySkiing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `cross-country, general`
+  String get paCrossCountrySkiingDesc {
+    return Intl.message(
+      'cross-country, general',
+      name: 'paCrossCountrySkiingDesc',
       desc: '',
       args: [],
     );
