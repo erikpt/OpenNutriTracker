@@ -1,4 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:opennutritracker/core/data/data_source/custom_meal_data_source.dart';
+import 'package:opennutritracker/core/data/dbo/meal_dbo.dart';
+import 'package:opennutritracker/core/data/dbo/meal_nutriments_dbo.dart';
 import 'package:opennutritracker/core/domain/entity/intake_entity.dart';
 import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
 import 'package:opennutritracker/core/domain/usecase/get_intake_usecase.dart';
@@ -63,16 +66,30 @@ class _FakeGetIntakeUsecase implements GetIntakeUsecase {
   }
 }
 
+class _FakeCustomMealDataSource implements CustomMealDataSource {
+  final List<MealDBO> meals = [];
+
+  @override
+  List<MealDBO> getAllCustomMeals() => meals;
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw UnimplementedError('Unexpected call: ${invocation.memberName}');
+}
+
 void main() {
   group('SearchProductsUseCase', () {
     late _FakeProductsRepository productsRepository;
     late _FakeGetIntakeUsecase getIntakeUsecase;
+    late _FakeCustomMealDataSource customMealDataSource;
     late SearchProductsUseCase useCase;
 
     setUp(() {
       productsRepository = _FakeProductsRepository();
       getIntakeUsecase = _FakeGetIntakeUsecase();
-      useCase = SearchProductsUseCase(productsRepository, getIntakeUsecase);
+      customMealDataSource = _FakeCustomMealDataSource();
+      useCase = SearchProductsUseCase(
+          productsRepository, getIntakeUsecase, customMealDataSource);
     });
 
     test('prepends matching custom meals for OFF search', () async {
@@ -266,7 +283,78 @@ void main() {
         expect(result.remoteSourceEmpty, isTrue);
       },
     );
+
+    test(
+      'surfaces custom meals from the box even when never logged as intake '
+      '(regression: CSV-imported meals must appear in search before being '
+      'logged for the first time)',
+      () async {
+        // Imported via CSV — sits in the custom-meal box, never logged.
+        customMealDataSource.meals.add(_customMealDbo(
+          code: 'custom-banana',
+          name: 'Banana',
+        ));
+        // Intake history is empty (e.g. fresh app or airplane mode).
+        getIntakeUsecase.recentIntake = const [];
+        // Remote unavailable too — covers the airplane-mode case explicitly.
+        productsRepository.offThrowOn.add('banana');
+
+        final result = await useCase.searchOFFProductsByString('banana');
+
+        expect(result.meals, hasLength(1));
+        expect(result.meals.single.name, 'Banana');
+        expect(result.meals.single.source, MealSourceEntity.custom);
+        expect(result.remoteSourceEmpty, isTrue);
+      },
+    );
+
+    test(
+      'deduplicates a custom meal that appears in both the box and intake '
+      'history',
+      () async {
+        final inBoth = _meal(
+            code: 'shared-1',
+            name: 'Tofu Bowl',
+            source: MealSourceEntity.custom);
+        customMealDataSource.meals.add(_customMealDbo(
+          code: 'shared-1',
+          name: 'Tofu Bowl',
+        ));
+        getIntakeUsecase.recentIntake = [_intake('i1', inBoth)];
+
+        final result = await useCase.searchOFFProductsByString('tofu');
+
+        expect(result.meals, hasLength(1));
+        expect(result.meals.single.code, 'shared-1');
+      },
+    );
   });
+}
+
+MealDBO _customMealDbo({required String code, required String name}) {
+  return MealDBO(
+    code: code,
+    name: name,
+    brands: null,
+    thumbnailImageUrl: null,
+    mainImageUrl: null,
+    url: null,
+    mealQuantity: '100',
+    mealUnit: 'g',
+    servingQuantity: null,
+    servingUnit: 'g',
+    servingSize: null,
+    source: MealSourceDBO.custom,
+    nutriments: MealNutrimentsDBO(
+      energyKcal100: 0,
+      carbohydrates100: null,
+      fat100: null,
+      proteins100: null,
+      sugars100: null,
+      saturatedFat100: null,
+      fiber100: null,
+    ),
+  );
 }
 
 MealEntity _meal({

@@ -1,4 +1,5 @@
 import 'package:logging/logging.dart';
+import 'package:opennutritracker/core/data/data_source/custom_meal_data_source.dart';
 import 'package:opennutritracker/core/domain/usecase/get_intake_usecase.dart';
 import 'package:opennutritracker/features/add_meal/data/repository/products_repository.dart';
 import 'package:opennutritracker/features/add_meal/domain/entity/meal_entity.dart';
@@ -24,8 +25,13 @@ class SearchProductsUseCase {
 
   final ProductsRepository _productsRepository;
   final GetIntakeUsecase _getIntakeUsecase;
+  final CustomMealDataSource _customMealDataSource;
 
-  SearchProductsUseCase(this._productsRepository, this._getIntakeUsecase);
+  SearchProductsUseCase(
+    this._productsRepository,
+    this._getIntakeUsecase,
+    this._customMealDataSource,
+  );
 
   Future<SearchProductsResult> searchOFFProductsByString(
     String searchString,
@@ -79,15 +85,29 @@ class SearchProductsUseCase {
       );
     }
 
+    // Two sources of custom-meal matches:
+    //  - the dedicated custom-meal box, which holds templates the user
+    //    created or imported via CSV (covers entries that have never been
+    //    logged as intake)
+    //  - the user's recent intake history, which covers custom-meal copies
+    //    the user has logged even after the original template was deleted
+    // Both are passed through the same dedup helper.
+    final fromCustomMealBox = _customMealDataSource
+        .getAllCustomMeals()
+        .map(MealEntity.fromMealDBO)
+        .where((meal) => _mealMatchesSearch(meal, normalizedSearchString))
+        .toList();
+
     final recentIntake = await _getIntakeUsecase.getRecentIntake();
-    final customMeals = recentIntake
+    final fromIntakeHistory = recentIntake
         .map((intake) => intake.meal)
         .where((meal) => meal.source == MealSourceEntity.custom)
         .where((meal) => _mealMatchesSearch(meal, normalizedSearchString))
         .toList();
 
     return SearchProductsResult(
-      meals: _deduplicateMeals([...customMeals, ...remoteResults]),
+      meals: _deduplicateMeals(
+          [...fromCustomMealBox, ...fromIntakeHistory, ...remoteResults]),
       remoteSourceEmpty: remoteSourceEmpty,
     );
   }
