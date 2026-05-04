@@ -7,7 +7,7 @@ import 'package:opennutritracker/features/add_activity/presentation/add_activity
 import 'package:opennutritracker/features/home/presentation/widgets/share_activity_qr_dialog.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
-enum _ActivityPopupMenuSelection { onShare, onImport }
+enum _ActivityPopupMenuSelection { onCopy, onShare, onImport }
 
 class ActivityVerticalList extends StatefulWidget {
   final DateTime day;
@@ -16,6 +16,7 @@ class ActivityVerticalList extends StatefulWidget {
   final Function(BuildContext, UserActivityEntity) onItemLongPressedCallback;
   final Function(BuildContext, UserActivityEntity)? onItemTappedCallback;
   final Function(bool isDragging)? onItemDragCallback;
+  final Function(UserActivityEntity)? onCopyActivityCallback;
 
   const ActivityVerticalList({
     super.key,
@@ -25,6 +26,7 @@ class ActivityVerticalList extends StatefulWidget {
     required this.onItemLongPressedCallback,
     this.onItemTappedCallback,
     this.onItemDragCallback,
+    this.onCopyActivityCallback,
   });
 
   @override
@@ -57,6 +59,10 @@ class _ActivityVerticalListState extends State<ActivityVerticalList> {
               PopupMenuButton<_ActivityPopupMenuSelection>(
                 onSelected: (_ActivityPopupMenuSelection selection) async {
                   switch (selection) {
+                    case _ActivityPopupMenuSelection.onCopy:
+                      for (final activity in widget.userActivityList) {
+                        widget.onCopyActivityCallback!(activity);
+                      }
                     case _ActivityPopupMenuSelection.onShare:
                       if (context.mounted) {
                         await showDialog(
@@ -76,6 +82,12 @@ class _ActivityVerticalListState extends State<ActivityVerticalList> {
                 },
                 itemBuilder: (BuildContext context) =>
                     <PopupMenuEntry<_ActivityPopupMenuSelection>>[
+                  if (widget.onCopyActivityCallback != null &&
+                      widget.userActivityList.isNotEmpty)
+                    PopupMenuItem<_ActivityPopupMenuSelection>(
+                      value: _ActivityPopupMenuSelection.onCopy,
+                      child: Text(S.of(context).dialogCopyLabel),
+                    ),
                   if (widget.userActivityList.isNotEmpty)
                     PopupMenuItem<_ActivityPopupMenuSelection>(
                       value: _ActivityPopupMenuSelection.onShare,

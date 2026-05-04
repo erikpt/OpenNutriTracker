@@ -145,6 +145,11 @@ class DayInfoWidget extends StatelessWidget {
               userActivityList: userActivities,
               onItemLongPressedCallback: onActivityItemLongPressed,
               onItemTappedCallback: onEditActivity,
+              onCopyActivityCallback:
+                  DateUtils.isSameDay(selectedDay, DateTime.now())
+                      ? null
+                      : (activity) =>
+                          onCopyActivity(activity, trackedDayEntity),
             ),
             IntakeVerticalList(
               day: selectedDay,
