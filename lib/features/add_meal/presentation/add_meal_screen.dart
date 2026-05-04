@@ -328,7 +328,6 @@ class _AddMealScreenState extends State<AddMealScreen>
   }
 
   void _openEditMealScreen(bool usesImperialUnits) {
-    // TODO
     Navigator.of(context).pushNamed(
       NavigationOptions.editMealRoute,
       arguments: EditMealScreenArguments(
