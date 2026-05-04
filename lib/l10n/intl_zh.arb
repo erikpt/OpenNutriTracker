@@ -443,5 +443,16 @@
   "paAutoRacing": "赛车",
   "paAutoRacingDesc": "开轮式",
   "paBackpackingGeneral": "背包旅行",
-  "paBackpackingGeneralDesc": "一般"
+  "paBackpackingGeneralDesc": "一般",
+  "settingsShowActivityTracking": "显示活动追踪",
+  "settingsNotificationsLabel": "每日提醒",
+  "settingsNotificationsTimeLabel": "提醒时间：{time}",
+  "mealNutrientsPerQtyLabel": "每 {qty} {unit}",
+  "mealNutrientsTotalLabel": "总量",
+  "weeklyWeightGoalLabel": "每周速率",
+  "weeklyWeightGoalNoneLabel": "未设置",
+  "weeklyWeightGoalKgPerWeek": "{rate} 千克/周",
+  "weeklyWeightGoalLbsPerWeek": "{rate} 磅/周",
+  "chooseWeeklyWeightGoalLabel": "每周体重速率",
+  "settingsLanguageLabel": "语言"
 }

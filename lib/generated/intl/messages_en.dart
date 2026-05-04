@@ -39,6 +39,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m7(count) => "Import ${count} activities?";
 
+  static String m8(rate) => "${rate} kg/week";
+
+  static String m9(rate) => "${rate} lbs/week";
+
+  static String m10(qty, unit) => "Per ${qty} ${unit}";
+
+  static String m11(time) => "Reminder time: ${time}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -92,6 +100,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "carbohydrateLabel":
             MessageLookupByLibrary.simpleMessage("carbohydrate"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("carbs"),
+        "chooseWeeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Weekly weight rate"),
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Choose Weight Goal"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("cm"),
@@ -131,6 +141,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dinnerLabel": MessageLookupByLibrary.simpleMessage("Dinner"),
         "disclaimerText": MessageLookupByLibrary.simpleMessage(
             "OpenNutriTracker is not a medical application. All data provided is not validated and should be used with caution. Please maintain a healthy lifestyle and consult a professional if you have any problems. Use during illness, pregnancy or lactation is not recommended."),
+        "duplicateMealDialogContent": MessageLookupByLibrary.simpleMessage(
+            "This food has already been added to this meal today. Add it again?"),
         "editItemDialogTitle":
             MessageLookupByLibrary.simpleMessage("Edit item"),
         "editMealLabel": MessageLookupByLibrary.simpleMessage("Edit meal"),
@@ -173,8 +185,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "heightLabel": MessageLookupByLibrary.simpleMessage("Height"),
         "homeLabel": MessageLookupByLibrary.simpleMessage("Home"),
         "importAction": MessageLookupByLibrary.simpleMessage("Import"),
-        "importMealConfirmContent": m4,
-        "importMealConfirmTitle": m5,
         "importActivityConfirmContent": MessageLookupByLibrary.simpleMessage(
             "These activities will be added to today."),
         "importActivityConfirmTitle": m7,
@@ -182,10 +192,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Import shared workout"),
         "importActivitySuccessLabel":
             MessageLookupByLibrary.simpleMessage("Workout imported"),
+        "importMealConfirmContent": m4,
+        "importMealConfirmTitle": m5,
         "importMealErrorLabel":
             MessageLookupByLibrary.simpleMessage("Invalid QR code"),
-        "shareActivityLabel":
-            MessageLookupByLibrary.simpleMessage("Share workout"),
         "importMealLabel":
             MessageLookupByLibrary.simpleMessage("Import shared meal"),
         "importMealSuccessLabel":
@@ -199,6 +209,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Item deleted"),
         "itemUpdatedSnackbar":
             MessageLookupByLibrary.simpleMessage("Item updated"),
+        "kcalExceededLabel":
+            MessageLookupByLibrary.simpleMessage("kcal exceeded"),
         "kcalLabel": MessageLookupByLibrary.simpleMessage("kcal"),
         "kcalLeftLabel": MessageLookupByLibrary.simpleMessage("kcal left"),
         "kcalTooMuchLabel":
@@ -215,6 +227,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "mealFatLabel": MessageLookupByLibrary.simpleMessage("fat per"),
         "mealKcalLabel": MessageLookupByLibrary.simpleMessage("kcal per"),
         "mealNameLabel": MessageLookupByLibrary.simpleMessage("Meal name"),
+        "mealNutrientsPerQtyLabel": m10,
+        "mealNutrientsTotalLabel":
+            MessageLookupByLibrary.simpleMessage("Total amount"),
         "mealProteinLabel":
             MessageLookupByLibrary.simpleMessage("protein per 100 g/ml"),
         "mealSizeLabel":
@@ -262,7 +277,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nutritionalStatusUnderweight":
             MessageLookupByLibrary.simpleMessage("Underweight"),
         "offDisclaimer": MessageLookupByLibrary.simpleMessage(
-            "The data provided to you by this app are retrieved from the Open Food Facts database. No guarantees can be made for the accuracy, completeness, or reliability of the information provided. The data are provided “as is” and the originating source for the data (Open Food Facts) is not liable for any damages arising out of the use of the data."),
+            'The data provided to you by this app are retrieved from the Open Food Facts database. No guarantees can be made for the accuracy, completeness, or reliability of the information provided. The data are provided "as is" and the originating source for the data (Open Food Facts) is not liable for any damages arising out of the use of the data.'),
         "onboardingActivityQuestionSubtitle":
             MessageLookupByLibrary.simpleMessage(
                 "How active are you? (without workouts)"),
@@ -363,7 +378,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paCheerleadingDesc": MessageLookupByLibrary.simpleMessage(
             "gymnastic moves, competitive"),
         "paChildrenGame":
-            MessageLookupByLibrary.simpleMessage("children’s games"),
+            MessageLookupByLibrary.simpleMessage("children's games"),
         "paChildrenGameDesc": MessageLookupByLibrary.simpleMessage(
             "(e.g., hopscotch, 4-square, dodgeball, playground apparatus, t-ball, tetherball, marbles, arcade games), moderate effort"),
         "paClimbingHillsNoLoadGeneral":
@@ -675,6 +690,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsImperialLabel":
             MessageLookupByLibrary.simpleMessage("Imperial (lbs, ft, oz)"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Settings"),
+        "settingsLanguageLabel":
+            MessageLookupByLibrary.simpleMessage("Language"),
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Licenses"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Mass"),
@@ -682,8 +699,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Metric (kg, cm, ml)"),
         "settingsPrivacySettings":
             MessageLookupByLibrary.simpleMessage("Privacy Settings"),
+        "settingsNotificationsLabel":
+            MessageLookupByLibrary.simpleMessage("Daily Reminder"),
+        "settingsNotificationsTimeLabel": m11,
         "settingsReportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Report Error"),
+        "settingsShowActivityTracking":
+            MessageLookupByLibrary.simpleMessage("Show Activity Tracking"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Source Code"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("System"),
@@ -703,6 +725,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "sugarLabel": MessageLookupByLibrary.simpleMessage("sugar"),
         "suppliedLabel": MessageLookupByLibrary.simpleMessage("supplied"),
         "unitLabel": MessageLookupByLibrary.simpleMessage("Unit"),
+        "warningLabel": MessageLookupByLibrary.simpleMessage("Warning"),
+        "weeklyWeightGoalKgPerWeek": m8,
+        "weeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Weekly rate"),
+        "weeklyWeightGoalLbsPerWeek": m9,
+        "weeklyWeightGoalNoneLabel":
+            MessageLookupByLibrary.simpleMessage("Not set"),
         "weightLabel": MessageLookupByLibrary.simpleMessage("Weight"),
         "yearsLabel": m3
       };

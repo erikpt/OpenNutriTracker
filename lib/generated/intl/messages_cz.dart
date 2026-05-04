@@ -37,6 +37,14 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(count) =>
       "${count} položek nebylo možné načíst z OpenFoodFacts.";
 
+  static String m8(rate) => "${rate} kg/týden";
+
+  static String m9(rate) => "${rate} lbs/týden";
+
+  static String m10(qty, unit) => "Na ${qty} ${unit}";
+
+  static String m11(time) => "Čas připomínky: ${time}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -90,6 +98,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Výpočet TDEE"),
         "carbohydrateLabel": MessageLookupByLibrary.simpleMessage("sacharidy"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("sacharidy"),
+        "chooseWeeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Týdenní tempo hmotnosti"),
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Zvolte cílovou hmotnost"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("cm"),
@@ -204,6 +214,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "mealFatLabel": MessageLookupByLibrary.simpleMessage("tuků na"),
         "mealKcalLabel": MessageLookupByLibrary.simpleMessage("kcal na"),
         "mealNameLabel": MessageLookupByLibrary.simpleMessage("Název jídla"),
+        "mealNutrientsPerQtyLabel": m10,
+        "mealNutrientsTotalLabel":
+            MessageLookupByLibrary.simpleMessage("Celkové množství"),
         "mealProteinLabel":
             MessageLookupByLibrary.simpleMessage("bílkovin na 100 g/ml"),
         "mealSizeLabel":
@@ -673,15 +686,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsImperialLabel":
             MessageLookupByLibrary.simpleMessage("Imperiální (lbs, ft, oz)"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Nastavení"),
+        "settingsLanguageLabel":
+            MessageLookupByLibrary.simpleMessage("Jazyk"),
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Licence"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Hmota"),
         "settingsMetricLabel":
             MessageLookupByLibrary.simpleMessage("Metrické (kg, cm, ml)"),
+        "settingsNotificationsLabel":
+            MessageLookupByLibrary.simpleMessage("Denní připomínka"),
+        "settingsNotificationsTimeLabel": m11,
         "settingsPrivacySettings":
             MessageLookupByLibrary.simpleMessage("Nastavení soukromí"),
         "settingsReportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Nahlásit chybu"),
+        "settingsShowActivityTracking":
+            MessageLookupByLibrary.simpleMessage("Zobrazit sledování aktivity"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Zdrojový kód"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("Systém"),
@@ -701,6 +721,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "sugarLabel": MessageLookupByLibrary.simpleMessage("cukry"),
         "suppliedLabel": MessageLookupByLibrary.simpleMessage("přijato"),
         "unitLabel": MessageLookupByLibrary.simpleMessage("Jednotka"),
+        "weeklyWeightGoalKgPerWeek": m8,
+        "weeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Týdenní tempo"),
+        "weeklyWeightGoalLbsPerWeek": m9,
+        "weeklyWeightGoalNoneLabel":
+            MessageLookupByLibrary.simpleMessage("Nenastaveno"),
         "weightLabel": MessageLookupByLibrary.simpleMessage("Hmotnost"),
         "yearsLabel": m3
       };

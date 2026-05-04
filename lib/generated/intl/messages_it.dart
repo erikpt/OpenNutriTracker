@@ -37,6 +37,14 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(count) =>
       "${count} elemento/i non è stato possibile recuperare da OpenFoodFacts.";
 
+  static String m8(rate) => "${rate} kg/settimana";
+
+  static String m9(rate) => "${rate} lbs/settimana";
+
+  static String m10(qty, unit) => "Per ${qty} ${unit}";
+
+  static String m11(time) => "Orario promemoria: ${time}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -92,6 +100,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "carbohydrateLabel":
             MessageLookupByLibrary.simpleMessage("carboidrati"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("carboidrati"),
+        "chooseWeeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Ritmo peso settimanale"),
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Scegli obiettivo di peso"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("cm"),
@@ -207,6 +217,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "mealFatLabel": MessageLookupByLibrary.simpleMessage("grassi per"),
         "mealKcalLabel": MessageLookupByLibrary.simpleMessage("kcal per"),
         "mealNameLabel": MessageLookupByLibrary.simpleMessage("Nome pasto"),
+        "mealNutrientsPerQtyLabel": m10,
+        "mealNutrientsTotalLabel":
+            MessageLookupByLibrary.simpleMessage("Quantità totale"),
         "mealProteinLabel":
             MessageLookupByLibrary.simpleMessage("proteine per 100 g/ml"),
         "mealSizeLabel":
@@ -680,15 +693,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsImperialLabel":
             MessageLookupByLibrary.simpleMessage("Imperiale (lbs, ft, oz)"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Impostazioni"),
+        "settingsLanguageLabel":
+            MessageLookupByLibrary.simpleMessage("Lingua"),
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Licenze"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Massa"),
         "settingsMetricLabel":
             MessageLookupByLibrary.simpleMessage("Metrico (kg, cm, ml)"),
+        "settingsNotificationsLabel":
+            MessageLookupByLibrary.simpleMessage("Promemoria giornaliero"),
+        "settingsNotificationsTimeLabel": m11,
         "settingsPrivacySettings":
             MessageLookupByLibrary.simpleMessage("Impostazioni privacy"),
         "settingsReportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Segnala errore"),
+        "settingsShowActivityTracking":
+            MessageLookupByLibrary.simpleMessage("Mostra tracciamento attività"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Codice sorgente"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("Sistema"),
@@ -710,6 +730,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "sugarLabel": MessageLookupByLibrary.simpleMessage("zuccheri"),
         "suppliedLabel": MessageLookupByLibrary.simpleMessage("assunte"),
         "unitLabel": MessageLookupByLibrary.simpleMessage("Unità"),
+        "weeklyWeightGoalKgPerWeek": m8,
+        "weeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Ritmo settimanale"),
+        "weeklyWeightGoalLbsPerWeek": m9,
+        "weeklyWeightGoalNoneLabel":
+            MessageLookupByLibrary.simpleMessage("Non impostato"),
         "weightLabel": MessageLookupByLibrary.simpleMessage("Peso"),
         "yearsLabel": m3
       };

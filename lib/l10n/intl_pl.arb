@@ -443,6 +443,16 @@
   "shareCodeLabel": "Udostępnij kod",
   "codeCopiedLabel": "Kod skopiowany",
   "pasteCodeLabel": "Wklej kod",
-  "pasteCodeHint": "Wklej tutaj kod udostępnionego posiłku"
+  "pasteCodeHint": "Wklej tutaj kod udostępnionego posiłku",
+  "settingsShowActivityTracking": "Pokaż śledzenie aktywności",
+  "settingsNotificationsLabel": "Codzienne przypomnienie",
+  "settingsNotificationsTimeLabel": "Czas przypomnienia: {time}",
+  "mealNutrientsPerQtyLabel": "Na {qty} {unit}",
+  "mealNutrientsTotalLabel": "Łączna ilość",
+  "weeklyWeightGoalLabel": "Tygodniowe tempo",
+  "weeklyWeightGoalNoneLabel": "Nie ustawiono",
+  "weeklyWeightGoalKgPerWeek": "{rate} kg/tydzień",
+  "weeklyWeightGoalLbsPerWeek": "{rate} lbs/tydzień",
+  "chooseWeeklyWeightGoalLabel": "Tygodniowe tempo wagi",
+  "settingsLanguageLabel": "Język"
 }
-

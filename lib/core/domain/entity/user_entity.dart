@@ -10,6 +10,7 @@ class UserEntity {
   UserGenderEntity gender;
   UserWeightGoalEntity goal;
   UserPALEntity pal;
+  double? weeklyWeightGoalKg;
 
   UserEntity({
     required this.birthday,
@@ -18,6 +19,7 @@ class UserEntity {
     required this.gender,
     required this.goal,
     required this.pal,
+    this.weeklyWeightGoalKg,
   });
 
   factory UserEntity.fromUserDBO(UserDBO userDBO) {
@@ -28,6 +30,7 @@ class UserEntity {
       gender: UserGenderEntity.fromUserGenderDBO(userDBO.gender),
       goal: UserWeightGoalEntity.fromUserWeightGoalDBO(userDBO.goal),
       pal: UserPALEntity.fromUserPALDBO(userDBO.pal),
+      weeklyWeightGoalKg: userDBO.weeklyWeightGoalKg,
     );
   }
 

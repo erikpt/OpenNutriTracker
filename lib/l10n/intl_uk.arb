@@ -108,19 +108,22 @@
   "dialogCopyLabel": "Скопіювати на сьогодні",
   "dialogDeleteLabel": "ВИДАЛИТИ",
   "deleteAllLabel": "Видалити все",
-
   "shareMealLabel": "Share meal",
   "importMealLabel": "Import shared meal",
   "importMealConfirmTitle": "Import {count} items?",
   "@importMealConfirmTitle": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "importMealConfirmContent": "These items will be added to your {mealType}.",
   "@importMealConfirmContent": {
     "placeholders": {
-      "mealType": { "type": "String" }
+      "mealType": {
+        "type": "String"
+      }
     }
   },
   "importMealSuccessLabel": "Meal imported",
@@ -128,7 +131,9 @@
   "importOffFetchFailedLabel": "{count} елемент(ів) не вдалося отримати з OpenFoodFacts.",
   "@importOffFetchFailedLabel": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "copyCodeLabel": "Копіювати код",
@@ -136,7 +141,6 @@
   "codeCopiedLabel": "Код скопійовано",
   "pasteCodeLabel": "Вставити код",
   "pasteCodeHint": "Вставте сюди код спільного прийому їжі",
-
   "suppliedLabel": "спожито",
   "burnedLabel": "спалено",
   "kcalLeftLabel": "залишилось ккал",
@@ -438,5 +442,16 @@
   "paSkiingGeneral": "лижний спорт",
   "paSkiingGeneralDesc": "загальне",
   "paSnowShovingModerate": "розчищення снігу",
-  "paSnowShovingModerateDesc": "Розчишення снігу, помірні зусилля"
+  "paSnowShovingModerateDesc": "Розчишення снігу, помірні зусилля",
+  "settingsShowActivityTracking": "Показати відстеження активності",
+  "settingsNotificationsLabel": "Щоденне нагадування",
+  "settingsNotificationsTimeLabel": "Час нагадування: {time}",
+  "mealNutrientsPerQtyLabel": "На {qty} {unit}",
+  "mealNutrientsTotalLabel": "Загальна кількість",
+  "weeklyWeightGoalLabel": "Тижневий темп",
+  "weeklyWeightGoalNoneLabel": "Не встановлено",
+  "weeklyWeightGoalKgPerWeek": "{rate} кг/тиждень",
+  "weeklyWeightGoalLbsPerWeek": "{rate} фунт/тиждень",
+  "chooseWeeklyWeightGoalLabel": "Тижневий темп ваги",
+  "settingsLanguageLabel": "Мова"
 }

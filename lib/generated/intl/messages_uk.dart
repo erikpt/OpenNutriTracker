@@ -37,6 +37,14 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(count) =>
       "${count} елемент(ів) не вдалося отримати з OpenFoodFacts.";
 
+  static String m8(rate) => "${rate} кг/тиждень";
+
+  static String m9(rate) => "${rate} фунт/тиждень";
+
+  static String m10(qty, unit) => "На ${qty} ${unit}";
+
+  static String m11(time) => "Час нагадування: ${time}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -90,6 +98,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Розрахунок TDEE"),
         "carbohydrateLabel": MessageLookupByLibrary.simpleMessage("вуглеводи"),
         "carbsLabel": MessageLookupByLibrary.simpleMessage("вуглеводи"),
+        "chooseWeeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Тижневий темп ваги"),
         "chooseWeightGoalLabel":
             MessageLookupByLibrary.simpleMessage("Виберіть ціль ваги"),
         "cmLabel": MessageLookupByLibrary.simpleMessage("см"),
@@ -206,6 +216,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "mealFatLabel": MessageLookupByLibrary.simpleMessage("жири на"),
         "mealKcalLabel": MessageLookupByLibrary.simpleMessage("ккал на"),
         "mealNameLabel": MessageLookupByLibrary.simpleMessage("Назва страви"),
+        "mealNutrientsPerQtyLabel": m10,
+        "mealNutrientsTotalLabel":
+            MessageLookupByLibrary.simpleMessage("Загальна кількість"),
         "mealProteinLabel":
             MessageLookupByLibrary.simpleMessage("білки на 100 г/мл"),
         "mealSizeLabel":
@@ -680,15 +693,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsImperialLabel": MessageLookupByLibrary.simpleMessage(
             "Імперська (фунти, фут, унції)"),
         "settingsLabel": MessageLookupByLibrary.simpleMessage("Налаштування"),
+        "settingsLanguageLabel":
+            MessageLookupByLibrary.simpleMessage("Мова"),
         "settingsLicensesLabel":
             MessageLookupByLibrary.simpleMessage("Ліцензії"),
         "settingsMassLabel": MessageLookupByLibrary.simpleMessage("Маса"),
         "settingsMetricLabel":
             MessageLookupByLibrary.simpleMessage("Метрична (кг, см, мл)"),
+        "settingsNotificationsLabel":
+            MessageLookupByLibrary.simpleMessage("Щоденне нагадування"),
+        "settingsNotificationsTimeLabel": m11,
         "settingsPrivacySettings": MessageLookupByLibrary.simpleMessage(
             "Налаштування конфіденційності"),
         "settingsReportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Повідомити про помилку"),
+        "settingsShowActivityTracking":
+            MessageLookupByLibrary.simpleMessage("Показати відстеження активності"),
         "settingsSourceCodeLabel":
             MessageLookupByLibrary.simpleMessage("Вихідний код"),
         "settingsSystemLabel": MessageLookupByLibrary.simpleMessage("Система"),
@@ -710,6 +730,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "sugarLabel": MessageLookupByLibrary.simpleMessage("цукор"),
         "suppliedLabel": MessageLookupByLibrary.simpleMessage("спожито"),
         "unitLabel": MessageLookupByLibrary.simpleMessage("Одиниця"),
+        "weeklyWeightGoalKgPerWeek": m8,
+        "weeklyWeightGoalLabel":
+            MessageLookupByLibrary.simpleMessage("Тижневий темп"),
+        "weeklyWeightGoalLbsPerWeek": m9,
+        "weeklyWeightGoalNoneLabel":
+            MessageLookupByLibrary.simpleMessage("Не встановлено"),
         "weightLabel": MessageLookupByLibrary.simpleMessage("Вага"),
         "yearsLabel": m3
       };

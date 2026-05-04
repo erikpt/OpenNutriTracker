@@ -58,6 +58,15 @@
   "settingsDisclaimerLabel": "Sorumluluk Reddi",
   "settingsReportErrorLabel": "Hata Bildir",
   "settingsPrivacySettings": "Gizlilik Ayarları",
+  "settingsNotificationsLabel": "Günlük Hatırlatıcı",
+  "settingsNotificationsTimeLabel": "Hatırlatma zamanı: {time}",
+  "@settingsNotificationsTimeLabel": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "settingsSourceCodeLabel": "Kaynak Kodu",
   "settingFeedbackLabel": "Geri Bildirim",
   "settingAboutLabel": "Hakkında",
@@ -107,19 +116,22 @@
   "copyOrDeleteTimeDialogContent": "\"Bugüne Kopyala\" ile yemeği bugüne kopyalayabilirsiniz. \"Sil\" ile yemeği silebilirsiniz.",
   "dialogCopyLabel": "BUGÜNE KOPYALA",
   "dialogDeleteLabel": "SİL",
-
   "shareMealLabel": "Share meal",
   "importMealLabel": "Import shared meal",
   "importMealConfirmTitle": "Import {count} items?",
   "@importMealConfirmTitle": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "importMealConfirmContent": "These items will be added to your {mealType}.",
   "@importMealConfirmContent": {
     "placeholders": {
-      "mealType": { "type": "String" }
+      "mealType": {
+        "type": "String"
+      }
     }
   },
   "importMealSuccessLabel": "Meal imported",
@@ -127,7 +139,9 @@
   "importOffFetchFailedLabel": "{count} öğe OpenFoodFacts'ten alınamadı.",
   "@importOffFetchFailedLabel": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "copyCodeLabel": "Kodu kopyala",
@@ -135,7 +149,6 @@
   "codeCopiedLabel": "Kod kopyalandı",
   "pasteCodeLabel": "Kodu yapıştır",
   "pasteCodeHint": "Paylaşılan yemek kodunu buraya yapıştırın",
-
   "suppliedLabel": "tüketilen",
   "burnedLabel": "yakılan",
   "kcalLeftLabel": "kalan kcal",
@@ -179,10 +192,22 @@
   "servingSizeLabelMetric": "Porsiyon boyutu (g/ml)",
   "servingSizeLabelImperial": "Porsiyon boyutu (oz/fl oz)",
   "mealUnitLabel": "Yemek birimi",
-  "mealKcalLabel": "kcal başına",
-  "mealCarbsLabel": "karbonhidrat başına",
-  "mealFatLabel": "yağ başına",
-  "mealProteinLabel": "protein başına 100 g/ml",
+  "mealKcalLabel": "kcal",
+  "mealCarbsLabel": "Karbonhidrat (g)",
+  "mealFatLabel": "Yağ (g)",
+  "mealProteinLabel": "Protein (g)",
+  "mealNutrientsPerQtyLabel": "{qty} {unit} başına",
+  "@mealNutrientsPerQtyLabel": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "mealNutrientsTotalLabel": "Toplam miktar",
   "errorMealSave": "Yemek kaydedilirken hata oluştu. Doğru yemek bilgilerini girdiniz mi?",
   "bmiLabel": "BMI",
   "bmiInfo": "Vücut Kitle İndeksi (BMI), yetişkinlerde aşırı kiloyu ve obeziteyi sınıflandırmak için kullanılan bir indekstir. Kilogram cinsinden ağırlığın, metre cinsinden boyun karesine bölünmesiyle tanımlanır (kg/m²).\n\nBMI, yağ ve kas kütlesi arasında ayrım yapmaz ve bazı bireyler için yanıltıcı olabilir.",
@@ -203,6 +228,25 @@
   "goalMaintainWeight": "Kilo Koru",
   "goalGainWeight": "Kilo Al",
   "goalLabel": "Hedef",
+  "weeklyWeightGoalLabel": "Haftalık oran",
+  "weeklyWeightGoalNoneLabel": "Ayarlanmadı",
+  "weeklyWeightGoalKgPerWeek": "{rate} kg/hafta",
+  "@weeklyWeightGoalKgPerWeek": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "weeklyWeightGoalLbsPerWeek": "{rate} lbs/hafta",
+  "@weeklyWeightGoalLbsPerWeek": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "chooseWeeklyWeightGoalLabel": "Haftalık kilo oranı",
   "selectHeightDialogLabel": "Boy Seçin",
   "heightLabel": "Boy",
   "cmLabel": "cm",
@@ -437,5 +481,6 @@
   "paSkiingGeneral": "kayak",
   "paSkiingGeneralDesc": "genel",
   "paSnowShovingModerate": "kar küreme",
-  "paSnowShovingModerateDesc": "elle, orta derecede çaba"
+  "paSnowShovingModerateDesc": "elle, orta derecede çaba",
+  "settingsLanguageLabel": "Dil"
 }
