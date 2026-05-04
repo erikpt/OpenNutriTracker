@@ -126,6 +126,16 @@
   },
   "importMealSuccessLabel": "Meal imported",
   "importMealErrorLabel": "Invalid QR code",
+  "shareActivityLabel": "Share workout",
+  "importActivityLabel": "Import shared workout",
+  "importActivityConfirmTitle": "Import {count} activities?",
+  "@importActivityConfirmTitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "importActivityConfirmContent": "These activities will be added to today.",
+  "importActivitySuccessLabel": "Workout imported",
   "importOffFetchFailedLabel": "{count} item(s) could not be fetched from OpenFoodFacts.",
   "@importOffFetchFailedLabel": {
     "placeholders": {

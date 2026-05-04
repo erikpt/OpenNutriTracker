@@ -295,13 +295,26 @@ class DayInfoWidget extends StatelessWidget {
     BuildContext context,
     UserActivityEntity activityEntity,
   ) async {
-    final shouldDeleteActivity = await showDialog<bool>(
-      context: context,
-      builder: (context) => const DeleteDialog(),
-    );
-
-    if (shouldDeleteActivity != null) {
-      onDeleteActivity(activityEntity, trackedDayEntity);
+    if (DateUtils.isSameDay(selectedDay, DateTime.now())) {
+      final shouldDelete = await showDialog<bool>(
+        context: context,
+        builder: (context) => const DeleteDialog(),
+      );
+      if (shouldDelete != null) {
+        onDeleteActivity(activityEntity, trackedDayEntity);
+      }
+    } else {
+      final copyOrDelete = await showDialog<bool>(
+        context: context,
+        builder: (context) => const CopyOrDeleteDialog(),
+      );
+      if (context.mounted) {
+        if (copyOrDelete == false) {
+          onDeleteActivity(activityEntity, trackedDayEntity);
+        } else if (copyOrDelete == true) {
+          onCopyActivity(activityEntity, trackedDayEntity);
+        }
+      }
     }
   }
 }

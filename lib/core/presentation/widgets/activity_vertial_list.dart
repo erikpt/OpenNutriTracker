@@ -4,8 +4,12 @@ import 'package:opennutritracker/core/presentation/widgets/activity_card.dart';
 import 'package:opennutritracker/core/presentation/widgets/placeholder_card.dart';
 import 'package:opennutritracker/core/utils/navigation_options.dart';
 import 'package:opennutritracker/features/add_activity/presentation/add_activity_screen.dart';
+import 'package:opennutritracker/features/home/presentation/widgets/share_activity_qr_dialog.dart';
+import 'package:opennutritracker/generated/l10n.dart';
 
-class ActivityVerticalList extends StatelessWidget {
+enum _ActivityPopupMenuSelection { onShare, onImport }
+
+class ActivityVerticalList extends StatefulWidget {
   final DateTime day;
   final String title;
   final List<UserActivityEntity> userActivityList;
@@ -24,6 +28,11 @@ class ActivityVerticalList extends StatelessWidget {
   });
 
   @override
+  State<ActivityVerticalList> createState() => _ActivityVerticalListState();
+}
+
+class _ActivityVerticalListState extends State<ActivityVerticalList> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -39,10 +48,44 @@ class ActivityVerticalList extends StatelessWidget {
               ),
               const SizedBox(width: 4.0),
               Text(
-                title,
+                widget.title,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       color: Theme.of(context).colorScheme.onSurface,
                     ),
+              ),
+              const Spacer(),
+              PopupMenuButton<_ActivityPopupMenuSelection>(
+                onSelected: (_ActivityPopupMenuSelection selection) async {
+                  switch (selection) {
+                    case _ActivityPopupMenuSelection.onShare:
+                      if (context.mounted) {
+                        await showDialog(
+                          context: context,
+                          builder: (_) => ShareActivityQrDialog(
+                            activityList: widget.userActivityList,
+                          ),
+                        );
+                      }
+                    case _ActivityPopupMenuSelection.onImport:
+                      if (context.mounted) {
+                        Navigator.of(context).pushNamed(
+                          NavigationOptions.importActivityScannerRoute,
+                        );
+                      }
+                  }
+                },
+                itemBuilder: (BuildContext context) =>
+                    <PopupMenuEntry<_ActivityPopupMenuSelection>>[
+                  if (widget.userActivityList.isNotEmpty)
+                    PopupMenuItem<_ActivityPopupMenuSelection>(
+                      value: _ActivityPopupMenuSelection.onShare,
+                      child: Text(S.of(context).shareActivityLabel),
+                    ),
+                  PopupMenuItem<_ActivityPopupMenuSelection>(
+                    value: _ActivityPopupMenuSelection.onImport,
+                    child: Text(S.of(context).importActivityLabel),
+                  ),
+                ],
               ),
             ],
           ),
@@ -51,23 +94,22 @@ class ActivityVerticalList extends StatelessWidget {
           height: 160,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount:
-                userActivityList.length + 1, // List length + placeholder card
+            itemCount: widget.userActivityList.length + 1,
             itemBuilder: (BuildContext context, int index) {
               final firstListElement = index == 0 ? true : false;
-              if (index == userActivityList.length) {
+              if (index == widget.userActivityList.length) {
                 return PlaceholderCard(
-                  day: day,
+                  day: widget.day,
                   onTap: () => _onPlaceholderCardTapped(context),
                   firstListElement: firstListElement,
                 );
               } else {
-                final userActivity = userActivityList[index];
+                final userActivity = widget.userActivityList[index];
                 return ActivityCard(
                   activityEntity: userActivity,
-                  onItemLongPressed: onItemLongPressedCallback,
-                  onItemTapped: onItemTappedCallback,
-                  onItemDragCallback: onItemDragCallback,
+                  onItemLongPressed: widget.onItemLongPressedCallback,
+                  onItemTapped: widget.onItemTappedCallback,
+                  onItemDragCallback: widget.onItemDragCallback,
                   firstListElement: firstListElement,
                 );
               }
@@ -81,7 +123,7 @@ class ActivityVerticalList extends StatelessWidget {
   void _onPlaceholderCardTapped(BuildContext context) {
     Navigator.of(context).pushNamed(
       NavigationOptions.addActivityRoute,
-      arguments: AddActivityScreenArguments(day: day),
+      arguments: AddActivityScreenArguments(day: widget.day),
     );
   }
 }

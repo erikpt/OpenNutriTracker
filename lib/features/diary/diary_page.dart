@@ -7,6 +7,9 @@ import 'package:opennutritracker/core/domain/entity/tracked_day_entity.dart';
 import 'package:opennutritracker/core/domain/entity/user_activity_entity.dart';
 import 'package:opennutritracker/core/presentation/widgets/edit_activity_dialog.dart';
 import 'package:opennutritracker/core/presentation/widgets/edit_dialog.dart';
+import 'package:opennutritracker/core/utils/calc/met_calc.dart';
+import 'package:opennutritracker/core/domain/usecase/get_user_usecase.dart';
+import 'package:opennutritracker/features/activity_detail/presentation/bloc/activity_detail_bloc.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/calendar_day_bloc.dart';
@@ -29,6 +32,7 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
   late DiaryBloc _diaryBloc;
   late CalendarDayBloc _calendarDayBloc;
   late MealDetailBloc _mealDetailBloc;
+  late ActivityDetailBloc _activityDetailBloc;
 
   static const _calendarDurationDays = Duration(days: 356);
   final _currentDate = DateTime.now();
@@ -41,6 +45,7 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
     _diaryBloc = locator<DiaryBloc>();
     _calendarDayBloc = locator<CalendarDayBloc>();
     _mealDetailBloc = locator<MealDetailBloc>();
+    _activityDetailBloc = locator<ActivityDetailBloc>();
     super.initState();
   }
 
@@ -195,7 +200,19 @@ class _DiaryPageState extends State<DiaryPage> with WidgetsBindingObserver {
     UserActivityEntity userActivityEntity,
     TrackedDayEntity? trackedDayEntity,
   ) async {
-    log.info("Should copy activity");
+    final user = await locator<GetUserUsecase>().getUserData();
+    final burnedKcal = METCalc.getTotalBurnedKcal(
+      user,
+      userActivityEntity.physicalActivityEntity,
+      userActivityEntity.duration,
+    );
+    _activityDetailBloc.persistActivity(
+      userActivityEntity.duration.toString(),
+      burnedKcal,
+      userActivityEntity.physicalActivityEntity,
+      DateTime.now(),
+    );
+    _diaryBloc.updateHomePage();
   }
 
   void _onEditIntakeItem(
