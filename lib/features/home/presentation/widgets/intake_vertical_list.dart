@@ -146,6 +146,9 @@ class _IntakeVerticalListState extends State<IntakeVerticalList> {
                             }
                             break;
                           }
+                        case VerticalListPopupMenuSelections.onShare:
+                        case VerticalListPopupMenuSelections.onImport:
+                          break;
                       }
                     },
                     itemBuilder: (BuildContext context) =>
