@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:opennutritracker/core/utils/supported_language.dart';
 import 'package:opennutritracker/features/add_meal/data/dto/off/off_product_dto.dart';
@@ -74,83 +76,102 @@ void main() {
     });
 
     test('Case 3: English Language - Null Name', () {
-      final product = OFFProductDTO(
-        code: '123 - testValue',
+      final product = _buildProduct(
         product_name: 'Default Name - testValue',
         product_name_en: null,
         product_name_fr: 'Nom Français - testValue',
         product_name_de: 'Deutscher Name - testValue',
-        brands: 'Brand - testValue',
-        image_front_thumb_url: 'thumb - testValue',
-        image_front_url: 'front - testValue',
-        image_ingredients_url: 'ingredients - testValue',
-        image_nutrition_url: 'nutrition - testValue',
-        image_url: 'image - testValue',
-        url: 'url - testValue',
-        quantity: '100g - testValue',
-        product_quantity: '100 - testValue',
-        serving_quantity: '50 - testValue',
-        serving_size: '50g - testValue',
-        nutriments: OFFProductNutrimentsDTO(
-          energy_kcal_100g: 1,
-          carbohydrates_100g: 1,
-          fat_100g: 1,
-          proteins_100g: 1,
-          sugars_100g: 1,
-          saturated_fat_100g: 1,
-          fiber_100g: 1
-        ),
       );
 
       final result = product.getLocaleName(SupportedLanguage.en);
 
-      expect(
-        result == 'Deutscher Name - testValue' ||
-        result == 'English Name - testValue' ||
-        result == 'Default Name - testValue' ||
-        result == 'Nom Français - testValue',
-        isTrue,
-      );
+      expect(result, equals('Default Name - testValue'));
     });
 
     test('Case 4: English Language - Empty Name', () {
-      final product = OFFProductDTO(
-        code: '123 - testValue',
+      final product = _buildProduct(
         product_name: 'Default Name - testValue',
         product_name_en: '',
         product_name_fr: 'Nom Français - testValue',
         product_name_de: 'Deutscher Name - testValue',
-        brands: 'Brand - testValue',
-        image_front_thumb_url: 'thumb - testValue',
-        image_front_url: 'front - testValue',
-        image_ingredients_url: 'ingredients - testValue',
-        image_nutrition_url: 'nutrition - testValue',
-        image_url: 'image - testValue',
-        url: 'url - testValue',
-        quantity: '100g - testValue',
-        product_quantity: '100 - testValue',
-        serving_quantity: '50 - testValue',
-        serving_size: '50g - testValue',
-        nutriments: OFFProductNutrimentsDTO(
-          energy_kcal_100g: 1,
-          carbohydrates_100g: 1,
-          fat_100g: 1,
-          proteins_100g: 1,
-          sugars_100g: 1,
-          saturated_fat_100g: 1,
-          fiber_100g: 1
-        ),
       );
 
       final result = product.getLocaleName(SupportedLanguage.en);
 
-      expect(
-        result == 'Deutscher Name - testValue' ||
-        result == 'English Name - testValue' ||
-        result == 'Default Name - testValue' ||
-        result == 'Nom Français - testValue',
-        isTrue,
+      expect(result, equals('Default Name - testValue'));
+    });
+
+    test('Case 5: Polish Language - returns product_name', () {
+      final product = _buildProduct(
+        product_name: 'Default Name - testValue',
+        product_name_en: 'English Name - testValue',
+        product_name_de: 'Deutscher Name - testValue',
       );
+
+      final result = product.getLocaleName(SupportedLanguage.pl);
+
+      expect(result, equals('Default Name - testValue'));
+    });
+
+    test('Case 6: Chinese Language - returns product_name', () {
+      final product = _buildProduct(
+        product_name: 'Default Name - testValue',
+        product_name_en: 'English Name - testValue',
+        product_name_de: 'Deutscher Name - testValue',
+      );
+
+      final result = product.getLocaleName(SupportedLanguage.zh);
+
+      expect(result, equals('Default Name - testValue'));
+    });
+
+    test('Case 7: All names null - returns null', () {
+      final product = _buildProduct();
+
+      final result = product.getLocaleName(SupportedLanguage.en);
+
+      expect(result, isNull);
+    });
+
+    test('Case 8: English fallback walks chain to product_name_fr', () {
+      // product_name_en is null, product_name is null — the implementation's
+      // fallback chain `product_name ?? product_name_en ?? product_name_fr ?? product_name_de`
+      // should return the French name.
+      final product = _buildProduct(
+        product_name_fr: 'Nom Français - testValue',
+        product_name_de: 'Deutscher Name - testValue',
+      );
+
+      final result = product.getLocaleName(SupportedLanguage.en);
+
+      expect(result, equals('Nom Français - testValue'));
     });
   });
-} 
+}
+
+OFFProductDTO _buildProduct({
+  String? product_name,
+  String? product_name_en,
+  String? product_name_fr,
+  String? product_name_de,
+}) {
+  return OFFProductDTO(
+    code: '123',
+    product_name: product_name,
+    product_name_en: product_name_en,
+    product_name_fr: product_name_fr,
+    product_name_de: product_name_de,
+    brands: null,
+    image_front_thumb_url: null,
+    image_front_url: null,
+    image_ingredients_url: null,
+    image_nutrition_url: null,
+    image_url: null,
+    url: null,
+    quantity: null,
+    product_quantity: null,
+    serving_quantity: null,
+    serving_size: null,
+    nutriments: null,
+  );
+}
