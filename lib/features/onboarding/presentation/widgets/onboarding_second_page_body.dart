@@ -206,19 +206,27 @@ class _OnboardingSecondPageBodyState extends State<OnboardingSecondPageBody> {
   }
 
   String? validateHeight(String? value) {
-    return ValueValidator.heightStringValidator(
-      value,
-      S.of(context).onboardingWrongHeightLabel,
-      isImperial: _isImperialSelected,
-    );
+    final label = S.of(context).onboardingWrongHeightLabel;
+    if (ValueValidator.heightStringValidator(value, label, isImperial: _isImperialSelected) != null) {
+      return label;
+    }
+    final parsed = double.tryParse(value!.replaceAll(',', '.'));
+    if (ValueValidator.parseHeightInCm(parsed, isImperial: _isImperialSelected) == null) {
+      return label;
+    }
+    return null;
   }
 
   String? validateWeight(String? value) {
-    return ValueValidator.weightStringValidator(
-      value,
-      S.of(context).onboardingWrongWeightLabel,
-      isImperial: _isImperialSelected,
-    );
+    final label = S.of(context).onboardingWrongWeightLabel;
+    if (ValueValidator.weightStringValidator(value, label, isImperial: _isImperialSelected) != null) {
+      return label;
+    }
+    final parsed = double.tryParse(value!);
+    if (ValueValidator.parseWeightInKg(parsed, isImperial: _isImperialSelected) == null) {
+      return label;
+    }
+    return null;
   }
 
   void checkCorrectInput() {
