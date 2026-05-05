@@ -126,8 +126,11 @@ class SearchProductsUseCase {
         .where((meal) => _mealMatchesSearch(meal, normalizedSearchString))
         .toList();
 
+    // Sorted with the most recently touched entries first so an item the
+    // user just selected (logged) appears at the top of the next search
+    // result list, ahead of other cached items they haven't touched.
     final fromOffCache = _cachedOffMealDataSource
-        .getAll()
+        .getAllByMostRecentlyTouched()
         .map(MealEntity.fromMealDBO)
         .where((meal) => _mealMatchesSearch(meal, normalizedSearchString))
         .toList();

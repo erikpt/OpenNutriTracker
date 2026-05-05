@@ -61,6 +61,25 @@ class RemoteSearchCacheDataSource {
 
   List<MealDBO> getAll() => _cacheBox.values.toList();
 
+  /// Returns cached entries sorted with the most recently touched first.
+  /// Entries with no timestamp record sort last. Used by search to put
+  /// items the user just selected at the top of the result list.
+  List<MealDBO> getAllByMostRecentlyTouched() {
+    final entries = _cacheBox.values.toList();
+    entries.sort((a, b) {
+      final aTs = _timestampFor(a) ?? 0;
+      final bTs = _timestampFor(b) ?? 0;
+      return bTs.compareTo(aTs);
+    });
+    return entries;
+  }
+
+  int? _timestampFor(MealDBO meal) {
+    final key = _timestampKey(meal);
+    if (key == null) return null;
+    return _timestampsBox.get(key);
+  }
+
   /// Look up a single cached meal by barcode. Returns null when none
   /// matches — the caller should then fall back to the remote API.
   MealDBO? getByBarcode(String barcode) {

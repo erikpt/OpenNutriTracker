@@ -83,13 +83,36 @@ class _FakeRemoteSearchCacheDataSource implements RemoteSearchCacheDataSource {
   final List<MealDBO> cached = [];
   final List<String> touched = [];
 
+  /// Per-key timestamps. Tests that care about ordering should set this
+  /// explicitly via [setTimestamp]; otherwise [cache] sets to a synthetic
+  /// monotonic counter so insertion-order matches touch-order.
+  final Map<String, int> timestamps = {};
+  int _nextTs = 0;
+
+  void setTimestamp(String key, int ts) => timestamps[key] = ts;
+
   @override
   List<MealDBO> getAll() => meals;
+
+  @override
+  List<MealDBO> getAllByMostRecentlyTouched() {
+    final entries = List<MealDBO>.of(meals);
+    entries.sort((a, b) {
+      final aTs = timestamps[a.code ?? a.name ?? ''] ?? 0;
+      final bTs = timestamps[b.code ?? b.name ?? ''] ?? 0;
+      return bTs.compareTo(aTs);
+    });
+    return entries;
+  }
 
   @override
   Future<void> cache(MealDBO meal) async {
     cached.add(meal);
     meals.add(meal);
+    final key = meal.code ?? meal.name;
+    if (key != null) {
+      timestamps[key] = ++_nextTs;
+    }
   }
 
   @override
@@ -106,6 +129,7 @@ class _FakeRemoteSearchCacheDataSource implements RemoteSearchCacheDataSource {
   @override
   Future<void> touch(String code) async {
     touched.add(code);
+    timestamps[code] = ++_nextTs;
   }
 
   @override
@@ -473,6 +497,35 @@ void main() {
 
       expect(cachedOffMealDataSource.cached, isEmpty);
     });
+
+    test(
+      'recently-touched cached entry sorts above other cached entries '
+      '(simulates the user logging a specific result and seeing it at the '
+      'top of the same search next time)',
+      () async {
+        // Three banana variants in the cache from a previous bulk-search.
+        cachedOffMealDataSource.meals.addAll([
+          _offCacheDbo(code: 'banana-a', name: 'Banana A'),
+          _offCacheDbo(code: 'banana-b', name: 'Banana B'),
+          _offCacheDbo(code: 'banana-c', name: 'Banana C'),
+        ]);
+        // All bulk-cached at the same epoch; user then explicitly logged
+        // banana-b later (touch fires with a higher timestamp).
+        cachedOffMealDataSource.setTimestamp('banana-a', 100);
+        cachedOffMealDataSource.setTimestamp('banana-b', 999);
+        cachedOffMealDataSource.setTimestamp('banana-c', 100);
+
+        // Remote returns nothing different — keeps the test focused on
+        // ordering of the cached entries.
+        productsRepository.offResults['banana'] = const [];
+
+        final result = await useCase.searchOFFProductsByString('banana');
+
+        // banana-b (the user-selected one) should be first.
+        expect(result.meals.map((m) => m.code).toList(),
+            ['banana-b', 'banana-a', 'banana-c']);
+      },
+    );
   });
 }
 
