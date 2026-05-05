@@ -53,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(imported, skipped) =>
       "Imported ${imported} meal(s); ${skipped} row(s) were skipped due to invalid data.";
 
+  static String m14(count, size) => "${count} item(s) · ${size}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -168,6 +170,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "Error while opening email app"),
         "errorProductNotFound":
             MessageLookupByLibrary.simpleMessage("Product not found"),
+        "clearOffCacheConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "Removes the locally cached search and scan results from Open Food Facts and FDC. The cache rebuilds automatically as you search and scan products. Your custom meals are not affected."),
+        "clearOffCacheConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("Clear cached items?"),
+        "clearOffCacheLabel":
+            MessageLookupByLibrary.simpleMessage("Clear cached items"),
+        "clearOffCacheSubtitle": m14,
         "csvImportContributeOffAndroidLink":
             MessageLookupByLibrary.simpleMessage("Android"),
         "csvImportContributeOffIosLink":

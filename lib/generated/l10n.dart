@@ -976,6 +976,42 @@ class S {
     );
   }
 
+  String get clearOffCacheLabel {
+    return Intl.message(
+      'Clear cached items',
+      name: 'clearOffCacheLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String clearOffCacheSubtitle(int count, String size) {
+    return Intl.message(
+      '$count item(s) · $size',
+      name: 'clearOffCacheSubtitle',
+      desc: '',
+      args: [count, size],
+    );
+  }
+
+  String get clearOffCacheConfirmTitle {
+    return Intl.message(
+      'Clear cached items?',
+      name: 'clearOffCacheConfirmTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get clearOffCacheConfirmContent {
+    return Intl.message(
+      'Removes the locally cached search and scan results from Open Food Facts and FDC. The cache rebuilds automatically as you search and scan products. Your custom meals are not affected.',
+      name: 'clearOffCacheConfirmContent',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `You can export the app data to a zip file and import it later. This is useful if you want to backup your data or transfer it to another device.\n\nThe app does not use any cloud service to store your data.`
   String get exportImportDescription {
     return Intl.message(

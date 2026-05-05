@@ -50,6 +50,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(imported, skipped) =>
       "Importováno ${imported} jídel; ${skipped} řádků přeskočeno kvůli neplatným datům.";
 
+  static String m14(count, size) => "${count} položek · ${size}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -172,6 +174,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "Zatím žádná vlastní jídla uložena."),
         "settingsCustomMealsLabel":
             MessageLookupByLibrary.simpleMessage("Vlastní jídla"),
+        "clearOffCacheConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "Odstraní lokálně uložené výsledky Open Food Facts. Mezipaměť se automaticky obnoví při dalším vyhledávání a skenování. Vaše vlastní jídla nejsou ovlivněna."),
+        "clearOffCacheConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("Vymazat mezipaměť?"),
+        "clearOffCacheLabel":
+            MessageLookupByLibrary.simpleMessage("Vymazat mezipaměť"),
+        "clearOffCacheSubtitle": m14,
         "csvImportContributeOffAndroidLink":
             MessageLookupByLibrary.simpleMessage("Android"),
         "csvImportContributeOffIosLink":

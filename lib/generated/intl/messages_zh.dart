@@ -48,6 +48,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(imported, skipped) =>
       "已导入 ${imported} 项餐食；因数据无效跳过 ${skipped} 行。";
 
+  static String m14(count, size) => "${count} 项 · ${size}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample":
@@ -159,6 +161,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("尚未保存自定义餐食。"),
         "settingsCustomMealsLabel":
             MessageLookupByLibrary.simpleMessage("自定义餐食"),
+        "clearOffCacheConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "移除本地缓存的 Open Food Facts 和 FDC 搜索及扫描结果。缓存会在您搜索和扫描产品时自动重建。您的自定义餐食不会受影响。"),
+        "clearOffCacheConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("清除缓存？"),
+        "clearOffCacheLabel":
+            MessageLookupByLibrary.simpleMessage("清除缓存"),
+        "clearOffCacheSubtitle": m14,
         "csvImportContributeOffAndroidLink":
             MessageLookupByLibrary.simpleMessage("Android"),
         "csvImportContributeOffIosLink":

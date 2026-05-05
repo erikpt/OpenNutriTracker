@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
+import 'package:opennutritracker/core/data/data_source/remote_search_cache_data_source.dart';
 import 'package:opennutritracker/core/domain/entity/app_theme_entity.dart';
 import 'package:opennutritracker/core/domain/usecase/add_config_usecase.dart';
 import 'package:opennutritracker/core/domain/usecase/add_tracked_day_usecase.dart';
@@ -21,6 +22,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final AddTrackedDayUsecase _addTrackedDayUsecase;
   final GetKcalGoalUsecase _getKcalGoalUsecase;
   final GetMacroGoalUsecase _getMacroGoalUsecase;
+  final RemoteSearchCacheDataSource _cachedOffMealDataSource;
 
   SettingsBloc(
     this._getConfigUsecase,
@@ -28,6 +30,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     this._addTrackedDayUsecase,
     this._getKcalGoalUsecase,
     this._getMacroGoalUsecase,
+    this._cachedOffMealDataSource,
   ) : super(SettingsInitial()) {
     on<LoadSettingsEvent>((event, emit) async {
       emit(SettingsLoadingState());
@@ -35,6 +38,9 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       final userConfig = await _getConfigUsecase.getConfig();
       final appVersion = await AppConst.getVersionNumber();
       final usesImperialUnits = userConfig.usesImperialUnits;
+      final offCacheCount = _cachedOffMealDataSource.count;
+      final offCacheSizeBytes =
+          await _cachedOffMealDataSource.getStorageSizeBytes();
 
       emit(
         SettingsLoadedState(
@@ -48,9 +54,16 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           notificationHour: userConfig.notificationHour,
           notificationMinute: userConfig.notificationMinute,
           selectedLocale: userConfig.selectedLocale,
+          offCacheCount: offCacheCount,
+          offCacheSizeBytes: offCacheSizeBytes,
         ),
       );
     });
+  }
+
+  Future<void> clearOffCache() async {
+    await _cachedOffMealDataSource.clear();
+    add(LoadSettingsEvent());
   }
 
   void setHasAcceptedAnonymousData(bool hasAcceptedAnonymousData) {

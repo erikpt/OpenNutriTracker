@@ -25,6 +25,8 @@ class SettingsLoadedState extends SettingsState {
   final int notificationHour;
   final int notificationMinute;
   final String? selectedLocale;
+  final int offCacheCount;
+  final int offCacheSizeBytes;
 
   const SettingsLoadedState(
     this.versionNumber,
@@ -37,6 +39,8 @@ class SettingsLoadedState extends SettingsState {
     this.notificationHour = 8,
     this.notificationMinute = 0,
     this.selectedLocale,
+    this.offCacheCount = 0,
+    this.offCacheSizeBytes = 0,
   });
 
   @override
@@ -51,5 +55,7 @@ class SettingsLoadedState extends SettingsState {
         notificationHour,
         notificationMinute,
         selectedLocale,
+        offCacheCount,
+        offCacheSizeBytes,
       ];
 }

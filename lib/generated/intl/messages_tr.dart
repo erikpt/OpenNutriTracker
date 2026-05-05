@@ -52,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(imported, skipped) =>
       "${imported} öğün içe aktarıldı; geçersiz veri nedeniyle ${skipped} satır atlandı.";
 
+  static String m14(count, size) => "${count} öğe · ${size}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -176,6 +178,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "Henüz özel yemek kaydedilmedi."),
         "settingsCustomMealsLabel":
             MessageLookupByLibrary.simpleMessage("Özel Yemekler"),
+        "clearOffCacheConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "Open Food Facts ve FDC'den yerel olarak önbelleğe alınmış arama ve tarama sonuçlarını kaldırır. Önbellek, ürünleri aradıkça ve tarattıkça otomatik olarak yeniden oluşur. Özel öğünleriniz etkilenmez."),
+        "clearOffCacheConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("Önbelleği temizle?"),
+        "clearOffCacheLabel":
+            MessageLookupByLibrary.simpleMessage("Önbelleği temizle"),
+        "clearOffCacheSubtitle": m14,
         "csvImportContributeOffAndroidLink":
             MessageLookupByLibrary.simpleMessage("Android"),
         "csvImportContributeOffIosLink":

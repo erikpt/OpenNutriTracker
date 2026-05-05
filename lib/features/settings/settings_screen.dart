@@ -164,6 +164,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: Text(S.of(context).exportImportAppDataLabel),
                   onTap: () => _showExportImportDialog(context),
                 ),
+                ListTile(
+                  leading: const Icon(Icons.cached_outlined),
+                  title: Text(S.of(context).clearOffCacheLabel),
+                  subtitle: Text(S.of(context).clearOffCacheSubtitle(
+                    state.offCacheCount,
+                    _formatBytes(state.offCacheSizeBytes),
+                  )),
+                  enabled: state.offCacheCount > 0,
+                  onTap: () => _confirmClearOffCache(context),
+                ),
                 const Divider(),
                 // About
                 ListTile(
@@ -335,6 +345,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: context,
       builder: (context) => ImportCustomFoodDataDialog(),
     );
+  }
+
+  Future<void> _confirmClearOffCache(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(S.of(context).clearOffCacheConfirmTitle),
+        content: Text(S.of(context).clearOffCacheConfirmContent),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: Text(S.of(context).dialogCancelLabel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: Text(S.of(context).dialogOKLabel),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await _settingsBloc.clearOffCache();
+    }
+  }
+
+  /// Format a byte count for display in the cache-clear tile subtitle.
+  /// Uses KB up to 1 MB, then MB with one decimal place above that.
+  String _formatBytes(int bytes) {
+    if (bytes < 1024) return '$bytes B';
+    if (bytes < 1024 * 1024) return '${(bytes / 1024).round()} KB';
+    return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
   }
 
   void _showThemeDialog(BuildContext context, AppThemeEntity currentAppTheme) {
