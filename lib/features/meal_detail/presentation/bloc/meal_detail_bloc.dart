@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,51 +103,49 @@ class MealDetailBloc extends Bloc<MealDetailEvent, MealDetailState> {
   ) async {
     final quantity = double.parse(amountText.replaceAll(',', '.'));
 
-    // For remote-sourced items with a barcode, attempt a fresh lookup so
-    // the logged intake reflects today's nutrition data. On any failure
-    // (rate limit, offline, 5xx) keep the meal data the user already has
-    // and just refresh the cache timestamp so the entry doesn't age out.
-    final resolvedMeal = await _refreshRemoteMealIfApplicable(meal);
-
     final intakeEntity = IntakeEntity(
       id: IdGenerator.getUniqueID(),
       unit: unit,
       amount: quantity,
       type: type,
-      meal: resolvedMeal,
+      meal: meal,
       dateTime: day,
     );
+    // Write the intake immediately so the Home/Diary refresh that
+    // follows on the caller side picks it up. The cache refresh happens
+    // in the background — the user shouldn't wait for an OFF round-trip
+    // (up to 60 s timeout) before seeing their item logged. Stale meal
+    // data in the intake is fine; nutrition values rarely change, and
+    // the cache update means the next search shows the freshest data.
     await _addIntakeUseCase.addIntake(intakeEntity);
     _updateTrackedDay(intakeEntity, day);
+    unawaited(_refreshCacheForSelectedMeal(meal));
   }
 
-  Future<MealEntity> _refreshRemoteMealIfApplicable(MealEntity meal) async {
+  /// Best-effort cache refresh after the user logs a meal. For OFF items
+  /// with a barcode, attempts a fresh lookup and overwrites the cache
+  /// entry with the result. For everything else (FDC, custom, no
+  /// barcode), just touches the cache timestamp so the entry doesn't
+  /// age out of the 90-day TTL window.
+  Future<void> _refreshCacheForSelectedMeal(MealEntity meal) async {
     final code = meal.code;
-    final isRefreshable = code != null &&
-        code.isNotEmpty &&
-        meal.source == MealSourceEntity.off;
-    if (!isRefreshable) {
-      // FDC items have no barcode-style refresh endpoint, and custom
-      // meals don't need one. Touch the cache anyway in case the item
-      // happens to have a cache entry — keeps it from ageing out.
-      if (code != null && code.isNotEmpty) {
-        await _remoteSearchCacheDataSource.touch(code);
-      }
-      return meal;
+    if (code == null || code.isEmpty) return;
+
+    if (meal.source != MealSourceEntity.off) {
+      await _remoteSearchCacheDataSource.touch(code);
+      return;
     }
     try {
       final fresh = await _productsRepository.getOFFProductByBarcode(code);
       await _remoteSearchCacheDataSource
           .cache(MealDBO.fromMealEntity(fresh));
-      return fresh;
     } catch (e, st) {
       log.warning(
-        'OFF refresh on intake-add failed for $code; using cached data',
+        'Background OFF refresh failed for $code; touching cache instead',
         e,
         st,
       );
       await _remoteSearchCacheDataSource.touch(code);
-      return meal;
     }
   }
 
