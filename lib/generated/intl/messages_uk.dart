@@ -45,6 +45,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m11(time) => "Час нагадування: ${time}";
 
+  static String m12(count) => "З CSV файлу імпортовано ${count} страв.";
+
+  static String m13(imported, skipped) =>
+      "Імпортовано ${imported} страв; ${skipped} рядків пропущено через неправильні дані.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -169,13 +174,31 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ще немає збережених власних страв."),
         "settingsCustomMealsLabel":
             MessageLookupByLibrary.simpleMessage("Власні страви"),
+        "csvImportContributeOffAndroidLink":
+            MessageLookupByLibrary.simpleMessage("Android"),
+        "csvImportContributeOffIosLink":
+            MessageLookupByLibrary.simpleMessage("iOS"),
+        "csvImportContributeOffPrefix": MessageLookupByLibrary.simpleMessage(
+            "Маєте штрих-код? Додайте продукт до Open Food Facts:"),
+        "csvImportErrorLabel": MessageLookupByLibrary.simpleMessage(
+            "Не вдалося прочитати CSV файл. Перевірте формат і спробуйте знову."),
+        "csvImportPartialLabel": m13,
+        "csvImportSuccessLabel": m12,
+        "downloadSampleCsvAction":
+            MessageLookupByLibrary.simpleMessage("Зразок CSV"),
+        "importMealsCsvAction":
+            MessageLookupByLibrary.simpleMessage("Імпортувати страви (CSV)"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Експортувати"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "Ви можете експортувати дані додатка у zip-файл і імпортувати їх пізніше. Це корисно, якщо ви хочете зробити резервну копію або перенести дані на інший пристрій. Додаток не використовує жодних хмарних сервісів для зберігання ваших даних."),
         "exportImportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Помилка експорту / імпорту"),
-        "exportImportLabel":
-            MessageLookupByLibrary.simpleMessage("Експорт / Імпорт даних"),
+        "exportImportAppDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Експортувати / Імпортувати дані застосунку"),
+        "importCustomFoodDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Імпортувати власні дані про їжу"),
+        "importCustomFoodDataDescription": MessageLookupByLibrary.simpleMessage(
+            "Імпортуйте власні страви з CSV файлу. Завантажте зразок, щоб побачити очікуваний формат стовпців та обов'язкові поля."),
         "exportImportSuccessLabel":
             MessageLookupByLibrary.simpleMessage("Експорт / Імпорт успішний"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("жири"),

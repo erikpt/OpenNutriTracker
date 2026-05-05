@@ -45,6 +45,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m11(time) => "Orario promemoria: ${time}";
 
+  static String m12(count) => "Importati ${count} pasti dal file CSV.";
+
+  static String m13(imported, skipped) =>
+      "Importati ${imported} pasti; ${skipped} righe ignorate per dati non validi.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -169,13 +174,31 @@ class MessageLookup extends MessageLookupByLibrary {
             "Nessun pasto personalizzato salvato."),
         "settingsCustomMealsLabel":
             MessageLookupByLibrary.simpleMessage("Pasti personalizzati"),
+        "csvImportContributeOffAndroidLink":
+            MessageLookupByLibrary.simpleMessage("Android"),
+        "csvImportContributeOffIosLink":
+            MessageLookupByLibrary.simpleMessage("iOS"),
+        "csvImportContributeOffPrefix": MessageLookupByLibrary.simpleMessage(
+            "Hai un codice a barre? Contribuisci il prodotto a Open Food Facts:"),
+        "csvImportErrorLabel": MessageLookupByLibrary.simpleMessage(
+            "Impossibile leggere il file CSV. Controlla il formato e riprova."),
+        "csvImportPartialLabel": m13,
+        "csvImportSuccessLabel": m12,
+        "downloadSampleCsvAction":
+            MessageLookupByLibrary.simpleMessage("CSV di esempio"),
+        "importMealsCsvAction":
+            MessageLookupByLibrary.simpleMessage("Importa pasti (CSV)"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Esporta"),
         "exportImportDescription": MessageLookupByLibrary.simpleMessage(
             "Puoi esportare i dati dell\'app in un file zip e importarli successivamente. Utile per backup o trasferimento su un altro dispositivo.\n\nL\'app non utilizza servizi cloud per memorizzare i tuoi dati."),
         "exportImportErrorLabel": MessageLookupByLibrary.simpleMessage(
             "Errore di esportazione / importazione"),
-        "exportImportLabel":
-            MessageLookupByLibrary.simpleMessage("Esporta / Importa dati"),
+        "exportImportAppDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Esporta / Importa dati app"),
+        "importCustomFoodDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Importa dati alimentari personalizzati"),
+        "importCustomFoodDataDescription": MessageLookupByLibrary.simpleMessage(
+            "Importa i tuoi pasti da un file CSV. Scarica un esempio per vedere il formato delle colonne e i campi obbligatori."),
         "exportImportSuccessLabel": MessageLookupByLibrary.simpleMessage(
             "Esportazione / Importazione riuscita"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("grassi"),

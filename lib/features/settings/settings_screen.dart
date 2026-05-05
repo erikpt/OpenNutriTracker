@@ -17,6 +17,7 @@ import 'package:opennutritracker/features/settings/custom_meals_screen.dart';
 import 'package:opennutritracker/features/settings/presentation/bloc/custom_meals_bloc.dart';
 import 'package:opennutritracker/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:opennutritracker/features/settings/presentation/widgets/export_import_dialog.dart';
+import 'package:opennutritracker/features/settings/presentation/widgets/import_custom_food_data_dialog.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -154,8 +155,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const Divider(),
                 // Data
                 ListTile(
+                  leading: const Icon(Icons.restaurant_menu_outlined),
+                  title: Text(S.of(context).importCustomFoodDataLabel),
+                  onTap: () => _showImportCustomFoodDataDialog(context),
+                ),
+                ListTile(
                   leading: const Icon(Icons.import_export),
-                  title: Text(S.of(context).exportImportLabel),
+                  title: Text(S.of(context).exportImportAppDataLabel),
                   onTap: () => _showExportImportDialog(context),
                 ),
                 const Divider(),
@@ -322,6 +328,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _showExportImportDialog(BuildContext context) {
     showDialog(context: context, builder: (context) => ExportImportDialog());
+  }
+
+  void _showImportCustomFoodDataDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => ImportCustomFoodDataDialog(),
+    );
   }
 
   void _showThemeDialog(BuildContext context, AppThemeEntity currentAppTheme) {

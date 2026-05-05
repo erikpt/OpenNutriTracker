@@ -47,6 +47,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m11(time) => "Reminder time: ${time}";
 
+  static String m12(count) =>
+      "Imported ${count} meal(s) from the CSV file.";
+
+  static String m13(imported, skipped) =>
+      "Imported ${imported} meal(s); ${skipped} row(s) were skipped due to invalid data.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -162,6 +168,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "Error while opening email app"),
         "errorProductNotFound":
             MessageLookupByLibrary.simpleMessage("Product not found"),
+        "csvImportContributeOffAndroidLink":
+            MessageLookupByLibrary.simpleMessage("Android"),
+        "csvImportContributeOffIosLink":
+            MessageLookupByLibrary.simpleMessage("iOS"),
+        "csvImportContributeOffPrefix": MessageLookupByLibrary.simpleMessage(
+            "Have a barcode? Help everyone by contributing the product to Open Food Facts:"),
+        "csvImportErrorLabel": MessageLookupByLibrary.simpleMessage(
+            "Could not read CSV file. Check the format and try again."),
+        "csvImportPartialLabel": m13,
+        "csvImportSuccessLabel": m12,
+        "downloadSampleCsvAction":
+            MessageLookupByLibrary.simpleMessage("Sample CSV"),
+        "importMealsCsvAction":
+            MessageLookupByLibrary.simpleMessage("Import meals (CSV)"),
         "exportAction": MessageLookupByLibrary.simpleMessage("Export"),
         "customMealsDeleteConfirmContent": MessageLookupByLibrary.simpleMessage(
             "All diary entries using this meal will also be removed."),
@@ -175,8 +195,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "You can export the app data to a zip file and import it later. This is useful if you want to backup your data or transfer it to another device.\n\nThe app does not use any cloud service to store your data."),
         "exportImportErrorLabel":
             MessageLookupByLibrary.simpleMessage("Export / Import error"),
-        "exportImportLabel":
-            MessageLookupByLibrary.simpleMessage("Export / Import data"),
+        "exportImportAppDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Export / Import App Data"),
+        "importCustomFoodDataLabel": MessageLookupByLibrary.simpleMessage(
+            "Import Custom Food Data"),
+        "importCustomFoodDataDescription": MessageLookupByLibrary.simpleMessage(
+            "Import your own meals from a CSV file. Download a sample to see the expected column shape and required fields."),
         "exportImportSuccessLabel":
             MessageLookupByLibrary.simpleMessage("Export / Import successful"),
         "fatLabel": MessageLookupByLibrary.simpleMessage("fat"),

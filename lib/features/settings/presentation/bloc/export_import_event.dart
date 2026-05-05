@@ -13,3 +13,15 @@ class ImportDataEvent extends ExportImportEvent {
   @override
   List<Object?> get props => [];
 }
+
+/// User picked a CSV file to import as custom meals.
+class ImportMealsCsvEvent extends ExportImportEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+/// User asked for a CSV template to fill in.
+class DownloadSampleCsvEvent extends ExportImportEvent {
+  @override
+  List<Object?> get props => [];
+}

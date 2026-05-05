@@ -949,11 +949,28 @@ class S {
     );
   }
 
-  /// `Export / Import data`
-  String get exportImportLabel {
+  String get exportImportAppDataLabel {
     return Intl.message(
-      'Export / Import data',
-      name: 'exportImportLabel',
+      'Export / Import App Data',
+      name: 'exportImportAppDataLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get importCustomFoodDataLabel {
+    return Intl.message(
+      'Import Custom Food Data',
+      name: 'importCustomFoodDataLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get importCustomFoodDataDescription {
+    return Intl.message(
+      'Import your own meals from a CSV file. Download a sample to see the expected column shape and required fields.',
+      name: 'importCustomFoodDataDescription',
       desc: '',
       args: [],
     );
@@ -1004,6 +1021,78 @@ class S {
     return Intl.message(
       'Import',
       name: 'importAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get downloadSampleCsvAction {
+    return Intl.message(
+      'Sample CSV',
+      name: 'downloadSampleCsvAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get importMealsCsvAction {
+    return Intl.message(
+      'Import meals (CSV)',
+      name: 'importMealsCsvAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String csvImportSuccessLabel(int count) {
+    return Intl.message(
+      'Imported $count meal(s) from the CSV file.',
+      name: 'csvImportSuccessLabel',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  String csvImportPartialLabel(int imported, int skipped) {
+    return Intl.message(
+      'Imported $imported meal(s); $skipped row(s) were skipped due to invalid data.',
+      name: 'csvImportPartialLabel',
+      desc: '',
+      args: [imported, skipped],
+    );
+  }
+
+  String get csvImportErrorLabel {
+    return Intl.message(
+      'Could not read CSV file. Check the format and try again.',
+      name: 'csvImportErrorLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get csvImportContributeOffPrefix {
+    return Intl.message(
+      'Have a barcode? Help everyone by contributing the product to Open Food Facts:',
+      name: 'csvImportContributeOffPrefix',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get csvImportContributeOffAndroidLink {
+    return Intl.message(
+      'Android',
+      name: 'csvImportContributeOffAndroidLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get csvImportContributeOffIosLink {
+    return Intl.message(
+      'iOS',
+      name: 'csvImportContributeOffIosLink',
       desc: '',
       args: [],
     );

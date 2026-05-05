@@ -96,12 +96,33 @@
   "customMealsEmptyLabel": "No custom meals saved yet.",
   "customMealsDeleteConfirmTitle": "Delete custom meal?",
   "customMealsDeleteConfirmContent": "All diary entries using this meal will also be removed.",
-  "exportImportLabel": "Export / Import data",
+  "exportImportAppDataLabel": "Export / Import App Data",
+  "importCustomFoodDataLabel": "Import Custom Food Data",
+  "importCustomFoodDataDescription": "Import your own meals from a CSV file. Download a sample to see the expected column shape and required fields.",
   "exportImportDescription": "You can export the app data to a zip file and import it later. This is useful if you want to backup your data or transfer it to another device.\n\nThe app does not use any cloud service to store your data.",
   "exportImportSuccessLabel": "Export / Import successful",
   "exportImportErrorLabel": "Export / Import error",
   "exportAction": "Export",
   "importAction": "Import",
+  "downloadSampleCsvAction": "Sample CSV",
+  "importMealsCsvAction": "Import meals (CSV)",
+  "csvImportSuccessLabel": "Imported {count} meal(s) from the CSV file.",
+  "@csvImportSuccessLabel": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "csvImportPartialLabel": "Imported {imported} meal(s); {skipped} row(s) were skipped due to invalid data.",
+  "@csvImportPartialLabel": {
+    "placeholders": {
+      "imported": {"type": "int"},
+      "skipped": {"type": "int"}
+    }
+  },
+  "csvImportErrorLabel": "Could not read CSV file. Check the format and try again.",
+  "csvImportContributeOffPrefix": "Have a barcode? Help everyone by contributing the product to Open Food Facts:",
+  "csvImportContributeOffAndroidLink": "Android",
+  "csvImportContributeOffIosLink": "iOS",
   "addItemLabel": "Add new Item:",
   "activityLabel": "Activity",
   "activityExample": "e.g. running, biking, yoga ...",
