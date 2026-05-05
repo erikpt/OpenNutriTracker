@@ -64,8 +64,13 @@ class SearchProductsUseCase {
 
   Future<void> _cacheRemoteResults(List<MealEntity> remote) async {
     if (remote.isEmpty) return;
+    // cacheFromSearch (vs cacheAll) preserves timestamps for entries
+    // already in the cache. Important so that an item the user logged
+    // earlier (its timestamp got bumped via the intent path) keeps that
+    // newer timestamp even when a subsequent search re-includes it,
+    // letting it remain at the top of the cache-sorted list.
     await _cachedOffMealDataSource
-        .cacheAll(remote.map(MealDBO.fromMealEntity));
+        .cacheFromSearch(remote.map(MealDBO.fromMealEntity));
   }
 
   /// Run a remote search and fall back to an empty list when the source

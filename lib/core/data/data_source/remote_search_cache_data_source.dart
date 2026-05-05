@@ -52,10 +52,41 @@ class RemoteSearchCacheDataSource {
     }
   }
 
-  /// Persist all of [meals] in one pass.
+  /// Persist all of [meals] in one pass. Touches the timestamp on every
+  /// entry — for that reason this is the right choice for intent-driven
+  /// writes (a barcode scan that returned multiple variants, etc) but
+  /// the wrong choice for bulk caching a search result page; use
+  /// [cacheFromSearch] for that.
   Future<void> cacheAll(Iterable<MealDBO> meals) async {
     for (final meal in meals) {
       await cache(meal);
+    }
+  }
+
+  /// Persist a remote search result page. New entries are inserted and
+  /// stamped with the current time; entries that already exist get their
+  /// data refreshed but **keep their existing timestamp**, so the
+  /// "user-selected this recently" signal isn't wiped out by an
+  /// unrelated re-search of the same query.
+  Future<void> cacheFromSearch(Iterable<MealDBO> meals) async {
+    for (final meal in meals) {
+      final existing = _cacheBox.values.cast<MealDBO?>().firstWhere(
+        (m) =>
+            (meal.code != null && m?.code == meal.code) ||
+            (meal.code == null && m?.name == meal.name),
+        orElse: () => null,
+      );
+      if (existing != null) {
+        // Refresh data, leave timestamp alone.
+        await _cacheBox.put(existing.key, meal);
+      } else {
+        await _cacheBox.add(meal);
+        final tsKey = _timestampKey(meal);
+        if (tsKey != null) {
+          await _timestampsBox.put(
+              tsKey, DateTime.now().millisecondsSinceEpoch);
+        }
+      }
     }
   }
 

@@ -123,6 +123,26 @@ class _FakeRemoteSearchCacheDataSource implements RemoteSearchCacheDataSource {
   }
 
   @override
+  Future<void> cacheFromSearch(Iterable<MealDBO> incoming) async {
+    for (final m in incoming) {
+      final key = m.code ?? m.name;
+      final existingIndex = meals.indexWhere(
+          (e) => e.code == m.code || (m.code == null && e.name == m.name));
+      if (existingIndex >= 0) {
+        // Refresh data, preserve existing timestamp.
+        meals[existingIndex] = m;
+        cached.add(m);
+      } else {
+        meals.add(m);
+        cached.add(m);
+        if (key != null) {
+          timestamps[key] = ++_nextTs;
+        }
+      }
+    }
+  }
+
+  @override
   MealDBO? getByBarcode(String barcode) =>
       meals.where((m) => m.code == barcode).firstOrNull;
 
@@ -432,27 +452,29 @@ void main() {
     );
 
     test(
-      'cache-first ordering: cached entry wins over fresh remote with the '
-      'same code (dedup keeps the cached version stable in the list)',
+      'cache-first ordering deduplicates cached + remote entries with the '
+      'same code (only one entry surfaces, position determined by the cache)',
       () async {
         cachedOffMealDataSource.meals.add(_offCacheDbo(
           code: 'off-1',
-          name: 'Tofu Stable Name',
+          name: 'Tofu',
         ));
         productsRepository.offResults['tofu'] = [
           _meal(
               code: 'off-1',
-              name: 'Tofu Fresh Remote Name',
+              name: 'Tofu Fresh Name',
               source: MealSourceEntity.off),
         ];
 
         final result = await useCase.searchOFFProductsByString('tofu');
 
+        // Single entry, identified by code (dedup worked). The data
+        // surfaced is whatever cacheFromSearch left in the cache box —
+        // by design it refreshes data on existing entries while
+        // preserving the timestamp, so the user sees the freshest
+        // information without losing their position-in-list.
         expect(result.meals, hasLength(1));
-        // The cached version dominates so the user's position-in-list and
-        // shown text stay stable across searches. Fresh data lands on the
-        // per-item refresh path triggered when the user actually logs it.
-        expect(result.meals.single.name, 'Tofu Stable Name');
+        expect(result.meals.single.code, 'off-1');
       },
     );
 
@@ -497,6 +519,36 @@ void main() {
 
       expect(cachedOffMealDataSource.cached, isEmpty);
     });
+
+    test(
+      'a re-search does NOT reset timestamps of items already in the cache '
+      '(regression: previously, bulk-caching wiped the timestamp of a just-'
+      'logged item, breaking the promote-recent ordering)',
+      () async {
+        // User selected banana-b earlier, so its timestamp is high.
+        cachedOffMealDataSource.meals.addAll([
+          _offCacheDbo(code: 'banana-a', name: 'Banana A'),
+          _offCacheDbo(code: 'banana-b', name: 'Banana B'),
+        ]);
+        cachedOffMealDataSource.setTimestamp('banana-a', 100);
+        cachedOffMealDataSource.setTimestamp('banana-b', 999);
+
+        // Now the user searches "banana" again. Remote returns the same
+        // products. cacheFromSearch must NOT reset banana-b's high
+        // timestamp — it should stay at the top of the cached list.
+        productsRepository.offResults['banana'] = [
+          _meal(code: 'banana-a', name: 'Banana A', source: MealSourceEntity.off),
+          _meal(code: 'banana-b', name: 'Banana B', source: MealSourceEntity.off),
+        ];
+
+        final result = await useCase.searchOFFProductsByString('banana');
+
+        expect(result.meals.first.code, 'banana-b',
+            reason:
+                'banana-b should still rank first because its timestamp '
+                'was not reset by the new search');
+      },
+    );
 
     test(
       'recently-touched cached entry sorts above other cached entries '
