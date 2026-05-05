@@ -1,7 +1,6 @@
 import 'package:logging/logging.dart';
 import 'package:opennutritracker/core/data/data_source/remote_search_cache_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/custom_meal_data_source.dart';
-import 'package:opennutritracker/core/data/dbo/meal_dbo.dart';
 import 'package:opennutritracker/core/domain/usecase/get_intake_usecase.dart';
 import 'package:opennutritracker/features/add_meal/data/repository/products_repository.dart';
 import 'package:opennutritracker/features/add_meal/domain/entity/meal_entity.dart';
@@ -40,14 +39,16 @@ class SearchProductsUseCase {
   Future<SearchProductsResult> searchOFFProductsByString(
     String searchString,
   ) async {
+    // The cache is intentionally NOT populated from search results. Bulk
+    // caching the entire result page filled the cache with products the
+    // user looked at and ignored. Items now enter the cache only when
+    // the user shows intent: a barcode scan (SearchProductByBarcodeUseCase)
+    // or logging an intake (MealDetailBloc.addIntake). The TTL sweep on
+    // startup ages out anything not re-touched within 90 days.
     final remote = await _safeRemoteCall(
       'OFF',
       () => _productsRepository.getOFFProductsByString(searchString),
     );
-    // Cache successful remote hits so the same query (and any future
-    // barcode scan of these items) resolves locally next time — even
-    // offline. Skip when remote came back empty, nothing to cache.
-    await _cacheRemoteResults(remote);
     return _buildResult(searchString, remote);
   }
 
@@ -56,14 +57,7 @@ class SearchProductsUseCase {
       'FDC',
       () => _productsRepository.getSupabaseFDCFoodsByString(searchString),
     );
-    await _cacheRemoteResults(remote);
     return _buildResult(searchString, remote);
-  }
-
-  Future<void> _cacheRemoteResults(List<MealEntity> remote) async {
-    if (remote.isEmpty) return;
-    await _cachedOffMealDataSource
-        .cacheAll(remote.map(MealDBO.fromMealEntity));
   }
 
   /// Run a remote search and fall back to an empty list when the source
@@ -130,12 +124,18 @@ class SearchProductsUseCase {
         .where((meal) => _mealMatchesSearch(meal, normalizedSearchString))
         .toList();
 
+    // Cache-first ordering: cached entries appear before fresh remote
+    // results. The dedup helper takes the first occurrence, so a cached
+    // entry wins when its code matches a fresh remote one — keeps the
+    // search list stable from the user's perspective ("the version I
+    // saw yesterday is still at the top"). Fresh remote data still
+    // wins on the per-item refresh path triggered by intake-add.
     return SearchProductsResult(
       meals: _deduplicateMeals([
         ...fromCustomMealBox,
         ...fromIntakeHistory,
-        ...remoteResults,
         ...fromOffCache,
+        ...remoteResults,
       ]),
       remoteSourceEmpty: remoteSourceEmpty,
     );

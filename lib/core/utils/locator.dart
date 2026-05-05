@@ -157,7 +157,14 @@ Future<void> initLocator() async {
     ),
   );
   locator.registerFactory<MealDetailBloc>(
-    () => MealDetailBloc(locator(), locator(), locator(), locator()),
+    () => MealDetailBloc(
+      locator(),
+      locator(),
+      locator(),
+      locator(),
+      locator(),
+      locator(),
+    ),
   );
   locator.registerFactory<ScannerBloc>(() => ScannerBloc(locator(), locator()));
   locator.registerFactory<EditMealBloc>(() => EditMealBloc(locator(), locator()));
@@ -285,7 +292,10 @@ Future<void> initLocator() async {
     () => CustomMealDataSource(hiveDBProvider.customMealBox),
   );
   locator.registerLazySingleton(
-    () => RemoteSearchCacheDataSource(hiveDBProvider.cachedOffMealBox),
+    () => RemoteSearchCacheDataSource(
+      hiveDBProvider.cachedOffMealBox,
+      hiveDBProvider.cachedOffMealTimestampsBox,
+    ),
   );
 
   await _initializeConfig(locator());

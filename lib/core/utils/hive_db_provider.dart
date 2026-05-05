@@ -24,6 +24,10 @@ class HiveDBProvider extends ChangeNotifier {
   static const trackedDayBoxName = 'TrackedDayBox';
   static const customMealBoxName = 'CustomMealBox';
   static const cachedOffMealBoxName = 'CachedOffMealBox';
+  // Sidecar to cachedOffMealBox: maps meal `code` -> millisSinceEpoch of
+  // last "touch" (creation or user re-select). Used by the TTL sweep so
+  // unused cache entries age out after 90 days.
+  static const cachedOffMealTimestampsBoxName = 'CachedOffMealTimestampsBox';
 
   late Box<ConfigDBO> configBox;
   late Box<IntakeDBO> intakeBox;
@@ -32,6 +36,7 @@ class HiveDBProvider extends ChangeNotifier {
   late Box<TrackedDayDBO> trackedDayBox;
   late Box<MealDBO> customMealBox;
   late Box<MealDBO> cachedOffMealBox;
+  late Box<int> cachedOffMealTimestampsBox;
 
   Future<void> initHiveDB(Uint8List encryptionKey) async {
     final encryptionCypher = HiveAesCipher(encryptionKey);
@@ -78,6 +83,10 @@ class HiveDBProvider extends ChangeNotifier {
     );
     cachedOffMealBox = await Hive.openBox(
       cachedOffMealBoxName,
+      encryptionCipher: encryptionCypher,
+    );
+    cachedOffMealTimestampsBox = await Hive.openBox(
+      cachedOffMealTimestampsBoxName,
       encryptionCipher: encryptionCypher,
     );
   }

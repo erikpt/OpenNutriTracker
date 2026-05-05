@@ -81,6 +81,7 @@ class _FakeCustomMealDataSource implements CustomMealDataSource {
 class _FakeRemoteSearchCacheDataSource implements RemoteSearchCacheDataSource {
   final List<MealDBO> meals = [];
   final List<MealDBO> cached = [];
+  final List<String> touched = [];
 
   @override
   List<MealDBO> getAll() => meals;
@@ -101,6 +102,11 @@ class _FakeRemoteSearchCacheDataSource implements RemoteSearchCacheDataSource {
   @override
   MealDBO? getByBarcode(String barcode) =>
       meals.where((m) => m.code == barcode).firstOrNull;
+
+  @override
+  Future<void> touch(String code) async {
+    touched.add(code);
+  }
 
   @override
   dynamic noSuchMethod(Invocation invocation) =>
@@ -402,25 +408,34 @@ void main() {
     );
 
     test(
-      'fresh remote result wins over the same item in cache (dedup)',
+      'cache-first ordering: cached entry wins over fresh remote with the '
+      'same code (dedup keeps the cached version stable in the list)',
       () async {
         cachedOffMealDataSource.meals.add(_offCacheDbo(
           code: 'off-1',
-          name: 'Stale Cached Name',
+          name: 'Tofu Stable Name',
         ));
         productsRepository.offResults['tofu'] = [
-          _meal(code: 'off-1', name: 'Fresh Remote Name', source: MealSourceEntity.off),
+          _meal(
+              code: 'off-1',
+              name: 'Tofu Fresh Remote Name',
+              source: MealSourceEntity.off),
         ];
 
         final result = await useCase.searchOFFProductsByString('tofu');
 
         expect(result.meals, hasLength(1));
-        expect(result.meals.single.name, 'Fresh Remote Name');
+        // The cached version dominates so the user's position-in-list and
+        // shown text stay stable across searches. Fresh data lands on the
+        // per-item refresh path triggered when the user actually logs it.
+        expect(result.meals.single.name, 'Tofu Stable Name');
       },
     );
 
-    // Cache: write-side
-    test('successful OFF search results are written to the cache', () async {
+    // Cache write-side: search results must NOT be cached. Items only enter
+    // the cache via barcode scans or intake-add (the "user intent" signals).
+    test('successful OFF search results are NOT written to the cache',
+        () async {
       productsRepository.offResults['tofu'] = [
         _meal(code: 'off-1', name: 'Tofu A', source: MealSourceEntity.off),
         _meal(code: 'off-2', name: 'Tofu B', source: MealSourceEntity.off),
@@ -428,19 +443,18 @@ void main() {
 
       await useCase.searchOFFProductsByString('tofu');
 
-      expect(cachedOffMealDataSource.cached.map((m) => m.code).toList(),
-          ['off-1', 'off-2']);
+      expect(cachedOffMealDataSource.cached, isEmpty);
     });
 
-    test('successful FDC search results are written to the cache', () async {
+    test('successful FDC search results are NOT written to the cache',
+        () async {
       productsRepository.fdcResults['apple'] = [
         _meal(code: 'fdc-1', name: 'Apple', source: MealSourceEntity.fdc),
       ];
 
       await useCase.searchFDCFoodByString('apple');
 
-      expect(cachedOffMealDataSource.cached, hasLength(1));
-      expect(cachedOffMealDataSource.cached.single.code, 'fdc-1');
+      expect(cachedOffMealDataSource.cached, isEmpty);
     });
 
     test('empty remote results do NOT write to the cache', () async {

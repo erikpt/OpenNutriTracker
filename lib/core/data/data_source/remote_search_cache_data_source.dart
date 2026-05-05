@@ -14,17 +14,26 @@ import 'package:opennutritracker/core/data/dbo/meal_dbo.dart';
 /// meals stay distinct from cached remote data and can be deleted
 /// independently.
 ///
-/// The on-disk box name (`CachedOffMealBox`) is kept for backward
-/// compatibility with installs that already have data in it; only the
-/// Dart class name was generalised when FDC caching was added.
+/// Each entry has an associated "last touched" timestamp stored in a
+/// sidecar box. The timestamp is set on initial cache and refreshed
+/// whenever the user explicitly selects (logs an intake of) the item.
+/// [pruneStale] drops entries whose timestamp is older than the supplied
+/// age — typically 90 days, called on app startup.
+///
+/// The on-disk box names (`CachedOffMealBox`, `CachedOffMealTimestampsBox`)
+/// are kept for backward compatibility with installs that already have
+/// data in them; only the Dart class name was generalised when FDC
+/// caching was added.
 class RemoteSearchCacheDataSource {
   final Box<MealDBO> _cacheBox;
+  final Box<int> _timestampsBox;
 
-  RemoteSearchCacheDataSource(this._cacheBox);
+  RemoteSearchCacheDataSource(this._cacheBox, this._timestampsBox);
 
-  /// Persist [meal] in the cache. If a cached entry with the same code
-  /// (or, when code is null, the same name) already exists, it is
-  /// overwritten so the freshest remote result wins.
+  /// Persist [meal] in the cache and stamp its "last touched" timestamp
+  /// to the current time. If a cached entry with the same code (or, when
+  /// code is null, the same name) already exists, it is overwritten so
+  /// the freshest remote result wins.
   Future<void> cache(MealDBO meal) async {
     final existing = _cacheBox.values.cast<MealDBO?>().firstWhere(
       (m) =>
@@ -36,6 +45,10 @@ class RemoteSearchCacheDataSource {
       await _cacheBox.put(existing.key, meal);
     } else {
       await _cacheBox.add(meal);
+    }
+    final tsKey = _timestampKey(meal);
+    if (tsKey != null) {
+      await _timestampsBox.put(tsKey, DateTime.now().millisecondsSinceEpoch);
     }
   }
 
@@ -57,19 +70,76 @@ class RemoteSearchCacheDataSource {
     return null;
   }
 
-  int get count => _cacheBox.length;
-
-  /// On-disk size of the cache box in bytes. Returns 0 when the box file
-  /// hasn't been flushed yet or the path can't be statted (e.g. in tests
-  /// running on an in-memory Hive). Used by Settings to show how much
-  /// space the cache is occupying.
-  Future<int> getStorageSizeBytes() async {
-    final path = _cacheBox.path;
-    if (path == null) return 0;
-    final file = File(path);
-    if (!await file.exists()) return 0;
-    return file.length();
+  /// Refresh the "last touched" timestamp for [code] without changing
+  /// the cached meal data. Called when the user selects (logs) an item
+  /// that was already in the cache, signalling continued interest.
+  Future<void> touch(String code) async {
+    if (code.isEmpty) return;
+    await _timestampsBox.put(code, DateTime.now().millisecondsSinceEpoch);
   }
 
-  Future<void> clear() => _cacheBox.clear();
+  int get count => _cacheBox.length;
+
+  /// On-disk size of the cache box plus the timestamps sidecar in bytes.
+  /// Returns 0 when the box files haven't been flushed yet or the path
+  /// can't be statted (e.g. in tests on an in-memory Hive). Used by
+  /// Settings to show how much space the cache is occupying.
+  Future<int> getStorageSizeBytes() async {
+    var total = 0;
+    for (final path in [_cacheBox.path, _timestampsBox.path]) {
+      if (path == null) continue;
+      final file = File(path);
+      if (!await file.exists()) continue;
+      total += await file.length();
+    }
+    return total;
+  }
+
+  /// Drop cached entries that haven't been touched within [maxAge].
+  /// "Untouched" includes entries with no timestamp record at all (e.g.
+  /// data left over from a build before the TTL feature existed) — those
+  /// are treated as immediately stale.
+  ///
+  /// Returns the number of entries removed. Call once at app startup.
+  Future<int> pruneStale(Duration maxAge) async {
+    final cutoff =
+        DateTime.now().subtract(maxAge).millisecondsSinceEpoch;
+    final keysToDelete = <dynamic>[];
+    final timestampKeysToDelete = <String>[];
+
+    for (final entry in _cacheBox.toMap().entries) {
+      final tsKey = _timestampKey(entry.value);
+      if (tsKey == null) {
+        // No way to track an age for this entry — drop it.
+        keysToDelete.add(entry.key);
+        continue;
+      }
+      final lastTouched = _timestampsBox.get(tsKey);
+      if (lastTouched == null || lastTouched < cutoff) {
+        keysToDelete.add(entry.key);
+        timestampKeysToDelete.add(tsKey);
+      }
+    }
+
+    if (keysToDelete.isNotEmpty) {
+      await _cacheBox.deleteAll(keysToDelete);
+    }
+    if (timestampKeysToDelete.isNotEmpty) {
+      await _timestampsBox.deleteAll(timestampKeysToDelete);
+    }
+    return keysToDelete.length;
+  }
+
+  Future<void> clear() async {
+    await _cacheBox.clear();
+    await _timestampsBox.clear();
+  }
+
+  /// Use the meal's barcode as the timestamp key when present, falling
+  /// back to its name. Matches the dedup key used inside [cache].
+  String? _timestampKey(MealDBO meal) {
+    if (meal.code != null && meal.code!.isNotEmpty) return meal.code;
+    if (meal.name != null && meal.name!.isNotEmpty) return meal.name;
+    return null;
+  }
 }

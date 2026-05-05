@@ -200,6 +200,7 @@ class _FakeCustomMealDataSource implements CustomMealDataSource {
 class _FakeRemoteSearchCacheDataSource implements RemoteSearchCacheDataSource {
   final List<MealDBO> entries = [];
   final List<MealDBO> writes = [];
+  final List<String> touched = [];
 
   @override
   List<MealDBO> getAll() => entries;
@@ -216,6 +217,11 @@ class _FakeRemoteSearchCacheDataSource implements RemoteSearchCacheDataSource {
   Future<void> cache(MealDBO meal) async {
     writes.add(meal);
     entries.add(meal);
+  }
+
+  @override
+  Future<void> touch(String code) async {
+    touched.add(code);
   }
 
   @override

@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
+import 'package:opennutritracker/core/data/data_source/remote_search_cache_data_source.dart';
+import 'package:opennutritracker/core/data/dbo/meal_dbo.dart';
 import 'package:opennutritracker/core/domain/entity/intake_entity.dart';
 import 'package:opennutritracker/core/domain/entity/intake_type_entity.dart';
 import 'package:opennutritracker/core/domain/usecase/add_intake_usecase.dart';
@@ -10,6 +12,7 @@ import 'package:opennutritracker/core/domain/usecase/get_kcal_goal_usecase.dart'
 import 'package:opennutritracker/core/domain/usecase/get_macro_goal_usecase.dart';
 import 'package:opennutritracker/core/utils/calc/unit_calc.dart';
 import 'package:opennutritracker/core/utils/id_generator.dart';
+import 'package:opennutritracker/features/add_meal/data/repository/products_repository.dart';
 import 'package:opennutritracker/features/add_meal/domain/entity/meal_entity.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -23,12 +26,16 @@ class MealDetailBloc extends Bloc<MealDetailEvent, MealDetailState> {
   final AddTrackedDayUsecase _addTrackedDayUsecase;
   final GetKcalGoalUsecase _getKcalGoalUsecase;
   final GetMacroGoalUsecase _getMacroGoalUsecase;
+  final ProductsRepository _productsRepository;
+  final RemoteSearchCacheDataSource _remoteSearchCacheDataSource;
 
   MealDetailBloc(
     this._addIntakeUseCase,
     this._addTrackedDayUsecase,
     this._getKcalGoalUsecase,
     this._getMacroGoalUsecase,
+    this._productsRepository,
+    this._remoteSearchCacheDataSource,
   ) : super(
           MealDetailInitial(
             totalQuantityConverted: '100',
@@ -94,16 +101,52 @@ class MealDetailBloc extends Bloc<MealDetailEvent, MealDetailState> {
   ) async {
     final quantity = double.parse(amountText.replaceAll(',', '.'));
 
+    // For remote-sourced items with a barcode, attempt a fresh lookup so
+    // the logged intake reflects today's nutrition data. On any failure
+    // (rate limit, offline, 5xx) keep the meal data the user already has
+    // and just refresh the cache timestamp so the entry doesn't age out.
+    final resolvedMeal = await _refreshRemoteMealIfApplicable(meal);
+
     final intakeEntity = IntakeEntity(
       id: IdGenerator.getUniqueID(),
       unit: unit,
       amount: quantity,
       type: type,
-      meal: meal,
+      meal: resolvedMeal,
       dateTime: day,
     );
     await _addIntakeUseCase.addIntake(intakeEntity);
     _updateTrackedDay(intakeEntity, day);
+  }
+
+  Future<MealEntity> _refreshRemoteMealIfApplicable(MealEntity meal) async {
+    final code = meal.code;
+    final isRefreshable = code != null &&
+        code.isNotEmpty &&
+        meal.source == MealSourceEntity.off;
+    if (!isRefreshable) {
+      // FDC items have no barcode-style refresh endpoint, and custom
+      // meals don't need one. Touch the cache anyway in case the item
+      // happens to have a cache entry — keeps it from ageing out.
+      if (code != null && code.isNotEmpty) {
+        await _remoteSearchCacheDataSource.touch(code);
+      }
+      return meal;
+    }
+    try {
+      final fresh = await _productsRepository.getOFFProductByBarcode(code);
+      await _remoteSearchCacheDataSource
+          .cache(MealDBO.fromMealEntity(fresh));
+      return fresh;
+    } catch (e, st) {
+      log.warning(
+        'OFF refresh on intake-add failed for $code; using cached data',
+        e,
+        st,
+      );
+      await _remoteSearchCacheDataSource.touch(code);
+      return meal;
+    }
   }
 
   Future<void> _updateTrackedDay(
