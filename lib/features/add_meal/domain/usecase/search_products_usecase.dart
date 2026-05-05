@@ -1,6 +1,7 @@
 import 'package:logging/logging.dart';
 import 'package:opennutritracker/core/data/data_source/remote_search_cache_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/custom_meal_data_source.dart';
+import 'package:opennutritracker/core/data/dbo/meal_dbo.dart';
 import 'package:opennutritracker/core/domain/usecase/get_intake_usecase.dart';
 import 'package:opennutritracker/features/add_meal/data/repository/products_repository.dart';
 import 'package:opennutritracker/features/add_meal/domain/entity/meal_entity.dart';
@@ -39,16 +40,16 @@ class SearchProductsUseCase {
   Future<SearchProductsResult> searchOFFProductsByString(
     String searchString,
   ) async {
-    // The cache is intentionally NOT populated from search results. Bulk
-    // caching the entire result page filled the cache with products the
-    // user looked at and ignored. Items now enter the cache only when
-    // the user shows intent: a barcode scan (SearchProductByBarcodeUseCase)
-    // or logging an intake (MealDetailBloc.addIntake). The TTL sweep on
-    // startup ages out anything not re-touched within 90 days.
     final remote = await _safeRemoteCall(
       'OFF',
       () => _productsRepository.getOFFProductsByString(searchString),
     );
+    // Cache the result page. Untouched entries age out after 90 days
+    // (RemoteSearchCacheDataSource.pruneStale), so this can't grow
+    // unbounded. Items the user actually selects (logs an intake of)
+    // get their timestamp refreshed and stay until 90 days after the
+    // last selection.
+    await _cacheRemoteResults(remote);
     return _buildResult(searchString, remote);
   }
 
@@ -57,7 +58,14 @@ class SearchProductsUseCase {
       'FDC',
       () => _productsRepository.getSupabaseFDCFoodsByString(searchString),
     );
+    await _cacheRemoteResults(remote);
     return _buildResult(searchString, remote);
+  }
+
+  Future<void> _cacheRemoteResults(List<MealEntity> remote) async {
+    if (remote.isEmpty) return;
+    await _cachedOffMealDataSource
+        .cacheAll(remote.map(MealDBO.fromMealEntity));
   }
 
   /// Run a remote search and fall back to an empty list when the source

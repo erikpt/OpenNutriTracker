@@ -432,10 +432,10 @@ void main() {
       },
     );
 
-    // Cache write-side: search results must NOT be cached. Items only enter
-    // the cache via barcode scans or intake-add (the "user intent" signals).
-    test('successful OFF search results are NOT written to the cache',
-        () async {
+    // Cache write-side: search results ARE cached. The 90-day TTL handles
+    // unbounded growth — entries the user never selects age out, while
+    // selected items have their timestamp refreshed and stay.
+    test('successful OFF search results are written to the cache', () async {
       productsRepository.offResults['tofu'] = [
         _meal(code: 'off-1', name: 'Tofu A', source: MealSourceEntity.off),
         _meal(code: 'off-2', name: 'Tofu B', source: MealSourceEntity.off),
@@ -443,18 +443,19 @@ void main() {
 
       await useCase.searchOFFProductsByString('tofu');
 
-      expect(cachedOffMealDataSource.cached, isEmpty);
+      expect(cachedOffMealDataSource.cached.map((m) => m.code).toList(),
+          ['off-1', 'off-2']);
     });
 
-    test('successful FDC search results are NOT written to the cache',
-        () async {
+    test('successful FDC search results are written to the cache', () async {
       productsRepository.fdcResults['apple'] = [
         _meal(code: 'fdc-1', name: 'Apple', source: MealSourceEntity.fdc),
       ];
 
       await useCase.searchFDCFoodByString('apple');
 
-      expect(cachedOffMealDataSource.cached, isEmpty);
+      expect(cachedOffMealDataSource.cached, hasLength(1));
+      expect(cachedOffMealDataSource.cached.single.code, 'fdc-1');
     });
 
     test('empty remote results do NOT write to the cache', () async {
