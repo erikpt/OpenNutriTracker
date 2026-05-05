@@ -23,6 +23,7 @@ class HiveDBProvider extends ChangeNotifier {
   static const userBoxName = 'UserBox';
   static const trackedDayBoxName = 'TrackedDayBox';
   static const customMealBoxName = 'CustomMealBox';
+  static const cachedOffMealBoxName = 'CachedOffMealBox';
 
   late Box<ConfigDBO> configBox;
   late Box<IntakeDBO> intakeBox;
@@ -30,6 +31,7 @@ class HiveDBProvider extends ChangeNotifier {
   late Box<UserDBO> userBox;
   late Box<TrackedDayDBO> trackedDayBox;
   late Box<MealDBO> customMealBox;
+  late Box<MealDBO> cachedOffMealBox;
 
   Future<void> initHiveDB(Uint8List encryptionKey) async {
     final encryptionCypher = HiveAesCipher(encryptionKey);
@@ -72,6 +74,10 @@ class HiveDBProvider extends ChangeNotifier {
     );
     customMealBox = await Hive.openBox(
       customMealBoxName,
+      encryptionCipher: encryptionCypher,
+    );
+    cachedOffMealBox = await Hive.openBox(
+      cachedOffMealBoxName,
       encryptionCipher: encryptionCypher,
     );
   }

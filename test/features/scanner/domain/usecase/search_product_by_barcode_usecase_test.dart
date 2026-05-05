@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:opennutritracker/core/data/data_source/remote_search_cache_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/custom_meal_data_source.dart';
 import 'package:opennutritracker/core/data/dbo/meal_dbo.dart';
 import 'package:opennutritracker/core/data/dbo/meal_nutriments_dbo.dart';
@@ -11,12 +12,18 @@ void main() {
   group('SearchProductByBarcodeUseCase', () {
     late _FakeProductsRepository repo;
     late _FakeCustomMealDataSource customMealDataSource;
+    late _FakeRemoteSearchCacheDataSource cachedOffMealDataSource;
     late SearchProductByBarcodeUseCase useCase;
 
     setUp(() {
       repo = _FakeProductsRepository();
       customMealDataSource = _FakeCustomMealDataSource();
-      useCase = SearchProductByBarcodeUseCase(repo, customMealDataSource);
+      cachedOffMealDataSource = _FakeRemoteSearchCacheDataSource();
+      useCase = SearchProductByBarcodeUseCase(
+        repo,
+        customMealDataSource,
+        cachedOffMealDataSource,
+      );
     });
 
     test(
@@ -87,14 +94,129 @@ void main() {
 
       expect(result.source, MealSourceEntity.off);
     });
+
+    test(
+      'returns cached OFF result without hitting the network when present',
+      () async {
+        cachedOffMealDataSource.entries.add(_offCacheDbo(
+          code: '1234',
+          name: 'Cached',
+        ));
+        repo.barcodeResult = MealEntity(
+          code: '1234',
+          name: 'Fresh OFF',
+          url: null,
+          mealQuantity: '100',
+          mealUnit: 'g',
+          servingQuantity: null,
+          servingUnit: 'g',
+          servingSize: null,
+          nutriments: _emptyNutriments(),
+          source: MealSourceEntity.off,
+        );
+
+        final result = await useCase.searchProductByBarcode('1234');
+
+        expect(result.name, 'Cached');
+        expect(repo.getOFFProductByBarcodeCalls, 0);
+      },
+    );
+
+    test('caches the OFF result on a successful network lookup', () async {
+      repo.barcodeResult = MealEntity(
+        code: '9999',
+        name: 'New Product',
+        url: null,
+        mealQuantity: '100',
+        mealUnit: 'g',
+        servingQuantity: null,
+        servingUnit: 'g',
+        servingSize: null,
+        nutriments: _emptyNutriments(),
+        source: MealSourceEntity.off,
+      );
+
+      final result = await useCase.searchProductByBarcode('9999');
+
+      expect(result.name, 'New Product');
+      expect(cachedOffMealDataSource.writes, hasLength(1));
+      expect(cachedOffMealDataSource.writes.single.code, '9999');
+    });
+
+    test('custom-meal match takes priority over cached match', () async {
+      customMealDataSource.meals.add(_customMealDbo(
+        code: '5555',
+        name: 'My Custom',
+      ));
+      cachedOffMealDataSource.entries.add(_offCacheDbo(
+        code: '5555',
+        name: 'OFF Cached',
+      ));
+
+      final result = await useCase.searchProductByBarcode('5555');
+
+      expect(result.name, 'My Custom');
+      expect(repo.getOFFProductByBarcodeCalls, 0);
+    });
   });
 }
+
+MealDBO _offCacheDbo({required String code, required String name}) =>
+    MealDBO(
+      code: code,
+      name: name,
+      brands: null,
+      thumbnailImageUrl: null,
+      mainImageUrl: null,
+      url: null,
+      mealQuantity: '100',
+      mealUnit: 'g',
+      servingQuantity: null,
+      servingUnit: 'g',
+      servingSize: null,
+      source: MealSourceDBO.off,
+      nutriments: MealNutrimentsDBO(
+        energyKcal100: 0,
+        carbohydrates100: null,
+        fat100: null,
+        proteins100: null,
+        sugars100: null,
+        saturatedFat100: null,
+        fiber100: null,
+      ),
+    );
 
 class _FakeCustomMealDataSource implements CustomMealDataSource {
   final List<MealDBO> meals = [];
 
   @override
   List<MealDBO> getAllCustomMeals() => meals;
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw UnimplementedError('Unexpected call: ${invocation.memberName}');
+}
+
+class _FakeRemoteSearchCacheDataSource implements RemoteSearchCacheDataSource {
+  final List<MealDBO> entries = [];
+  final List<MealDBO> writes = [];
+
+  @override
+  List<MealDBO> getAll() => entries;
+
+  @override
+  MealDBO? getByBarcode(String barcode) {
+    for (final m in entries) {
+      if (m.code == barcode) return m;
+    }
+    return null;
+  }
+
+  @override
+  Future<void> cache(MealDBO meal) async {
+    writes.add(meal);
+    entries.add(meal);
+  }
 
   @override
   dynamic noSuchMethod(Invocation invocation) =>

@@ -50,6 +50,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(imported, skipped) =>
       "Zaimportowano ${imported} posiłk(ów); pominięto ${skipped} wiersz(y) z powodu nieprawidłowych danych.";
 
+  static String m14(count, size) => "${count} pozycji · ${size}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -173,6 +175,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "Brak zapisanych własnych posiłków."),
         "settingsCustomMealsLabel":
             MessageLookupByLibrary.simpleMessage("Własne posiłki"),
+        "clearOffCacheConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "Usuwa lokalnie zapisane wyniki wyszukiwania i skanowania z Open Food Facts i FDC. Pamięć podręczna odbuduje się automatycznie przy kolejnych wyszukiwaniach i skanowaniach. Twoje własne posiłki nie zostaną zmienione."),
+        "clearOffCacheConfirmTitle": MessageLookupByLibrary.simpleMessage(
+            "Wyczyścić pamięć podręczną?"),
+        "clearOffCacheLabel": MessageLookupByLibrary.simpleMessage(
+            "Wyczyść pamięć podręczną"),
+        "clearOffCacheSubtitle": m14,
         "csvImportContributeOffAndroidLink":
             MessageLookupByLibrary.simpleMessage("Android"),
         "csvImportContributeOffIosLink":

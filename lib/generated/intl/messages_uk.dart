@@ -50,6 +50,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(imported, skipped) =>
       "Імпортовано ${imported} страв; ${skipped} рядків пропущено через неправильні дані.";
 
+  static String m14(count, size) => "${count} елементів · ${size}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -174,6 +176,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ще немає збережених власних страв."),
         "settingsCustomMealsLabel":
             MessageLookupByLibrary.simpleMessage("Власні страви"),
+        "clearOffCacheConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "Видаляє локально збережені результати пошуку та сканування з Open Food Facts та FDC. Кеш автоматично відновлюється під час пошуку та сканування. Ваші власні страви не зачіпаються."),
+        "clearOffCacheConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("Очистити кеш?"),
+        "clearOffCacheLabel":
+            MessageLookupByLibrary.simpleMessage("Очистити кеш"),
+        "clearOffCacheSubtitle": m14,
         "csvImportContributeOffAndroidLink":
             MessageLookupByLibrary.simpleMessage("Android"),
         "csvImportContributeOffIosLink":

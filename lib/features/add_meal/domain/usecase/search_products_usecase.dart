@@ -1,5 +1,7 @@
 import 'package:logging/logging.dart';
+import 'package:opennutritracker/core/data/data_source/remote_search_cache_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/custom_meal_data_source.dart';
+import 'package:opennutritracker/core/data/dbo/meal_dbo.dart';
 import 'package:opennutritracker/core/domain/usecase/get_intake_usecase.dart';
 import 'package:opennutritracker/features/add_meal/data/repository/products_repository.dart';
 import 'package:opennutritracker/features/add_meal/domain/entity/meal_entity.dart';
@@ -26,11 +28,13 @@ class SearchProductsUseCase {
   final ProductsRepository _productsRepository;
   final GetIntakeUsecase _getIntakeUsecase;
   final CustomMealDataSource _customMealDataSource;
+  final RemoteSearchCacheDataSource _cachedOffMealDataSource;
 
   SearchProductsUseCase(
     this._productsRepository,
     this._getIntakeUsecase,
     this._customMealDataSource,
+    this._cachedOffMealDataSource,
   );
 
   Future<SearchProductsResult> searchOFFProductsByString(
@@ -40,6 +44,10 @@ class SearchProductsUseCase {
       'OFF',
       () => _productsRepository.getOFFProductsByString(searchString),
     );
+    // Cache successful remote hits so the same query (and any future
+    // barcode scan of these items) resolves locally next time — even
+    // offline. Skip when remote came back empty, nothing to cache.
+    await _cacheRemoteResults(remote);
     return _buildResult(searchString, remote);
   }
 
@@ -48,7 +56,14 @@ class SearchProductsUseCase {
       'FDC',
       () => _productsRepository.getSupabaseFDCFoodsByString(searchString),
     );
+    await _cacheRemoteResults(remote);
     return _buildResult(searchString, remote);
+  }
+
+  Future<void> _cacheRemoteResults(List<MealEntity> remote) async {
+    if (remote.isEmpty) return;
+    await _cachedOffMealDataSource
+        .cacheAll(remote.map(MealDBO.fromMealEntity));
   }
 
   /// Run a remote search and fall back to an empty list when the source
@@ -85,13 +100,17 @@ class SearchProductsUseCase {
       );
     }
 
-    // Two sources of custom-meal matches:
-    //  - the dedicated custom-meal box, which holds templates the user
-    //    created or imported via CSV (covers entries that have never been
-    //    logged as intake)
-    //  - the user's recent intake history, which covers custom-meal copies
-    //    the user has logged even after the original template was deleted
-    // Both are passed through the same dedup helper.
+    // Local sources of matches, in priority order:
+    //  1. Custom-meal box: the user's own templates (created or CSV-
+    //     imported). Covers entries that haven't been logged as intake.
+    //  2. Recent intake history: custom-meal copies the user has logged
+    //     even after the original template was deleted.
+    //  3. Cached OFF/FDC results: products we previously fetched from the
+    //     network. Lets repeat searches and offline use work without a
+    //     round-trip — and means freshly-imported users will hit increasing
+    //     local hit-rates as they use the app over weeks.
+    // All three are passed through the same dedup helper alongside fresh
+    // remote results.
     final fromCustomMealBox = _customMealDataSource
         .getAllCustomMeals()
         .map(MealEntity.fromMealDBO)
@@ -105,9 +124,19 @@ class SearchProductsUseCase {
         .where((meal) => _mealMatchesSearch(meal, normalizedSearchString))
         .toList();
 
+    final fromOffCache = _cachedOffMealDataSource
+        .getAll()
+        .map(MealEntity.fromMealDBO)
+        .where((meal) => _mealMatchesSearch(meal, normalizedSearchString))
+        .toList();
+
     return SearchProductsResult(
-      meals: _deduplicateMeals(
-          [...fromCustomMealBox, ...fromIntakeHistory, ...remoteResults]),
+      meals: _deduplicateMeals([
+        ...fromCustomMealBox,
+        ...fromIntakeHistory,
+        ...remoteResults,
+        ...fromOffCache,
+      ]),
       remoteSourceEmpty: remoteSourceEmpty,
     );
   }

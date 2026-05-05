@@ -1,6 +1,7 @@
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get_it/get_it.dart';
 import 'package:opennutritracker/core/data/data_source/config_data_source.dart';
+import 'package:opennutritracker/core/data/data_source/remote_search_cache_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/custom_meal_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/intake_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/physical_activity_data_source.dart';
@@ -126,7 +127,14 @@ Future<void> initLocator() async {
     () => ProfileBloc(locator(), locator(), locator(), locator(), locator()),
   );
   locator.registerLazySingleton(
-    () => SettingsBloc(locator(), locator(), locator(), locator(), locator()),
+    () => SettingsBloc(
+      locator(),
+      locator(),
+      locator(),
+      locator(),
+      locator(),
+      locator(),
+    ),
   );
   locator.registerFactory(
     () => ExportImportBloc(locator(), locator(), locator(), locator()),
@@ -174,10 +182,15 @@ Future<void> initLocator() async {
     () => AddUserUsecase(locator()),
   );
   locator.registerLazySingleton<SearchProductsUseCase>(
-    () => SearchProductsUseCase(locator(), locator(), locator()),
+    () => SearchProductsUseCase(
+      locator(),
+      locator(),
+      locator(),
+      locator(),
+    ),
   );
   locator.registerLazySingleton<SearchProductByBarcodeUseCase>(
-    () => SearchProductByBarcodeUseCase(locator(), locator()),
+    () => SearchProductByBarcodeUseCase(locator(), locator(), locator()),
   );
   locator.registerLazySingleton<GetIntakeUsecase>(
     () => GetIntakeUsecase(locator()),
@@ -270,6 +283,9 @@ Future<void> initLocator() async {
   );
   locator.registerLazySingleton(
     () => CustomMealDataSource(hiveDBProvider.customMealBox),
+  );
+  locator.registerLazySingleton(
+    () => RemoteSearchCacheDataSource(hiveDBProvider.cachedOffMealBox),
   );
 
   await _initializeConfig(locator());

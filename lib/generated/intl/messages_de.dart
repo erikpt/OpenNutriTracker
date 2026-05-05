@@ -53,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(imported, skipped) =>
       "${imported} Mahlzeit(en) importiert; ${skipped} Zeile(n) wegen ungültiger Daten übersprungen.";
 
+  static String m14(count, size) => "${count} Eintrag/Einträge · ${size}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activityExample": MessageLookupByLibrary.simpleMessage(
@@ -179,6 +181,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "Noch keine eigenen Mahlzeiten gespeichert."),
         "settingsCustomMealsLabel":
             MessageLookupByLibrary.simpleMessage("Eigene Mahlzeiten"),
+        "clearOffCacheConfirmContent": MessageLookupByLibrary.simpleMessage(
+            "Entfernt die lokal zwischengespeicherten Open-Food-Facts-Ergebnisse. Der Cache wird beim Suchen und Scannen automatisch neu aufgebaut. Deine eigenen Mahlzeiten sind nicht betroffen."),
+        "clearOffCacheConfirmTitle":
+            MessageLookupByLibrary.simpleMessage("Cache leeren?"),
+        "clearOffCacheLabel":
+            MessageLookupByLibrary.simpleMessage("Cache leeren"),
+        "clearOffCacheSubtitle": m14,
         "csvImportContributeOffAndroidLink":
             MessageLookupByLibrary.simpleMessage("Android"),
         "csvImportContributeOffIosLink":

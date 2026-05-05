@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:opennutritracker/core/data/data_source/remote_search_cache_data_source.dart';
 import 'package:opennutritracker/core/data/data_source/custom_meal_data_source.dart';
 import 'package:opennutritracker/core/data/dbo/meal_dbo.dart';
 import 'package:opennutritracker/core/data/dbo/meal_nutriments_dbo.dart';
@@ -77,19 +78,54 @@ class _FakeCustomMealDataSource implements CustomMealDataSource {
       throw UnimplementedError('Unexpected call: ${invocation.memberName}');
 }
 
+class _FakeRemoteSearchCacheDataSource implements RemoteSearchCacheDataSource {
+  final List<MealDBO> meals = [];
+  final List<MealDBO> cached = [];
+
+  @override
+  List<MealDBO> getAll() => meals;
+
+  @override
+  Future<void> cache(MealDBO meal) async {
+    cached.add(meal);
+    meals.add(meal);
+  }
+
+  @override
+  Future<void> cacheAll(Iterable<MealDBO> incoming) async {
+    for (final m in incoming) {
+      await cache(m);
+    }
+  }
+
+  @override
+  MealDBO? getByBarcode(String barcode) =>
+      meals.where((m) => m.code == barcode).firstOrNull;
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw UnimplementedError('Unexpected call: ${invocation.memberName}');
+}
+
 void main() {
   group('SearchProductsUseCase', () {
     late _FakeProductsRepository productsRepository;
     late _FakeGetIntakeUsecase getIntakeUsecase;
     late _FakeCustomMealDataSource customMealDataSource;
+    late _FakeRemoteSearchCacheDataSource cachedOffMealDataSource;
     late SearchProductsUseCase useCase;
 
     setUp(() {
       productsRepository = _FakeProductsRepository();
       getIntakeUsecase = _FakeGetIntakeUsecase();
       customMealDataSource = _FakeCustomMealDataSource();
+      cachedOffMealDataSource = _FakeRemoteSearchCacheDataSource();
       useCase = SearchProductsUseCase(
-          productsRepository, getIntakeUsecase, customMealDataSource);
+        productsRepository,
+        getIntakeUsecase,
+        customMealDataSource,
+        cachedOffMealDataSource,
+      );
     });
 
     test('prepends matching custom meals for OFF search', () async {
@@ -328,10 +364,114 @@ void main() {
         expect(result.meals.single.code, 'shared-1');
       },
     );
+
+    // Cache: read-side
+    test(
+      'surfaces cached OFF results when the remote source is empty',
+      () async {
+        cachedOffMealDataSource.meals.add(_offCacheDbo(
+          code: 'off-cached-1',
+          name: 'Cached Banana',
+        ));
+        // No remote results, no failure.
+        productsRepository.offResults['banana'] = const [];
+
+        final result = await useCase.searchOFFProductsByString('banana');
+
+        expect(result.meals, hasLength(1));
+        expect(result.meals.single.name, 'Cached Banana');
+        expect(result.meals.single.source, MealSourceEntity.off);
+        expect(result.remoteSourceEmpty, isTrue);
+      },
+    );
+
+    test(
+      'surfaces cached OFF results in airplane mode (remote throws)',
+      () async {
+        cachedOffMealDataSource.meals.add(_offCacheDbo(
+          code: 'off-cached-1',
+          name: 'Cached Banana',
+        ));
+        productsRepository.offThrowOn.add('banana');
+
+        final result = await useCase.searchOFFProductsByString('banana');
+
+        expect(result.meals.map((m) => m.name), contains('Cached Banana'));
+        expect(result.remoteSourceEmpty, isTrue);
+      },
+    );
+
+    test(
+      'fresh remote result wins over the same item in cache (dedup)',
+      () async {
+        cachedOffMealDataSource.meals.add(_offCacheDbo(
+          code: 'off-1',
+          name: 'Stale Cached Name',
+        ));
+        productsRepository.offResults['tofu'] = [
+          _meal(code: 'off-1', name: 'Fresh Remote Name', source: MealSourceEntity.off),
+        ];
+
+        final result = await useCase.searchOFFProductsByString('tofu');
+
+        expect(result.meals, hasLength(1));
+        expect(result.meals.single.name, 'Fresh Remote Name');
+      },
+    );
+
+    // Cache: write-side
+    test('successful OFF search results are written to the cache', () async {
+      productsRepository.offResults['tofu'] = [
+        _meal(code: 'off-1', name: 'Tofu A', source: MealSourceEntity.off),
+        _meal(code: 'off-2', name: 'Tofu B', source: MealSourceEntity.off),
+      ];
+
+      await useCase.searchOFFProductsByString('tofu');
+
+      expect(cachedOffMealDataSource.cached.map((m) => m.code).toList(),
+          ['off-1', 'off-2']);
+    });
+
+    test('successful FDC search results are written to the cache', () async {
+      productsRepository.fdcResults['apple'] = [
+        _meal(code: 'fdc-1', name: 'Apple', source: MealSourceEntity.fdc),
+      ];
+
+      await useCase.searchFDCFoodByString('apple');
+
+      expect(cachedOffMealDataSource.cached, hasLength(1));
+      expect(cachedOffMealDataSource.cached.single.code, 'fdc-1');
+    });
+
+    test('empty remote results do NOT write to the cache', () async {
+      productsRepository.offResults['nothing'] = const [];
+
+      await useCase.searchOFFProductsByString('nothing');
+
+      expect(cachedOffMealDataSource.cached, isEmpty);
+    });
+
+    test('failing remote calls do NOT write to the cache', () async {
+      productsRepository.offThrowOn.add('boom');
+
+      await useCase.searchOFFProductsByString('boom');
+
+      expect(cachedOffMealDataSource.cached, isEmpty);
+    });
   });
 }
 
-MealDBO _customMealDbo({required String code, required String name}) {
+MealDBO _customMealDbo({required String code, required String name}) =>
+    _meaDboWithSource(code: code, name: name, source: MealSourceDBO.custom);
+
+MealDBO _offCacheDbo({required String code, required String name}) =>
+    _meaDboWithSource(code: code, name: name, source: MealSourceDBO.off);
+
+MealDBO _meaDboWithSource({
+  required String code,
+  required String name,
+  required MealSourceDBO source,
+}) {
   return MealDBO(
     code: code,
     name: name,
@@ -344,7 +484,7 @@ MealDBO _customMealDbo({required String code, required String name}) {
     servingQuantity: null,
     servingUnit: 'g',
     servingSize: null,
-    source: MealSourceDBO.custom,
+    source: source,
     nutriments: MealNutrimentsDBO(
       energyKcal100: 0,
       carbohydrates100: null,
